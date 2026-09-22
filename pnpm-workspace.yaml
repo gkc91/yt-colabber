@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+
+# Packages whose install scripts may run. @sentry/cli fetches its binary (source-map upload).
+allowBuilds:
+  '@sentry/cli': true
+  esbuild: true
+  unrs-resolver: false

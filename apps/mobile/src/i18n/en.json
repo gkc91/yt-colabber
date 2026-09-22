@@ -1,0 +1,17 @@
+{
+  "tabs": {
+    "review": "Review",
+    "submit": "Test",
+    "profile": "Profile"
+  },
+  "placeholder": {
+    "review": "Your next review task will appear here.",
+    "submit": "Your tests will appear here.",
+    "profile": "Credits, reputation and settings will appear here."
+  },
+  "notFound": {
+    "title": "Oops!",
+    "message": "This screen doesn't exist.",
+    "home": "Go to home screen"
+  }
+}

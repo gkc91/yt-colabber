@@ -1,0 +1,22 @@
+{
+  "name": "firstcut",
+  "private": true,
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:mobile": "pnpm --filter mobile start",
+    "dev:landing": "pnpm --filter landing dev",
+    "db:reset": "supabase db reset",
+    "db:types": "supabase gen types typescript --local --schema public > apps/mobile/src/lib/database.types.ts",
+    "test:db": "supabase test db",
+    "lint": "pnpm -r --if-present lint",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
