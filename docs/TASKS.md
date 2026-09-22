@@ -13,7 +13,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - ESLint + Prettier + `tsc --noEmit` CI (GitHub Actions).
   - Kabul: `pnpm dev:mobile` Expo Go'da boş tabs açar; `pnpm lint` temiz.
 
-- [ ] **A2. Supabase projesi + migration'lar**
+- [x] **A2. Supabase projesi + migration'lar**
   - `supabase init`, `supabase start` (Docker), `0001_init.sql` ve `0002_collab.sql` uygular. Hata çıkarsa migration'ı düzelt (yorumla belgele).
   - `supabase/seed.sql`: 3 test kullanıcısı (animation nişi), her nişe 10 sahte cache satırı (thumbnail_url için placeholder resimler).
   - `pnpm db:types` → `apps/mobile/src/lib/database.types.ts`.

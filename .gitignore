@@ -31,3 +31,6 @@ supabase/.temp/
 .DS_Store
 *.log
 coverage/
+
+# Claude Code Game Studios hook logs (global tooling, not project content)
+production/session-logs/
