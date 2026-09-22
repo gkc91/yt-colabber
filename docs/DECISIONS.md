@@ -14,3 +14,9 @@
 - 2026-09-22 A2: Değerlendirme süresi sunucuda ölçülür: `min(client time_spent, now() − assigned_at)`; `watched_seconds` geçen süreyi aşamaz. (0003, CLAUDE.md kırmızı çizgi)
 - 2026-09-22 A2: `profile_balances` view `security_invoker=true` — önceki hali RLS'i atlayıp herkesin bakiyesini gösteriyordu. (0003)
 - 2026-09-22 A2: Supabase CLI root devDependency (`pnpm exec supabase`), global kurulum gerekmez. Yerelde analytics kapalı (Windows'ta Docker TCP ister).
+- 2026-09-22 A3: Auth PKCE akışı (`flowType: 'pkce'`); magic link ve OAuth `auth` rotasına `?code=` ile döner, rota kodu oturuma çevirir. Magic link aynı cihazda açılmalı (PKCE verifier cihazda).
+- 2026-09-22 A3: Google girişi kodda hazır; `config.toml`'da kapalı, OAuth kimlik bilgileri gelince açılır (Google Cloud + Supabase Providers).
+- 2026-09-22 A3: Onboarding dilleri: en, tr, es, pt, de, fr (kanal içerik dili; eşleştirme buna göre). Liste `src/features/onboarding/options.ts`.
+- 2026-09-22 A3: Web'de donanım kimliği yok; `register_device` için AsyncStorage'da saklanan rastgele `web-<uuid>` kullanılır.
+- 2026-09-22 A3: Saf TS mantığı için birim testleri vitest ile (`src/**/*.test.ts`); ekranlar çalışan uygulamada doğrulanır. jest-expo ekran testleri gerekirse sonra.
+- 2026-09-22 A3: `pnpm dev:mobile:local` yerel Supabase bilgilerini `supabase status`'tan alır; yerel geliştirmede `.env` gerekmez.

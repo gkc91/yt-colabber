@@ -20,7 +20,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - pgTAP: `supabase/tests/001_credits.sql` — signup bonus 5; `create_submission` bakiye yetersizse hata; `submit_review` 20 sn altı reddediyor; `close_stale_submissions` iade yapıyor.
   - Kabul: `supabase test db` yeşil.
 
-- [ ] **A3. Auth + onboarding**
+- [x] **A3. Auth + onboarding**
   - `src/lib/supabase.ts` (AsyncStorage session), magic link (deep link `firstcut://auth`), Google sign-in (expo-auth-session).
   - `(onboarding)/niche` ve `(onboarding)/channel`: profiles + channels günceller, `onboarding_done=true`. YouTube URL doğrulama (regex, `@handle`/`channel/UC...`/`c/...`).
   - `register_device` çağrısı ilk açılışta.

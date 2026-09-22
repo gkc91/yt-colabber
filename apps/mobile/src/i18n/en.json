@@ -9,6 +9,46 @@
     "submit": "Your tests will appear here.",
     "profile": "Credits, reputation and settings will appear here."
   },
+  "credits": {
+    "balance": "Credits",
+    "loading": "…"
+  },
+  "auth": {
+    "title": "FirstCut",
+    "tagline": "Test your thumbnail, title and first 60 seconds on real people in your niche before you publish.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "sendLink": "Email me a sign-in link",
+    "linkSent": "Check your inbox. Open the link on this device to sign in.",
+    "useAnotherEmail": "Use a different email",
+    "or": "or",
+    "google": "Continue with Google",
+    "invalidEmail": "Enter a valid email address.",
+    "signingIn": "Signing you in…",
+    "linkFailed": "This sign-in link didn't work. It may have expired or been opened on another device.",
+    "backToSignIn": "Back to sign in",
+    "genericError": "Something went wrong. Please try again."
+  },
+  "onboarding": {
+    "nicheTitle": "What is your channel about?",
+    "nicheHint": "You'll review videos from this niche, and your tests go to people in it.",
+    "languageTitle": "Which language are your videos in?",
+    "continue": "Continue",
+    "channelTitle": "Your YouTube channel",
+    "channelHint": "Only used to show who you are. We never post, like or subscribe on YouTube.",
+    "channelLabel": "Channel URL",
+    "channelPlaceholder": "youtube.com/@yourchannel",
+    "channelInvalid": "Paste your channel link, like youtube.com/@name or youtube.com/channel/UC…",
+    "bandTitle": "Subscribers (optional)",
+    "finish": "Start",
+    "bands": {
+      "b0_100": "0–100",
+      "b100_1k": "100–1K",
+      "b1k_10k": "1K–10K",
+      "b10k_100k": "10K–100K",
+      "b100k_plus": "100K+"
+    }
+  },
   "notFound": {
     "title": "Oops!",
     "message": "This screen doesn't exist.",

@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "mobile-web",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "mobile", "exec", "expo", "start", "--web", "--port", "8081"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/dev-mobile-local.mjs", "--web", "--port", "8081"],
       "port": 8081
     }
   ]

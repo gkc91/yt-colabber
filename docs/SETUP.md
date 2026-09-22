@@ -23,6 +23,8 @@ pnpm db:types                       # database.types.ts üret
 copy .env.example apps/mobile/.env  # doldur
 pnpm dev:mobile                     # Expo, QR ile Expo Go (Android) / eşinin iPhone'unda Expo Go
 ```
+Yerel Supabase ile `.env` gerekmez: `pnpm dev:mobile:local` (web/simülatör) veya `pnpm dev:mobile:local --lan` (aynı Wi-Fi'deki telefon; Windows güvenlik duvarı 54321 portuna izin vermeli). Script `supabase status`'tan URL ve anon key'i alır.
+Yerel test kullanıcıları: `alice@`, `bob@`, `cara@firstcut.test`. Magic link e-postaları http://127.0.0.1:54324 (Mailpit) adresine düşer.
 Native modüller (react-native-purchases, compressor) Expo Go'da çalışmaz → `eas build --profile development` ile dev client al, onunla test et.
 
 ## Supabase Edge Functions
