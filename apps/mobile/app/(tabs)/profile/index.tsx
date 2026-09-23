@@ -2,5 +2,5 @@ import { PlaceholderScreen } from '@/components/PlaceholderScreen';
 import { t } from '@/i18n';
 
 export default function ProfileScreen() {
-  return <PlaceholderScreen message={t('placeholder.profile')} />;
+  return <PlaceholderScreen message={t('profile.placeholder')} />;
 }

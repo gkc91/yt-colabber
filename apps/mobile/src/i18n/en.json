@@ -4,10 +4,6 @@
     "submit": "Test",
     "profile": "Profile"
   },
-  "placeholder": {
-    "review": "Your next review task will appear here.",
-    "profile": "Credits, reputation and settings will appear here."
-  },
   "credits": {
     "balance": "Credits",
     "loading": "…"
@@ -122,5 +118,64 @@
     "title": "Oops!",
     "message": "This screen doesn't exist.",
     "home": "Go to home screen"
+  },
+  "review": {
+    "ready": {
+      "title": "A test is waiting",
+      "body": "Three quick steps: pick what you'd click, say what you expect, then watch the first seconds. About two minutes.",
+      "start": "Start reviewing"
+    },
+    "empty": {
+      "title": "Nothing to review right now",
+      "body": "No one in your niche is testing at the moment. Come back later, or turn on notifications so we can tell you when a test arrives."
+    },
+    "next": "Next",
+    "feed": {
+      "question": "Which one would you click?"
+    },
+    "guess": {
+      "question": "What is this video about, in one sentence?",
+      "placeholder": "I'd expect this video to…",
+      "words": "{words} words (at least {min})"
+    },
+    "hook": {
+      "video": "The first seconds of the video",
+      "leave": "I'd stop watching here",
+      "watchedAll": "You watched the whole clip.",
+      "leftAt": "You stopped at {second}s.",
+      "tagsTitle": "Why? (pick any)",
+      "commentLabel": "Anything to add? (optional)",
+      "commentPlaceholder": "One line for the creator",
+      "submit": "Send review"
+    },
+    "tags": {
+      "slow_intro": "Slow intro",
+      "unclear_promise": "Unclear promise",
+      "bad_audio": "Bad audio",
+      "low_energy": "Low energy",
+      "too_long_setup": "Setup too long",
+      "visual_quality": "Visual quality",
+      "didnt_match_thumbnail": "Didn't match the thumbnail",
+      "kept_watching": "Kept me watching"
+    },
+    "done": {
+      "reward": "+1 credit",
+      "body": "Thanks. Your review is on its way to the creator.",
+      "channelHint": "Curious about this creator?",
+      "visit": "Visit the channel",
+      "visitNamed": "Visit {channel}",
+      "next": "Review another"
+    },
+    "errors": {
+      "review_too_fast": "That was too quick to be a real review, so it wasn't counted and no credit was given. Take your time with the next one.",
+      "task_expired": "This task has expired. Grab a new one from the Review tab.",
+      "submission_closed": "This test has already collected enough reviews.",
+      "invalid_watch": "Something didn't add up in the playback times. Please try again.",
+      "reviewer_blocked": "Your reputation is too low to take new tasks right now.",
+      "niche_cache_empty": "We're still collecting example videos for your niche. Please try again later."
+    }
+  },
+  "profile": {
+    "placeholder": "Credits, reputation and settings will appear here."
   }
 }

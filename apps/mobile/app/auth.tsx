@@ -18,18 +18,25 @@ export default function AuthCallback() {
   const handled = useRef(false);
 
   useEffect(() => {
-    // Reloading /auth?code=… after sign-in would replay a spent code; just go home.
-    if (session) {
-      router.replace('/');
+    const source = code ? `clickable://auth?code=${encodeURIComponent(code)}` : url;
+
+    // Bağlantıda işlenecek bir şey yoksa (ör. oturum açıkken /auth'a dönülmüş) ana sayfaya.
+    if (!source) {
+      if (session) router.replace('/');
       return;
     }
-    const source = code ? `clickable://auth?code=${encodeURIComponent(code)}` : url;
-    if (!source || handled.current) return;
+    if (handled.current) return;
     handled.current = true;
 
+    // Oturum açıkken gelen bağlantı BAŞKA bir hesabın olabilir; yine de işleriz,
+    // yoksa kullanıcı sessizce eski hesapta kalır.
     createSessionFromUrl(source)
-      .then((ok) => (ok ? router.replace('/') : setFailed(true)))
-      .catch(() => setFailed(true));
+      .then((ok) => {
+        if (ok || session) router.replace('/');
+        else setFailed(true);
+      })
+      // Harcanmış bir bağlantı tekrar açıldıysa ve oturum zaten varsa hata gösterme.
+      .catch(() => (session ? router.replace('/') : setFailed(true)));
   }, [code, url, session]);
 
   return (

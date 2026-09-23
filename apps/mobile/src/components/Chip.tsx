@@ -3,16 +3,22 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 
-type Props = { label: string; selected: boolean; onPress: () => void };
+type Props = {
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+  /** Çoklu seçimde 'checkbox' verilmeli; tek seçimde radio (varsayılan). */
+  role?: 'radio' | 'checkbox';
+};
 
-export function Chip({ label, selected, onPress }: Props) {
+export function Chip({ label, selected, onPress, role = 'radio' }: Props) {
   const colors = Colors[useColorScheme()];
 
   return (
     <Pressable
-      accessibilityRole="radio"
+      accessibilityRole={role}
       accessibilityLabel={label}
-      accessibilityState={{ selected }}
+      accessibilityState={role === 'checkbox' ? { checked: selected } : { selected }}
       onPress={onPress}
       style={[
         styles.chip,

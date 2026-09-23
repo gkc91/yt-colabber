@@ -62,6 +62,11 @@ select vault.create_secret('<service-role-key>', 'service_role_key');
 ve `supabase secrets set YOUTUBE_API_KEY=...` + `supabase functions deploy refresh-niche-cache`.
 Sırlar yoksa günlük iş sessizce atlanır (hata vermez).
 
+## Değerlendirme akışı kontrolü (B4)
+```powershell
+node scripts/check-review.mjs        # 3 kullanıcı bir submission'ı değerlendirir, received_reviews=3
+```
+
 ## Supabase Edge Functions
 ```powershell
 supabase functions serve            # yerel

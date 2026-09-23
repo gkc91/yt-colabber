@@ -45,3 +45,7 @@
 - 2026-09-23 B3: Cron, Edge Function'ı `net.http_post` ile çağırır; URL ve service role key Vault'ta (migration'da sır yok). Sır yoksa iş sessizce atlanır.
 - 2026-09-23 B3: Decoy'lar dile göre filtrelenmiyor; sorgular İngilizce ama sonuçlara başka diller karışabiliyor. TASKS "Sonrası" listesine eklendi — B4'te değerlendirme kalitesini etkilerse öne alınır.
 - 2026-09-23 Kanal bağlantısı değerlendirme GÖNDERİLDİKTEN sonra "+1 kredi" ekranında gösterilecek. Gerekçe: değerlendirici kanalı önceden tanırsa feed ve başlık testi "tanımayan birinin tepkisi" olmaktan çıkar ve sonuç thumbnail'i değil kanala duyulan sempatiyi ölçer. Sonrasında gösterim ölçümü bozmuyor; ziyaret ve abonelik tamamen değerlendiricinin tercihi, krediyle ilişkisiz. (PRODUCT §5, §9, §12)
+- 2026-09-23 B4: Feed ızgarasında kanal adı hiçbir öğede gösterilmiyor. Gerekçe: aday için gerçek kanalı göstermek testi ele verir, boş bırakmak da adayı belli eder.
+- 2026-09-23 B4: Değerlendiriciye yalnızca kendisine atanan başlık metni ve klip süresi gönderilir (0007). Diğer başlıklar/thumbnail'lar gizli kalır; submission satırını RLS zaten kapatıyor.
+- 2026-09-23 B4: Kanal bağlantısı `reviewed_channel()` ile, yalnızca değerlendirme kaydı varsa döner. Böylece "gönderimden sonra" kuralı client'ta değil sunucuda garanti.
+- 2026-09-23 B4: Oturum açıkken gelen magic link artık işleniyor (önce sessizce yok sayılıyordu). Farklı hesabın bağlantısına dokunan kullanıcı eski hesapta kalıyordu.

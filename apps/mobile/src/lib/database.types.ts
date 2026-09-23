@@ -762,6 +762,7 @@ export type Database = {
         Returns: undefined
       }
       register_device: { Args: { p_device_id: string }; Returns: undefined }
+      reviewed_channel: { Args: { p_submission_id: string }; Returns: Json }
       send_message: {
         Args: { p_body: string; p_match: string }
         Returns: number
@@ -785,6 +786,7 @@ export type Database = {
         }
         Returns: string
       }
+      trigger_refresh_niche_cache: { Args: never; Returns: undefined }
     }
     Enums: {
       collab_type:

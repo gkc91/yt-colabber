@@ -49,7 +49,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - pg_cron günlük 04:00 → `net.http_post` ile fonksiyonu çağır (pg_net).
   - Kabul: yerelde elle çağrılınca animation nişi için ≥50 satır oluşuyor.
 
-- [ ] **B4. Değerlendirme akışı**
+- [x] **B4. Değerlendirme akışı**
   - `review/index`: `rpc('next_review_task')`; görev yoksa boş durum ("Nişinde bekleyen test yok, bildirim aç").
   - `review/[taskId]`: Adım 1 feed ızgarası (aday `candidate_position`'da), karar süresi ölçümü; Adım 2 metin; Adım 3 `expo-video` + "Buradan çıkardım" + etiketler + yorum. Toplam süre sayacı (ekran açılışından).
   - `rpc('submit_review')`; başarıda "+1 kredi" animasyonu; hata `review_too_fast` → açıklayıcı uyarı.

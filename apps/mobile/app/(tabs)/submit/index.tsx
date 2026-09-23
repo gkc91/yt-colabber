@@ -14,12 +14,13 @@ import { t, type MessageKey } from '@/i18n';
 export default function SubmissionsScreen() {
   const { session } = useSession();
   const submissions = useMySubmissions(session?.user.id);
+  const refetchSubmissions = submissions.refetch;
 
   // Sihirbazdan dönünce liste tazelensin.
   useFocusEffect(
     useCallback(() => {
-      submissions.refetch();
-    }, [submissions.refetch]),
+      refetchSubmissions();
+    }, [refetchSubmissions]),
   );
 
   return (
