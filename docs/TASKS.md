@@ -84,6 +84,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 - [ ] **E1. Landing** — `apps/landing` Astro tek sayfa: vaat, 3 adım, ekran görüntüsü, mağaza butonları, gizlilik/şartlar sayfaları. Cloudflare Pages.
 - [ ] **E2. Web/PWA** — `expo export -p web`, Cloudflare Pages; submission/ödeme ekranları web'de "uygulamada aç".
 - [ ] **E3. Mağaza hazırlığı** — Play kapalı test (12 kişi, 14 gün); App Store metadata, ekran görüntüleri, gizlilik etiketleri, hesap silme akışı, review notları (test hesabı).
+  - Google OAuth izin ekranı doğrulaması: logo + ana sayfa + gizlilik politikası (E1 landing gerekir). Doğrulanmadan onay ekranında uygulama adı yerine `<ref>.supabase.co` görünüyor ve güven kaybı yaratıyor. Alternatif: Supabase özel alan adı (Pro planı).
 - [ ] **E4. Ölçüm** — PostHog olayları: `submission_created`, `task_started`, `review_submitted`, `review_rejected`, `paywall_viewed`, `purchase`. Dashboard: submission başına 24 saatte değerlendirme.
 
 ## Faz F — Collab
