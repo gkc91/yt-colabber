@@ -44,7 +44,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - `submit/index`: listem (status, received/requested, kalan süre).
   - Kabul: 8 MB üstü klip yüklenmiyor; 3 thumbnail + 3 başlık + klip ile submission oluşuyor, bakiye düşüyor.
 
-- [ ] **B3. Niş cache**
+- [x] **B3. Niş cache**
   - Edge Function `refresh-niche-cache`: her niş için 3 arama sorgusu (`niches.queries`, seed'de örnekler var; diğer nişlere sorgu ekle), `search.list` + `videos.list`, izlenme 1k–500k filtre, niş başına 200 satır tut (eskileri sil).
   - pg_cron günlük 04:00 → `net.http_post` ile fonksiyonu çağır (pg_net).
   - Kabul: yerelde elle çağrılınca animation nişi için ≥50 satır oluşuyor.
@@ -95,4 +95,4 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 - [ ] **F4. Moderasyon** — mesaj raporu, engelleyince eşleşme gizlenir; günlük mesaj limiti (100).
 
 ## Sonrası (planlanmadı, sıraya girmesin)
-YouTube read-only OAuth ile gerçek CTR/retention çekme ve oy-CTR korelasyonu · Türkçe dil · Ajans tier · R2 geçişi.
+YouTube read-only OAuth ile gerçek CTR/retention çekme ve oy-CTR korelasyonu · Türkçe dil · Ajans tier · R2 geçişi · Decoy'ları dile göre filtreleme (`niche_thumbnail_cache.language` + arama `relevanceLanguage`; şu an sorgular İngilizce ama sonuçlara başka diller karışabiliyor).

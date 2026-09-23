@@ -40,3 +40,7 @@
 - 2026-09-23 B2: Medya modülü platforma ayrıldı (`media.ts` cihaz, `media.web.ts` stub, `media.types.ts` ortak). Gerekçe: sıkıştırma kütüphanesi web paketine girince derleme kırılıyor. Web'de submission oluşturma zaten yok (PRODUCT §14) — "uygulamada aç" ekranı gösterilir.
 - 2026-09-23 B2: Yükleme iptal/hata durumunda yüklenen dosyalar silinir (0005 delete policy). Kredi yalnızca create_submission başarılı olunca düşer.
 - 2026-09-23 B2: Profil okunamıyorsa (oturum geçersiz) uygulama boş ekranda kalıyordu; artık oturum kapatılıp giriş ekranına dönülüyor.
+- 2026-09-23 B3: Decoy aramasında süre filtresi YouTube'da değil kendi tarafımızda: Shorts (<61 sn) elenir, geri kalan her uzunluk kabul edilir. Gerekçe: `videoDuration=medium` aday havuzunu aşırı daraltıyordu (animation 34 satırda kalmıştı); Shorts ise dikey thumbnail'la ızgarada sırıtıyor.
+- 2026-09-23 B3: Fonksiyon `{"niche":"<slug>"}` ile tek niş yenileyebilir. Gerekçe: YouTube kotası (arama başına 100 birim, günde 10.000) elle denemelerde hızla tükeniyor.
+- 2026-09-23 B3: Cron, Edge Function'ı `net.http_post` ile çağırır; URL ve service role key Vault'ta (migration'da sır yok). Sır yoksa iş sessizce atlanır.
+- 2026-09-23 B3: Decoy'lar dile göre filtrelenmiyor; sorgular İngilizce ama sonuçlara başka diller karışabiliyor. TASKS "Sonrası" listesine eklendi — B4'te değerlendirme kalitesini etkilerse öne alınır.

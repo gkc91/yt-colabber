@@ -43,6 +43,25 @@ node scripts/check-submission.mjs        # 3 thumbnail + 3 başlık + klip, kred
 Sihirbaz ekranları (galeriden seçme, sıkıştırma) Expo Go'da çalışmaz; cihazda denemek için:
 `npx eas-cli@latest build --profile development --platform android` ile dev client al, sonra `pnpm dev:mobile:local --lan`.
 
+## Niş cache (B3)
+YouTube Data API v3 anahtarı gerekir (Google Cloud projesi `clickable-509507`, anahtar "Clickable niche cache").
+Yerelde `supabase/functions/.env` içine `YOUTUBE_API_KEY=...` yaz (dosya .gitignore'da), sonra:
+```powershell
+pnpm exec supabase functions serve --env-file supabase/functions/.env
+# ayrı terminalde (SERVICE_ROLE_KEY'i `supabase status -o env` verir):
+curl -X POST http://127.0.0.1:54321/functions/v1/refresh-niche-cache -H "Authorization: Bearer <service-role-key>" -d '{"niche":"animation"}'
+```
+Kota: her arama 100 birim, günlük hak 10.000. Tam tur (15 niş × 3 sorgu) 4.500 birim — elle denerken `{"niche":"<slug>"}` ile tek niş çalıştır.
+Cache birikir: satırlar kalıcıdır, niş başına 200'ü aşınca en eskiler silinir.
+
+Hosted projede cron'un çalışması için (bir kez):
+```sql
+select vault.create_secret('https://<ref>.supabase.co', 'project_url');
+select vault.create_secret('<service-role-key>', 'service_role_key');
+```
+ve `supabase secrets set YOUTUBE_API_KEY=...` + `supabase functions deploy refresh-niche-cache`.
+Sırlar yoksa günlük iş sessizce atlanır (hata vermez).
+
 ## Supabase Edge Functions
 ```powershell
 supabase functions serve            # yerel
