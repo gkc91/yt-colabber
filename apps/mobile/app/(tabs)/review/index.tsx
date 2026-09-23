@@ -1,5 +1,5 @@
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 
 import { Button } from '@/components/Button';
@@ -8,6 +8,11 @@ import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
+import {
+  enablePushNotifications,
+  getPushPermission,
+  pushSupported,
+} from '@/features/notifications/api';
 import { useNextTask } from '@/features/review/api';
 import { t } from '@/i18n';
 
@@ -17,6 +22,7 @@ export default function ReviewScreen() {
   const balance = useBalance(session?.user.id);
   const task = useNextTask(!!session);
   const assignment = task.data;
+  const [pushState, setPushState] = useState<'unknown' | 'granted' | 'denied'>('unknown');
   const refetchTask = task.refetch;
   const refetchBalance = balance.refetch;
 
@@ -24,6 +30,8 @@ export default function ReviewScreen() {
     useCallback(() => {
       refetchTask();
       refetchBalance();
+      if (pushSupported)
+        getPushPermission().then((p) => setPushState(p === 'granted' ? 'granted' : 'denied'));
     }, [refetchTask, refetchBalance]),
   );
 
@@ -59,6 +67,20 @@ export default function ReviewScreen() {
           <>
             <Text style={styles.title}>{t('review.empty.title')}</Text>
             <Text style={styles.text}>{t('review.empty.body')}</Text>
+            {pushSupported && pushState === 'denied' ? (
+              <Button
+                title={t('review.empty.enablePush')}
+                variant="secondary"
+                onPress={() =>
+                  enablePushNotifications(session?.user.id as string)
+                    .then((result) => setPushState(result === 'granted' ? 'granted' : 'denied'))
+                    .catch(() => setPushState('denied'))
+                }
+              />
+            ) : null}
+            {pushState === 'granted' ? (
+              <Text style={[styles.text, { color: colors.muted }]}>{t('review.empty.pushOn')}</Text>
+            ) : null}
           </>
         ) : null}
 

@@ -127,7 +127,9 @@
     },
     "empty": {
       "title": "Nothing to review right now",
-      "body": "No one in your niche is testing at the moment. Come back later, or turn on notifications so we can tell you when a test arrives."
+      "body": "No one in your niche is testing at the moment. Come back later, or turn on notifications so we can tell you when a test arrives.",
+      "enablePush": "Tell me when a test arrives",
+      "pushOn": "We'll let you know when a test shows up in your niche."
     },
     "next": "Next",
     "feed": {

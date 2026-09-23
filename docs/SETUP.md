@@ -72,6 +72,15 @@ node scripts/check-review.mjs        # 3 kullanıcı bir submission'ı değerlen
 node scripts/check-results.mjs       # 5 değerlendirme, tüm bölümler, puanlama itibarı değiştiriyor
 ```
 
+## Bildirim kuyruğu kontrolü (C2)
+Expo'ya gerçek istek atmadan dener (sahte push sunucusu):
+```powershell
+pnpm exec supabase functions serve --env-file supabase/functions/local-test.vars
+node scripts/check-notifications.mjs
+```
+Hosted projede: `supabase secrets set` gerekmez (EXPO_PUSH_URL varsayılanı Expo'dur), ancak cron'un
+çalışması için Vault sırları (project_url, service_role_key) girilmiş olmalı — bkz. niş cache bölümü.
+
 ## Supabase Edge Functions
 ```powershell
 supabase functions serve            # yerel

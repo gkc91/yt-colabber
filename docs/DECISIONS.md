@@ -59,3 +59,7 @@
 - 2026-09-23 C1: Desen cezası yalnızca 10 değerlendirme dolduktan sonra uygulanır; az veriyle suçlamamak için. Ceza bir kez uygulanır (zaten bayraklıysa tekrar düşmez).
 - 2026-09-23 C1: `profiles.flagged_at` / `flagged_reason` eklendi — destek ve itiraz için bayrağın nedeni kayıtlı olmalı.
 - 2026-09-23 C1: Bayraklanan kullanıcıya gösterilen metin nedeni açıklar ("hep aynı yer, hep anında atlama") ve itiraz yolu söyler; "itibarın düşük" demek yanıltıcıydı (ceza sonrası itibar 0.70 oluyor).
+- 2026-09-23 C2: Bildirimler doğrudan gönderilmez; tetikleyiciler `notifications` kuyruğuna yazar, Edge Function `notify` her 5 dakikada kuyruğu boşaltır. Gerekçe: kural tarafı pgTAP ile test edilebilir ve Expo hatası veri kaybettirmez (satır kuyrukta kalır, `attempts` artar, 5 denemeden sonra durur).
+- 2026-09-23 C2: `DeviceNotRegistered` yanıtında kullanıcının push token'ı temizlenir; aksi halde her turda aynı hata tekrarlanırdı.
+- 2026-09-23 C2: Hatırlatma (tasks_waiting) günde en fazla bir kez ve yalnızca 24 saattir değerlendirme yapmamış, kapsamında ≥5 boş slot olan, token'ı olan kullanıcılara gider (PRODUCT §13).
+- 2026-09-23 C2: Bildirim izni onboarding'de değil, Değerlendir sekmesinin boş ekranında isteniyor — kullanıcı tam o anda "haber ver" ihtiyacını hissediyor.
