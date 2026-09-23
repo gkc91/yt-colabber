@@ -20,3 +20,6 @@
 - 2026-09-22 A3: Web'de donanım kimliği yok; `register_device` için AsyncStorage'da saklanan rastgele `web-<uuid>` kullanılır.
 - 2026-09-22 A3: Saf TS mantığı için birim testleri vitest ile (`src/**/*.test.ts`); ekranlar çalışan uygulamada doğrulanır. jest-expo ekran testleri gerekirse sonra.
 - 2026-09-22 A3: `pnpm dev:mobile:local` yerel Supabase bilgilerini `supabase status`'tan alır; yerel geliştirmede `.env` gerekmez.
+- 2026-09-23 Uygulama adı **Clickable** (çalışma adı FirstCut'tan değişti). Gerekçe: "tıklanır mı?" sorusu ürünün cevapladığı soru; App Store'da çakışma yok. Elenenler: ScrollStop, Thumbstop, HookLab (hepsi dolu ve komşu kategorilerde), Unlisted (dolu).
+- 2026-09-23 A4: Paket kimliği `app.clickable.mobile` (iOS + Android aynı), şema `clickable://`, Supabase yerel proje adı `clickable`.
+- 2026-09-23 A4: EAS profilleri development / preview / production; `appVersionSource: remote`, `runtimeVersion.policy: appVersion`. Supabase URL ve anon key EAS ortam değişkenlerinde (depoda değil).

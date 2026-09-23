@@ -7,9 +7,9 @@ import { supabase } from '@/lib/supabase';
 
 WebBrowser.maybeCompleteAuthSession();
 
-// firstcut://auth in builds · exp://…/--/auth in Expo Go · http://localhost:8081/auth on web.
+// clickable://auth in builds · exp://…/--/auth in Expo Go · http://localhost:8081/auth on web.
 // Each must be in supabase/config.toml `additional_redirect_urls` (and the hosted project's list).
-export const authRedirectUrl = () => makeRedirectUri({ scheme: 'firstcut', path: 'auth' });
+export const authRedirectUrl = () => makeRedirectUri({ scheme: 'clickable', path: 'auth' });
 
 export async function sendMagicLink(email: string) {
   const { error } = await supabase.auth.signInWithOtp({

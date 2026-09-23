@@ -1,6 +1,6 @@
-# FirstCut — Claude Code Proje Talimatları
+# Clickable — Claude Code Proje Talimatları
 
-> Çalışma adı "FirstCut" (değişebilir). Küçük YouTube kanalları için yayın öncesi geri bildirim topluluğu:
+> Uygulama adı "Clickable" (2026-09-23'te FirstCut çalışma adından değişti). Küçük YouTube kanalları için yayın öncesi geri bildirim topluluğu:
 > thumbnail + başlık + ilk 60 saniye, aynı nişteki gerçek insanlara test ettirilir. Kredi ekonomisi:
 > 1 değerlendirme ver = 1 kredi; 1 test = N kredi (N = istenen değerlendirme sayısı).
 

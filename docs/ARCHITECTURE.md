@@ -2,7 +2,7 @@
 
 ## Klasör yapısı
 ```
-firstcut/
+clickable/
   CLAUDE.md
   docs/                      PRODUCT, ARCHITECTURE, TASKS, SETUP, DECISIONS
   supabase/

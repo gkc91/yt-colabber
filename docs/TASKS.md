@@ -21,13 +21,13 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - Kabul: `supabase test db` yeşil.
 
 - [x] **A3. Auth + onboarding**
-  - `src/lib/supabase.ts` (AsyncStorage session), magic link (deep link `firstcut://auth`), Google sign-in (expo-auth-session).
+  - `src/lib/supabase.ts` (AsyncStorage session), magic link (deep link `clickable://auth`), Google sign-in (expo-auth-session).
   - `(onboarding)/niche` ve `(onboarding)/channel`: profiles + channels günceller, `onboarding_done=true`. YouTube URL doğrulama (regex, `@handle`/`channel/UC...`/`c/...`).
   - `register_device` çağrısı ilk açılışta.
   - Kabul: yeni kullanıcı → onboarding → tabs; bakiye 5 görünür.
 
 - [ ] **A4. EAS + mağaza iskeleti**
-  - `eas.json` (development/preview/production), `app.json` bundle id `com.<sen>.firstcut`, icon/splash placeholder.
+  - `eas.json` (development/preview/production), `app.json` bundle id `app.clickable.mobile`, icon/splash placeholder.
   - `eas build --profile preview --platform all`; iOS build TestFlight'a, Android internal test'e yüklenir.
   - Kabul: TestFlight'ta ve Play Internal'da uygulama açılıyor, giriş yapılıyor.
 

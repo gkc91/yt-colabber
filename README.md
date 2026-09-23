@@ -1,4 +1,4 @@
-# FirstCut
+# Clickable
 
 Küçük YouTube kanalları için yayın öncesi geri bildirim topluluğu. Thumbnail + başlık + ilk 60 saniye, aynı nişteki gerçek insanlara test ettirilir; kredi ekonomisiyle karşılıklılık sağlanır. Collab eşleştirme modülü içerir. YouTube üzerinde hiçbir etkileşim üretmez.
 

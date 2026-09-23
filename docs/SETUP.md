@@ -15,7 +15,7 @@ Docker Desktop açık olmalı (`supabase start` için).
 
 ## İlk çalıştırma
 ```powershell
-git clone <repo> firstcut && cd firstcut
+git clone <repo> clickable && cd clickable
 pnpm install
 supabase start                      # yerel Postgres + Auth + Storage
 supabase db reset                   # migrations + seed
@@ -24,7 +24,7 @@ copy .env.example apps/mobile/.env  # doldur
 pnpm dev:mobile                     # Expo, QR ile Expo Go (Android) / eşinin iPhone'unda Expo Go
 ```
 Yerel Supabase ile `.env` gerekmez: `pnpm dev:mobile:local` (web/simülatör) veya `pnpm dev:mobile:local --lan` (aynı Wi-Fi'deki telefon; Windows güvenlik duvarı 54321 portuna izin vermeli). Script `supabase status`'tan URL ve anon key'i alır.
-Yerel test kullanıcıları: `alice@`, `bob@`, `cara@firstcut.test`. Magic link e-postaları http://127.0.0.1:54324 (Mailpit) adresine düşer.
+Yerel test kullanıcıları: `alice@`, `bob@`, `cara@clickable.test`. Magic link e-postaları http://127.0.0.1:54324 (Mailpit) adresine düşer.
 Native modüller (react-native-purchases, compressor) Expo Go'da çalışmaz → `eas build --profile development` ile dev client al, onunla test et.
 
 ## Supabase Edge Functions
@@ -35,13 +35,22 @@ supabase functions deploy revenuecat-webhook refresh-niche-cache ai-summary sign
 ```
 
 ## EAS
+`apps/mobile/eas.json` hazır: `development` (dev client, internal), `preview` (TestFlight / Play internal test), `production`.
+Tüm komutlar `apps/mobile` klasöründe çalıştırılır.
+
 ```powershell
-eas build:configure
-eas build --profile preview --platform ios      # Mac gerekmez
-eas submit --platform ios
-eas build --profile preview --platform android
+cd apps\mobile
+npx eas-cli@latest login
+npx eas-cli@latest init            # Expo projesi oluşturur, app.json'a projectId yazar
+npx eas-cli@latest env:create --environment preview --name EXPO_PUBLIC_SUPABASE_URL --value https://<ref>.supabase.co
+npx eas-cli@latest env:create --environment preview --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value <anon-key>
+npx eas-cli@latest build --profile preview --platform all
+npx eas-cli@latest submit --profile preview --platform ios
+npx eas-cli@latest submit --profile preview --platform android
 ```
 iOS sertifikalarını EAS yönetsin (ilk build'de sorar → "let EAS handle").
+Ortam değişkenleri EAS'te tutulur, depoda değil; `production` ortamı için aynı iki değişkeni prod Supabase projesiyle oluştur.
+Uygulama kimliği: `app.clickable.mobile` (iOS bundle id ve Android package aynı). Derin bağlantı şeması: `clickable://auth` — Supabase projesinin Auth → URL Configuration listesine eklenmeli.
 
 ## Mağaza ödeme profili
 App Store Connect ve Play Console ödeme bilgilerine yalnızca 20/B istisna hesabını gir. Başka hesaba mağaza ödemesi gelmesin.

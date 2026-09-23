@@ -9,7 +9,7 @@ import { createSessionFromUrl } from '@/features/auth/api';
 import { useSession } from '@/features/auth/session';
 import { t } from '@/i18n';
 
-// Landing route for magic links and OAuth: firstcut://auth?code=… (web: /auth?code=…).
+// Landing route for magic links and OAuth: clickable://auth?code=… (web: /auth?code=…).
 export default function AuthCallback() {
   const url = Linking.useLinkingURL();
   const { code } = useLocalSearchParams<{ code?: string }>();
@@ -23,7 +23,7 @@ export default function AuthCallback() {
       router.replace('/');
       return;
     }
-    const source = code ? `firstcut://auth?code=${encodeURIComponent(code)}` : url;
+    const source = code ? `clickable://auth?code=${encodeURIComponent(code)}` : url;
     if (!source || handled.current) return;
     handled.current = true;
 

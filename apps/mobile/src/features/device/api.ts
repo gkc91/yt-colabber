@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 
 import { supabase } from '@/lib/supabase';
 
-const WEB_DEVICE_KEY = 'firstcut.device_id';
+const WEB_DEVICE_KEY = 'clickable.device_id';
 
 async function getDeviceId(): Promise<string | null> {
   if (Platform.OS === 'android') return Application.getAndroidId();
