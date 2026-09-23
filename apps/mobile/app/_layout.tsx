@@ -8,6 +8,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { SessionProvider, useSession } from '@/features/auth/session';
 import { registerDevice } from '@/features/device/api';
 import { useProfile } from '@/features/profile/api';
+import { supabase } from '@/lib/supabase';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -36,8 +37,16 @@ function RootNavigator() {
   const userId = session?.user.id;
   const profile = useProfile(userId);
 
-  const ready = !isLoading && (!userId || !profile.isPending);
+  // Profil okunamıyorsa (oturum süresi dolmuş, kullanıcı silinmiş) boş ekranda kalmak yerine
+  // oturumu kapatıp giriş ekranına döneriz.
+  const profileFailed = profile.isError;
+  const ready = !isLoading && (!userId || !profile.isPending || profileFailed);
   const onboarded = profile.data?.onboarding_done === true;
+
+  useEffect(() => {
+    // Doğrudan supabase: features/auth/api web'de tarayıcı oturumu kütüphanelerini çekiyor.
+    if (profileFailed) supabase.auth.signOut().catch(() => {});
+  }, [profileFailed]);
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync();
@@ -63,6 +72,7 @@ function RootNavigator() {
       </Stack.Protected>
       {/* Magic link / OAuth return; must stay reachable before a session exists. */}
       <Stack.Screen name="auth" />
+      <Stack.Screen name="paywall" options={{ presentation: 'modal', headerShown: true }} />
       <Stack.Screen name="index" />
     </Stack>
   );

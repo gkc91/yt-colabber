@@ -18,4 +18,6 @@ export interface StorageAdapter {
   uploadClip(userId: string, localUri: string): Promise<string>;
   /** İzin verilen dosyalar için süreli (60 dk) imzalı adresler. Yetkiyi sunucu belirler. */
   getSignedUrls(request: SignedMediaRequest): Promise<SignedMedia>;
+  /** Yarım kalan yüklemeleri temizler. Sunucu yalnızca kendi klasörüne izin verir (0005). */
+  remove(paths: string[]): Promise<void>;
 }

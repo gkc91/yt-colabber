@@ -8,10 +8,17 @@ type Leaves<T, P extends string = ''> = {
 
 export type MessageKey = Leaves<Messages>;
 
-export function t(key: MessageKey): string {
+/** Yer tutucular: "{count} reviews" → t('…', { count: 5 }) */
+export type MessageVars = Record<string, string | number>;
+
+export function t(key: MessageKey, vars?: MessageVars): string {
   let node: unknown = en;
   for (const part of key.split('.')) {
     node = (node as Record<string, unknown>)[part];
   }
-  return typeof node === 'string' ? node : key;
+  if (typeof node !== 'string') return key;
+  if (!vars) return node;
+  return node.replace(/\{(\w+)\}/g, (match, name: string) =>
+    name in vars ? String(vars[name]) : match,
+  );
 }

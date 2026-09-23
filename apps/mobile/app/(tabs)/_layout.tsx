@@ -47,6 +47,8 @@ export default function TabLayout() {
           ),
         }}
       />
+      {/* Sihirbaz sekme çubuğunda görünmez, Test sekmesinden açılır. */}
+      <Tabs.Screen name="submit/new" options={{ href: null, title: t('submit.newTest') }} />
       <Tabs.Screen
         name="profile/index"
         options={{

@@ -38,7 +38,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - Edge Function `signed-media`: girdi `task_id` veya `submission_id`; yetki kontrolü (reviewer'ın açık görevi var mı / owner mı); 60 dk signed URL döner.
   - Kabul: yüklenen dosya `media/clips/{uid}/...` yolunda; başkası signed URL alamıyor (test).
 
-- [ ] **B2. Submission sihirbazı**
+- [x] **B2. Submission sihirbazı**
   - `submit/new`: 5 adım (PRODUCT §6). Thumbnail 1280×720 resize (`expo-image-manipulator`), klip sıkıştırma + 60 sn kırpma, ilerleme çubuğu, iptal.
   - `rpc('create_submission')`; hata kodları → kullanıcı metinleri (`insufficient_credits` → paywall'a yönlendir).
   - `submit/index`: listem (status, received/requested, kalan süre).

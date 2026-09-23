@@ -6,7 +6,6 @@
   },
   "placeholder": {
     "review": "Your next review task will appear here.",
-    "submit": "Your tests will appear here.",
     "profile": "Credits, reputation and settings will appear here."
   },
   "credits": {
@@ -48,6 +47,76 @@
       "b10k_100k": "10K–100K",
       "b100k_plus": "100K+"
     }
+  },
+  "submit": {
+    "listTitle": "Your tests",
+    "empty": "No tests yet. Upload a thumbnail, a few titles and your first 60 seconds, and see what real people in your niche think.",
+    "newTest": "New test",
+    "reviewsProgress": "{received} of {requested} reviews",
+    "remaining": "{hours}h {minutes}m left",
+    "closed": "Closed",
+    "status": {
+      "open": "Collecting reviews",
+      "completed": "Done",
+      "cancelled": "Cancelled",
+      "hidden": "Hidden"
+    },
+    "webOnly": {
+      "title": "Start a test in the app",
+      "body": "Picking and compressing video needs the phone app. Open Clickable on your phone to start a test; you can read results here."
+    },
+    "wizard": {
+      "step": "Step {current} of {total}",
+      "back": "Back",
+      "next": "Next",
+      "thumbnailsTitle": "Add up to 3 thumbnails",
+      "thumbnailsHint": "Each reviewer sees one of them in a feed next to real videos from your niche. Images are resized to 1280×720.",
+      "addThumbnail": "Choose from gallery",
+      "removeThumbnail": "Remove",
+      "titlesTitle": "Add up to 3 titles",
+      "titlesHint": "Reviewers see one title with the thumbnail and tell you what they expect the video to be about.",
+      "titlePlaceholder": "Your title",
+      "addTitle": "Add another title",
+      "clipTitle": "Your first 60 seconds",
+      "clipHint": "Pick the clip from your gallery. Longer videos are trimmed to 60 seconds while you choose, then compressed to 720p.",
+      "pickClip": "Choose video",
+      "replaceClip": "Choose another video",
+      "compressing": "Compressing… {percent}%",
+      "clipReady": "{seconds}s · {megabytes} MB",
+      "countTitle": "How many reviews?",
+      "countHint": "One review costs one credit. Unused credits come back when the test closes.",
+      "countOption": "{count} reviews · {count} credits",
+      "proOnly": "Pro",
+      "balance": "You have {balance} credits",
+      "notEnough": "You need {missing} more credits",
+      "getCredits": "Get credits",
+      "confirmTitle": "Ready to go",
+      "confirmSummary": "{thumbnails} thumbnails · {titles} titles · {seconds}s clip · {count} reviews",
+      "start": "Start the test",
+      "uploading": "Uploading {done}/{total}…",
+      "creating": "Opening your test…",
+      "cancel": "Cancel",
+      "cancelled": "Upload cancelled. Nothing was charged.",
+      "done": "Your test is live. Reviews will arrive over the next 72 hours."
+    },
+    "errors": {
+      "insufficient_credits": "Not enough credits for this test.",
+      "pro_required": "25 reviews is a Pro feature.",
+      "onboarding_incomplete": "Finish setting up your channel first.",
+      "not_authenticated": "Please sign in again.",
+      "no_titles": "Add at least one title.",
+      "too_many_titles": "Up to 3 titles.",
+      "title_too_long": "Titles can be up to 100 characters.",
+      "clip_too_long": "The clip is longer than 60 seconds. Trim it while picking.",
+      "clip_too_short": "The clip is shorter than 5 seconds.",
+      "clip_too_large": "Even after compression this clip is over 8 MB. Try a shorter or simpler clip.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "paywall": {
+    "title": "Credits and Pro",
+    "body": "Buying credits is not built yet. It arrives with the store release.",
+    "close": "Close"
   },
   "notFound": {
     "title": "Oops!",

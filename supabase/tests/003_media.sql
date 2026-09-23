@@ -1,7 +1,7 @@
 -- 003_media.sql — medya erişim kuralları (0004).
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(11);
+select plan(13);
 
 -- ---------- arrange ----------
 -- 01 owner · 02 atanmış değerlendirici · 03 görevi olmayan kullanıcı
@@ -79,6 +79,25 @@ select is(
 select throws_ok(
   $$select media_paths()$$,
   'invalid_arguments', 'media_paths: argümansız çağrı reddedilir');
+
+-- ---------- test_media_storage_delete_is_owner_only (0005) ----------
+reset role;
+set local request.jwt.claims to '{"sub":"cccccccc-0000-0000-0000-000000000001","role":"authenticated"}';
+set local role authenticated;
+select lives_ok(
+  $$insert into storage.objects (bucket_id, name, owner_id)
+    values ('media', 'clips/cccccccc-0000-0000-0000-000000000001/own.mp4', 'cccccccc-0000-0000-0000-000000000001')$$,
+  'storage: kullanıcı kendi klasörüne yazabilir');
+
+-- Storage artık SQL'den doğrudan silmeyi engelliyor (storage.protect_delete); silme yalnızca
+-- Storage API üzerinden yapılır ve orada bu policy uygulanır. Burada policy'nin varlığını
+-- doğruluyoruz, gerçek davranış scripts/check-media-access.mjs ile API üzerinden test ediliyor.
+reset role;
+select is(
+  (select qual::text from pg_policies
+    where schemaname = 'storage' and tablename = 'objects' and policyname = 'media owner delete'),
+  '((bucket_id = ''media''::text) AND ((storage.foldername(name))[2] = (auth.uid())::text))',
+  'storage: silme policy''si yalnızca kendi klasörüne izin verir');
 
 select * from finish();
 rollback;

@@ -21,3 +21,23 @@ export function useProfile(userId: string | undefined) {
     enabled: !!userId,
   });
 }
+
+/** Pro abonelik durumu; 25 değerlendirme seçeneği ve AI özeti buna bakar. */
+export async function fetchIsPro(userId: string) {
+  const { data, error } = await supabase
+    .from('subscriptions')
+    .select('tier, active, expires_at')
+    .eq('profile_id', userId)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data || data.tier !== 'pro' || !data.active) return false;
+  return !data.expires_at || new Date(data.expires_at) > new Date();
+}
+
+export function useIsPro(userId: string | undefined) {
+  return useQuery({
+    queryKey: ['is-pro', userId],
+    queryFn: () => fetchIsPro(userId as string),
+    enabled: !!userId,
+  });
+}

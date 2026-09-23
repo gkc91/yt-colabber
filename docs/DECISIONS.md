@@ -36,3 +36,7 @@
 - 2026-09-23 "Kanala git" bağlantısı yalnızca Collab kartlarında; değerlendirme/sonuç ekranlarında yok, krediyle bağlantısı yok. (PRODUCT §9, §12)
 - 2026-09-23 Google girişi staging'de etkin. Google Cloud projesi `clickable-509507`, OAuth web istemcisi "Clickable Supabase Auth", redirect URI `https://doentqtqklsetbxdprrg.supabase.co/auth/v1/callback`. Uygulama henüz Google doğrulamasından geçmedi ("unverified app" uyarısı çıkar) — E3'te ele alınacak.
 - 2026-09-23 Google giriş ekranında uygulama adı yerine Supabase alt alan adı görünüyor (doğrulanmamış OAuth uygulaması). Yayın öncesi ya Google doğrulaması (landing + gizlilik politikası ile) ya da Supabase özel alan adı gerekiyor → E3'e not eklendi.
+- 2026-09-23 B2: Klip 60 sn sınırı galeri seçicisinde uygulanıyor (`videoMaxDuration` + düzenleme ekranı); uygulama içinde ayrı kırpma yok. Gerekçe: ffmpeg tabanlı kırpma ek native bağımlılık ve build riski; Expo'nun kendi seçicisi işi görüyor. Uzun klip yine de gelirse `clip_too_long` ile reddedilir.
+- 2026-09-23 B2: Medya modülü platforma ayrıldı (`media.ts` cihaz, `media.web.ts` stub, `media.types.ts` ortak). Gerekçe: sıkıştırma kütüphanesi web paketine girince derleme kırılıyor. Web'de submission oluşturma zaten yok (PRODUCT §14) — "uygulamada aç" ekranı gösterilir.
+- 2026-09-23 B2: Yükleme iptal/hata durumunda yüklenen dosyalar silinir (0005 delete policy). Kredi yalnızca create_submission başarılı olunca düşer.
+- 2026-09-23 B2: Profil okunamıyorsa (oturum geçersiz) uygulama boş ekranda kalıyordu; artık oturum kapatılıp giriş ekranına dönülüyor.

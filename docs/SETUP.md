@@ -36,6 +36,13 @@ Not: `pnpm db:reset` ayrıca `scripts/local-storage-index.mjs` çalıştırır. 
 storage servisi sürümleri uyuşmadığı için gereken geçici bir indeks; hosted'a gitmez, imajlar
 hizalanınca silinecek.
 
+## Submission kontrolü (B2)
+```powershell
+node scripts/check-submission.mjs        # 3 thumbnail + 3 başlık + klip, kredi düşümü, 8 MB sınırı
+```
+Sihirbaz ekranları (galeriden seçme, sıkıştırma) Expo Go'da çalışmaz; cihazda denemek için:
+`npx eas-cli@latest build --profile development --platform android` ile dev client al, sonra `pnpm dev:mobile:local --lan`.
+
 ## Supabase Edge Functions
 ```powershell
 supabase functions serve            # yerel

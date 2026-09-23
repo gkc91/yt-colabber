@@ -45,6 +45,12 @@ export class SupabaseStorage implements StorageAdapter {
     return upload(clipPath(userId, Crypto.randomUUID(), localUri), localUri, MAX_CLIP_BYTES);
   }
 
+  async remove(paths: string[]): Promise<void> {
+    if (paths.length === 0) return;
+    const { error } = await supabase.storage.from(MEDIA_BUCKET).remove(paths);
+    if (error) throw error;
+  }
+
   // Signed URL'leri client üretemez (bucket private, başkasının dosyası okunamaz):
   // 'signed-media' Edge Function'ı media_paths() ile yetkiyi doğrulayıp imzalar.
   async getSignedUrls(request: SignedMediaRequest): Promise<SignedMedia> {
