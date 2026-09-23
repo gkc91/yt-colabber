@@ -44,3 +44,4 @@
 - 2026-09-23 B3: Fonksiyon `{"niche":"<slug>"}` ile tek niş yenileyebilir. Gerekçe: YouTube kotası (arama başına 100 birim, günde 10.000) elle denemelerde hızla tükeniyor.
 - 2026-09-23 B3: Cron, Edge Function'ı `net.http_post` ile çağırır; URL ve service role key Vault'ta (migration'da sır yok). Sır yoksa iş sessizce atlanır.
 - 2026-09-23 B3: Decoy'lar dile göre filtrelenmiyor; sorgular İngilizce ama sonuçlara başka diller karışabiliyor. TASKS "Sonrası" listesine eklendi — B4'te değerlendirme kalitesini etkilerse öne alınır.
+- 2026-09-23 Kanal bağlantısı değerlendirme GÖNDERİLDİKTEN sonra "+1 kredi" ekranında gösterilecek. Gerekçe: değerlendirici kanalı önceden tanırsa feed ve başlık testi "tanımayan birinin tepkisi" olmaktan çıkar ve sonuç thumbnail'i değil kanala duyulan sempatiyi ölçer. Sonrasında gösterim ölçümü bozmuyor; ziyaret ve abonelik tamamen değerlendiricinin tercihi, krediyle ilişkisiz. (PRODUCT §5, §9, §12)

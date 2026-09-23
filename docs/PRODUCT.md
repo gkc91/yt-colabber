@@ -42,6 +42,8 @@ Kaydedilen: `leave_second` (null = sonuna kadar), `watched_seconds`, etiketler, 
 
 Tamamlanınca: +1 kredi (reputation ≥ 0.5 ise; altındaysa kredi yok, uyarı).
 
+**Değerlendirme sonrası kanal bağlantısı.** "+1 kredi" ekranında test sahibinin kanalına giden isteğe bağlı bir bağlantı gösterilir ("Kanala göz at"). Kurallar: yalnızca değerlendirme GÖNDERİLDİKTEN sonra görünür (önce gösterilirse değerlendirici kanalı tanır ve feed/başlık testi "tanımayan biri"nin tepkisi olmaktan çıkar); krediyle ilişkisi yoktur; "abone ol" gibi bir çağrı kullanılmaz; ziyaret sayılmaz, ödüllendirilmez, raporlanmaz.
+
 ## 6. Submission akışı
 1. Thumbnail'lar: 1–3 görsel, ≤2 MB (client 1280×720'ye yeniden boyutlandırır).
 2. Başlıklar: 1–3 metin, ≤100 karakter.
@@ -77,7 +79,7 @@ Uygulama YouTube üzerinde hiçbir etkileşim üretmez ve istemez. İzlenme/abon
 - Profilde "Collab'a açığım" + türler: `joint_video`, `guest`, `shorts`, `end_screen_swap`, `live`.
 - Adaylar: aynı niş + dil, abone bandı ±1, engellenmemiş, daha önce beğenilmemiş. Sıralama: (a) aralarında değerlendirme geçmişi olanlar önce, (b) itibar, (c) yenilik.
 - Kart: kanal adı, band, türler, bio, "seni X kez değerlendirdi / sen onu Y kez".
-- Kanal bağlantısı ("kanala git") YALNIZCA burada gösterilir; değerlendirme ve sonuç ekranlarında gösterilmez (karşılıklılık baskısı doğurur). Hiçbir yerde krediyle ödüllendirilmez.
+- Kanal bağlantısı burada ve değerlendirme sonrası ekranında gösterilir (§5); hiçbir yerde krediyle ödüllendirilmez, görev haline getirilmez.
 - Beğen → karşılıklıysa eşleşme → sohbet (Realtime). Engelle / rapor.
 - Kredi yok, görev yok, YouTube aksiyonu yok.
 

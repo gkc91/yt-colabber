@@ -53,6 +53,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - `review/index`: `rpc('next_review_task')`; görev yoksa boş durum ("Nişinde bekleyen test yok, bildirim aç").
   - `review/[taskId]`: Adım 1 feed ızgarası (aday `candidate_position`'da), karar süresi ölçümü; Adım 2 metin; Adım 3 `expo-video` + "Buradan çıkardım" + etiketler + yorum. Toplam süre sayacı (ekran açılışından).
   - `rpc('submit_review')`; başarıda "+1 kredi" animasyonu; hata `review_too_fast` → açıklayıcı uyarı.
+  - "+1 kredi" ekranında test sahibinin kanalına isteğe bağlı bağlantı (PRODUCT §5). Yalnızca gönderimden sonra; ödül/koşul değil.
   - Kabul: 3 test kullanıcısıyla bir submission'a 3 değerlendirme giriyor, `received_reviews=3`.
 
 - [ ] **B5. Sonuç ekranı**
