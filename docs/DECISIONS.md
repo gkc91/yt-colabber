@@ -80,3 +80,9 @@
 - 2026-09-23 E1: Astro `build.format: 'file'` + `trailingSlash: 'never'` — adresler `/thumbnail-test` (slash'sız), canonical ile birebir aynı. Türkçe ana sayfa `/tr`.
 - 2026-09-23 E1: Mağaza bağlantıları yokken butonlar "App Store — Coming soon" diyor; olmayan bir linki gizlemek yerine durumu söylüyoruz (E3'te `STORE` sabiti doldurulacak).
 - 2026-09-23 E1: Kabul kriteri Lighthouse ≥ 95, build çıktısı üzerinde ölçüldü: `/`, `/thumbnail-test`, `/tr/for/gaming` → SEO/erişilebilirlik/best-practices/performans 100. (Dev sunucusunda SEO 92 çıkıyor; sebebi Astro dev toolbar'ının "Learn more" bağlantısı, prod çıktısında yok.)
+- 2026-09-23 G0: Boş feed sorununa çözüm olarak sahte kullanıcı değil, etiketli örnek test seçildi. Değerlendirici 20+ saniyesini veriyor; karşısında kimsenin olmadığını bilmeye hakkı var. Rozet + "kimse bunu beklemiyor" açıklaması ekranda duruyor (PRODUCT §9.1).
+- 2026-09-23 G0: Örnek test kredi ekonomisine hiç dokunmuyor: `create_demo_submission` ledger'a yazmaz, demo kapanmaz ve iade üretmez. Aksi halde yoktan kredi basmış olurduk.
+- 2026-09-23 G0: Sıralama `is_demo asc` — gerçek testler her zaman önce. Demo yalnızca sıra boşken çıkar; kotası da dolmaz, havuz boş kalmasın diye açık kalır.
+- 2026-09-23 G0: Demo değerlendirmesi de +1 kredi kazandırır. Emek gerçek; ödülü kesmek değerlendiriciyi cezalandırmak olurdu.
+- 2026-09-23 G0: `create_demo_submission` yetkisi `authenticated`'tan alındı — demo açmak yalnızca service_role (seed scripti) işi.
+- 2026-09-23 G0: Örnek test klipleri üretilmiş video değil, kendi kanallarımızın gerçek ilk 60 saniyesi olacak (seeds/demo/README.md). Thumbnail üretilebilir — zaten test edilen şey o.

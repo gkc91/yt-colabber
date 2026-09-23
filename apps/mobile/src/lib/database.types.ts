@@ -664,6 +664,7 @@ export type Database = {
           closes_at: string
           created_at: string
           id: string
+          is_demo: boolean
           is_priority: boolean
           language: string
           niche_id: number
@@ -682,6 +683,7 @@ export type Database = {
           closes_at?: string
           created_at?: string
           id?: string
+          is_demo?: boolean
           is_priority?: boolean
           language?: string
           niche_id: number
@@ -700,6 +702,7 @@ export type Database = {
           closes_at?: string
           created_at?: string
           id?: string
+          is_demo?: boolean
           is_priority?: boolean
           language?: string
           niche_id?: number
@@ -787,6 +790,18 @@ export type Database = {
       close_stale_submissions: { Args: never; Returns: undefined }
       collab_candidates: { Args: { p_limit?: number }; Returns: Json }
       collab_like: { Args: { p_to: string }; Returns: string }
+      create_demo_submission: {
+        Args: {
+          p_clip_duration: number
+          p_clip_path: string
+          p_language?: string
+          p_niche_slug: string
+          p_owner: string
+          p_thumbnail_paths: string[]
+          p_title_options: string[]
+        }
+        Returns: string
+      }
       create_submission: {
         Args: {
           p_clip_duration: number

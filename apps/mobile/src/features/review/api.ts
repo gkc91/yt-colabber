@@ -18,12 +18,15 @@ export type ReviewAssignment = {
   task: ReviewTask;
   title: string;
   clipDurationSeconds: number;
+  /** Örnek test (0014): arayüzde rozetle gösterilir, kredi ödülü aynıdır. */
+  isDemo: boolean;
 };
 
 type NextTaskResponse = {
   task: ReviewTask | null;
   title?: string;
   clip_duration_seconds?: number;
+  is_demo?: boolean;
 };
 
 /** Sunucu görevi seçer ve açar; aynı kişiye aynı submission iki kez gelmez (0001/0007). */
@@ -37,6 +40,7 @@ export async function fetchNextTask(): Promise<ReviewAssignment | null> {
     task: response.task,
     title: response.title ?? '',
     clipDurationSeconds: response.clip_duration_seconds ?? 0,
+    isDemo: response.is_demo ?? false,
   };
 }
 

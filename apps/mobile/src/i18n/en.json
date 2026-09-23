@@ -175,6 +175,10 @@
       "invalid_watch": "Something didn't add up in the playback times. Please try again.",
       "reviewer_blocked": "Reviewing is paused on your account. This happens when reviews look automatic — for example the same spot picked every time, or the clip skipped instantly on every task. Reply to your sign-in email if you think this is wrong.",
       "niche_cache_empty": "We're still collecting example videos for your niche. Please try again later."
+    },
+    "demo": {
+      "title": "Practice test",
+      "body": "Nobody is waiting on this one — it is here so you can try the flow and earn a credit. Answer it honestly anyway; the results tell us how the test itself performs."
     }
   },
   "profile": {

@@ -98,6 +98,16 @@
 - [ ] **Mağaza linkleri** E3'ten sonra `site.ts` içindeki `STORE` sabitine yazılacak; şimdilik
       butonlar "Coming soon" diyor.
 
+## 8. Örnek test içeriği (G0b)
+
+- [ ] **Kendi kanallarından ilk 60 saniyeler.** Somebody Had To Do It, Let Me Finish, finans
+      kanalı ve çocuk kanalı — her biri farklı niş demek. Klipleri `seeds/demo/` içine koy,
+      `manifest.json`'a gir (biçim `seeds/demo/README.md`'de), sonra
+      `SUPABASE_URL=... SERVICE_ROLE_KEY=... node scripts/seed-demo.mjs`.
+- [ ] **Thumbnail'lar** üretilmiş olabilir (test edilen şey zaten o); klip üretilmiş olmamalı.
+- [ ] Not: bu testler uygulamada "Örnek test" rozetiyle görünür ve gerçek testlerin arkasında
+      sıraya girer; gerçek kullanıcı testi geldiği an o öne geçer.
+
 ---
 
 ## Kararını beklediğim konular

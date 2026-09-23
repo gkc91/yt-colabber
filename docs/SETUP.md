@@ -102,6 +102,14 @@ Cloudflare Pages ayarları:
 Sayfalar `/`, `/thumbnail-test`, `/hook-test`, `/for/<nis>` (14 niş), `/privacy`, `/terms`
 ve hepsinin `/tr/...` karşılığı; `sitemap.xml` ve `robots.txt` build'de üretilir.
 
+## Örnek (demo) testler
+```powershell
+node scripts/seed-demo.mjs          # yerel stack; manifest seeds/demo/manifest.json
+node scripts/seed-demo.mjs --list   # yüklü örnek testler
+$env:SUPABASE_URL="https://<ref>.supabase.co"; $env:SERVICE_ROLE_KEY="<key>"; node scripts/seed-demo.mjs
+```
+Medya `seeds/demo/` altında durur ve repoya girmez; ayrıntı `seeds/demo/README.md`.
+
 ## Staging Supabase
 Proje: `doentqtqklsetbxdprrg` (bölge eu-west-3). Şema 0001-0003 uygulandı; `clickable://auth` redirect listesinde.
 Seed **gönderilmez** — staging'de sahte kullanıcı yoktur. `niche_thumbnail_cache` boş olduğu için B3 (niş cache) tamamlanana kadar

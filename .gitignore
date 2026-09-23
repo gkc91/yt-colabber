@@ -37,3 +37,9 @@ production/session-logs/
 
 # Claude Code Game Studios hook artefaktları
 apps/mobile/production/
+
+# Örnek test medyası repoya girmez; manifest ve README izlenir (seeds/demo/README.md).
+seeds/demo/*
+!seeds/demo/README.md
+!seeds/demo/manifest.example.json
+!seeds/demo/manifest.json

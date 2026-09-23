@@ -66,6 +66,14 @@ Submission 72 saat açık kalır; sonunda gelen kadarıyla `completed`, kullanı
 ## 9. Politika sınırı (değişmez)
 Uygulama YouTube üzerinde hiçbir etkileşim üretmez ve istemez. İzlenme/abone vaadi verilmez: YouTube'un sahte etkileşim politikası takas ve şişirme hizmetlerini yasaklar (uyarı → ihtar → kanal kapatma), uygulama içi izlemeler YouTube'da izlenme sayılmaz ve ilgisiz aboneler CTR/izlenme süresini düşürerek erişimi azaltır. Vaadimiz: yayın öncesi düzeltme ile **mevcut gösterimden daha fazla izlenme**. Kanal URL'i yalnızca niş/profil içindir. "Abone ol / izle / yorum yap" görevleri, karşılıklı tanıtım kredisi, izlenme/abone takası: **hiçbiri, hiçbir zaman.** Collab modülü yalnızca tanıştırır.
 
+## 9.1 Örnek (demo) testler
+Değerlendir sekmesi boş kalmasın diye resmî `demo@clickable.app` hesabına ait örnek testler bulunur.
+Kurallar: arayüzde "Örnek test" rozetiyle ve "kimse bunu beklemiyor" açıklamasıyla gösterilir; kredi
+ile açılmaz ve ledger'a dokunmaz; kapanmaz, iade üretmez; sıralamada gerçek testlerin arkasındadır;
+değerlendirici normal +1 krediyi kazanır. İçeriği gerçek, yayınlanabilir bir ilk 60 saniye olmalıdır
+(ilk kaynak kendi kanallarımız). Sahte değerlendirici hesabı YOKTUR: demo yalnızca test tarafındadır,
+gerçek bir üreticinin testine sahte geri bildirim yazılmaz.
+
 ## 10. İtibar
 `reputation` 0.2–2.0, başlangıç 1.0. Yararlı oyu +0.05, yararsız −0.1, reddedilen değerlendirme −0.2. Oy ağırlığı = reputation. 0.5 altı kredi kazanamaz; 0.3 altı görev alamaz.
 

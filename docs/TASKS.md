@@ -101,8 +101,10 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 
 ## Faz G — Büyüme (kod değil; E1 yayına girdikten sonra, GROWTH.md)
 
+- [x] **G0. Örnek testler (kod)** — `submissions.is_demo`, `create_demo_submission` (yalnızca service_role), arayüzde "Örnek test" rozeti, `scripts/seed-demo.mjs` + `seeds/demo/`. Kabul: demo kredi düşmez, kapanmaz, gerçek testten sonra gelir, değerlendirici yine +1 kredi alır (pgTAP 011).
+- [ ] **G0b. Örnek test içeriği** — kendi kanallarımızın ilk 60 saniyeleri `seeds/demo/manifest.json`'a girilir ve staging'e yüklenir. Kabul: en az 4 nişte birer örnek test; ilk giren kullanıcı boş ekran görmez.
 - [ ] **G1. İlk 100 değerlendirici** — tek nişte (gaming ya da animation) 60-100 aktif değerlendirici topla: Reddit (r/NewTubers), YouTube'cu Discord sunucuları, Türkçe içerik üretici grupları. Kabul: o nişte açılan bir test ilk 24 saatte ≥5 değerlendirme alıyor.
-- [ ] **G2. Niş sayfaları** — `/for/<nis>` sayfalarını gerçek veriyle doldur (o nişten örnek sonuç, kaç test yapıldı). Kabul: 15 sayfa yayında, her biri kendi arama niyetine cevap veriyor.
+- [ ] **G2. Niş sayfaları** — `/for/<nis>` sayfalarını gerçek veriyle doldur (o nişten örnek sonuç, kaç test yapıldı). Kabul: 14 sayfa yayında, her biri kendi arama niyetine cevap veriyor.
 - [ ] **G3. Veri içeriği** — ilk 200 testten toplulaştırılmış bulgularla 3 yazı ("500 testten çıkan sonuçlar" tarzı). Kural: gerçek sayılar, örneklem büyüklüğü yazılı, kullanıcı videoları izinsiz paylaşılmaz. Kabul: 3 yazı yayında + kısa video sürümleri.
 - [ ] **G4. Kanal karnesi** — haftalık tabloyu otomatikleştir (kaynak → kayıt → ilk değerlendirme → kuzey yıldızı). Kabul: tablo PostHog'dan tek tıkla alınıyor; kuzey yıldızını düşüren kanal kapatılıyor.
 

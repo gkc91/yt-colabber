@@ -1,0 +1,12 @@
+{
+  "submissions": [
+    {
+      "niche": "diy",
+      "language": "en",
+      "titles": ["I fixed the thing nobody wanted to fix"],
+      "thumbnails": ["shtdi-garage.jpg"],
+      "clip": "shtdi-garage.mp4",
+      "clip_duration_seconds": 58
+    }
+  ]
+}

@@ -87,7 +87,7 @@ export default function ReviewTaskScreen() {
     );
   }
 
-  const { task: reviewTask, title, clipDurationSeconds } = assignment;
+  const { task: reviewTask, title, clipDurationSeconds, isDemo } = assignment;
   const candidateThumbnail = media.data?.thumbnails[0] ?? '';
   const items = buildFeedItems(
     { title, thumbnailUrl: candidateThumbnail },
@@ -140,6 +140,12 @@ export default function ReviewTaskScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      {isDemo ? (
+        <View style={[styles.demo, { borderColor: colors.border }]}>
+          <Text style={styles.demoTitle}>{t('review.demo.title')}</Text>
+          <Text style={[styles.demoBody, { color: colors.muted }]}>{t('review.demo.body')}</Text>
+        </View>
+      ) : null}
       {stage === 'feed' ? <FeedStep items={items} onPick={onPick} /> : null}
 
       {stage === 'guess' ? (
@@ -181,6 +187,20 @@ function submitErrorText(error: unknown): string {
 }
 
 const styles = StyleSheet.create({
+  demo: {
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 14,
+    gap: 4,
+  },
+  demoTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  demoBody: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
   container: {
     padding: 20,
     gap: 16,
