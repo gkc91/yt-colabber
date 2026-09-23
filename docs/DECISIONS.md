@@ -34,3 +34,4 @@
 - 2026-09-23 Kendi testin tek niş + tek dile gider (sonuç karışmasın); değerlendirme tarafında çoklu niş/dil seçilebilecek → B6 görevi açıldı.
 - 2026-09-23 İzlenme/abone vaadi veren mekanizma kurulmayacak. Gerekçe: YouTube sahte etkileşim politikası (takas → ihtar → kanal kapatma), mağaza kuralları; ayrıca uygulama içi izleme YouTube'da sayılmaz ve ilgisiz abone erişimi düşürür. Vaat: mevcut gösterimden daha yüksek CTR/izlenme.
 - 2026-09-23 "Kanala git" bağlantısı yalnızca Collab kartlarında; değerlendirme/sonuç ekranlarında yok, krediyle bağlantısı yok. (PRODUCT §9, §12)
+- 2026-09-23 Google girişi staging'de etkin. Google Cloud projesi `clickable-509507`, OAuth web istemcisi "Clickable Supabase Auth", redirect URI `https://doentqtqklsetbxdprrg.supabase.co/auth/v1/callback`. Uygulama henüz Google doğrulamasından geçmedi ("unverified app" uyarısı çıkar) — E3'te ele alınacak.

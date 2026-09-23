@@ -11,7 +11,7 @@ Docker Desktop açık olmalı (`supabase start` için).
 ## Hesaplar (bir kez)
 - Supabase: `local` için gerek yok; `staging` ve `prod` için iki proje aç (ücretsiz → Pro'ya geç yayına çıkarken).
 - Expo: `eas login`.
-- Apple Developer, Google Play Console (mevcut), RevenueCat, PostHog, Sentry, Google Cloud (YouTube Data API v3 anahtarı), Anthropic API.
+- Apple Developer, Google Play Console (mevcut), RevenueCat, PostHog, Sentry, Google Cloud (YouTube Data API v3 anahtarı + OAuth istemcisi, proje `clickable-509507`), Anthropic API.
 
 ## İlk çalıştırma
 ```powershell
