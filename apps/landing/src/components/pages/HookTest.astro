@@ -1,0 +1,174 @@
+---
+import Base from '../../layouts/Base.astro';
+import StoreButtons from '../StoreButtons.astro';
+import { localePath, NICHES, nicheName, type Locale } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Video hook test — where viewers leave in 60 seconds | Clickable',
+    description:
+      'Upload your first 60 seconds and watch where real viewers from your niche tap out, with the reason they give. Fix the intro before the video is published.',
+    h1: 'Find the second people leave — before you publish',
+    lede: 'Retention graphs tell you that people left. They do not tell you why, and by then the video is already out. The hook test plays your first 60 seconds to reviewers in your niche and records the moment each one would have stopped watching, plus the reason.',
+    sections: [
+      {
+        h: 'What the reviewer does',
+        p: 'The clip plays. The moment they would have left, they say so — one tap. If they watch to the end, that counts too. Then they pick reasons from a fixed list: slow intro, unclear promise, bad audio, low energy, too long a setup, visual quality, did not match the thumbnail, or kept watching. One line of written feedback is optional and usually the most useful part.',
+      },
+      {
+        h: 'What you get back',
+        p: 'A drop-off timeline across the 60 seconds, the median leave second, the share who watched to the end, and the reason tags ranked. Reading them together usually points at a single fixable thing: fifteen seconds of logo, a promise the thumbnail did not make, or audio that is quieter than everything else in the feed.',
+      },
+      {
+        h: 'Why 60 seconds',
+        p: 'The first minute is where a video is won or lost, and it is short enough that a reviewer can give you real attention for it. Longer clips get skimmed, and a skimmed answer is worse than no answer. Clips are compressed on the device to 720p, and anything longer is cut at 60 seconds before upload.',
+      },
+      {
+        h: 'Reviews that are too fast do not count',
+        p: 'The server measures how long a review actually took. Anything under 20 seconds is thrown away, the reviewer loses reputation and no credit is paid. Reviewers who always leave at the same second or always pick the same position get flagged automatically.',
+      },
+    ],
+    faqTitle: 'Questions',
+    faq: [
+      {
+        q: 'Do reviewers watch the whole video?',
+        a: 'No — only the first 60 seconds, which is what the hook test is about. Your full video stays unpublished and off the platform.',
+      },
+      {
+        q: 'Is my unpublished clip safe?',
+        a: 'It is shown only to the reviewers assigned to your test, inside the app, and it is never public. Deleting your account removes your clips.',
+      },
+      {
+        q: 'How is this different from YouTube retention analytics?',
+        a: 'Retention analytics arrive after publishing and show a curve without reasons. This runs before publishing and gives you the second, the reason tag and a sentence from a person in your niche.',
+      },
+      {
+        q: 'What if everyone watches to the end?',
+        a: 'That is a result too, and a good one: your hook is not what is holding the video back. Then the thumbnail and title test is where to look.',
+      },
+    ],
+    nichesTitle: 'Hook tests by niche',
+  },
+  tr: {
+    title: 'Video hook testi — ilk 60 saniyede kim nerede bırakıyor | Clickable',
+    description:
+      'İlk 60 saniyeni yükle, nişindeki gerçek izleyicilerin kaçıncı saniyede bıraktığını ve nedenini gör. Girişi video yayınlanmadan önce düzelt.',
+    h1: 'İnsanların bıraktığı saniyeyi yayından önce bul',
+    lede: 'Retention grafiği sana insanların bıraktığını söyler. Neden bıraktığını söylemez, üstelik o noktada video çoktan yayında olur. Hook testi ilk 60 saniyeni nişindeki değerlendiricilere oynatır ve her birinin izlemeyi bırakacağı anı, sebebiyle birlikte kaydeder.',
+    sections: [
+      {
+        h: 'Değerlendirici ne yapıyor',
+        p: 'Klip oynar. Bırakacağı anda bunu söyler — tek dokunuş. Sonuna kadar izlerse o da sayılır. Ardından sabit bir listeden sebep seçer: yavaş giriş, belirsiz vaat, kötü ses, düşük enerji, uzun hazırlık, görüntü kalitesi, thumbnail\'la uyuşmadı ya da izlemeye devam ettim. Bir satırlık yorum isteğe bağlıdır ve genelde en işe yarayan kısımdır.',
+      },
+      {
+        h: 'Eline ne geçer',
+        p: '60 saniye boyunca ayrılma grafiği, medyan ayrılma saniyesi, sonuna kadar izleyenlerin oranı ve sıralanmış sebep etiketleri. Bunları birlikte okumak çoğu zaman tek bir düzeltilebilir şeyi işaret eder: on beş saniyelik logo, thumbnail\'ın vermediği bir vaat ya da feed\'deki her şeyden kısık bir ses.',
+      },
+      {
+        h: 'Neden 60 saniye',
+        p: 'Bir video ilk dakikada kazanılır ya da kaybedilir; üstelik 60 saniye, değerlendiricinin gerçekten dikkatini verebileceği kadar kısadır. Uzun klipler göz ucuyla izlenir, göz ucuyla verilmiş cevap ise cevapsızlıktan kötüdür. Klipler cihazda 720p\'ye sıkıştırılır, daha uzunu yüklemeden önce 60 saniyede kesilir.',
+      },
+      {
+        h: 'Çok hızlı yapılan değerlendirme sayılmaz',
+        p: 'Sunucu değerlendirmenin gerçekte ne kadar sürdüğünü ölçer. 20 saniyenin altındakiler çöpe gider, değerlendiricinin itibarı düşer ve kredi ödenmez. Hep aynı saniyede bırakan ya da hep aynı pozisyonu seçen değerlendiriciler otomatik olarak işaretlenir.',
+      },
+    ],
+    faqTitle: 'Sorular',
+    faq: [
+      {
+        q: 'Değerlendiriciler videonun tamamını izliyor mu?',
+        a: 'Hayır — yalnızca ilk 60 saniyeyi; hook testinin konusu bu. Videonun tamamı yayınlanmamış olarak sende kalır.',
+      },
+      {
+        q: 'Yayınlanmamış klibim güvende mi?',
+        a: 'Yalnızca testine atanan değerlendiricilere, uygulamanın içinde gösterilir; herkese açık olmaz. Hesabını silersen kliplerin de silinir.',
+      },
+      {
+        q: 'YouTube retention analizinden farkı ne?',
+        a: 'Retention analizi yayından sonra gelir ve gerekçesiz bir eğri gösterir. Bu, yayından önce çalışır; sana saniyeyi, sebep etiketini ve nişinden bir insanın cümlesini verir.',
+      },
+      {
+        q: 'Herkes sonuna kadar izlerse?',
+        a: 'O da bir sonuçtur ve iyi bir sonuçtur: videoyu tutan şey hook değil. Bu durumda bakılacak yer thumbnail ve başlık testi.',
+      },
+    ],
+    nichesTitle: 'Nişe göre hook testi',
+  },
+} as const;
+
+const c = copy[locale];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<Base
+  path="/hook-test"
+  locale={locale}
+  title={c.title}
+  description={c.description}
+  schema={[faqSchema]}
+>
+  <section>
+    <div class="wrap">
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.lede}</p>
+      <StoreButtons locale={locale} />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap prose">
+      {
+        c.sections.map((item) => (
+          <>
+            <h2>{item.h}</h2>
+            <p>{item.p}</p>
+          </>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap faq">
+      <h2>{c.faqTitle}</h2>
+      {
+        c.faq.map((item) => (
+          <div>
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.nichesTitle}</h2>
+      <ul class="chips">
+        {
+          NICHES.map((niche) => (
+            <li>
+              <a href={localePath(`/for/${niche.slug}`, locale)}>{nicheName(niche, locale)}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

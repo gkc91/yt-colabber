@@ -1,0 +1,263 @@
+---
+import Base from '../../layouts/Base.astro';
+import { CONTACT_EMAIL, type Locale } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+  kind: 'privacy' | 'terms';
+}
+
+const { locale, kind } = Astro.props;
+
+const updated = '2026-09-23';
+
+const copy = {
+  privacy: {
+    en: {
+      title: 'Privacy policy | Clickable',
+      description:
+        'What Clickable stores, why, who can see your unpublished thumbnails and clips, and how to delete your account and data.',
+      h1: 'Privacy policy',
+      sections: [
+        {
+          h: 'What we store',
+          items: [
+            'Your email address, used to sign you in and nothing else. Sign-in happens with a magic link or with Google.',
+            'Your profile: display handle, niche, language, optional channel URL, credit balance and reputation.',
+            'What you upload for a test: thumbnails, titles and a clip of up to 60 seconds.',
+            'What you do in the app: reviews you give and receive, credit ledger entries, reports you file.',
+            'A push notification token, if you allow notifications.',
+            'Purchase records from the app stores, handled through RevenueCat. We never see your card.',
+          ],
+        },
+        {
+          h: 'Who can see your unpublished video',
+          items: [
+            'Only reviewers assigned to your test, inside the app, and only the first 60 seconds you uploaded.',
+            'Media is served through short-lived signed links. Files are not public and are not indexed.',
+            'We do not sell media or feedback, and we do not share it with advertisers.',
+          ],
+        },
+        {
+          h: 'Analytics and errors',
+          items: [
+            'Product analytics (PostHog) records events such as signing up, submitting a review and creating a test, so we can see where the flow breaks.',
+            'Crash and error reports (Sentry) include technical details about the device and the error, not your media.',
+          ],
+        },
+        {
+          h: 'Deleting your account',
+          items: [
+            'Profile, then Delete account. Your profile, your tests and your uploaded files are deleted.',
+            'Reviews you wrote on other creators\' tests stay, without your identity attached, because that feedback belongs to the person who paid credits for it.',
+            'Deletion is immediate and cannot be undone.',
+          ],
+        },
+        {
+          h: 'Where the data lives',
+          items: [
+            'On Supabase (Postgres and object storage) in the EU region, and on the app stores for purchases.',
+            'Tests close after 72 hours; results stay in your account until you delete them or delete your account.',
+          ],
+        },
+        {
+          h: 'Your rights and contact',
+          items: [
+            'You can ask for a copy of your data, a correction, or deletion.',
+            `Write to ${CONTACT_EMAIL}.`,
+          ],
+        },
+      ],
+    },
+    tr: {
+      title: 'Gizlilik politikası | Clickable',
+      description:
+        'Clickable neyi neden saklıyor, yayınlanmamış thumbnail ve kliplerini kim görebiliyor, hesabını ve verini nasıl silersin.',
+      h1: 'Gizlilik politikası',
+      sections: [
+        {
+          h: 'Ne saklıyoruz',
+          items: [
+            'E-posta adresin; yalnızca girişin için. Giriş, magic link ya da Google ile yapılır.',
+            'Profilin: görünen adın, nişin, dilin, isteğe bağlı kanal adresin, kredi bakiyen ve itibarın.',
+            'Test için yüklediklerin: thumbnail\'lar, başlıklar ve en fazla 60 saniyelik klip.',
+            'Uygulamadaki hareketlerin: verdiğin ve aldığın değerlendirmeler, kredi hareketleri, açtığın raporlar.',
+            'Bildirimlere izin verdiysen bir push bildirim anahtarı.',
+            'Mağaza satın alma kayıtları (RevenueCat üzerinden). Kart bilgini hiç görmeyiz.',
+          ],
+        },
+        {
+          h: 'Yayınlanmamış videonu kim görüyor',
+          items: [
+            'Yalnızca testine atanan değerlendiriciler, uygulamanın içinde ve yalnızca yüklediğin ilk 60 saniye.',
+            'Medya kısa ömürlü imzalı bağlantılarla sunulur. Dosyalar herkese açık değildir, aranabilir de değildir.',
+            'Medyayı ve geri bildirimleri satmayız, reklamverenlerle paylaşmayız.',
+          ],
+        },
+        {
+          h: 'Analitik ve hatalar',
+          items: [
+            'Ürün analitiği (PostHog) kayıt olma, değerlendirme gönderme, test açma gibi olayları kaydeder; akışın nerede koptuğunu görmek için.',
+            'Hata raporları (Sentry) cihaz ve hata hakkında teknik ayrıntı içerir, medyanı içermez.',
+          ],
+        },
+        {
+          h: 'Hesabını silmek',
+          items: [
+            'Profil, sonra Hesabı sil. Profilin, testlerin ve yüklediğin dosyalar silinir.',
+            'Başkalarının testlerine yazdığın değerlendirmeler, kimliğin olmadan kalır; çünkü o geri bildirim onun için kredi ödeyen kişiye aittir.',
+            'Silme anında gerçekleşir ve geri alınamaz.',
+          ],
+        },
+        {
+          h: 'Veri nerede duruyor',
+          items: [
+            'Supabase üzerinde (Postgres ve dosya depolama), AB bölgesinde; satın almalar için mağazalarda.',
+            'Testler 72 saat sonra kapanır; sonuçlar sen silene ya da hesabını silene kadar hesabında kalır.',
+          ],
+        },
+        {
+          h: 'Haklarını kullanma ve iletişim',
+          items: [
+            'Verinin bir kopyasını, düzeltilmesini ya da silinmesini isteyebilirsin.',
+            `${CONTACT_EMAIL} adresine yaz.`,
+          ],
+        },
+      ],
+    },
+  },
+  terms: {
+    en: {
+      title: 'Terms of use | Clickable',
+      description:
+        'The rules of Clickable: credits, what counts as a review, what gets your account flagged, and what we never do on YouTube.',
+      h1: 'Terms of use',
+      sections: [
+        {
+          h: 'What Clickable is',
+          items: [
+            'A place to test a thumbnail, a title and a first 60 seconds with other creators before publishing.',
+            'You must be old enough to hold an account under your local law and own the rights to what you upload.',
+          ],
+        },
+        {
+          h: 'Credits',
+          items: [
+            'Credits are earned by reviewing (one review, one credit) and can be bought. They are not money and cannot be cashed out or transferred.',
+            'A test costs one credit per reviewer requested. Credits that are not used within 72 hours are returned.',
+            'Purchases are handled by Apple or Google; refunds follow their rules.',
+          ],
+        },
+        {
+          h: 'What counts as a review',
+          items: [
+            'A review must take at least 20 seconds, measured on the server. Faster ones are discarded, earn no credit and cost reputation.',
+            'Always leaving at the same second, or always picking the same position, gets an account flagged automatically.',
+            'Abusive, off-topic or automated feedback can be reported; three reports hide a test and refund its unused credits.',
+          ],
+        },
+        {
+          h: 'What we never do',
+          items: [
+            'No views, subscribers, likes or comments are exchanged, promised or rewarded — on YouTube or anywhere else.',
+            'Watching inside Clickable is not a YouTube view and is never counted as one.',
+            'Accounts that try to turn the app into an engagement exchange are removed.',
+          ],
+        },
+        {
+          h: 'Your content',
+          items: [
+            'You keep the rights to everything you upload. You give us permission to show it to the reviewers assigned to your test, and nothing more.',
+            'Do not upload anything you do not have the right to share, or anything unlawful.',
+          ],
+        },
+        {
+          h: 'Availability and changes',
+          items: [
+            'The service is provided as is, without a guarantee of uninterrupted availability.',
+            `These terms can change; the date above says when they last did. Questions go to ${CONTACT_EMAIL}.`,
+          ],
+        },
+      ],
+    },
+    tr: {
+      title: 'Kullanım şartları | Clickable',
+      description:
+        'Clickable kuralları: krediler, neyin değerlendirme sayıldığı, hesabın ne zaman işaretlendiği ve YouTube üzerinde asla yapmadıklarımız.',
+      h1: 'Kullanım şartları',
+      sections: [
+        {
+          h: 'Clickable nedir',
+          items: [
+            'Thumbnail, başlık ve ilk 60 saniyeyi yayınlamadan önce diğer üreticilerle test ettiğin bir yer.',
+            'Kendi ülkendeki yasaya göre hesap açacak yaşta olmalı ve yüklediğin içeriğin haklarına sahip olmalısın.',
+          ],
+        },
+        {
+          h: 'Krediler',
+          items: [
+            'Kredi değerlendirme yaparak kazanılır (bir değerlendirme, bir kredi) ve satın alınabilir. Para değildir; nakde çevrilemez, devredilemez.',
+            'Bir test, istenen değerlendirici sayısı kadar krediye mal olur. 72 saat içinde kullanılmayan kredi iade edilir.',
+            'Satın almaları Apple ya da Google yürütür; iadeler onların kurallarına tabidir.',
+          ],
+        },
+        {
+          h: 'Ne değerlendirme sayılır',
+          items: [
+            'Bir değerlendirme en az 20 saniye sürmelidir; bu süre sunucuda ölçülür. Daha hızlıları çöpe gider, kredi kazandırmaz ve itibarı düşürür.',
+            'Hep aynı saniyede bırakmak ya da hep aynı pozisyonu seçmek hesabı otomatik olarak işaretletir.',
+            'Saldırgan, konu dışı ya da otomatik geri bildirim raporlanabilir; üç rapor bir testi gizler ve kullanılmayan kredisini iade eder.',
+          ],
+        },
+        {
+          h: 'Asla yapmadıklarımız',
+          items: [
+            'İzlenme, abone, beğeni ya da yorum takası yapılmaz, vaat edilmez, ödüllendirilmez — ne YouTube\'da ne başka yerde.',
+            'Clickable içindeki izleme YouTube izlenmesi değildir ve asla öyle sayılmaz.',
+            'Uygulamayı etkileşim takasına çevirmeye çalışan hesaplar kapatılır.',
+          ],
+        },
+        {
+          h: 'İçeriğin',
+          items: [
+            'Yüklediğin her şeyin hakları sende kalır. Bize yalnızca testine atanan değerlendiricilere gösterme izni vermiş olursun, fazlasını değil.',
+            'Paylaşma hakkın olmayan ya da hukuka aykırı hiçbir şeyi yükleme.',
+          ],
+        },
+        {
+          h: 'Hizmet ve değişiklikler',
+          items: [
+            'Hizmet olduğu gibi sunulur; kesintisiz erişim garantisi verilmez.',
+            `Bu şartlar değişebilir; yukarıdaki tarih en son ne zaman değiştiğini söyler. Sorular: ${CONTACT_EMAIL}.`,
+          ],
+        },
+      ],
+    },
+  },
+} as const;
+
+const c = copy[kind][locale];
+const path = kind === 'privacy' ? '/privacy' : '/terms';
+const updatedLabel = locale === 'tr' ? 'Son güncelleme' : 'Last updated';
+---
+
+<Base path={path} locale={locale} title={c.title} description={c.description}>
+  <section>
+    <div class="wrap prose">
+      <h1>{c.h1}</h1>
+      <p class="fine">{updatedLabel}: {updated}</p>
+      {
+        c.sections.map((section) => (
+          <>
+            <h2>{section.h}</h2>
+            <ul>
+              {section.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </>
+        ))
+      }
+    </div>
+  </section>
+</Base>

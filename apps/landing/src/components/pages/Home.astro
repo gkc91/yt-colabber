@@ -1,0 +1,254 @@
+---
+import Base from '../../layouts/Base.astro';
+import FeedMock from '../FeedMock.astro';
+import StoreButtons from '../StoreButtons.astro';
+import { canonical, localePath, NICHES, nicheName, type Locale } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Clickable — test your thumbnail and hook before you publish',
+    description:
+      'Show your thumbnail, title and first 60 seconds to real people in your niche and get the numbers before you publish. No views or subscribers are traded.',
+    h1: 'Find out how your thumbnail lands before you publish',
+    lede: 'Clickable puts your thumbnail in a feed next to real videos from your niche, asks what your title promises, and plays your first 60 seconds until the viewer taps out. You get the numbers; they get yours.',
+    stepsTitle: 'Three questions, under three minutes',
+    steps: [
+      {
+        step: 'Step 1',
+        head: 'Feed test',
+        body: 'Your thumbnail is mixed into a grid with five real videos from your niche. One question: which one would you click?',
+      },
+      {
+        step: 'Step 2',
+        head: 'Promise test',
+        body: 'Thumbnail and title alone. The reviewer writes, in one sentence, what they think the video is about. You see whether the promise landed.',
+      },
+      {
+        step: 'Step 3',
+        head: 'Hook test',
+        body: 'Your first 60 seconds play. The reviewer taps "I would have left here" whenever it happens, and picks a reason.',
+      },
+    ],
+    resultsTitle: 'What comes back',
+    results: [
+      'Pick rate and average decision time for every thumbnail, with a winner badge only when one leads by three votes or more.',
+      'Every title guess, so you can mark what was understood and what was not.',
+      'A drop-off timeline across the 60 seconds, the median leave second, and the share who watched to the end.',
+      'Reason tags — slow intro, unclear promise, bad audio, did not match the thumbnail — and written comments.',
+    ],
+    creditsTitle: 'How credits work',
+    creditsBody:
+      'You start with 5 credits. Every review you give earns 1. A test costs 1 credit per reviewer you ask for — 5, 10 or 15. A test stays open for 72 hours; unused credits come back to you.',
+    notTitle: 'What this is not',
+    notBody:
+      'No sub4sub, no view trading, no "watch my video" tasks. Nothing happens on YouTube at all: the watching and the voting happen inside the app. Traded engagement breaks YouTube\'s fake engagement policy and unrelated subscribers drag your reach down, so we do not sell it.',
+    nichesTitle: 'Your niche',
+    nichesBody:
+      'Reviewers are matched by niche and language, so the people judging your thumbnail watch this kind of video anyway.',
+    faqTitle: 'Questions',
+    faq: [
+      {
+        q: 'How is this different from YouTube Test & Compare?',
+        a: 'Test & Compare runs after you publish and needs enough impressions to reach a result — which small channels rarely get. Clickable runs before you publish and gives you written reasons, not just a curve.',
+      },
+      {
+        q: 'Do I have to review other people to use it?',
+        a: 'Yes, and that is the point. One review you give is one credit. It keeps the pool made of creators rather than idle accounts.',
+      },
+      {
+        q: 'Who sees my unpublished video?',
+        a: 'Only the reviewers assigned to your test, inside the app, for the 60 seconds you upload. Clips are not public and are not shared outside the app.',
+      },
+      {
+        q: 'What does it cost?',
+        a: 'Nothing to start. Credits can also be bought, and Pro adds 40 monthly credits, up to 25 reviewers per test and an AI summary.',
+      },
+    ],
+  },
+  tr: {
+    title: 'Clickable — thumbnail, başlık ve ilk 60 saniyeyi yayından önce test et',
+    description:
+      'Thumbnail, başlık ve ilk 60 saniyeni nişindeki gerçek insanlara göster, yayından önce sayıları gör. İzlenme ya da abone takası yok.',
+    h1: 'Thumbnail\'ının nasıl karşılandığını yayından önce gör',
+    lede: 'Clickable thumbnail\'ını nişindeki gerçek videoların arasına koyar, başlığının ne vaat ettiğini sorar ve ilk 60 saniyeni izleyici bırakana kadar oynatır. Sayıları sen alırsın; onlar da seninkini.',
+    stepsTitle: 'Üç soru, üç dakikadan kısa',
+    steps: [
+      {
+        step: 'Adım 1',
+        head: 'Feed testi',
+        body: 'Thumbnail\'ın nişinden beş gerçek videoyla aynı ızgaraya karışır. Tek soru: hangisine tıklardın?',
+      },
+      {
+        step: 'Adım 2',
+        head: 'Vaat testi',
+        body: 'Yalnızca thumbnail ve başlık. Değerlendirici videonun ne hakkında olduğunu tek cümleyle yazar. Vaadin anlaşılmış mı, görürsün.',
+      },
+      {
+        step: 'Adım 3',
+        head: 'Hook testi',
+        body: 'İlk 60 saniyen oynar. Değerlendirici "buradan çıkardım" dediği anı işaretler ve bir sebep seçer.',
+      },
+    ],
+    resultsTitle: 'Eline ne geçer',
+    results: [
+      'Her thumbnail için seçilme oranı ve ortalama karar süresi; kazanan rozeti yalnızca en az üç oy fark varsa.',
+      'Bütün başlık tahminleri: neyin anlaşıldığını, neyin anlaşılmadığını tek tek işaretlersin.',
+      '60 saniye boyunca ayrılma grafiği, medyan ayrılma saniyesi ve sonuna kadar izleyenlerin oranı.',
+      'Sebep etiketleri — yavaş giriş, belirsiz vaat, kötü ses, thumbnail\'la uyuşmadı — ve yazılı yorumlar.',
+    ],
+    creditsTitle: 'Kredi nasıl işliyor',
+    creditsBody:
+      'Kayıtta 5 kredin olur. Verdiğin her değerlendirme 1 kredi kazandırır. Bir test, istediğin değerlendirici sayısı kadar krediye mal olur — 5, 10 ya da 15. Test 72 saat açık kalır; kullanılmayan kredi sana geri döner.',
+    notTitle: 'Bu ne değil',
+    notBody:
+      'Sub4sub yok, izlenme takası yok, "videomu izle" görevi yok. YouTube üzerinde hiçbir şey olmaz: izleme de oylama da uygulamanın içinde kalır. Takas edilen etkileşim YouTube\'un sahte etkileşim politikasına aykırıdır ve ilgisiz aboneler erişimini düşürür; bu yüzden satmıyoruz.',
+    nichesTitle: 'Senin nişin',
+    nichesBody:
+      'Değerlendiriciler niş ve dile göre eşleşir; yani thumbnail\'ına bakan kişi zaten bu tür videoları izleyen kişidir.',
+    faqTitle: 'Sorular',
+    faq: [
+      {
+        q: 'YouTube Test & Compare\'dan farkı ne?',
+        a: 'Test & Compare yayından sonra çalışır ve sonuca varmak için yeterli gösterim ister; küçük kanallar bunu çoğu zaman bulamaz. Clickable yayından önce çalışır ve sana eğri değil, gerekçe verir.',
+      },
+      {
+        q: 'Kullanmak için başkalarını değerlendirmek zorunda mıyım?',
+        a: 'Evet, mesele de bu. Verdiğin bir değerlendirme bir kredi. Havuzu boş hesaplar değil, gerçek üreticiler oluşturuyor.',
+      },
+      {
+        q: 'Yayınlanmamış videomu kim görüyor?',
+        a: 'Yalnızca testine atanan değerlendiriciler, uygulamanın içinde, yüklediğin 60 saniye kadarıyla. Klipler herkese açık değildir ve uygulama dışına çıkmaz.',
+      },
+      {
+        q: 'Ücreti ne?',
+        a: 'Başlamak ücretsiz. Kredi satın alınabilir; Pro ayda 40 kredi, test başına 25 değerlendiriciye kadar ve AI özeti ekler.',
+      },
+    ],
+  },
+} as const;
+
+const c = copy[locale];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Clickable',
+  url: canonical('/', locale),
+  inLanguage: locale,
+};
+---
+
+<Base
+  path="/"
+  locale={locale}
+  title={c.title}
+  description={c.description}
+  schema={[faqSchema, websiteSchema]}
+>
+  <section>
+    <div class="wrap hero">
+      <div>
+        <h1>{c.h1}</h1>
+        <p class="lede">{c.lede}</p>
+        <StoreButtons locale={locale} />
+      </div>
+      <FeedMock locale={locale} />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.stepsTitle}</h2>
+      <ul class="cards">
+        {
+          c.steps.map((item) => (
+            <li class="card">
+              <p class="step">{item.step}</p>
+              <h3>{item.head}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.resultsTitle}</h2>
+      <ul>
+        {c.results.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.creditsTitle}</h2>
+      <p>{c.creditsBody}</p>
+      <h2>{c.notTitle}</h2>
+      <p class="note">{c.notBody}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.nichesTitle}</h2>
+      <p>{c.nichesBody}</p>
+      <ul class="chips">
+        {
+          NICHES.map((niche) => (
+            <li>
+              <a href={localePath(`/for/${niche.slug}`, locale)}>{nicheName(niche, locale)}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap faq">
+      <h2>{c.faqTitle}</h2>
+      {
+        c.faq.map((item) => (
+          <div>
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 36px;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

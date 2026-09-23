@@ -1,0 +1,368 @@
+---
+import { canonical, LOCALES, localePath, SITE_URL, type Locale } from '../data/site';
+import { ui } from '../data/ui';
+
+interface Props {
+  /** Locale-independent path, e.g. `/thumbnail-test`. */
+  path: string;
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Extra schema.org objects for this page (FAQPage, BreadcrumbList...). */
+  schema?: Record<string, unknown>[];
+}
+
+const { path, locale, title, description, schema = [] } = Astro.props;
+const t = ui(locale);
+const url = canonical(path, locale);
+
+const softwareApplication = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Clickable',
+  url: SITE_URL,
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'iOS, Android, Web',
+  description,
+  inLanguage: [...LOCALES],
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description:
+      locale === 'tr'
+        ? 'Ücretsiz kullanılır; kredi paketleri ve Pro aboneliği isteğe bağlıdır.'
+        : 'Free to use; credit packs and a Pro subscription are optional.',
+  },
+};
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    {LOCALES.map((other) => <link rel="alternate" hreflang={other} href={canonical(path, other)} />)}
+    <link rel="alternate" hreflang="x-default" href={canonical(path, 'en')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Clickable" />
+    <meta property="og:locale" content={locale === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={`${SITE_URL}/og.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#0f1115" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(softwareApplication)} is:inline />
+    {
+      schema.map((item) => (
+        <script type="application/ld+json" set:html={JSON.stringify(item)} is:inline />
+      ))
+    }
+  </head>
+  <body>
+    <a class="skip" href="#main">{t.skip}</a>
+    <header class="site">
+      <div class="bar">
+        <a class="brand" href={localePath('/', locale)}>
+          <span class="dot" aria-hidden="true"></span>Clickable
+        </a>
+        <nav aria-label={locale === 'tr' ? 'Ana menü' : 'Main'}>
+          <a href={localePath('/thumbnail-test', locale)}>{t.nav.thumbnail}</a>
+          <a href={localePath('/hook-test', locale)}>{t.nav.hook}</a>
+          <a href={localePath('/for/gaming', locale)}>{t.nav.niches}</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site">
+      <div class="bar">
+        <p>© {new Date().getFullYear()} {t.footer.rights}</p>
+        <nav aria-label={locale === 'tr' ? 'Alt menü' : 'Footer'}>
+          <a href={localePath('/privacy', locale)}>{t.footer.privacy}</a>
+          <a href={localePath('/terms', locale)}>{t.footer.terms}</a>
+          <a href={localePath(path, locale === 'en' ? 'tr' : 'en')} rel="alternate">
+            {t.footer.language}
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <style is:global>
+      :root {
+        --bg: #ffffff;
+        --surface: #f4f5f7;
+        --text: #14161a;
+        --muted: #5b626e;
+        --line: #e2e5ea;
+        --accent: #d92d20;
+        --accent-text: #ffffff;
+        --radius: 14px;
+        --measure: 68ch;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f1115;
+          --surface: #171a20;
+          --text: #f2f4f7;
+          --muted: #a3abb8;
+          --line: #262b33;
+          --accent: #ff5a4d;
+          --accent-text: #14161a;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 17px/1.6 ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .skip:focus {
+        left: 12px;
+        top: 12px;
+        z-index: 10;
+        background: var(--accent);
+        color: var(--accent-text);
+        padding: 8px 14px;
+        border-radius: 8px;
+      }
+
+      .bar,
+      .wrap {
+        width: 100%;
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header.site {
+        border-bottom: 1px solid var(--line);
+      }
+
+      footer.site {
+        border-top: 1px solid var(--line);
+        margin-top: 64px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      header.site .bar,
+      footer.site .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 64px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      footer.site p {
+        margin: 0;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      nav a,
+      footer.site a {
+        text-decoration: none;
+        color: var(--muted);
+      }
+
+      nav a:hover,
+      footer.site a:hover {
+        color: var(--text);
+        text-decoration: underline;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-weight: 700;
+        font-size: 19px;
+        text-decoration: none;
+        letter-spacing: -0.01em;
+      }
+
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      section {
+        padding: 56px 0 0;
+      }
+
+      h1 {
+        font-size: clamp(32px, 6vw, 50px);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin: 0 0 18px;
+        max-width: 22ch;
+      }
+
+      h2 {
+        font-size: clamp(23px, 3.4vw, 30px);
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        margin: 0 0 14px;
+      }
+
+      h3 {
+        font-size: 19px;
+        margin: 0 0 6px;
+      }
+
+      p,
+      li {
+        max-width: var(--measure);
+      }
+
+      .lede {
+        font-size: 20px;
+        color: var(--muted);
+        margin: 0 0 28px;
+      }
+
+      .cards {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        padding: 0;
+        margin: 24px 0 0;
+        list-style: none;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .step {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 8px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin: 0 0 12px;
+      }
+
+      .btn {
+        display: inline-block;
+        background: var(--accent);
+        color: var(--accent-text);
+        border-radius: 10px;
+        padding: 13px 22px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .btn.ghost {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+
+      .btn.soon {
+        background: var(--surface);
+        color: var(--muted);
+        border: 1px dashed var(--line);
+      }
+
+      .fine {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0;
+        margin: 20px 0 0;
+        list-style: none;
+      }
+
+      .chips a {
+        display: inline-block;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        border-radius: 999px;
+        padding: 7px 15px;
+        font-size: 15px;
+        text-decoration: none;
+        color: var(--muted);
+      }
+
+      .chips a:hover {
+        color: var(--text);
+      }
+
+      .faq h3 {
+        margin-top: 24px;
+      }
+
+      .prose h2 {
+        margin-top: 40px;
+      }
+
+      .note {
+        border-left: 3px solid var(--accent);
+        padding-left: 16px;
+        color: var(--muted);
+      }
+    </style>
+  </body>
+</html>

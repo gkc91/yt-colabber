@@ -7,13 +7,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "og": "node scripts/og-image.mjs"
   },
   "dependencies": {
     "astro": "^7.3.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "sharp": "^0.35.4",
     "typescript": "^6.0.3"
   }
 }

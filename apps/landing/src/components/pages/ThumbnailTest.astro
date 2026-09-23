@@ -1,0 +1,193 @@
+---
+import Base from '../../layouts/Base.astro';
+import FeedMock from '../FeedMock.astro';
+import StoreButtons from '../StoreButtons.astro';
+import { localePath, NICHES, nicheName, type Locale } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'YouTube thumbnail test — free A/B test with real viewers | Clickable',
+    description:
+      'Test up to three thumbnails against real videos from your niche before uploading. Pick rate, decision time and written reasons from real viewers.',
+    h1: 'Test your YouTube thumbnail before you upload',
+    lede: 'Upload one to three thumbnails. Each reviewer sees one of them in a two-column feed next to five real videos from your niche and answers a single question: which one would you click?',
+    sections: [
+      {
+        h: 'Why a feed, not a side-by-side',
+        p: 'Nobody chooses your thumbnail next to your other thumbnail. They choose it next to whatever else YouTube put on the screen. Showing two of your own options side by side measures a comparison that never happens; showing one option inside a realistic feed measures the one that does.',
+      },
+      {
+        h: 'What you get',
+        p: 'Pick rate per thumbnail, average decision time in milliseconds, and the position the thumbnail sat in — so a win is not just a lucky spot. A winner badge appears only when one option leads by three votes or more; below that the honest answer is "too close to call".',
+      },
+      {
+        h: 'Thumbnail and title travel together',
+        p: 'Each candidate thumbnail is shown with one of your titles, picked at random, because that is the pair a viewer actually judges. Step two then shows the pair alone and asks what the video promises, which is where a thumbnail that wins clicks but misleads gets caught.',
+      },
+      {
+        h: 'What it costs',
+        p: 'One credit per reviewer. You start with five credits and earn one for every review you give, so a five-reviewer test is free if you have reviewed five videos. A test stays open for 72 hours and unused credits are returned.',
+      },
+    ],
+    faqTitle: 'Questions',
+    faq: [
+      {
+        q: 'Is the thumbnail test free?',
+        a: 'Yes. Credits are earned by reviewing other creators — one review, one credit — and a five-reviewer test costs five credits. Buying credits is optional.',
+      },
+      {
+        q: 'How many thumbnails can I test at once?',
+        a: 'Up to three thumbnails and three titles per test. Each reviewer sees one combination, so the votes stay independent.',
+      },
+      {
+        q: 'How many reviewers do I need for a meaningful result?',
+        a: 'Five tells you whether a thumbnail is clearly broken. Ten to fifteen is where a winner badge starts to mean something, since it needs a three-vote gap.',
+      },
+      {
+        q: 'Do the other videos in the feed belong to real channels?',
+        a: 'Yes. They are current videos from your niche, so your thumbnail is judged against the competition it will actually face.',
+      },
+    ],
+    nichesTitle: 'Thumbnail tests by niche',
+  },
+  tr: {
+    title: 'YouTube thumbnail testi — ücretsiz A/B testi | Clickable',
+    description:
+      'Yüklemeden önce üç thumbnail\'a kadar, nişindeki gerçek videolarla aynı ızgarada test et. Seçilme oranı, karar süresi ve gerekçeli yorumlar.',
+    h1: 'Thumbnail\'ını yüklemeden önce test et',
+    lede: 'Bir ila üç thumbnail yükle. Her değerlendirici bunlardan birini, nişinden beş gerçek videoyla birlikte iki sütunlu bir feed\'de görür ve tek bir soruyu yanıtlar: hangisine tıklardın?',
+    sections: [
+      {
+        h: 'Neden yan yana değil, feed içinde',
+        p: 'Kimse senin thumbnail\'ını yine senin diğer thumbnail\'ının yanında seçmiyor. YouTube ekrana ne koyduysa onun yanında seçiyor. İki seçeneğini yan yana göstermek hiç yaşanmayan bir karşılaştırmayı ölçer; tek seçeneği gerçekçi bir feed\'in içinde göstermek yaşananı ölçer.',
+      },
+      {
+        h: 'Eline ne geçer',
+        p: 'Thumbnail başına seçilme oranı, milisaniye cinsinden ortalama karar süresi ve thumbnail\'ın ızgaradaki pozisyonu — yani kazanmak sadece iyi yere denk gelmek olmasın. Kazanan rozeti yalnızca en az üç oy fark varsa çıkar; altındaysa dürüst cevap "fark anlamlı değil".',
+      },
+      {
+        h: 'Thumbnail ve başlık birlikte gider',
+        p: 'Her aday thumbnail, başlıklarından rastgele biriyle gösterilir; çünkü izleyicinin gerçekte değerlendirdiği şey bu ikili. İkinci adımda ikili tek başına gösterilir ve videonun ne vaat ettiği sorulur — tıklatan ama yanıltan thumbnail tam burada yakalanır.',
+      },
+      {
+        h: 'Maliyeti',
+        p: 'Değerlendirici başına 1 kredi. Kayıtta 5 kredin var ve verdiğin her değerlendirme 1 kredi kazandırıyor; yani beş videoyu değerlendirdiysen beş kişilik test ücretsiz. Test 72 saat açık kalır, kullanılmayan kredi iade edilir.',
+      },
+    ],
+    faqTitle: 'Sorular',
+    faq: [
+      {
+        q: 'Thumbnail testi ücretsiz mi?',
+        a: 'Evet. Kredi, başka üreticileri değerlendirerek kazanılır — bir değerlendirme, bir kredi — ve beş kişilik test beş krediye mal olur. Kredi satın almak isteğe bağlıdır.',
+      },
+      {
+        q: 'Aynı anda kaç thumbnail test edebilirim?',
+        a: 'Test başına üç thumbnail ve üç başlığa kadar. Her değerlendirici tek bir kombinasyonu görür; böylece oylar bağımsız kalır.',
+      },
+      {
+        q: 'Anlamlı sonuç için kaç değerlendirici gerekir?',
+        a: 'Beş kişi, bir thumbnail\'ın açıkça kötü olup olmadığını söyler. Kazanan rozetinin anlam kazandığı yer 10-15 kişi; çünkü rozet üç oy fark istiyor.',
+      },
+      {
+        q: 'Feed\'deki diğer videolar gerçek kanallara mı ait?',
+        a: 'Evet. Nişindeki güncel videolar; yani thumbnail\'ın gerçekte karşılaşacağı rekabete karşı değerlendiriliyor.',
+      },
+    ],
+    nichesTitle: 'Nişe göre thumbnail testi',
+  },
+} as const;
+
+const c = copy[locale];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<Base
+  path="/thumbnail-test"
+  locale={locale}
+  title={c.title}
+  description={c.description}
+  schema={[faqSchema]}
+>
+  <section>
+    <div class="wrap hero">
+      <div>
+        <h1>{c.h1}</h1>
+        <p class="lede">{c.lede}</p>
+        <StoreButtons locale={locale} />
+      </div>
+      <FeedMock locale={locale} />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap prose">
+      {
+        c.sections.map((item) => (
+          <>
+            <h2>{item.h}</h2>
+            <p>{item.p}</p>
+          </>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap faq">
+      <h2>{c.faqTitle}</h2>
+      {
+        c.faq.map((item) => (
+          <div>
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.nichesTitle}</h2>
+      <ul class="chips">
+        {
+          NICHES.map((niche) => (
+            <li>
+              <a href={localePath(`/for/${niche.slug}`, locale)}>{nicheName(niche, locale)}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 36px;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

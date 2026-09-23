@@ -1,0 +1,94 @@
+---
+import type { Locale } from '../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const label =
+  locale === 'tr'
+    ? 'Uygulamadaki feed testinin çizimi: iki sütunlu ızgarada beş gerçek niş videosu ve test edilen thumbnail.'
+    : 'Illustration of the in-app feed test: five real videos from the niche and the tested thumbnail in a two-column grid.';
+const question = locale === 'tr' ? 'Hangisine tıklardın?' : 'Which one would you click?';
+const yours = locale === 'tr' ? 'senin' : 'yours';
+---
+
+<figure class="mock">
+  <svg viewBox="0 0 360 300" role="img" aria-label={label}>
+    <rect x="0" y="0" width="360" height="300" rx="16" class="frame"></rect>
+    <text x="20" y="32" class="q">{question}</text>
+    {
+      [0, 1, 2, 3, 4, 5].map((index) => {
+        const x = 20 + (index % 2) * 170;
+        const y = 48 + Math.floor(index / 2) * 84;
+        const candidate = index === 3;
+        return (
+          <g>
+            <rect
+              x={x}
+              y={y}
+              width="150"
+              height="62"
+              rx="8"
+              class={candidate ? 'tile pick' : 'tile'}
+            />
+            <rect x={x} y={y + 68} width={candidate ? 104 : 84} height="7" rx="3" class="line" />
+            {candidate && (
+              <text x={x + 8} y={y + 18} class="tag">
+                {yours}
+              </text>
+            )}
+          </g>
+        );
+      })
+    }
+  </svg>
+  <figcaption class="fine">{label}</figcaption>
+</figure>
+
+<style>
+  .mock {
+    margin: 0;
+    max-width: 420px;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .frame {
+    fill: var(--surface);
+    stroke: var(--line);
+  }
+
+  .tile {
+    fill: var(--line);
+  }
+
+  .pick {
+    fill: var(--accent);
+    opacity: 0.85;
+  }
+
+  .line {
+    fill: var(--line);
+  }
+
+  .q {
+    fill: var(--text);
+    font: 600 15px ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .tag {
+    fill: var(--accent-text);
+    font: 700 10px ui-sans-serif, system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  figcaption {
+    margin-top: 10px;
+  }
+</style>

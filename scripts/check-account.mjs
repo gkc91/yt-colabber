@@ -38,7 +38,11 @@ async function signIn(email) {
 
 // ---------- silinecek kullanıcı ----------
 const email = `doomed-${Date.now()}@clickable.test`;
-const { data: animation } = await admin.from('niches').select('id').eq('slug', 'animation').single();
+const { data: animation } = await admin
+  .from('niches')
+  .select('id')
+  .eq('slug', 'animation')
+  .single();
 const { data: created, error: createError } = await admin.auth.admin.createUser({
   email,
   password: 'password123',
@@ -135,13 +139,25 @@ const { data: submission } = await admin
   .select('received_reviews')
   .eq('id', submissionId)
   .single();
-check('test sahibinin sayacı bozulmadı', submission.received_reviews === 1, String(submission.received_reviews));
+check(
+  'test sahibinin sayacı bozulmadı',
+  submission.received_reviews === 1,
+  String(submission.received_reviews),
+);
 
 const { data: ownFiles } = await admin.storage.from('media').list(`thumbs/${doomed.id}`);
-check('silinen kullanıcının dosyaları temizlendi', (ownFiles ?? []).length === 0, String((ownFiles ?? []).length));
+check(
+  'silinen kullanıcının dosyaları temizlendi',
+  (ownFiles ?? []).length === 0,
+  String((ownFiles ?? []).length),
+);
 
 const { data: ownerFiles } = await admin.storage.from('media').list(`thumbs/${owner.id}`);
-check('test sahibinin dosyalarına dokunulmadı', (ownerFiles ?? []).length > 0, String((ownerFiles ?? []).length));
+check(
+  'test sahibinin dosyalarına dokunulmadı',
+  (ownerFiles ?? []).length > 0,
+  String((ownerFiles ?? []).length),
+);
 
 const failed = results.filter((ok) => !ok).length;
 console.log(`\n${results.length - failed}/${results.length} passed`);

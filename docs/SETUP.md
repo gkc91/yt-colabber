@@ -88,6 +88,20 @@ supabase secrets set RC_WEBHOOK_SECRET=... YOUTUBE_API_KEY=... ANTHROPIC_API_KEY
 supabase functions deploy revenuecat-webhook refresh-niche-cache ai-summary signed-media notify delete-account
 ```
 
+## Landing (apps/landing, Astro → Cloudflare Pages)
+```powershell
+pnpm dev:landing                 # http://localhost:4321
+pnpm check:landing               # build + scripts/check-landing.mjs (CI de bunu koşar)
+pnpm --filter landing og         # public/og.png'i yeniden üret (marka değişirse)
+```
+Cloudflare Pages ayarları:
+- Build command: `pnpm install --frozen-lockfile && pnpm --filter landing build`
+- Build output directory: `apps/landing/dist`
+- Environment variable: `PUBLIC_SITE_URL=https://<alan-adı>` (canonical, hreflang ve sitemap
+  bunu kullanır; verilmezse `https://clickable.app` varsayılır).
+Sayfalar `/`, `/thumbnail-test`, `/hook-test`, `/for/<nis>` (14 niş), `/privacy`, `/terms`
+ve hepsinin `/tr/...` karşılığı; `sitemap.xml` ve `robots.txt` build'de üretilir.
+
 ## Staging Supabase
 Proje: `doentqtqklsetbxdprrg` (bölge eu-west-3). Şema 0001-0003 uygulandı; `clickable://auth` redirect listesinde.
 Seed **gönderilmez** — staging'de sahte kullanıcı yoktur. `niche_thumbnail_cache` boş olduğu için B3 (niş cache) tamamlanana kadar

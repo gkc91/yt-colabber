@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+import StoreButtons from '../StoreButtons.astro';
+import { canonical, localePath, NICHES, nicheName, type Locale, type Niche } from '../../data/site';
+import { NICHE_COPY } from '../../data/nicheCopy';
+
+interface Props {
+  locale: Locale;
+  niche: Niche;
+}
+
+const { locale, niche } = Astro.props;
+const name = nicheName(niche, locale);
+const specific = NICHE_COPY[niche.slug][locale];
+
+const copy = {
+  en: {
+    title: `${name} thumbnail and hook test | Clickable`,
+    description: `Test your thumbnail, title and first 60 seconds with real ${name.toLowerCase()} viewers before you publish. Reviewers are matched to your niche and language.`,
+    h1: `Thumbnail and hook test for ${name} channels`,
+    lede: `Your thumbnail is judged next to real ${name.toLowerCase()} videos, by people who watch ${name.toLowerCase()} videos anyway. Not by your friends, and not by a general audience that would click anything.`,
+    feedTitle: 'What your thumbnail is up against',
+    hookTitle: 'Where the first 60 seconds usually breaks here',
+    matchTitle: 'How matching works',
+    matchBody: `You pick ${name} as your niche and your language when you sign up. Tests are offered to reviewers in the same niche and language first, and you can opt into up to three extra niches and two extra languages if you want more to review.`,
+    stepsTitle: 'What a test looks like',
+    steps: [
+      'One to three thumbnails and titles, plus your first 60 seconds.',
+      'Each reviewer sees one thumbnail-title pair in a feed with five real videos from the niche.',
+      'They say what the video promises, then watch until they would have left.',
+      'You ask for 5, 10 or 15 reviewers — one credit each, unused credits refunded after 72 hours.',
+    ],
+    otherTitle: 'Other niches',
+  },
+  tr: {
+    title: `${name} için thumbnail ve hook testi | Clickable`,
+    description: `Thumbnail, başlık ve ilk 60 saniyeni yayından önce gerçek ${name.toLowerCase()} izleyicileriyle test et. Değerlendiriciler nişine ve diline göre eşleşir.`,
+    h1: `${name} kanalları için thumbnail ve hook testi`,
+    lede: `Thumbnail\'ın gerçek ${name.toLowerCase()} videolarının yanında, zaten ${name.toLowerCase()} videoları izleyen insanlar tarafından değerlendirilir. Arkadaşların tarafından değil, her şeye tıklayacak genel bir kitle tarafından da değil.`,
+    feedTitle: 'Thumbnail\'ın neyle yarışıyor',
+    hookTitle: 'Bu nişte ilk 60 saniye genelde nerede kopuyor',
+    matchTitle: 'Eşleşme nasıl çalışıyor',
+    matchBody: `Kayıt olurken nişini ${name} ve dilini seçiyorsun. Testler önce aynı niş ve dildeki değerlendiricilere gösterilir; daha fazla değerlendirmek istersen üç ek niş ve iki ek dile kadar açabilirsin.`,
+    stepsTitle: 'Bir test neye benziyor',
+    steps: [
+      'Bir ila üç thumbnail ve başlık, bir de ilk 60 saniyen.',
+      'Her değerlendirici tek bir thumbnail-başlık ikilisini, nişten beş gerçek videoyla aynı feed\'de görür.',
+      'Videonun ne vaat ettiğini yazar, sonra bırakacağı ana kadar izler.',
+      '5, 10 ya da 15 değerlendirici istersin — kişi başı 1 kredi, kullanılmayan kredi 72 saat sonra iade.',
+    ],
+    otherTitle: 'Diğer nişler',
+  },
+} as const;
+
+const c = copy[locale];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Clickable',
+      item: canonical('/', locale),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: locale === 'tr' ? 'Thumbnail testi' : 'Thumbnail test',
+      item: canonical('/thumbnail-test', locale),
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name,
+      item: canonical(`/for/${niche.slug}`, locale),
+    },
+  ],
+};
+---
+
+<Base
+  path={`/for/${niche.slug}`}
+  locale={locale}
+  title={c.title}
+  description={c.description}
+  schema={[breadcrumb]}
+>
+  <section>
+    <div class="wrap">
+      <h1>{c.h1}</h1>
+      <p class="lede">{c.lede}</p>
+      <StoreButtons locale={locale} />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap prose">
+      <h2>{c.feedTitle}</h2>
+      <p>{specific.feed}</p>
+      <h2>{c.hookTitle}</h2>
+      <p>{specific.hook}</p>
+      <h2>{c.matchTitle}</h2>
+      <p>{c.matchBody}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.stepsTitle}</h2>
+      <ol>
+        {c.steps.map((step) => <li>{step}</li>)}
+      </ol>
+      <p class="fine">
+        <a href={localePath('/thumbnail-test', locale)}>
+          {locale === 'tr' ? 'Thumbnail testi' : 'Thumbnail test'}
+        </a>
+        {' · '}
+        <a href={localePath('/hook-test', locale)}>
+          {locale === 'tr' ? 'Hook testi' : 'Hook test'}
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>{c.otherTitle}</h2>
+      <ul class="chips">
+        {
+          NICHES.filter((item) => item.slug !== niche.slug).map((item) => (
+            <li>
+              <a href={localePath(`/for/${item.slug}`, locale)}>{nicheName(item, locale)}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

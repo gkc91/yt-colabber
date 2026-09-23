@@ -85,11 +85,22 @@
 
 ---
 
-## Kararını beklediğim konular
+## 7. Landing yayına alma (E1 kod tarafı bitti)
 
-- **Landing'i öne çekelim mi?** SEO'nun saati landing yayına girince işlemeye başlıyor. Faz C
-  bitince D (para) yerine E1'e geçmeyi öneriyorum; kimse kullanmadan ödeme ekranı yazmanın
-  faydası yok.
+- [ ] **Alan adı al** ve `PUBLIC_SITE_URL` olarak Cloudflare Pages'e gir. Sayfalar şu an
+      `https://clickable.app` varsayıyor.
+- [ ] **Cloudflare Pages projesi**: repoyu bağla, build `pnpm install --frozen-lockfile &&
+      pnpm --filter landing build`, çıktı `apps/landing/dist` (ayrıntı SETUP.md'de).
+- [ ] **Destek e-postası** (`support@<alan-adı>`) — gizlilik ve şartlar sayfalarında yazıyor,
+      `apps/landing/src/data/site.ts` içindeki `CONTACT_EMAIL` ile değiştirilecek.
+- [ ] **Google Search Console + Bing**: alan adını doğrula, `sitemap.xml` gönder. SEO'nun saati
+      burada işlemeye başlar.
+- [ ] **Mağaza linkleri** E3'ten sonra `site.ts` içindeki `STORE` sabitine yazılacak; şimdilik
+      butonlar "Coming soon" diyor.
+
+---
+
+## Kararını beklediğim konular
 - **Decoy dili.** Niş cache'inde sorgular İngilizce ama YouTube bazen başka dilde video döndürüyor.
   Değerlendirme kalitesini gözle görülür biçimde bozarsa dile göre filtreleme öne alınır
   (şu an TASKS "Sonrası" listesinde).

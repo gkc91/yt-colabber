@@ -82,7 +82,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 
 ## Faz E — Yayın
 
-- [ ] **E1. Landing + SEO** — `apps/landing` Astro, Cloudflare Pages. Sayfalar: `/` (vaat, 3 adım, ekran görüntüsü, mağaza butonları), `/thumbnail-test`, `/hook-test`, `/for/<nis>` (15 niş, programatik), gizlilik/şartlar, `/tr/...`.
+- [x] **E1. Landing + SEO** — `apps/landing` Astro, Cloudflare Pages. Sayfalar: `/` (vaat, 3 adım, ekran görüntüsü, mağaza butonları), `/thumbnail-test`, `/hook-test`, `/for/<nis>` (15 niş, programatik), gizlilik/şartlar, `/tr/...`.
   - Teknik: sayfa başına benzersiz title/meta, Open Graph görseli, `sitemap.xml`, `robots.txt`, `hreflang` (en/tr), schema.org `SoftwareApplication`.
   - Kabul: Lighthouse SEO ≥ 95, sitemap tüm sayfaları listeliyor, her sayfa tek bir arama niyetine cevap veriyor (GROWTH.md §4).
 - [ ] **E2. Web/PWA** — `expo export -p web`, Cloudflare Pages; submission/ödeme ekranları web'de "uygulamada aç".

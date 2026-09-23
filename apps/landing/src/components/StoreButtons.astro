@@ -1,0 +1,33 @@
+---
+import { STORE, type Locale } from '../data/site';
+import { ui } from '../data/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ui(locale);
+---
+
+<div class="actions">
+  {
+    STORE.ios ? (
+      <a class="btn" href={STORE.ios}>
+        {t.cta.ios}
+      </a>
+    ) : (
+      <span class="btn soon">{`${t.cta.ios} — ${t.cta.comingSoon}`}</span>
+    )
+  }
+  {
+    STORE.android ? (
+      <a class="btn ghost" href={STORE.android}>
+        {t.cta.android}
+      </a>
+    ) : (
+      <span class="btn soon">{`${t.cta.android} — ${t.cta.comingSoon}`}</span>
+    )
+  }
+</div>
+<p class="fine">{t.cta.note}</p>
