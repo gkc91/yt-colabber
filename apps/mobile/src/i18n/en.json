@@ -190,7 +190,43 @@
       "save": "Save",
       "saved": "Saved"
     },
-    "placeholder": "Credit history, reputation and settings arrive with the profile screen."
+    "stats": {
+      "title": "You",
+      "reputation": "Reputation",
+      "given": "Reviews given",
+      "received": "Reviews received",
+      "flagged": "Reviewing is paused on your account. Reply to your sign-in email if you think this is wrong."
+    },
+    "niche": {
+      "change": "Change my niche",
+      "canChange": "You can change your niche once a month.",
+      "locked": "You can change it again in {days} days.",
+      "errors": {
+        "niche_change_too_soon": "You changed it recently. Niches can change once a month.",
+        "unknown_niche": "Pick one of the niches in the list.",
+        "unknown": "Something went wrong. Please try again."
+      }
+    },
+    "credits": {
+      "title": "Credit history",
+      "empty": "Nothing yet. Reviewing a video earns your first credit.",
+      "reasons": {
+        "signup_bonus": "Welcome bonus",
+        "review_reward": "Review you gave",
+        "submission_cost": "Test you started",
+        "refund": "Refund for unused reviews",
+        "purchase": "Credits you bought",
+        "subscription_grant": "Pro credits",
+        "admin": "Adjustment"
+      }
+    },
+    "account": {
+      "title": "Account",
+      "signOut": "Sign out",
+      "delete": "Delete my account",
+      "deleteHint": "Deleting removes your account, your tests and your credit history. Reviews you wrote on other people's tests stay, without your name, so their results keep working.",
+      "deleteConfirm": "This cannot be undone. Your account, your tests and your credits will be deleted."
+    }
   },
   "results": {
     "title": "Results",

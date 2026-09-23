@@ -67,3 +67,8 @@
 - 2026-09-23 C3: 3 rapor alıp gizlenen testin kullanılmayan kredisi sahibine iade edilir. Önceden kredi askıda kalıyordu: test artık değerlendirme alamıyor ama parası da geri dönmüyordu.
 - 2026-09-23 C3: Raporlanan değerlendirme silinmez ve itibarı düşmez, yalnızca `is_reported` ile işaretlenir. Gerekçe: doğrulanmamış tek taraflı rapor ceza olamaz; aksi halde olumsuz ama dürüst geri bildirim raporlanarak sildirilebilirdi. Moderasyon insana kalır.
 - 2026-09-23 C3: Rapor sebebi sabit listeden seçilir (`inappropriate`, `spam`, `abusive`, `copyright`, `other`); serbest metin ayrı `note` alanında.
+- 2026-09-23 C4: Niş değişimi 30 günde bir (`profiles.niche_changed_at` + `change_niche()`); kural sunucuda, istemcideki hesap yalnızca kalan günü gösterir. Gerekçe: niş, eşleştirmenin tek dayanağı — serbest değişim, değerlendirici havuzunu sürekli kaydırır.
+- 2026-09-23 C4: Niş değişince o niş `also_review_niche_ids` içinden çıkarılır; kendi nişi ayrıca 'ek niş' olarak sayılmamalı.
+- 2026-09-23 C4: Hesap silinince kullanıcının BAŞKALARININ testlerine yazdığı değerlendirmeler silinmez: `reviews.reviewer_id`/`task_id` artık nullable ve `on delete set null`. Gerekçe: test sahibi ödediği krediyle aldığı geri bildirimi, değerlendirici ayrıldı diye kaybetmemeli; `submissions.received_reviews` de bozulmaz. Kimlik düşer, metin kalır.
+- 2026-09-23 C4: Silme işi Edge Function `delete-account` ile yapılır (service_role): önce `thumbs/{uid}` ve `clips/{uid}` temizlenir, sonra `auth.admin.deleteUser` çağrılır; profil ve kendi testleri cascade ile gider. Uçtan uca `scripts/check-account.mjs` ile doğrulandı (10/10).
+- 2026-09-23 C4: Kredi geçmişi profilde son 50 kayıtla salt-okunur gösterilir (`credit_ledger` append-only, CLAUDE.md).

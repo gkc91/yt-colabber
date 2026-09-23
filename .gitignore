@@ -34,3 +34,6 @@ coverage/
 
 # Claude Code Game Studios hook logs (global tooling, not project content)
 production/session-logs/
+
+# Claude Code Game Studios hook artefaktları
+apps/mobile/production/

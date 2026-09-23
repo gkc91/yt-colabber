@@ -378,6 +378,7 @@ export type Database = {
           id: string
           is_flagged: boolean
           language: string
+          niche_changed_at: string | null
           niche_id: number | null
           onboarding_done: boolean
           reputation: number
@@ -397,6 +398,7 @@ export type Database = {
           id: string
           is_flagged?: boolean
           language?: string
+          niche_changed_at?: string | null
           niche_id?: number | null
           onboarding_done?: boolean
           reputation?: number
@@ -416,6 +418,7 @@ export type Database = {
           id?: string
           is_flagged?: boolean
           language?: string
+          niche_changed_at?: string | null
           niche_id?: number | null
           onboarding_done?: boolean
           reputation?: number
@@ -575,9 +578,9 @@ export type Database = {
           picked_position: number
           promise_understood: boolean | null
           reason_tags: string[]
-          reviewer_id: string
+          reviewer_id: string | null
           submission_id: string
-          task_id: string
+          task_id: string | null
           thumbnail_index: number
           time_spent_seconds: number
           title_guess: string
@@ -597,9 +600,9 @@ export type Database = {
           picked_position: number
           promise_understood?: boolean | null
           reason_tags?: string[]
-          reviewer_id: string
+          reviewer_id?: string | null
           submission_id: string
-          task_id: string
+          task_id?: string | null
           thumbnail_index: number
           time_spent_seconds: number
           title_guess: string
@@ -619,9 +622,9 @@ export type Database = {
           picked_position?: number
           promise_understood?: boolean | null
           reason_tags?: string[]
-          reviewer_id?: string
+          reviewer_id?: string | null
           submission_id?: string
-          task_id?: string
+          task_id?: string | null
           thumbnail_index?: number
           time_spent_seconds?: number
           title_guess?: string
@@ -780,6 +783,7 @@ export type Database = {
     }
     Functions: {
       balance_of: { Args: { p: string }; Returns: number }
+      change_niche: { Args: { p_niche_id: number }; Returns: undefined }
       close_stale_submissions: { Args: never; Returns: undefined }
       collab_candidates: { Args: { p_limit?: number }; Returns: Json }
       collab_like: { Args: { p_to: string }; Returns: string }
