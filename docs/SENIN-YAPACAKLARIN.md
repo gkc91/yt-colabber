@@ -59,10 +59,18 @@
       Kendini test kullanıcısı olarak ekle.
 - [ ] **Play kapalı test:** 12 kişi, 14 gün (Google'ın yeni hesaplar için şartı). Kimleri
       çağıracağını şimdiden düşün; G1'deki ilk kullanıcılar buraya denk gelebilir.
-- [ ] **Google OAuth doğrulaması.** Şu an giriş onay ekranında uygulama adı yerine
-      `doentqtqklsetbxdprrg.supabase.co` yazıyor; kullanıcıda güven kaybı yaratır.
-      Çözüm: landing + gizlilik politikası yayınlanınca izin ekranını doğrulamaya göndermek.
-      Alternatif: Supabase özel alan adı (Pro planı, aylık ek ücret).
+- [x] **Google OAuth yayına alındı** (2026-09-23). Yapılanlar: izin ekranı markası (uygulama adı
+      "Clickable", ana sayfa / gizlilik / şartlar bağlantıları `clickabletest.com`, yetkili alan
+      adları), ve **Testing → In production**. Kritik: uygulama "Testing" durumundayken yalnızca
+      test kullanıcıları giriş yapabiliyordu ve test kullanıcısı listesi BOŞTU — yani proje sahibi
+      dışında kimse Google ile giremezdi. Artık herkes girebilir, token'lar da 7 günde düşmüyor.
+      Hassas kapsam kullanmadığımız için (yalnızca `email profile`) Google incelemesi gerekmiyor.
+- [ ] **Giriş ekranındaki alan adı yazısı.** Hesap seçme ekranı hâlâ
+      "doentqtqklsetbxdprrg.supabase.co uygulamasına devam edin" diyor; Google bu satırda
+      yönlendirme adresinin alan adını gösteriyor. Marka ayarlarının yayılması birkaç saat
+      sürebilir; düzelmezse tek kalıcı çözüm Supabase Custom Domain eklentisi (Pro plan,
+      aylık ek ücret) ile adresi `auth.clickabletest.com` yapmak. Karar sende — gerçek
+      kullanıcılar gelmeden şart değil.
 - [ ] **İkon ve açılış ekranı.** Şu an Expo'nun varsayılanları. E3'te gerçek tasarım gerekecek.
 
 ## 5. Para tarafı (Faz D — ilk kullanıcılar gelene kadar bekleyebilir)
