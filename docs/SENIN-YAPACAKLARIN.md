@@ -8,17 +8,13 @@
 
 ## 1. Şimdi yapılabilir (kısa işler)
 
-- [ ] **`.env.example` dosyasını commit'le.** Ortamım `.env` dosyalarını okumayı engelliyor, bu yüzden
-      göremediğim bir dosyayı push'lamadım. İçinde gerçek anahtar yoksa:
-      `git add .env.example && git commit -m "chore: add env example"`
-- [ ] **Docker Desktop'ı açılışta başlat.** Ayarlar → "Start Docker Desktop when you sign in".
-      Yerel Supabase bunsuz çalışmıyor.
-- [ ] **Supabase projesinin adını değiştir.** Şu an "gokcekantarci@hotmail.com's Project";
-      Settings → General → "Clickable staging" yap.
+- [x] **`.env.example` commit'lendi** (2026-09-23; içinde gerçek anahtar yok).
+- [x] **Docker açılışta başlıyor** (2026-09-23, `AutoStart = True`).
+- [x] **Supabase projesi "Clickable staging" oldu** (2026-09-23).
 - [ ] **GitHub deposunun adı** `yt-colabber`. İstersen `clickable` yap (Settings → Rename).
       Ben senin deponun adını değiştirmiyorum.
-- [ ] **Marka ve alan adı kontrolü.** Mağazada "Clickable" çakışması yok ama ticari marka taraması
-      ve `clickable.app` benzeri bir alan adı alma kararı sende. Landing (E1) bunu bekliyor.
+- [x] **Alan adı alındı: `clickabletest.com`** (2026-09-23). Ticari marka taraması hâlâ senin kararın;
+      `clickable.app/.com/.io` başkalarında.
 
 ## 2. Cihazda test (kod hazır, doğrulama sende)
 
@@ -37,19 +33,21 @@
 
 ## 3. Staging'i tam çalışır hale getirme
 
-- [ ] **Vault sırlarını gir** (cron'un Edge Function'ları çağırabilmesi için). Supabase → SQL Editor:
+- [x] **Vault sırları girildi** (2026-09-23; cron → Edge Function yolu doğrulandı). Komutlar:
+      **Vault sırlarını gir** (cron'un Edge Function'ları çağırabilmesi için). Supabase → SQL Editor:
       ```sql
       select vault.create_secret('https://doentqtqklsetbxdprrg.supabase.co', 'project_url');
       select vault.create_secret('<service-role-key>', 'service_role_key');
       ```
       Service role key: Settings → API Keys → Secret keys. **Bu anahtarı bana gönderme.**
-- [ ] **YouTube anahtarını staging'e ekle ve fonksiyonları deploy et:**
+- [x] **YouTube anahtarı staging'de ve fonksiyonlar deploy edildi** (2026-09-23:
+      `signed-media`, `refresh-niche-cache`, `notify`, `delete-account`; 15 nişin hepsinde decoy var).
+      Komutlar:
       ```powershell
       pnpm exec supabase secrets set YOUTUBE_API_KEY=<anahtar> --project-ref doentqtqklsetbxdprrg
       pnpm exec supabase functions deploy signed-media refresh-niche-cache notify
       ```
-- [ ] **Site URL'i düzelt.** Auth → URL Configuration → Site URL şu an `http://localhost:3000`.
-      Landing yayına girince gerçek adresi koy.
+- [x] **Site URL `https://clickabletest.com` oldu** (2026-09-23).
 - [ ] **E-posta gönderimi (Resend).** Supabase'in kendi SMTP'si saatte 2-3 e-posta ile sınırlı;
       gerçek kullanıcı gelmeden önce Resend hesabı açıp Supabase → Auth → SMTP'ye bağlamalıyız.
 
@@ -89,13 +87,14 @@
 
 - [x] **Alan adı alındı: `clickabletest.com`** (Cloudflare Registrar, 2026-09-23, 10,46 $/yıl,
       otomatik yenileme açık). Kodda varsayılan adres bu; `PUBLIC_SITE_URL` vermeye gerek yok.
-- [ ] **Cloudflare Pages projesi**: repoyu bağla, build `pnpm install --frozen-lockfile &&
-      pnpm --filter landing build`, çıktı `apps/landing/dist` (ayrıntı SETUP.md'de).
-- [ ] **Destek e-postası**: Cloudflare → Email → Email Routing ile `support@clickabletest.com`
-      adresini kendi kutuna yönlendir (ücretsiz, alan adıyla birlikte geliyor). Sayfalardaki
-      adres zaten bu.
-- [ ] **Google Search Console + Bing**: alan adını doğrula, `sitemap.xml` gönder. SEO'nun saati
-      burada işlemeye başlar.
+- [x] **Cloudflare Pages projesi `clickable`** kuruldu (2026-09-23): repo bağlı, her main push'unda
+      otomatik deploy. Canlı: https://clickabletest.com (www de bağlı, `clickable.pages.dev` yedek).
+- [x] **`support@clickabletest.com`** Cloudflare Email Routing ile gokcekantarci@hotmail.com'a
+      yönlendiriliyor (2026-09-23). İlk gerçek postayı alınca çalıştığını teyit et.
+- [x] **Google Search Console**: alan adı DNS TXT ile doğrulandı, `sitemap.xml` gönderildi
+      (2026-09-23). İlk saatlerde "Getirilemedi" diyebilir; Google birkaç saat içinde tekrar dener,
+      1-2 gün sonra "Başarılı" olmalı — olmazsa haber ver.
+- [ ] **Bing Webmaster Tools**: Search Console'dan içe aktarma ile 2 dakika sürer (isteğe bağlı).
 - [ ] **Mağaza linkleri** E3'ten sonra `site.ts` içindeki `STORE` sabitine yazılacak; şimdilik
       butonlar "Coming soon" diyor.
 
