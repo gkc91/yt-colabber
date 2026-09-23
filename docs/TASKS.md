@@ -56,7 +56,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - "+1 kredi" ekranında test sahibinin kanalına isteğe bağlı bağlantı (PRODUCT §5). Yalnızca gönderimden sonra; ödül/koşul değil.
   - Kabul: 3 test kullanıcısıyla bir submission'a 3 değerlendirme giriyor, `received_reviews=3`.
 
-- [ ] **B5. Sonuç ekranı**
+- [x] **B5. Sonuç ekranı**
   - `submit/[id]`: `rpc('submission_results')` → thumbnail kartları (seçilme %, kazanan), başlık tahminleri + "doğru/yanlış anladı", hook histogramı (60 kovalı basit bar), etiket dağılımı, yorum listesi + yararlı/değil (`rpc('rate_review')`).
   - Kabul: 5 değerlendirmeli örnekte tüm bölümler doluyor; puanlama reputation'ı değiştiriyor (DB'de doğrula).
 

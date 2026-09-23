@@ -49,3 +49,6 @@
 - 2026-09-23 B4: Değerlendiriciye yalnızca kendisine atanan başlık metni ve klip süresi gönderilir (0007). Diğer başlıklar/thumbnail'lar gizli kalır; submission satırını RLS zaten kapatıyor.
 - 2026-09-23 B4: Kanal bağlantısı `reviewed_channel()` ile, yalnızca değerlendirme kaydı varsa döner. Böylece "gönderimden sonra" kuralı client'ta değil sunucuda garanti.
 - 2026-09-23 B4: Oturum açıkken gelen magic link artık işleniyor (önce sessizce yok sayılıyordu). Farklı hesabın bağlantısına dokunan kullanıcı eski hesapta kalıyordu.
+- 2026-09-23 B5: `submission_results` ham oy sayısını (`picked`) ve her değerlendirmenin gördüğü başlık/thumbnail indeksini de döner (0008). Gerekçe: "≥3 oy farkı" kazanan kuralı ağırlıklı toplamla ölçülemez; tahminler hangi başlığa ait olduğu gösterilmeden anlamsız.
+- 2026-09-23 B5: Kazanan rozeti yalnızca ham oy farkı ≥3 ise gösterilir; aksi halde "sonuç net değil" yazar. Az oyla kazanan ilan etmek gürültüyü sonuç gibi sunmak olurdu.
+- 2026-09-23 B5: Hook histogramı 12 kovaya bölünür (60 sn klipte 5 sn). Kova sayısı sabit; klip daha kısaysa kova aralığı küçülür.

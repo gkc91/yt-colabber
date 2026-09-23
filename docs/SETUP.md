@@ -67,6 +67,11 @@ Sırlar yoksa günlük iş sessizce atlanır (hata vermez).
 node scripts/check-review.mjs        # 3 kullanıcı bir submission'ı değerlendirir, received_reviews=3
 ```
 
+## Sonuç ekranı kontrolü (B5)
+```powershell
+node scripts/check-results.mjs       # 5 değerlendirme, tüm bölümler, puanlama itibarı değiştiriyor
+```
+
 ## Supabase Edge Functions
 ```powershell
 supabase functions serve            # yerel

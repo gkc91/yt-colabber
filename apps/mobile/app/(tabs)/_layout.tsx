@@ -50,6 +50,7 @@ export default function TabLayout() {
       {/* Alt ekranlar sekme çubuğunda görünmez; kendi sekmelerinden açılır. */}
       <Tabs.Screen name="review/[taskId]" options={{ href: null, title: t('tabs.review') }} />
       <Tabs.Screen name="submit/new" options={{ href: null, title: t('submit.newTest') }} />
+      <Tabs.Screen name="submit/[id]" options={{ href: null, title: t('results.title') }} />
       <Tabs.Screen
         name="profile/index"
         options={{

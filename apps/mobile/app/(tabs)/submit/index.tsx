@@ -1,6 +1,6 @@
 import { Link, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, StyleSheet } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text, View } from '@/components/Themed';
@@ -29,7 +29,13 @@ export default function SubmissionsScreen() {
         data={submissions.data ?? []}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
-        renderItem={({ item }) => <SubmissionRow submission={item} />}
+        renderItem={({ item }) => (
+          <Link href={{ pathname: '/submit/[id]', params: { id: item.id } }} asChild>
+            <Pressable accessibilityRole="button">
+              <SubmissionRow submission={item} />
+            </Pressable>
+          </Link>
+        )}
         ListEmptyComponent={
           submissions.isPending ? (
             <ActivityIndicator style={styles.loading} />

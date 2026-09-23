@@ -177,5 +177,36 @@
   },
   "profile": {
     "placeholder": "Credits, reputation and settings will appear here."
+  },
+  "results": {
+    "title": "Results",
+    "notFound": "This test isn't available.",
+    "waiting": "No reviews yet. They usually start arriving within a few hours.",
+    "noData": "Nothing here yet.",
+    "thumbnails": {
+      "title": "Thumbnails",
+      "rate": "{rate}% clicked",
+      "winner": "Winner",
+      "noWinner": "Too close to call a winner yet.",
+      "detail": "{picked} of {shown} reviewers · {seconds}s to decide"
+    },
+    "hook": {
+      "title": "First 60 seconds",
+      "finished": "Watched to the end",
+      "median": "Median drop-off",
+      "chartLabel": "When reviewers stopped watching",
+      "bucket": "{seconds}s per bar",
+      "tags": "Why they stopped"
+    },
+    "reviews": {
+      "title": "What they expected",
+      "sawTitle": "Saw: {title}",
+      "understood": "Got it right",
+      "misunderstood": "Got it wrong",
+      "helpful": "Helpful",
+      "notHelpful": "Not helpful",
+      "watchedAll": "Watched the whole clip",
+      "leftAt": "Stopped at {second}s"
+    }
   }
 }
