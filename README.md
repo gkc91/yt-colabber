@@ -7,6 +7,7 @@ Küçük YouTube kanalları için yayın öncesi geri bildirim topluluğu. Thumb
 - Nasıl: `docs/ARCHITECTURE.md`
 - Sıradaki iş: `docs/TASKS.md` (Claude Code'da `/next-task`)
 - Kullanıcıyı nereden bulacağız: `docs/GROWTH.md`
+- Senin yapman gerekenler (hesap, ödeme, cihaz): `docs/SENIN-YAPACAKLARIN.md`
 - Şema: `supabase/migrations/`
 
 Claude Code ile çalışma: repoyu aç, `claude` başlat, `/next-task` de. Her görev sonunda `/review-policy` ile kırmızı çizgileri denetlet.
