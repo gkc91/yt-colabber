@@ -49,6 +49,9 @@
         "projectId": "031c3f84-7b0f-47e3-a55d-f8a2cbbe8f4b"
       }
     },
-    "owner": "clickablex"
+    "owner": "clickablex",
+    "updates": {
+      "url": "https://u.expo.dev/031c3f84-7b0f-47e3-a55d-f8a2cbbe8f4b"
+    }
   }
 }
