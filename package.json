@@ -9,7 +9,7 @@
     "dev:mobile": "pnpm --filter mobile start",
     "dev:mobile:local": "node scripts/dev-mobile-local.mjs",
     "dev:landing": "pnpm --filter landing dev",
-    "db:reset": "supabase db reset",
+    "db:reset": "supabase db reset && node scripts/local-storage-index.mjs",
     "db:types": "supabase gen types typescript --local --schema public > apps/mobile/src/lib/database.types.ts",
     "test:db": "supabase test db",
     "lint": "pnpm -r --if-present lint",

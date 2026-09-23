@@ -748,6 +748,10 @@ export type Database = {
         Returns: undefined
       }
       is_pro: { Args: { p: string }; Returns: boolean }
+      media_paths: {
+        Args: { p_submission_id?: string; p_task_id?: string }
+        Returns: Json
+      }
       next_review_task: { Args: never; Returns: Json }
       rate_review: {
         Args: {

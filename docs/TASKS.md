@@ -33,7 +33,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 
 ## Faz B — Çekirdek döngü
 
-- [ ] **B1. StorageAdapter + medya yükleme**
+- [x] **B1. StorageAdapter + medya yükleme**
   - `src/lib/storage/StorageAdapter.ts` (`uploadThumbnail`, `uploadClip`, `getSignedUrl`), `SupabaseStorage.ts`.
   - Edge Function `signed-media`: girdi `task_id` veya `submission_id`; yetki kontrolü (reviewer'ın açık görevi var mı / owner mı); 60 dk signed URL döner.
   - Kabul: yüklenen dosya `media/clips/{uid}/...` yolunda; başkası signed URL alamıyor (test).

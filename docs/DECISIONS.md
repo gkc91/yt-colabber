@@ -25,3 +25,8 @@
 - 2026-09-23 A4: EAS profilleri development / preview / production; `appVersionSource: remote`, `runtimeVersion.policy: appVersion`. Supabase URL ve anon key EAS ortam değişkenlerinde (depoda değil).
 - 2026-09-23 A4: Staging Supabase projesi `doentqtqklsetbxdprrg` (eu-west-3); 0001-0003 uygulandı, RLS API üzerinden doğrulandı (anon profil/ledger göremiyor). Seed yalnızca yerelde kalır.
 - 2026-09-23 A4: Hosted projede redirect listesi dar tutuldu: sadece `clickable://auth`. `exp://**` yalnızca yerel config'te.
+- 2026-09-23 B1: Medya yetkisi Postgres'te (`media_paths()`, 0004); Edge Function `signed-media` yalnızca imzalar. Gerekçe: kural sunucuda ve pgTAP ile CI'da test edilebilir olmalı.
+- 2026-09-23 B1: Değerlendirici YALNIZCA kendisine atanan thumbnail'i alır (başlangıç taslağı hepsini veriyordu — testin tasarımını ele veriyordu).
+- 2026-09-23 B1: `signed-media` göreli yol döner, tam adresi client kendi Supabase URL'iyle kurar. Gerekçe: yerelde imza URL'i Docker içi host (`kong`) taşıyor ve cihazdan çözülemiyor.
+- 2026-09-23 B1: pgTAP testleri kendi nişlerini açar; `next_review_task` veritabanındaki başka submission'ları seçip testi dış duruma bağlamasın.
+- 2026-09-23 B1: Yerel storage yükleme indeksi (`bucketid_objname`) `pnpm db:reset` içinde script ile oluşturulur — CLI imaj sürümleri uyuşana kadar geçici.

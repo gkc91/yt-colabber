@@ -27,6 +27,15 @@ Yerel Supabase ile `.env` gerekmez: `pnpm dev:mobile:local` (web/simülatör) ve
 Yerel test kullanıcıları: `alice@`, `bob@`, `cara@clickable.test`. Magic link e-postaları http://127.0.0.1:54324 (Mailpit) adresine düşer.
 Native modüller (react-native-purchases, compressor) Expo Go'da çalışmaz → `eas build --profile development` ile dev client al, onunla test et.
 
+## Medya erişimi kontrolü (B1)
+Yüklemeyi ve imzalı adresleri uçtan uca dener (yerel stack + `supabase functions serve` gerekir):
+```powershell
+node scripts/check-media-access.mjs      # önce db reset yapar; --no-reset ile atlanır
+```
+Not: `pnpm db:reset` ayrıca `scripts/local-storage-index.mjs` çalıştırır. Yerel Postgres imajı ile
+storage servisi sürümleri uyuşmadığı için gereken geçici bir indeks; hosted'a gitmez, imajlar
+hizalanınca silinecek.
+
 ## Supabase Edge Functions
 ```powershell
 supabase functions serve            # yerel

@@ -12,12 +12,15 @@ insert into auth.users (id, email, raw_user_meta_data) values
   ('aaaaaaaa-0000-0000-0000-000000000002', 'honest@test.local', '{"full_name":"Honest"}'),
   ('aaaaaaaa-0000-0000-0000-000000000003', 'fast@test.local',   '{"full_name":"Fast"}'),
   ('aaaaaaaa-0000-0000-0000-000000000004', 'liar@test.local',   '{"full_name":"Liar"}');
-update profiles set niche_id = (select id from niches where slug = 'animation'), onboarding_done = true
+-- Teste özel niş: next_review_task veritabanındaki başka submission'ları seçemesin
+-- (testler dış duruma bağlı olmamalı).
+insert into niches (slug, name) values ('test-credits', 'Test niche (credits)');
+update profiles set niche_id = (select id from niches where slug = 'test-credits'), onboarding_done = true
   where id::text like 'aaaaaaaa-0000-0000-0000-00000000000_';
 -- next_review_task 5 decoy ister
 insert into niche_thumbnail_cache (niche_id, video_id, title, thumbnail_url)
-select (select id from niches where slug = 'animation'), 'test_decoy_'||g, 'Decoy '||g, 'https://example.test/'||g||'.jpg'
-from generate_series(1,5) g on conflict do nothing;
+select (select id from niches where slug = 'test-credits'), 'test_decoy_'||g, 'Decoy '||g, 'https://example.test/'||g||'.jpg'
+from generate_series(1,5) g;
 
 -- ---------- test_credits_signup_bonus_is_five ----------
 select is(balance_of('aaaaaaaa-0000-0000-0000-000000000001'), 5, 'signup: yeni kullanıcı 5 kredi ile başlar');
