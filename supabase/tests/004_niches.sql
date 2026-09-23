@@ -1,7 +1,7 @@
 -- 004_niches.sql — niş sorguları ve cache yenileme işi (0006).
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(7);
+select plan(8);
 
 select is(
   (select count(*)::int from niches where is_active and array_length(queries, 1) is null),
@@ -26,7 +26,8 @@ select is(
   (select count(*)::int from net.http_request_queue),
   0, 'trigger_refresh_niche_cache: sır yokken istek göndermez');
 
--- Sırlar varsa gerçekten istek kuyruğa girmeli (cron yolunun asıl testi)
+-- Sırlar varsa istek kuyruğa girmeli. 0015'ten beri niş başına BİR istek: tek büyük
+-- istek staging'de yarıda kalıyor ve nişlerin yarısı boş kalıyordu.
 do $$ begin
   perform vault.create_secret('http://kong:8000', 'project_url');
   perform vault.create_secret('test-service-role-key', 'service_role_key');
@@ -36,7 +37,14 @@ do $$ begin perform trigger_refresh_niche_cache(); end $$;
 select is(
   (select count(*)::int from net.http_request_queue
     where url = 'http://kong:8000/functions/v1/refresh-niche-cache'),
-  1, 'trigger_refresh_niche_cache: sırlar varsa Edge Function çağrısı kuyruğa girer');
+  (select count(*)::int from niches_to_refresh()),
+  'trigger_refresh_niche_cache: her niş için ayrı istek kuyruğa girer');
+
+select is(
+  (select count(*)::int from net.http_request_queue
+    where url = 'http://kong:8000/functions/v1/refresh-niche-cache'
+      and convert_from(body, 'utf8')::jsonb ->> 'niche' = 'gaming'),
+  1, 'trigger_refresh_niche_cache: istek gövdesi nişi taşır');
 
 select * from finish();
 rollback;

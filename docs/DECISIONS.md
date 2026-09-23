@@ -86,3 +86,4 @@
 - 2026-09-23 G0: Demo değerlendirmesi de +1 kredi kazandırır. Emek gerçek; ödülü kesmek değerlendiriciyi cezalandırmak olurdu.
 - 2026-09-23 G0: `create_demo_submission` yetkisi `authenticated`'tan alındı — demo açmak yalnızca service_role (seed scripti) işi.
 - 2026-09-23 G0: Örnek test klipleri üretilmiş video değil, kendi kanallarımızın gerçek ilk 60 saniyesi olacak (seeds/demo/README.md). Thumbnail üretilebilir — zaten test edilen şey o.
+- 2026-09-23 (staging bulgusu): `trigger_refresh_niche_cache()` tek bir `net.http_post` ile bütün nişleri gezen bir çağrı yapıyordu; staging'de istek yarıda kalıp yalnızca ilk 7 niş doldu. 0015 ile veritabanı niş başına ayrı istek atıyor (timeout 20 sn). Tek nişlik çağrı ~3 sn sürüyor, biri düşerse diğerleri etkilenmiyor. Regresyon testi: 004_niches.sql artık kuyrukta niş sayısı kadar istek ve gövdede niş adı arıyor.
