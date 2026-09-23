@@ -63,3 +63,7 @@
 - 2026-09-23 C2: `DeviceNotRegistered` yanıtında kullanıcının push token'ı temizlenir; aksi halde her turda aynı hata tekrarlanırdı.
 - 2026-09-23 C2: Hatırlatma (tasks_waiting) günde en fazla bir kez ve yalnızca 24 saattir değerlendirme yapmamış, kapsamında ≥5 boş slot olan, token'ı olan kullanıcılara gider (PRODUCT §13).
 - 2026-09-23 C2: Bildirim izni onboarding'de değil, Değerlendir sekmesinin boş ekranında isteniyor — kullanıcı tam o anda "haber ver" ihtiyacını hissediyor.
+- 2026-09-23 C3: Rapor yalnızca içeriği görmüş kişiden kabul edilir (submission → görevi olan değerlendirici, review → testin sahibi). Kontrol `report_content()` içinde; `reports` tablosuna doğrudan insert kapatıldı.
+- 2026-09-23 C3: 3 rapor alıp gizlenen testin kullanılmayan kredisi sahibine iade edilir. Önceden kredi askıda kalıyordu: test artık değerlendirme alamıyor ama parası da geri dönmüyordu.
+- 2026-09-23 C3: Raporlanan değerlendirme silinmez ve itibarı düşmez, yalnızca `is_reported` ile işaretlenir. Gerekçe: doğrulanmamış tek taraflı rapor ceza olamaz; aksi halde olumsuz ama dürüst geri bildirim raporlanarak sildirilebilirdi. Moderasyon insana kalır.
+- 2026-09-23 C3: Rapor sebebi sabit listeden seçilir (`inappropriate`, `spam`, `abusive`, `copyright`, `other`); serbest metin ayrı `note` alanında.

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { ReportSheet } from '@/features/reports/ReportSheet';
 import { t } from '@/i18n';
 
 import type { ResultReview } from '../api';
@@ -59,6 +60,11 @@ export function ReviewList({ reviews, titles, busyReviewId, onRate, onPromise }:
               ? t('results.reviews.watchedAll')
               : t('results.reviews.leftAt', { second: review.leave_second })}
           </Text>
+
+          <ReportSheet
+            target={{ type: 'review', id: review.id }}
+            label={t('report.reportReview')}
+          />
 
           <View style={styles.actions}>
             <Choice

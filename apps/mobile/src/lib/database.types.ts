@@ -323,6 +323,47 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          attempts: number
+          created_at: string
+          error: string | null
+          id: string
+          kind: Database["public"]["Enums"]["notification_kind"]
+          payload: Json
+          profile_id: string
+          sent_at: string | null
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: Database["public"]["Enums"]["notification_kind"]
+          payload?: Json
+          profile_id: string
+          sent_at?: string | null
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["notification_kind"]
+          payload?: Json
+          profile_id?: string
+          sent_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           also_review_languages: string[]
@@ -331,6 +372,8 @@ export type Database = {
           device_ids: string[]
           display_name: string | null
           expo_push_token: string | null
+          flagged_at: string | null
+          flagged_reason: string | null
           handle: string | null
           id: string
           is_flagged: boolean
@@ -348,6 +391,8 @@ export type Database = {
           device_ids?: string[]
           display_name?: string | null
           expo_push_token?: string | null
+          flagged_at?: string | null
+          flagged_reason?: string | null
           handle?: string | null
           id: string
           is_flagged?: boolean
@@ -365,6 +410,8 @@ export type Database = {
           device_ids?: string[]
           display_name?: string | null
           expo_push_token?: string | null
+          flagged_at?: string | null
+          flagged_reason?: string | null
           handle?: string | null
           id?: string
           is_flagged?: boolean
@@ -427,6 +474,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          note: string | null
           reason: string
           reporter_id: string
           target_id: string
@@ -435,6 +483,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          note?: string | null
           reason: string
           reporter_id: string
           target_id: string
@@ -443,6 +492,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          note?: string | null
           reason?: string
           reporter_id?: string
           target_id?: string
@@ -519,6 +569,7 @@ export type Database = {
           decision_ms: number
           helpful: boolean | null
           id: string
+          is_reported: boolean
           leave_second: number | null
           picked_candidate: boolean
           picked_position: number
@@ -540,6 +591,7 @@ export type Database = {
           decision_ms: number
           helpful?: boolean | null
           id?: string
+          is_reported?: boolean
           leave_second?: number | null
           picked_candidate: boolean
           picked_position: number
@@ -561,6 +613,7 @@ export type Database = {
           decision_ms?: number
           helpful?: boolean | null
           id?: string
+          is_reported?: boolean
           leave_second?: number | null
           picked_candidate?: boolean
           picked_position?: number
@@ -759,6 +812,7 @@ export type Database = {
         Returns: Json
       }
       next_review_task: { Args: never; Returns: Json }
+      queue_task_reminders: { Args: never; Returns: number }
       rate_review: {
         Args: {
           p_helpful: boolean
@@ -768,6 +822,15 @@ export type Database = {
         Returns: undefined
       }
       register_device: { Args: { p_device_id: string }; Returns: undefined }
+      report_content: {
+        Args: {
+          p_note?: string
+          p_reason: string
+          p_target_id: string
+          p_target_type: string
+        }
+        Returns: undefined
+      }
       reviewed_channel: { Args: { p_submission_id: string }; Returns: Json }
       send_message: {
         Args: { p_body: string; p_match: string }
@@ -792,6 +855,7 @@ export type Database = {
         }
         Returns: string
       }
+      trigger_notify: { Args: never; Returns: undefined }
       trigger_refresh_niche_cache: { Args: never; Returns: undefined }
     }
     Enums: {
@@ -809,6 +873,7 @@ export type Database = {
         | "purchase"
         | "subscription_grant"
         | "admin"
+      notification_kind: "reviews_arriving" | "test_completed" | "tasks_waiting"
       submission_status: "open" | "completed" | "cancelled" | "hidden"
       subscriber_band:
         | "b0_100"
@@ -960,6 +1025,11 @@ export const Constants = {
         "purchase",
         "subscription_grant",
         "admin",
+      ],
+      notification_kind: [
+        "reviews_arriving",
+        "test_completed",
+        "tasks_waiting",
       ],
       submission_status: ["open", "completed", "cancelled", "hidden"],
       subscriber_band: [

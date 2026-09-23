@@ -154,6 +154,7 @@ export default function ReviewTaskScreen() {
 
       {stage === 'hook' ? (
         <HookStep
+          submissionId={reviewTask.submission_id}
           clipUrl={media.data?.clip ?? ''}
           comment={comment}
           tags={tags}

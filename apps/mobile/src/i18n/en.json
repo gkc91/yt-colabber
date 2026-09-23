@@ -222,5 +222,29 @@
       "watchedAll": "Watched the whole clip",
       "leftAt": "Stopped at {second}s"
     }
+  },
+  "report": {
+    "title": "Report this",
+    "body": "Tell us what's wrong. Reports are reviewed by a person; nothing is deleted automatically.",
+    "reasons": {
+      "inappropriate": "Inappropriate content",
+      "spam": "Spam or misleading",
+      "abusive": "Abusive language",
+      "copyright": "Not their content",
+      "other": "Something else"
+    },
+    "noteLabel": "Anything to add? (optional)",
+    "notePlaceholder": "A line of context helps",
+    "send": "Send report",
+    "cancel": "Cancel",
+    "thanks": "Reported. Thanks for flagging it.",
+    "reportTest": "Report this test",
+    "reportReview": "Report this review",
+    "errors": {
+      "no_access": "You can only report something you have seen here.",
+      "invalid_reason": "Pick one of the reasons above.",
+      "not_authenticated": "Please sign in again.",
+      "unknown": "Something went wrong. Please try again."
+    }
   }
 }

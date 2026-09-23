@@ -70,7 +70,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 
 - [x] **C1. Anti-fraud kuralları** — `0010_fraud.sql`: trigger `reviews` insert sonrası son 10 değerlendirmede aynı `picked_position` veya hep `leave_second=0` ise reputation −0.3 + `is_flagged`. pgTAP testi.
 - [x] **C2. Push bildirimleri** — `expo_push_token` kaydı; Edge Function `notify` (Expo push API); tetikleyiciler: submission 3'e ulaşınca, tamamlanınca, nişte 5+ bekleyen görev varken 24 saattir değerlendirme yapmamış kullanıcıya günde en fazla 1.
-- [ ] **C3. Rapor / engelle** — submission ve review üzerinde rapor menüsü; `hidden` submission'lar görev havuzundan düşer (zaten status filtresinde).
+- [x] **C3. Rapor / engelle** — submission ve review üzerinde rapor menüsü; `hidden` submission'lar görev havuzundan düşer (zaten status filtresinde).
 - [ ] **C4. Profil ekranı** — kredi geçmişi (ledger), itibar, verilen/alınan sayıları, niş değiştirme (ayda 1), çıkış, hesap silme (Apple zorunlu).
 
 ## Faz D — Para
