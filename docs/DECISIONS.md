@@ -23,3 +23,5 @@
 - 2026-09-23 Uygulama adı **Clickable** (çalışma adı FirstCut'tan değişti). Gerekçe: "tıklanır mı?" sorusu ürünün cevapladığı soru; App Store'da çakışma yok. Elenenler: ScrollStop, Thumbstop, HookLab (hepsi dolu ve komşu kategorilerde), Unlisted (dolu).
 - 2026-09-23 A4: Paket kimliği `app.clickable.mobile` (iOS + Android aynı), şema `clickable://`, Supabase yerel proje adı `clickable`.
 - 2026-09-23 A4: EAS profilleri development / preview / production; `appVersionSource: remote`, `runtimeVersion.policy: appVersion`. Supabase URL ve anon key EAS ortam değişkenlerinde (depoda değil).
+- 2026-09-23 A4: Staging Supabase projesi `doentqtqklsetbxdprrg` (eu-west-3); 0001-0003 uygulandı, RLS API üzerinden doğrulandı (anon profil/ledger göremiyor). Seed yalnızca yerelde kalır.
+- 2026-09-23 A4: Hosted projede redirect listesi dar tutuldu: sadece `clickable://auth`. `exp://**` yalnızca yerel config'te.

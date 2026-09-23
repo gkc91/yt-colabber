@@ -34,6 +34,18 @@ supabase secrets set RC_WEBHOOK_SECRET=... YOUTUBE_API_KEY=... ANTHROPIC_API_KEY
 supabase functions deploy revenuecat-webhook refresh-niche-cache ai-summary signed-media notify
 ```
 
+## Staging Supabase
+Proje: `doentqtqklsetbxdprrg` (bölge eu-west-3). Şema 0001-0003 uygulandı; `clickable://auth` redirect listesinde.
+Seed **gönderilmez** — staging'de sahte kullanıcı yoktur. `niche_thumbnail_cache` boş olduğu için B3 (niş cache) tamamlanana kadar
+`next_review_task` staging'de `niche_cache_empty` döner; giriş ve onboarding çalışır.
+
+```powershell
+pnpm exec supabase login
+pnpm exec supabase link --project-ref doentqtqklsetbxdprrg
+pnpm exec supabase db push          # yeni migration çıktıkça
+pnpm exec supabase migration list --linked
+```
+
 ## EAS
 `apps/mobile/eas.json` hazır: `development` (dev client, internal), `preview` (TestFlight / Play internal test), `production`.
 Tüm komutlar `apps/mobile` klasöründe çalıştırılır.
