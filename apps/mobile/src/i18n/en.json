@@ -171,7 +171,7 @@
       "task_expired": "This task has expired. Grab a new one from the Review tab.",
       "submission_closed": "This test has already collected enough reviews.",
       "invalid_watch": "Something didn't add up in the playback times. Please try again.",
-      "reviewer_blocked": "Your reputation is too low to take new tasks right now.",
+      "reviewer_blocked": "Reviewing is paused on your account. This happens when reviews look automatic — for example the same spot picked every time, or the clip skipped instantly on every task. Reply to your sign-in email if you think this is wrong.",
       "niche_cache_empty": "We're still collecting example videos for your niche. Please try again later."
     }
   },

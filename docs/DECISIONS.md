@@ -56,3 +56,6 @@
 - 2026-09-23 B6: En fazla 3 ek niş, 2 ek dil (DB check constraint + client sınırı). Herkesin her nişi değerlendirmesi geri bildirim kalitesini düşürür.
 - 2026-09-23 B6: Görev sıralamasında kendi nişi önce gelir; ek nişler yalnızca kendi nişinde iş kalmadığında devreye girer.
 - 2026-09-23 B6 (davranış notu): Bir görevi alıp bırakan/süresini dolduran değerlendiriciye o submission bir daha gösterilmez (`next_review_task` görev satırının varlığına bakar, durumuna değil). Kasıtlı: aksi halde aynı test tekrar tekrar denenip elenebilirdi.
+- 2026-09-23 C1: Desen cezası yalnızca 10 değerlendirme dolduktan sonra uygulanır; az veriyle suçlamamak için. Ceza bir kez uygulanır (zaten bayraklıysa tekrar düşmez).
+- 2026-09-23 C1: `profiles.flagged_at` / `flagged_reason` eklendi — destek ve itiraz için bayrağın nedeni kayıtlı olmalı.
+- 2026-09-23 C1: Bayraklanan kullanıcıya gösterilen metin nedeni açıklar ("hep aynı yer, hep anında atlama") ve itiraz yolu söyler; "itibarın düşük" demek yanıltıcıydı (ceza sonrası itibar 0.70 oluyor).
