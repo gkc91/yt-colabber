@@ -325,6 +325,8 @@ export type Database = {
       }
       profiles: {
         Row: {
+          also_review_languages: string[]
+          also_review_niche_ids: number[]
           created_at: string
           device_ids: string[]
           display_name: string | null
@@ -340,6 +342,8 @@ export type Database = {
           reviews_received: number
         }
         Insert: {
+          also_review_languages?: string[]
+          also_review_niche_ids?: number[]
           created_at?: string
           device_ids?: string[]
           display_name?: string | null
@@ -355,6 +359,8 @@ export type Database = {
           reviews_received?: number
         }
         Update: {
+          also_review_languages?: string[]
+          also_review_niche_ids?: number[]
           created_at?: string
           device_ids?: string[]
           display_name?: string | null

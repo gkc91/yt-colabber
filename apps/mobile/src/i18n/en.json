@@ -176,7 +176,19 @@
     }
   },
   "profile": {
-    "placeholder": "Credits, reputation and settings will appear here."
+    "yourChannel": {
+      "title": "Your channel",
+      "body": "Your tests go to {niche} creators who make videos in {language}."
+    },
+    "scope": {
+      "title": "Also review",
+      "body": "Pick a few more niches or languages you're happy to review. Your own tests still go to your niche only, so results stay meaningful.",
+      "niches": "Extra niches ({used}/{max})",
+      "languages": "Extra languages ({used}/{max})",
+      "save": "Save",
+      "saved": "Saved"
+    },
+    "placeholder": "Credit history, reputation and settings arrive with the profile screen."
   },
   "results": {
     "title": "Results",

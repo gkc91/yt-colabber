@@ -52,3 +52,7 @@
 - 2026-09-23 B5: `submission_results` ham oy sayısını (`picked`) ve her değerlendirmenin gördüğü başlık/thumbnail indeksini de döner (0008). Gerekçe: "≥3 oy farkı" kazanan kuralı ağırlıklı toplamla ölçülemez; tahminler hangi başlığa ait olduğu gösterilmeden anlamsız.
 - 2026-09-23 B5: Kazanan rozeti yalnızca ham oy farkı ≥3 ise gösterilir; aksi halde "sonuç net değil" yazar. Az oyla kazanan ilan etmek gürültüyü sonuç gibi sunmak olurdu.
 - 2026-09-23 B5: Hook histogramı 12 kovaya bölünür (60 sn klipte 5 sn). Kova sayısı sabit; klip daha kısaysa kova aralığı küçülür.
+- 2026-09-23 B6: Kolonlar "ek liste" tutar (`also_review_*`), tam liste değil. Gerekçe: kullanıcı kendi nişini değiştirdiğinde (C4, ayda bir) liste bayatlamasın. TASKS'taki `review_niche_ids` adı buna göre güncellendi.
+- 2026-09-23 B6: En fazla 3 ek niş, 2 ek dil (DB check constraint + client sınırı). Herkesin her nişi değerlendirmesi geri bildirim kalitesini düşürür.
+- 2026-09-23 B6: Görev sıralamasında kendi nişi önce gelir; ek nişler yalnızca kendi nişinde iş kalmadığında devreye girer.
+- 2026-09-23 B6 (davranış notu): Bir görevi alıp bırakan/süresini dolduran değerlendiriciye o submission bir daha gösterilmez (`next_review_task` görev satırının varlığına bakar, durumuna değil). Kasıtlı: aksi halde aynı test tekrar tekrar denenip elenebilirdi.
