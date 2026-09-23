@@ -62,7 +62,7 @@ Submission 72 saat açık kalır; sonunda gelen kadarıyla `completed`, kullanı
 - IAP: `credits_10` / `credits_30` / `credits_100`. Pro aylık: 40 kredi + öncelikli kuyruk + 25'e kadar değerlendirici + AI özeti.
 
 ## 9. Politika sınırı (değişmez)
-Uygulama YouTube üzerinde hiçbir etkileşim üretmez ve istemez. Kanal URL'i yalnızca niş/profil içindir. "Abone ol / izle / yorum yap" görevleri, karşılıklı tanıtım kredisi, izlenme/abone takası: **hiçbiri, hiçbir zaman.** Collab modülü yalnızca tanıştırır.
+Uygulama YouTube üzerinde hiçbir etkileşim üretmez ve istemez. İzlenme/abone vaadi verilmez: YouTube'un sahte etkileşim politikası takas ve şişirme hizmetlerini yasaklar (uyarı → ihtar → kanal kapatma), uygulama içi izlemeler YouTube'da izlenme sayılmaz ve ilgisiz aboneler CTR/izlenme süresini düşürerek erişimi azaltır. Vaadimiz: yayın öncesi düzeltme ile **mevcut gösterimden daha fazla izlenme**. Kanal URL'i yalnızca niş/profil içindir. "Abone ol / izle / yorum yap" görevleri, karşılıklı tanıtım kredisi, izlenme/abone takası: **hiçbiri, hiçbir zaman.** Collab modülü yalnızca tanıştırır.
 
 ## 10. İtibar
 `reputation` 0.2–2.0, başlangıç 1.0. Yararlı oyu +0.05, yararsız −0.1, reddedilen değerlendirme −0.2. Oy ağırlığı = reputation. 0.5 altı kredi kazanamaz; 0.3 altı görev alamaz.
@@ -77,6 +77,7 @@ Uygulama YouTube üzerinde hiçbir etkileşim üretmez ve istemez. Kanal URL'i y
 - Profilde "Collab'a açığım" + türler: `joint_video`, `guest`, `shorts`, `end_screen_swap`, `live`.
 - Adaylar: aynı niş + dil, abone bandı ±1, engellenmemiş, daha önce beğenilmemiş. Sıralama: (a) aralarında değerlendirme geçmişi olanlar önce, (b) itibar, (c) yenilik.
 - Kart: kanal adı, band, türler, bio, "seni X kez değerlendirdi / sen onu Y kez".
+- Kanal bağlantısı ("kanala git") YALNIZCA burada gösterilir; değerlendirme ve sonuç ekranlarında gösterilmez (karşılıklılık baskısı doğurur). Hiçbir yerde krediyle ödüllendirilmez.
 - Beğen → karşılıklıysa eşleşme → sohbet (Realtime). Engelle / rapor.
 - Kredi yok, görev yok, YouTube aksiyonu yok.
 

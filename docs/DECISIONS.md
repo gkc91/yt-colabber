@@ -31,3 +31,6 @@
 - 2026-09-23 B1: pgTAP testleri kendi nişlerini açar; `next_review_task` veritabanındaki başka submission'ları seçip testi dış duruma bağlamasın.
 - 2026-09-23 B1: Yerel storage yükleme indeksi (`bucketid_objname`) `pnpm db:reset` içinde script ile oluşturulur — CLI imaj sürümleri uyuşana kadar geçici.
 - 2026-09-23 A4 kabul: Android preview derlemesi telefonda test edildi — uygulama açılıyor, magic link ile giriş yapılıyor, onboarding tamamlanıyor, bakiye 5 görünüyor. iOS derlemesi Apple Developer hesabı alınınca yapılacak.
+- 2026-09-23 Kendi testin tek niş + tek dile gider (sonuç karışmasın); değerlendirme tarafında çoklu niş/dil seçilebilecek → B6 görevi açıldı.
+- 2026-09-23 İzlenme/abone vaadi veren mekanizma kurulmayacak. Gerekçe: YouTube sahte etkileşim politikası (takas → ihtar → kanal kapatma), mağaza kuralları; ayrıca uygulama içi izleme YouTube'da sayılmaz ve ilgisiz abone erişimi düşürür. Vaat: mevcut gösterimden daha yüksek CTR/izlenme.
+- 2026-09-23 "Kanala git" bağlantısı yalnızca Collab kartlarında; değerlendirme/sonuç ekranlarında yok, krediyle bağlantısı yok. (PRODUCT §9, §12)

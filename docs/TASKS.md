@@ -59,6 +59,12 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - `submit/[id]`: `rpc('submission_results')` → thumbnail kartları (seçilme %, kazanan), başlık tahminleri + "doğru/yanlış anladı", hook histogramı (60 kovalı basit bar), etiket dağılımı, yorum listesi + yararlı/değil (`rpc('rate_review')`).
   - Kabul: 5 değerlendirmeli örnekte tüm bölümler doluyor; puanlama reputation'ı değiştiriyor (DB'de doğrula).
 
+- [ ] **B6. Çoklu değerlendirme nişi ve dili**
+  - Kendi testin tek niş + tek dile gider (sonucun anlamlı kalması için değişmez).
+  - `0005_review_scope.sql`: `profiles.review_niche_ids int[]`, `profiles.review_languages text[]` (varsayılan: kendi nişi/dili). `next_review_task` eşleşmesi bu listelere bakar.
+  - Profil ekranında "Şunları da değerlendirebilirim" seçimi; onboarding'de varsayılan tek seçim kalır.
+  - Kabul: iki niş seçen kullanıcı ikisinden de görev alır; kendi submission'ı hâlâ tek nişe gider; pgTAP testi.
+
 ## Faz C — Güven ve kalite
 
 - [ ] **C1. Anti-fraud kuralları** — `0004_fraud.sql`: trigger `reviews` insert sonrası son 10 değerlendirmede aynı `picked_position` veya hep `leave_second=0` ise reputation −0.3 + `is_flagged`. pgTAP testi.
