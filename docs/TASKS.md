@@ -26,7 +26,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
   - `register_device` çağrısı ilk açılışta.
   - Kabul: yeni kullanıcı → onboarding → tabs; bakiye 5 görünür.
 
-- [ ] **A4. EAS + mağaza iskeleti**
+- [x] **A4. EAS + mağaza iskeleti**
   - `eas.json` (development/preview/production), `app.json` bundle id `app.clickable.mobile`, icon/splash placeholder.
   - `eas build --profile preview --platform all`; iOS build TestFlight'a, Android internal test'e yüklenir.
   - Kabul: TestFlight'ta ve Play Internal'da uygulama açılıyor, giriş yapılıyor.

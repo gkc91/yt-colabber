@@ -30,3 +30,4 @@
 - 2026-09-23 B1: `signed-media` göreli yol döner, tam adresi client kendi Supabase URL'iyle kurar. Gerekçe: yerelde imza URL'i Docker içi host (`kong`) taşıyor ve cihazdan çözülemiyor.
 - 2026-09-23 B1: pgTAP testleri kendi nişlerini açar; `next_review_task` veritabanındaki başka submission'ları seçip testi dış duruma bağlamasın.
 - 2026-09-23 B1: Yerel storage yükleme indeksi (`bucketid_objname`) `pnpm db:reset` içinde script ile oluşturulur — CLI imaj sürümleri uyuşana kadar geçici.
+- 2026-09-23 A4 kabul: Android preview derlemesi telefonda test edildi — uygulama açılıyor, magic link ile giriş yapılıyor, onboarding tamamlanıyor, bakiye 5 görünüyor. iOS derlemesi Apple Developer hesabı alınınca yapılacak.
