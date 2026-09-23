@@ -1,12 +1,12 @@
 /** Site-wide constants for the landing pages (E1). */
 
-export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? 'https://clickable.app').replace(
+export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? 'https://clickabletest.com').replace(
   /\/+$/,
   '',
 );
 
-/** Support and privacy contact. Set with the domain (docs/SENIN-YAPACAKLARIN.md). */
-export const CONTACT_EMAIL = 'support@clickable.app';
+/** Support and privacy contact; forwarded by Cloudflare Email Routing. */
+export const CONTACT_EMAIL = 'support@clickabletest.com';
 
 export const LOCALES = ['en', 'tr'] as const;
 export type Locale = (typeof LOCALES)[number];

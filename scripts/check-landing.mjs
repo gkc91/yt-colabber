@@ -7,7 +7,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'apps/landing/dist';
-const SITE = 'https://clickable.app';
+const SITE = 'https://clickabletest.com';
 const LOCALES = ['en', 'tr'];
 
 const NICHES = [

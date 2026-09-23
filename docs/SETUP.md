@@ -97,8 +97,8 @@ pnpm --filter landing og         # public/og.png'i yeniden üret (marka değişi
 Cloudflare Pages ayarları:
 - Build command: `pnpm install --frozen-lockfile && pnpm --filter landing build`
 - Build output directory: `apps/landing/dist`
-- Environment variable: `PUBLIC_SITE_URL=https://<alan-adı>` (canonical, hreflang ve sitemap
-  bunu kullanır; verilmezse `https://clickable.app` varsayılır).
+- Environment variable: `PUBLIC_SITE_URL=https://clickabletest.com` (canonical, hreflang ve sitemap
+  bunu kullanır; varsayılan da odur).
 Sayfalar `/`, `/thumbnail-test`, `/hook-test`, `/for/<nis>` (14 niş), `/privacy`, `/terms`
 ve hepsinin `/tr/...` karşılığı; `sitemap.xml` ve `robots.txt` build'de üretilir.
 

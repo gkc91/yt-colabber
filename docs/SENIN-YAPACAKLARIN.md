@@ -87,12 +87,13 @@
 
 ## 7. Landing yayına alma (E1 kod tarafı bitti)
 
-- [ ] **Alan adı al** ve `PUBLIC_SITE_URL` olarak Cloudflare Pages'e gir. Sayfalar şu an
-      `https://clickable.app` varsayıyor.
+- [x] **Alan adı alındı: `clickabletest.com`** (Cloudflare Registrar, 2026-09-23, 10,46 $/yıl,
+      otomatik yenileme açık). Kodda varsayılan adres bu; `PUBLIC_SITE_URL` vermeye gerek yok.
 - [ ] **Cloudflare Pages projesi**: repoyu bağla, build `pnpm install --frozen-lockfile &&
       pnpm --filter landing build`, çıktı `apps/landing/dist` (ayrıntı SETUP.md'de).
-- [ ] **Destek e-postası** (`support@<alan-adı>`) — gizlilik ve şartlar sayfalarında yazıyor,
-      `apps/landing/src/data/site.ts` içindeki `CONTACT_EMAIL` ile değiştirilecek.
+- [ ] **Destek e-postası**: Cloudflare → Email → Email Routing ile `support@clickabletest.com`
+      adresini kendi kutuna yönlendir (ücretsiz, alan adıyla birlikte geliyor). Sayfalardaki
+      adres zaten bu.
 - [ ] **Google Search Console + Bing**: alan adını doğrula, `sitemap.xml` gönder. SEO'nun saati
       burada işlemeye başlar.
 - [ ] **Mağaza linkleri** E3'ten sonra `site.ts` içindeki `STORE` sabitine yazılacak; şimdilik
