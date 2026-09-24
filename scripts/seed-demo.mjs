@@ -45,9 +45,31 @@ function localEnv() {
   return { url: env.API_URL, key: env.SERVICE_ROLE_KEY };
 }
 
-const { url, key } = process.env.SUPABASE_URL
-  ? { url: process.env.SUPABASE_URL, key: process.env.SERVICE_ROLE_KEY }
-  : localEnv();
+/**
+ * --linked: `supabase link` ile bağlanmış projeye (canlı) yükle. Adres bağlı projeden
+ * okunur, anahtar terminalde sorulur — elle ortam değişkeni yazmak gerekmez.
+ */
+async function linkedEnv() {
+  const refFile = resolve('supabase/.temp/project-ref');
+  if (!existsSync(refFile)) throw new Error('Bağlı proje yok. Önce: pnpm exec supabase link');
+  const ref = readFileSync(refFile, 'utf8').trim();
+  let key = process.env.SERVICE_ROLE_KEY;
+  if (!key) {
+    const { createInterface } = await import('node:readline/promises');
+    const rl = createInterface({ input: process.stdin, output: process.stdout });
+    console.log(`Proje: https://${ref}.supabase.co`);
+    console.log('service_role anahtarı: Supabase paneli → Project Settings → API Keys');
+    key = (await rl.question('Anahtarı yapıştır ve Enter: ')).trim();
+    rl.close();
+  }
+  return { url: `https://${ref}.supabase.co`, key };
+}
+
+const { url, key } = process.argv.includes('--linked')
+  ? await linkedEnv()
+  : process.env.SUPABASE_URL
+    ? { url: process.env.SUPABASE_URL, key: process.env.SERVICE_ROLE_KEY }
+    : localEnv();
 if (!url || !key) throw new Error('SUPABASE_URL ve SERVICE_ROLE_KEY gerekli');
 
 const admin = createClient(url, key, { auth: { persistSession: false } });

@@ -51,7 +51,7 @@ olmalı. Thumbnail üretilmiş olabilir (zaten test edilen şey o), klip olmamal
 
 Staging/prod için:
 
-    SUPABASE_URL=https://<ref>.supabase.co SERVICE_ROLE_KEY=<key> node scripts/seed-demo.mjs
+    node scripts/seed-demo.mjs --linked   # bağlı proje; anahtarı terminalde sorar
 
 Aynı başlık iki kez yüklenmez; dosyaları değiştirmeden tekrar çalıştırmak güvenlidir.
 Medya dosyaları repoya konmaz (`.gitignore`), yalnızca `manifest.json` izlenir.
