@@ -90,7 +90,13 @@
          `EXPO_PUBLIC_RC_ANDROID_KEY` olarak yaz.
 - [ ] **App Store Connect ve Play Console ödeme/vergi bilgileri.** SETUP.md'deki not: ödeme
       bilgilerine yalnızca 20/B istisna hesabını gir.
-- [ ] **Anthropic API anahtarı** (D3, Pro kullanıcılara AI özeti için).
+- [ ] **Anthropic API anahtarı** (D3, Pro kullanıcılara AI özeti için) — **Pro satışa çıkmadan
+      hemen önce**, daha erken değil. Anahtar yokken özellik uygulamada hiç görünmüyor.
+      Önemli: console.anthropic.com'da **ayrı bir workspace** aç, anahtarı orada üret ve o
+      workspace'e aylık harcama limiti koy (10 $ fazlasıyla yeter; özet başına ~0,007 $).
+      Böylece kendi Claude Code/API kullanımınla uygulamanın bütçesi birbirini tüketmez.
+      Claude Max aboneliğinden bağımsızdır — Max bir sunucudan çağrılamaz.
+      `supabase secrets set ANTHROPIC_API_KEY=<anahtar> --project-ref doentqtqklsetbxdprrg`
 
 ## 6. Ölçüm ve büyüme (GROWTH.md)
 
