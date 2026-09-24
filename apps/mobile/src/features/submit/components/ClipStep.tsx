@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text, View } from '@/components/Themed';
@@ -17,7 +17,9 @@ export function ClipStep({ clip, busy, progress, onPick }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{t('submit.wizard.clipTitle')}</Text>
-      <Text style={styles.hint}>{t('submit.wizard.clipHint')}</Text>
+      <Text style={styles.hint}>
+        {Platform.OS === 'web' ? t('submit.wizard.clipHintWeb') : t('submit.wizard.clipHint')}
+      </Text>
 
       {clip ? (
         <Text style={styles.ready}>
@@ -34,7 +36,13 @@ export function ClipStep({ clip, busy, progress, onPick }: Props) {
         </Text>
       ) : (
         <Button
-          title={clip ? t('submit.wizard.replaceClip') : t('submit.wizard.pickClip')}
+          title={
+            clip
+              ? t('submit.wizard.replaceClip')
+              : Platform.OS === 'web'
+                ? t('submit.wizard.pickClipWeb')
+                : t('submit.wizard.pickClip')
+          }
           variant="secondary"
           onPress={onPick}
         />

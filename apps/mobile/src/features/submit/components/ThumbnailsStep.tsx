@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, Platform } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Text, View } from '@/components/Themed';
@@ -43,7 +43,11 @@ export function ThumbnailsStep({ thumbnails, busy, onAdd, onRemove }: Props) {
 
       {thumbnails.length < MAX_THUMBNAILS ? (
         <Button
-          title={t('submit.wizard.addThumbnail')}
+          title={
+            Platform.OS === 'web'
+              ? t('submit.wizard.addThumbnailWeb')
+              : t('submit.wizard.addThumbnail')
+          }
           variant="secondary"
           onPress={onAdd}
           loading={busy}

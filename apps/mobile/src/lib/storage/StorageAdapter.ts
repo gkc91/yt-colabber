@@ -14,8 +14,8 @@ export type SignedMediaRequest = { taskId: string } | { submissionId: string };
 
 export interface StorageAdapter {
   /** Yerel dosyayı yükler ve depolama yolunu döner (URL değil; URL'ler imzalanarak alınır). */
-  uploadThumbnail(userId: string, localUri: string): Promise<string>;
-  uploadClip(userId: string, localUri: string): Promise<string>;
+  uploadThumbnail(userId: string, localUri: string, extension?: string): Promise<string>;
+  uploadClip(userId: string, localUri: string, extension?: string): Promise<string>;
   /** İzin verilen dosyalar için süreli (60 dk) imzalı adresler. Yetkiyi sunucu belirler. */
   getSignedUrls(request: SignedMediaRequest): Promise<SignedMedia>;
   /** Yarım kalan yüklemeleri temizler. Sunucu yalnızca kendi klasörüne izin verir (0005). */

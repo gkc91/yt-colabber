@@ -37,12 +37,14 @@ export async function uploadAndCreate(
   try {
     for (const thumbnail of input.thumbnails) {
       if (stop()) throw new Cancelled();
-      uploaded.push(await storage.uploadThumbnail(input.userId, thumbnail.uri));
+      uploaded.push(
+        await storage.uploadThumbnail(input.userId, thumbnail.uri, thumbnail.extension),
+      );
       options.onProgress?.({ done: uploaded.length, total });
     }
 
     if (stop()) throw new Cancelled();
-    const clipPath = await storage.uploadClip(input.userId, input.clip.uri);
+    const clipPath = await storage.uploadClip(input.userId, input.clip.uri, input.clip.extension);
     uploaded.push(clipPath);
     options.onProgress?.({ done: total, total });
 

@@ -95,7 +95,15 @@ gerçek bir üreticinin testine sahte geri bildirim yazılmaz.
 Push: yeni değerlendirme, test tamamlandı, görev bekliyor, yeni eşleşme, yeni mesaj. E-posta yalnızca magic link.
 
 ## 14. Web/PWA kapsamı
-Web'de: giriş, değerlendirme, sonuç, profil. Web'de YOK: submission oluşturma, satın alma (→ "uygulamada aç").
+Web'de: giriş, değerlendirme, sonuç, profil **ve test açma**. Web'de YOK: satın alma (→ "uygulamada aç";
+mağaza kuralı ve 20/B düzeni).
+
+Test açmanın iki platformdaki farkı (2026-09-24'te değişti, DECISIONS):
+- **Uygulama:** uzun video 60 saniyeye kesilir ve cihazda 720p'ye sıkıştırılır.
+- **Web:** sıkıştırma YOK. Klip zaten ≤60 sn, ≤8 MB ve MP4/MOV olmalı; değilse kapıda reddedilir
+  ve ne yapması gerektiği söylenir. Thumbnail'lar tarayıcıda 1280×720'ye indirilir.
+Gerekçe: üreticiler kurguyu ve thumbnail'ı PC'de yapıyor; dosyayı telefona taşıtmak PC
+kullanıcısını kaybettiriyor. Sunucu tarafı transcoding yine YOK.
 
 ## 15. Fiyat taslağı (RevenueCat ürün id'leri)
 `credits_10` $2.99 · `credits_30` $6.99 · `credits_100` $17.99 · `pro_monthly` $6.99 · `pro_yearly` $49.99. Mağaza yerel fiyatları otomatik.

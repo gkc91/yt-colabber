@@ -40,6 +40,29 @@ export function validateTitles(titles: string[]): TitlesProblem | null {
 
 export type ClipProblem = 'clip_too_long' | 'clip_too_short';
 
+/** Masaüstünden seçilen dosyanın kapıda reddedilme sebepleri (E5). */
+export type ClipFileProblem = ClipProblem | 'clip_too_large' | 'clip_wrong_type';
+
+export const CLIP_MAX_BYTES = 8 * 1024 * 1024; // PRODUCT §6
+export const CLIP_TYPES = ['video/mp4', 'video/quicktime'] as const;
+
+/**
+ * Tarayıcıda sıkıştırma yapmıyoruz (sunucuda da yok): dosya zaten kurallara uyuyorsa
+ * kabul, uymuyorsa net sebep. Kullanıcı neyi beklediğimizi ekranda önceden görüyor.
+ */
+export function validateClipFile(file: {
+  durationSeconds: number;
+  bytes: number;
+  mimeType: string;
+}): ClipFileProblem | null {
+  const type = file.mimeType.split(';')[0].trim().toLowerCase();
+  if (!(CLIP_TYPES as readonly string[]).includes(type)) return 'clip_wrong_type';
+  const duration = validateClipDuration(file.durationSeconds);
+  if (duration) return duration;
+  if (file.bytes > CLIP_MAX_BYTES) return 'clip_too_large';
+  return null;
+}
+
 export function validateClipDuration(seconds: number): ClipProblem | null {
   // Seçici 60 sn ile sınırlı; yine de bir saniyelik yuvarlama payı bırakıyoruz.
   if (seconds > CLIP_MAX_SECONDS + 1) return 'clip_too_long';

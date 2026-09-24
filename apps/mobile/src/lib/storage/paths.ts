@@ -42,18 +42,23 @@ function assertUserId(userId: string) {
   }
 }
 
-export function thumbnailPath(userId: string, fileId: string, uri: string): string {
+export function thumbnailPath(
+  userId: string,
+  fileId: string,
+  uri: string,
+  extension?: string,
+): string {
   assertUserId(userId);
-  const ext = extensionFromUri(uri);
+  const ext = (extension ?? extensionFromUri(uri)).toLowerCase();
   if (!(ext in THUMBNAIL_TYPES)) {
     throw new MediaError('unsupported_type', `Thumbnail type not allowed: ${ext || 'none'}`);
   }
   return `thumbs/${userId}/${fileId}.${ext}`;
 }
 
-export function clipPath(userId: string, fileId: string, uri: string): string {
+export function clipPath(userId: string, fileId: string, uri: string, extension?: string): string {
   assertUserId(userId);
-  const ext = extensionFromUri(uri);
+  const ext = (extension ?? extensionFromUri(uri)).toLowerCase();
   if (!(ext in CLIP_TYPES)) {
     throw new MediaError('unsupported_type', `Clip type not allowed: ${ext || 'none'}`);
   }

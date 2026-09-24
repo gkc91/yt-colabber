@@ -31,16 +31,28 @@ import { t, type MessageKey } from '@/i18n';
 const STEPS = 5;
 
 export default function NewSubmission() {
-  // PRODUCT §14: submission oluşturma yalnızca uygulamada (video seçme/sıkıştırma cihaz işi).
-  if (Platform.OS === 'web') return <WebNotice />;
+  // E5: masaüstünden de test açılabiliyor. Fark: cihazda uzun video 60 saniyeye kesilip
+  // sıkıştırılıyor, tarayıcıda sıkıştırma yok — dosya zaten kurallara uymalı.
   return <Wizard />;
 }
 
-function WebNotice() {
+/** Ne beklediğimizi baştan söyleriz; kullanıcı kuralları hata mesajıyla öğrenmesin. */
+function Requirements() {
+  const colors = Colors[useColorScheme()];
   return (
-    <View style={styles.notice}>
-      <Text style={styles.noticeTitle}>{t('submit.webOnly.title')}</Text>
-      <Text style={styles.noticeBody}>{t('submit.webOnly.body')}</Text>
+    <View style={[styles.requirements, { borderColor: colors.border }]}>
+      <Text style={styles.requirementsTitle}>{t('submit.requirements.title')}</Text>
+      <Text style={[styles.requirementsBody, { color: colors.muted }]}>
+        {t('submit.requirements.thumbnails')}
+      </Text>
+      <Text style={[styles.requirementsBody, { color: colors.muted }]}>
+        {t('submit.requirements.titles')}
+      </Text>
+      <Text style={[styles.requirementsBody, { color: colors.muted }]}>
+        {Platform.OS === 'web'
+          ? t('submit.requirements.clipWeb')
+          : t('submit.requirements.clipApp')}
+      </Text>
     </View>
   );
 }
@@ -152,6 +164,8 @@ function Wizard() {
         {t('submit.wizard.step', { current: step + 1, total: STEPS })}
       </Text>
 
+      {step === 0 ? <Requirements /> : null}
+
       {step === 0 ? (
         <ThumbnailsStep
           thumbnails={thumbnails}
@@ -227,6 +241,20 @@ const styles = StyleSheet.create({
   },
   navItem: {
     flex: 1,
+  },
+  requirements: {
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 14,
+    gap: 6,
+  },
+  requirementsTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  requirementsBody: {
+    fontSize: 14,
+    lineHeight: 20,
   },
   notice: {
     // Web'de bu ekran uzun bir kapsayıcının içinde açılıyor; flex ile ortalamak metni

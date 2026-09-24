@@ -33,16 +33,20 @@ async function upload(path: string, uri: string, limit: number): Promise<string>
 }
 
 export class SupabaseStorage implements StorageAdapter {
-  uploadThumbnail(userId: string, localUri: string): Promise<string> {
+  uploadThumbnail(userId: string, localUri: string, extension?: string): Promise<string> {
     return upload(
-      thumbnailPath(userId, Crypto.randomUUID(), localUri),
+      thumbnailPath(userId, Crypto.randomUUID(), localUri, extension),
       localUri,
       MAX_THUMBNAIL_BYTES,
     );
   }
 
-  uploadClip(userId: string, localUri: string): Promise<string> {
-    return upload(clipPath(userId, Crypto.randomUUID(), localUri), localUri, MAX_CLIP_BYTES);
+  uploadClip(userId: string, localUri: string, extension?: string): Promise<string> {
+    return upload(
+      clipPath(userId, Crypto.randomUUID(), localUri, extension),
+      localUri,
+      MAX_CLIP_BYTES,
+    );
   }
 
   async remove(paths: string[]): Promise<void> {

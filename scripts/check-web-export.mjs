@@ -75,10 +75,15 @@ check('sayfanın başlığı var', html.includes('<title>Clickable</title>'));
 const bundleDir = join(DIST, '_expo/static/js/web');
 const bundles = existsSync(bundleDir) ? readdirSync(bundleDir) : [];
 const bundle = bundles.map((file) => readFileSync(join(bundleDir, file), 'utf8')).join('');
+// Build sırasında verilen adres pakete girmiş mi? (env'siz alınan build tarayıcıda
+// açılır açılmaz patlar.) Yerelde 127.0.0.1, üretimde *.supabase.co olur.
+const expectedUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 check(
   'Supabase adresi pakete gömülü',
-  /https:\/\/[a-z0-9]+\.supabase\.co/.test(bundle),
-  `${bundles.length} paket`,
+  expectedUrl
+    ? bundle.includes(expectedUrl)
+    : /https:\/\/[a-z0-9]+\.supabase\.co/.test(bundle),
+  expectedUrl ?? 'env verilmedi; üretim adresi aranıyor',
 );
 check(
   'satın alma kütüphanesi web paketine girmemiş',
