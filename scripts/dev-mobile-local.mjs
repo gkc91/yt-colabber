@@ -30,9 +30,15 @@ if (!vars.API_URL || !vars.ANON_KEY) {
 
 let apiUrl = vars.API_URL;
 if (lan) {
-  const ip = Object.values(networkInterfaces())
-    .flat()
-    .find((i) => i && i.family === 'IPv4' && !i.internal)?.address;
+  // Windows'ta ilk adres çoğu zaman Hyper-V/WSL sanal adaptörü (vEthernet, 172.x) olur;
+  // telefon ona ulaşamaz. Sanal adaptörleri atla, ev ağı aralığını (192.168/10) öne al.
+  const candidates = Object.entries(networkInterfaces())
+    .filter(([name]) => !/vEthernet|WSL|VirtualBox|VMware|Docker/i.test(name))
+    .flatMap(([, list]) => list ?? [])
+    .filter((i) => i.family === 'IPv4' && !i.internal)
+    .map((i) => i.address);
+  const ip =
+    candidates.find((a) => a.startsWith('192.168.') || a.startsWith('10.')) ?? candidates[0];
   if (!ip) {
     console.error('No LAN IPv4 address found.');
     process.exit(1);
