@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useEffect } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 
 import { Button } from '@/components/Button';
@@ -14,6 +15,7 @@ import {
   useRestore,
   type PurchaseOption,
 } from '@/features/credits/purchaseApi';
+import { track } from '@/lib/track';
 import { t, type MessageKey } from '@/i18n';
 
 export default function Paywall() {
@@ -25,6 +27,10 @@ export default function Paywall() {
   const options = usePurchaseOptions();
   const purchase = usePurchase(userId);
   const restore = useRestore(userId);
+
+  useEffect(() => {
+    track.capture('paywall_viewed');
+  }, []);
 
   const loadErrorKey = options.error ? purchaseErrorKey(options.error) : null;
   // Web'de ve anahtar yokken satın alma hiç açılmaz: kullanıcıyı boş bir listeyle

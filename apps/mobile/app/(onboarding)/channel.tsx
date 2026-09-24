@@ -12,6 +12,7 @@ import { completeOnboarding, type SubscriberBand } from '@/features/onboarding/a
 import { BANDS } from '@/features/onboarding/options';
 import { parseYouTubeChannelUrl, type YouTubeChannelRef } from '@/features/onboarding/youtube';
 import { profileQueryKey } from '@/features/profile/api';
+import { track } from '@/lib/track';
 import { t } from '@/i18n';
 
 export default function ChannelStep() {
@@ -27,6 +28,7 @@ export default function ChannelStep() {
     mutationFn: (input: { channel: YouTubeChannelRef; band: SubscriberBand | null }) =>
       completeOnboarding(userId, input.channel, input.band),
     onSuccess: async () => {
+      track.capture('onboarding_done');
       await queryClient.invalidateQueries({ queryKey: profileQueryKey(userId) });
       router.replace('/review');
     },

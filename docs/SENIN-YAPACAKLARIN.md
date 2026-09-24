@@ -100,7 +100,15 @@
 
 ## 6. Ölçüm ve büyüme (GROWTH.md)
 
-- [ ] **PostHog ve Sentry hesapları** (E4 ve hata takibi için).
+- [ ] **PostHog hesabı** (E4). Kod hazır ve anahtarsız sessiz duruyor. Yapılacak:
+      1. posthog.com'da ücretsiz hesap (AB bölgesi seç — kullanıcı verisi AB'de kalsın).
+      2. Project API key'i (`phc_...`) `.env` ve Cloudflare Pages `clickable-app` projesine
+         `EXPO_PUBLIC_POSTHOG_KEY` olarak gir; AB bölgesindeysen
+         `EXPO_PUBLIC_POSTHOG_HOST=https://eu.i.posthog.com`.
+      3. Panelde kuzey yıldızı: `submission_created` sonrası 24 saat içindeki
+         `review_submitted` sayısı (olaylar: signed_in, onboarding_done, task_started,
+         review_submitted, review_rejected, submission_created, paywall_viewed, purchase).
+- [ ] **Sentry hesabı** (hata takibi).
 - [ ] **G1 — ilk 100 değerlendirici.** Tek nişte 60-100 kişi: Reddit (r/NewTubers), YouTube'cu
       Discord sunucuları, Türkçe içerik üretici grupları. Ayrıntılı oyun planı GROWTH.md §2'de.
       Bu madde ürünün kaderini belirleyen tek iş; kod bitmeden de başlanabilir.

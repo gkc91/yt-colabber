@@ -14,6 +14,7 @@ import {
   pushSupported,
 } from '@/features/notifications/api';
 import { useNextTask } from '@/features/review/api';
+import { track } from '@/lib/track';
 import { t } from '@/i18n';
 
 export default function ReviewScreen() {
@@ -53,12 +54,13 @@ export default function ReviewScreen() {
             <Text style={styles.text}>{t('review.ready.body')}</Text>
             <Button
               title={t('review.ready.start')}
-              onPress={() =>
+              onPress={() => {
+                track.capture('task_started', { is_demo: assignment.isDemo });
                 router.push({
                   pathname: '/review/[taskId]',
                   params: { taskId: assignment.task.id },
-                })
-              }
+                });
+              }}
             />
           </>
         ) : null}

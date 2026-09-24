@@ -20,6 +20,7 @@ import {
   type ReasonTag,
 } from '@/features/review/rules';
 import { storage } from '@/lib/storage';
+import { track } from '@/lib/track';
 import { t } from '@/i18n';
 
 type Stage = 'feed' | 'guess' | 'hook';
@@ -124,9 +125,11 @@ export default function ReviewTaskScreen() {
 
       if (!reviewId) {
         // 0003: çok hızlı değerlendirme kredi kazandırmaz, görev kapanır.
+        track.capture('review_rejected', { reason: 'too_fast' });
         setError(t('review.errors.review_too_fast'));
         return;
       }
+      track.capture('review_submitted', { is_demo: isDemo });
       // Sıradaki görev Değerlendir sekmesine dönünce alınır; burada tazelersek
       // bu ekranın verisi altından kayar.
       await queryClient.invalidateQueries({ queryKey: ['balance', session?.user.id] });

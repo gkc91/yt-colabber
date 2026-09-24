@@ -3,6 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { purchases } from '@/lib/purchases';
+import { track } from '@/lib/track';
 import { type PurchaseOption } from '@/lib/purchases.types';
 
 import { fetchBalance } from './api';
@@ -48,6 +49,11 @@ export function usePurchase(userId: string | undefined) {
         ? await waitForCredits({ readBalance: () => fetchBalance(userId), previous })
         : { outcome: 'pending' as const, balance: previous };
 
+      track.capture('purchase', {
+        product: option.productId,
+        kind: option.kind,
+        outcome: waited.outcome,
+      });
       return { outcome: waited.outcome, balance: waited.balance, proActive, kind: option.kind };
     },
     onSettled: async () => {

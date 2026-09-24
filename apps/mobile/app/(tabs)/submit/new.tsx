@@ -25,6 +25,7 @@ import {
 } from '@/features/submit/media';
 import { canAfford, cleanTitles, validateTitles, type ReviewCount } from '@/features/submit/rules';
 import { Cancelled, uploadAndCreate, type UploadProgress } from '@/features/submit/upload';
+import { track } from '@/lib/track';
 import { t, type MessageKey } from '@/i18n';
 
 const STEPS = 5;
@@ -108,6 +109,12 @@ function Wizard() {
         { userId, thumbnails, titles: cleanTitles(titles), clip, requested },
         { onProgress: setUploadProgress, isCancelled: () => cancelled.current },
       );
+      track.capture('submission_created', {
+        requested,
+        thumbnails: thumbnails.length,
+        titles: cleanTitles(titles).length,
+        clip_seconds: clip.durationSeconds,
+      });
       await queryClient.invalidateQueries({ queryKey: ['balance', userId] });
       await queryClient.invalidateQueries({ queryKey: ['submissions', userId] });
       router.replace('/submit');
@@ -222,10 +229,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   notice: {
-    flex: 1,
-    justifyContent: 'center',
+    // Web'de bu ekran uzun bir kapsayıcının içinde açılıyor; flex ile ortalamak metni
+    // sayfanın dibine düşürüyordu. Üstten hizalayıp genişliği sınırlıyoruz.
     padding: 24,
+    paddingTop: 32,
     gap: 12,
+    width: '100%',
+    maxWidth: 560,
+    alignSelf: 'center',
   },
   noticeTitle: {
     fontSize: 22,
