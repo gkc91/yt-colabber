@@ -75,7 +75,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 
 ## Faz D — Para
 
-- [ ] **D1. RevenueCat** — dashboard'da ürünler (PRODUCT §15), `src/lib/purchases.ts`, entitlement `pro`. Webhook Edge Function `revenuecat-webhook`: bearer doğrula, `INITIAL_PURCHASE/RENEWAL/NON_RENEWING_PURCHASE/EXPIRATION/CANCELLATION` → `grant_purchase`. Idempotent (event id).
+- [x] **D1. RevenueCat** (kod tarafı; dashboard ürünleri + webhook sırrı SENIN-YAPACAKLARIN §5) — dashboard'da ürünler (PRODUCT §15), `src/lib/purchases.ts`, entitlement `pro`. Webhook Edge Function `revenuecat-webhook`: bearer doğrula, `INITIAL_PURCHASE/RENEWAL/NON_RENEWING_PURCHASE/EXPIRATION/CANCELLATION` → `grant_purchase`. Idempotent (event id).
 - [ ] **D2. Paywall** — modal: kredi paketleri + Pro; "Satın alımları geri yükle"; fiyatlar RevenueCat'ten; web'de "uygulamada aç" ekranı.
 - [ ] **D3. AI özeti** — Edge Function `ai-summary` (Claude Haiku), sadece Pro; prompt: değerlendirmeleri 5 maddeye indir + "değiştir" önerileri; `submissions.ai_summary`.
 - [ ] **D4. Sandbox test** — iOS sandbox ve Play license tester ile satın alma → ledger doğrula.

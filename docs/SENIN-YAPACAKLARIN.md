@@ -76,7 +76,18 @@
 ## 5. Para tarafı (Faz D — ilk kullanıcılar gelene kadar bekleyebilir)
 
 - [ ] **RevenueCat hesabı** ve ürünlerin tanımlanması (PRODUCT §15: `credits_10`, `credits_30`,
-      `credits_100`, `pro_monthly`, `pro_yearly`).
+      `credits_100`, `pro_monthly`, `pro_yearly`). Kod tarafı hazır; sırayla:
+      1. RevenueCat projesi aç, iOS/Android uygulamalarını ekle (mağaza hesapları gerekiyor).
+      2. Ürünleri yukarıdaki kimliklerle tanımla; `pro_monthly` + `pro_yearly` için
+         **entitlement adı `pro`** olmalı (kod bu adı arıyor).
+      3. Tek bir Offering yap, beş ürünü de paket olarak ekle.
+      4. Webhook: `https://doentqtqklsetbxdprrg.supabase.co/functions/v1/revenuecat-webhook`,
+         Authorization `Bearer <kendi ürettiğin sır>`.
+      5. Aynı sırrı Supabase'e koy:
+         `supabase secrets set RC_WEBHOOK_SECRET=<sır> --project-ref doentqtqklsetbxdprrg`
+         (şu an tanımlı değil; fonksiyon bilerek 500 `webhook_secret_missing` dönüyor).
+      6. iOS/Android public SDK anahtarlarını `.env` içine `EXPO_PUBLIC_RC_IOS_KEY` /
+         `EXPO_PUBLIC_RC_ANDROID_KEY` olarak yaz.
 - [ ] **App Store Connect ve Play Console ödeme/vergi bilgileri.** SETUP.md'deki not: ödeme
       bilgilerine yalnızca 20/B istisna hesabını gir.
 - [ ] **Anthropic API anahtarı** (D3, Pro kullanıcılara AI özeti için).

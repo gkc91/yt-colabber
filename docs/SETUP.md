@@ -102,6 +102,31 @@ Cloudflare Pages ayarları:
 Sayfalar `/`, `/thumbnail-test`, `/hook-test`, `/for/<nis>` (14 niş), `/privacy`, `/terms`
 ve hepsinin `/tr/...` karşılığı; `sitemap.xml` ve `robots.txt` build'de üretilir.
 
+## RevenueCat (D1)
+Webhook adresi (RevenueCat → Project settings → Integrations → Webhooks):
+
+    https://doentqtqklsetbxdprrg.supabase.co/functions/v1/revenuecat-webhook
+
+Authorization header alanına `Bearer <RC_WEBHOOK_SECRET>` yazılır. Sırrı Supabase'e de koy:
+
+```powershell
+supabase secrets set RC_WEBHOOK_SECRET=<sır> --project-ref doentqtqklsetbxdprrg
+supabase functions deploy revenuecat-webhook
+```
+
+Not: `supabase/config.toml` içinde bu fonksiyon için `verify_jwt = false`. RevenueCat Supabase
+JWT'si göndermez; doğrulama fonksiyonun içinde `RC_WEBHOOK_SECRET` ile yapılır. Sır tanımlı
+değilse fonksiyon hiçbir isteği kabul etmez (500 `webhook_secret_missing`).
+
+Yerelde uçtan uca deneme:
+```powershell
+supabase functions serve --env-file supabase/functions/local-test.vars
+node scripts/check-purchases.mjs
+```
+
+İstemci anahtarları `.env` içinde: `EXPO_PUBLIC_RC_IOS_KEY`, `EXPO_PUBLIC_RC_ANDROID_KEY`.
+Boşsa satın alma katmanı `not_configured` döner ve paywall satın alma düğmesi göstermez.
+
 ## Örnek (demo) testler
 ```powershell
 node scripts/seed-demo.mjs          # yerel stack; manifest seeds/demo/manifest.json
