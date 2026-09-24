@@ -104,3 +104,8 @@
 - 2026-09-24 D3: Model çağrısının adresi `ANTHROPIC_BASE_URL` ile değiştirilebilir (notify'daki EXPO_PUSH_URL ile aynı yöntem). Böylece `scripts/check-ai-summary.mjs` sahte bir uca konuşuyor: uçtan uca test para harcamıyor ve model hatası gibi yolları da deneyebiliyoruz.
 - 2026-09-24 D3: Anthropic anahtarı ayrı bir Console workspace'inde ('Clickable') üretildi ve süresiz seçildi. Varsayılan 30 gün, Pro kullanıcının özetini bir ay sonra sessizce bozardı; karşılığında rotasyon bizim sorumluluğumuz.
 - 2026-09-24 D3: Arayüz hiçbir kuralı kendisi hesaplamıyor; `ai_summary_status` sebep kodunu ve kalan hakkı döndürüyor, ekran onu yazıyor. Durum okunamazsa bölüm hiç gösterilmiyor — olmayan bir özelliği vaat etmemek için.
+- 2026-09-24 C5: Kapanan testin klibi 30 gün sonra siliniyor; thumbnail'lar ve sonuç sayıları kalıyor. Gerekçe: klip 8 MB ve her değerlendirici indiriyor — depolama + çıkış trafiği altyapının en büyük kalemi (Supabase Free 5 GB ≈ 40 test). İkincisi gizlilik: yayınlanmamış videoyu işi bittikten sonra tutmanın savunulacak tarafı yok.
+- 2026-09-24 C5: Silme Edge Function'da yapılıyor, SQL'de değil. `storage.objects` satırını silmek dosyayı diskte öksüz bırakır; desteklenen yol Storage API'si.
+- 2026-09-24 C5: Sıra önce dosya, sonra işaret. Tersi olsaydı işaretlenmiş ama dosyası duran, bir daha hiç silinmeyecek kayıtlar kalırdı; bu sırada en kötü ihtimal aynı dosyayı bir kez daha silmeye çalışmak, o da zararsız.
+- 2026-09-24 C5: `cleanup-media` yalnızca service_role anahtarıyla çağrılabiliyor — silme geri alınamaz, kullanıcı JWT'siyle tetiklenmemeli. Testte anon anahtarla çağrı 403 alıyor ve dosya duruyor.
+- 2026-09-24 C5: Açık testin klibi asla silinmiyor (`status <> 'open'`). Mutasyon testi: bu koşul kaldırılınca 015 testi düşüyor.

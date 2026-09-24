@@ -85,7 +85,7 @@ Hosted projede: `supabase secrets set` gerekmez (EXPO_PUSH_URL varsayılanı Exp
 ```powershell
 supabase functions serve            # yerel
 supabase secrets set RC_WEBHOOK_SECRET=... YOUTUBE_API_KEY=... ANTHROPIC_API_KEY=... --project-ref <ref>
-supabase functions deploy revenuecat-webhook refresh-niche-cache ai-summary signed-media notify delete-account
+supabase functions deploy revenuecat-webhook refresh-niche-cache ai-summary signed-media notify delete-account cleanup-media
 ```
 
 ## Landing (apps/landing, Astro → Cloudflare Pages)
