@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { radius, space } from '@/design/tokens';
 
 type Props = {
   label: string;
@@ -11,6 +12,10 @@ type Props = {
   role?: 'radio' | 'checkbox';
 };
 
+/**
+ * Seçili chip mürekkep rengi, kırmızı değil: profilde beş niş seçildiğinde sayfa beş
+ * kırmızıyla dolmasın. Kırmızı ekranda tek bir yere ait (DESIGN.md §3).
+ */
 export function Chip({ label, selected, onPress, role = 'radio' }: Props) {
   const colors = Colors[useColorScheme()];
 
@@ -23,21 +28,23 @@ export function Chip({ label, selected, onPress, role = 'radio' }: Props) {
       style={[
         styles.chip,
         selected
-          ? { backgroundColor: colors.tint, borderColor: colors.tint }
-          : { borderColor: colors.border },
+          ? { backgroundColor: colors.text, borderColor: colors.text }
+          : { borderColor: colors.border, backgroundColor: colors.surface },
       ]}
     >
-      <Text style={[styles.label, { color: selected ? colors.onTint : colors.text }]}>{label}</Text>
+      <Text style={[styles.label, { color: selected ? colors.background : colors.text }]}>
+        {label}
+      </Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   chip: {
-    borderWidth: 1,
-    borderRadius: 999,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    borderWidth: StyleSheet.hairlineWidth * 2,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.lg,
+    paddingVertical: space.sm,
   },
   label: {
     fontSize: 15,

@@ -1,11 +1,11 @@
 import { useEventListener } from 'expo';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
-import { Body, Meta } from '@/components/Type';
+import { Body, Heading, Meta, Small } from '@/components/Type';
 import { TextField } from '@/components/TextField';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
@@ -42,11 +42,26 @@ export function HookStep({
   const colors = Colors[useColorScheme()];
   const [leftAt, setLeftAt] = useState<number | null>(null);
   const [reachedEnd, setReachedEnd] = useState(false);
+  // Mobil tarayıcılar sesli videonun kendiliğinden başlamasını engeller (2026-09-24 canlı
+  // bulgu: değerlendirme 0 sn izlemeyle kaydedildi). Oynamadıysa büyük bir "oynat" düğmesi
+  // gösteririz; dokunuş kullanıcı hareketi sayıldığı için ses açık başlar.
+  const [started, setStarted] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const player = useVideoPlayer(clipUrl, (instance) => {
     instance.timeUpdateEventInterval = 1;
     instance.play();
   });
+
+  useEventListener(player, 'playingChange', ({ isPlaying }) => {
+    if (isPlaying) setStarted(true);
+  });
+  useEventListener(player, 'statusChange', ({ status }) => setFailed(status === 'error'));
+
+  const play = () => {
+    setFailed(false);
+    player.play();
+  };
 
   useEventListener(player, 'playToEnd', () => {
     setReachedEnd(true);
@@ -69,9 +84,28 @@ export function HookStep({
         nativeControls={false}
         accessibilityLabel={t('review.hook.video')}
       />
+      {!started && !decided ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('review.hook.play')}
+          onPress={play}
+          style={styles.overlay}
+        >
+          <View style={[styles.playButton, { backgroundColor: colors.background }]}>
+            <Heading>{t('review.hook.play')}</Heading>
+          </View>
+          {failed ? <Small style={styles.overlayNote}>{t('review.hook.loadFailed')}</Small> : null}
+        </Pressable>
+      ) : null}
 
       {!decided ? (
-        <Button title={t('review.hook.leave')} variant="secondary" onPress={markLeft} />
+        // Video başlamadan "burada çıktım" anlamsız: 0. saniye verisi sonucu bozar.
+        <Button
+          title={t('review.hook.leave')}
+          variant="secondary"
+          onPress={markLeft}
+          disabled={!started}
+        />
       ) : (
         <Body style={styles.decision}>
           {leftAt === null
@@ -122,6 +156,26 @@ export function HookStep({
 const styles = StyleSheet.create({
   container: {
     gap: space.md,
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    aspectRatio: 16 / 9,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: space.md,
+  },
+  playButton: {
+    paddingHorizontal: space.xl,
+    paddingVertical: space.md,
+    borderRadius: radius.pill,
+  },
+  overlayNote: {
+    color: '#fff',
+    textAlign: 'center',
+    paddingHorizontal: space.lg,
   },
   video: {
     width: '100%',

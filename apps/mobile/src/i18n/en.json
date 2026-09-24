@@ -1,7 +1,7 @@
 {
   "tabs": {
     "review": "Review",
-    "submit": "Test",
+    "submit": "Content",
     "profile": "Profile"
   },
   "credits": {
@@ -186,7 +186,9 @@
       "tagsTitle": "Why? (pick any)",
       "commentLabel": "Anything to add? (optional)",
       "commentPlaceholder": "One line for the creator",
-      "submit": "Send review"
+      "submit": "Send review",
+      "play": "Tap to play",
+      "loadFailed": "The clip didn't load. Check your connection and tap to try again."
     },
     "tags": {
       "slow_intro": "Slow intro",
