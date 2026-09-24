@@ -1,5 +1,5 @@
 ---
-import { STORE, type Locale } from '../data/site';
+import { STORE, WEB_APP_URL, type Locale } from '../data/site';
 import { ui } from '../data/ui';
 
 interface Props {
@@ -29,5 +29,6 @@ const t = ui(locale);
       <span class="btn soon">{`${t.cta.android} — ${t.cta.comingSoon}`}</span>
     )
   }
+  <a class="btn ghost" href={WEB_APP_URL}>{t.cta.web}</a>
 </div>
 <p class="fine">{t.cta.note}</p>

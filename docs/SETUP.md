@@ -131,6 +131,7 @@ Boşsa satın alma katmanı `not_configured` döner ve paywall satın alma düğ
 ```powershell
 pnpm check:web    # expo export --platform web + scripts/check-web-export.mjs
 ```
+Canlı: https://app.clickabletest.com (yedek: `clickable-app.pages.dev`).
 Cloudflare Pages projesi `clickable-app`:
 - Build command: `pnpm install --frozen-lockfile && pnpm --filter mobile build:web`
 - Build output: `apps/mobile/dist`
@@ -140,6 +141,8 @@ Cloudflare Pages projesi `clickable-app`:
 `apps/mobile/public/_redirects` dinamik rotaları statik dosyalara eşler
 (`/review/:id` → `review/[taskId].html`) ve kalan her adresi uygulamaya düşürür.
 Web'de submission oluşturma ve satın alma YOK (PRODUCT §14): iki ekran da "uygulamada aç" der.
+Supabase → Auth → URL Configuration'da `https://app.clickabletest.com/**` ve
+`https://clickable-app.pages.dev/**` yönlendirme listesinde; yoksa web'de giriş dönmez.
 
 ## Örnek (demo) testler
 ```powershell

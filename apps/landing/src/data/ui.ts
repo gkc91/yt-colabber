@@ -15,7 +15,8 @@ export const UI = {
       comingSoon: 'Coming soon',
       ios: 'App Store',
       android: 'Google Play',
-      note: 'Sign up gives you 5 credits. One review you give = one credit.',
+      web: 'Open in your browser',
+      note: 'Sign up gives you 5 credits. One review you give = one credit. Reviewing works in the browser; uploading a test needs the app.',
     },
     footer: {
       privacy: 'Privacy',
@@ -38,7 +39,8 @@ export const UI = {
       comingSoon: 'Yakında',
       ios: 'App Store',
       android: 'Google Play',
-      note: 'Kayıtta 5 kredi. Verdiğin her değerlendirme = 1 kredi.',
+      web: 'Tarayıcıda aç',
+      note: 'Kayıtta 5 kredi. Verdiğin her değerlendirme = 1 kredi. Değerlendirme tarayıcıda çalışır; test açmak için uygulama gerekir.',
     },
     footer: {
       privacy: 'Gizlilik',

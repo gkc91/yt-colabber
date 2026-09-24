@@ -86,7 +86,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 - [x] **E1. Landing + SEO** — `apps/landing` Astro, Cloudflare Pages. Sayfalar: `/` (vaat, 3 adım, ekran görüntüsü, mağaza butonları), `/thumbnail-test`, `/hook-test`, `/for/<nis>` (15 niş, programatik), gizlilik/şartlar, `/tr/...`.
   - Teknik: sayfa başına benzersiz title/meta, Open Graph görseli, `sitemap.xml`, `robots.txt`, `hreflang` (en/tr), schema.org `SoftwareApplication`.
   - Kabul: Lighthouse SEO ≥ 95, sitemap tüm sayfaları listeliyor, her sayfa tek bir arama niyetine cevap veriyor (GROWTH.md §4).
-- [ ] **E2. Web/PWA** — `expo export -p web`, Cloudflare Pages; submission/ödeme ekranları web'de "uygulamada aç".
+- [x] **E2. Web/PWA** — `expo export -p web`, Cloudflare Pages; submission/ödeme ekranları web'de "uygulamada aç".
 - [ ] **E3. Mağaza hazırlığı** — Play kapalı test (12 kişi, 14 gün); App Store metadata, ekran görüntüleri, gizlilik etiketleri, hesap silme akışı, review notları (test hesabı).
   - ASO: başlık/alt başlık ve anahtar kelimeler (thumbnail test, youtube ctr, video hook), ekran görüntüsünde feed ızgarası + sonuç yüzdesi, ilk 10 değerlendirmenin dürüstçe istenmesi (GROWTH.md §3).
   - Google OAuth izin ekranı doğrulaması: logo + ana sayfa + gizlilik politikası (E1 landing gerekir). Doğrulanmadan onay ekranında uygulama adı yerine `<ref>.supabase.co` görünüyor ve güven kaybı yaratıyor. Alternatif: Supabase özel alan adı (Pro planı).

@@ -11,6 +11,9 @@ export const CONTACT_EMAIL = 'support@clickabletest.com';
 export const LOCALES = ['en', 'tr'] as const;
 export type Locale = (typeof LOCALES)[number];
 
+/** Web sürümü (E2): mağaza sürümü yokken insanlar tarayıcıdan deneyebilsin. */
+export const WEB_APP_URL = 'https://app.clickabletest.com';
+
 /** Store links are filled in with E3; until then the buttons say "coming soon". */
 export const STORE: { ios: string | null; android: string | null } = {
   ios: null,
