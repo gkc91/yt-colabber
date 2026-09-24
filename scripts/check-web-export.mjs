@@ -80,9 +80,7 @@ const bundle = bundles.map((file) => readFileSync(join(bundleDir, file), 'utf8')
 const expectedUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 check(
   'Supabase adresi pakete gömülü',
-  expectedUrl
-    ? bundle.includes(expectedUrl)
-    : /https:\/\/[a-z0-9]+\.supabase\.co/.test(bundle),
+  expectedUrl ? bundle.includes(expectedUrl) : /https:\/\/[a-z0-9]+\.supabase\.co/.test(bundle),
   expectedUrl ?? 'env verilmedi; üretim adresi aranıyor',
 );
 check(
