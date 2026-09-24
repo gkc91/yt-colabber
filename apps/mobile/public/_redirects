@@ -1,7 +1,8 @@
-# Cloudflare Pages (E2). Var olan dosyalar önce servis edilir; buradakiler kalanlar içindir.
-# Dinamik rotalar statik dışa aktarımda "[param].html" adıyla üretiliyor, gelen adres ise
-# /review/<uuid> oluyor — eşleştirmeyi burada yapıyoruz.
-/review/:id      /review/[taskId].html   200
-/submit/:id      /submit/[id].html       200
-# Geri kalan her şey istemci tarafı yönlendiriciye düşsün (404 yerine uygulama açılsın).
-/*               /index.html             200
+# Cloudflare Pages (E2). Var olan dosyalar önce servis edilir; bu kural kalanlar içindir.
+#
+# Dinamik rotalar statik dışa aktarımda "[param].html" adıyla üretiliyor. Bunları
+# `/review/:id  /review/[taskId].html  200` gibi bir kuralla eşlemeyi denedik: Cloudflare
+# bunu 308 yönlendirmeye çeviriyor ve `/review/[taskId]` yeniden aynı kurala düşüp
+# sonsuz döngü oluyordu (canlıda yakalandı). Bu yüzden tek kural: kalan her adres
+# uygulamaya düşer, doğru ekranı istemci tarafı yönlendirici açar.
+/*  /index.html  200

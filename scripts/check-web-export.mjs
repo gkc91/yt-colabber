@@ -37,15 +37,18 @@ check('bütün ekranlar üretildi', missing.length === 0, missing.join(', '));
 const redirectsPath = join(DIST, '_redirects');
 const redirects = existsSync(redirectsPath) ? readFileSync(redirectsPath, 'utf8') : '';
 check('_redirects dosyası kopyalandı', redirects.length > 0);
+/** Yorumlar kuralların kendisi değil; kontroller yalnızca kurallara bakmalı. */
+const redirectRules = redirects
+  .split(/\r?\n/)
+  .filter((line) => line.trim() && !line.trim().startsWith('#'))
+  .join('\n');
+check('bilinmeyen adresler uygulamaya düşüyor', /\/\*\s+\/index\.html\s+200/.test(redirectRules));
+// Regresyon: dinamik rotayı "[taskId].html" dosyasına eşleyen kural Cloudflare'de 308'e
+// dönüşüp sonsuz döngü yapıyordu. Böyle bir kural bir daha girmesin.
 check(
-  'değerlendirme rotası yönlendirilmiş',
-  /\/review\/:id\s+\/review\/\[taskId\]\.html\s+200/.test(redirects),
+  'dinamik rota dosyaya eşlenmiyor (308 döngüsü)',
+  !/\[taskId\]\.html|\[id\]\.html/.test(redirectRules),
 );
-check(
-  'sonuç rotası yönlendirilmiş',
-  /\/submit\/:id\s+\/submit\/\[id\]\.html\s+200/.test(redirects),
-);
-check('bilinmeyen adresler uygulamaya düşüyor', /\/\*\s+\/index\.html\s+200/.test(redirects));
 
 // ---------- PWA ----------
 const manifestPath = join(DIST, 'manifest.json');
