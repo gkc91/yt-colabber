@@ -1,0 +1,31 @@
+{
+  "submissions": [
+    {
+      "niche": "animation",
+      "language": "en",
+      "titles": ["I Animated a Stickman War (1 vs 100)", "Stickman Army vs One Hero"],
+      "thumbnails": ["demo-stickman-a.jpg", "demo-stickman-b.jpg"],
+      "clip": "demo-stickman.mp4",
+      "clip_duration_seconds": 45
+    },
+    {
+      "niche": "animation",
+      "language": "en",
+      "titles": ["I Drew Every Day for 30 Days — Here Is What Changed"],
+      "thumbnails": ["demo-30days.jpg"],
+      "clip": "demo-30days.mp4",
+      "clip_duration_seconds": 52
+    },
+    {
+      "niche": "animation",
+      "language": "en",
+      "titles": [
+        "Why Your Animation Looks Bad (and 3 Fixes)",
+        "Stop Making These Animation Mistakes"
+      ],
+      "thumbnails": ["demo-badanim.jpg"],
+      "clip": "demo-badanim.mp4",
+      "clip_duration_seconds": 38
+    }
+  ]
+}

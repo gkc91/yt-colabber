@@ -131,3 +131,5 @@
 - 2026-09-24 E6: Başlık fontu (Archivo) yüklenene kadar kök düzen hiçbir şey çizmiyor. Yazı tipinin sonradan oturması (FOUT) ucuz görünmenin en hızlı yolu; açılış zaten splash arkasında.
 - 2026-09-24 E6 (sınır): Web'de `useColorScheme` bilerek `light` döndürüyor (sunucu render'ı ile hidrasyon uyuşmazlığı olmasın). Koyu palet tanımlı ama yalnızca cihazda görülüyor; tarayıcıda doğrulanamaz.
 
+- 2026-09-24 (canlı bulgu): Gerçek hesapla giren kullanıcı 'Nothing to review' gördü — örnek testler yalnızca kendi nişlerine çıkıyordu. 0018: kişinin nişinde/kapsamında hiçbir şey yoksa HERHANGİ bir nişten örnek test gösteriliyor (dili tutan önce). Gerçek testlerin eşleştirmesi değişmedi; başka nişin gerçek testi asla sızmaz (016 testi). Mutasyon: yedek blok kaldırılınca 016'dan 2 kontrol düşüyor.
+- 2026-09-24 (ürün kararı, sahibin seçimi): Canlıda şimdilik ÜRETİLMİŞ klipli 3 örnek test (test deseni + sayaç) yayında. seeds/demo/README.md'deki 'üretilmiş klip koymuyoruz' kuralından bilinçli sapma: boş ekran, sahte görünen örnekten daha kötü bulundu. Kendi kanal klipleri gelince bunlar değiştirilecek (G0b).
