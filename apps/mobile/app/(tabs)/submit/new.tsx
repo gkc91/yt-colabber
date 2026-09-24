@@ -1,12 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
-import { Platform, ScrollView, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
+import { Card } from '@/components/Card';
+import { Screen } from '@/components/Screen';
+import { Meta, Small } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
 import { useIsPro } from '@/features/profile/api';
@@ -47,21 +50,34 @@ export default function NewSubmission() {
 
 /** Ne beklediğimizi baştan söyleriz; kullanıcı kuralları hata mesajıyla öğrenmesin. */
 function Requirements() {
-  const colors = Colors[useColorScheme()];
   return (
-    <View style={[styles.requirements, { borderColor: colors.border }]}>
-      <Text style={styles.requirementsTitle}>{t('submit.requirements.title')}</Text>
-      <Text style={[styles.requirementsBody, { color: colors.muted }]}>
-        {t('submit.requirements.thumbnails')}
-      </Text>
-      <Text style={[styles.requirementsBody, { color: colors.muted }]}>
-        {t('submit.requirements.titles')}
-      </Text>
-      <Text style={[styles.requirementsBody, { color: colors.muted }]}>
+    <Card gap={space.sm}>
+      <Meta style={styles.requirementsTitle}>{t('submit.requirements.title')}</Meta>
+      <Small tone="muted">{t('submit.requirements.thumbnails')}</Small>
+      <Small tone="muted">{t('submit.requirements.titles')}</Small>
+      <Small tone="muted">
         {Platform.OS === 'web'
           ? t('submit.requirements.clipWeb')
           : t('submit.requirements.clipApp')}
-      </Text>
+      </Small>
+    </Card>
+  );
+}
+
+/** Adım çubuğu: dekorasyon değil, kaç adım kaldığının cevabı (DESIGN.md §8). */
+function StepBar({ step, total }: { step: number; total: number }) {
+  const colors = Colors[useColorScheme()];
+  return (
+    <View style={styles.stepBar}>
+      {Array.from({ length: total }, (_, index) => (
+        <View
+          key={index}
+          style={[
+            styles.stepSegment,
+            { backgroundColor: index <= step ? colors.text : colors.border },
+          ]}
+        />
+      ))}
     </View>
   );
 }
@@ -70,7 +86,6 @@ function Wizard() {
   const { session } = useSession();
   const userId = session?.user.id as string;
   const queryClient = useQueryClient();
-  const colors = Colors[useColorScheme()];
 
   const balance = useBalance(userId).data ?? 0;
   const isPro = useIsPro(userId).data ?? false;
@@ -168,10 +183,13 @@ function Wizard() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-      <Text style={[styles.step, { color: colors.muted }]}>
-        {t('submit.wizard.step', { current: step + 1, total: STEPS })}
-      </Text>
+    <Screen gap={space.xl}>
+      <View style={styles.header}>
+        <Meta style={styles.step}>
+          {t('submit.wizard.step', { current: step + 1, total: STEPS })}
+        </Meta>
+        <StepBar step={step} total={STEPS} />
+      </View>
 
       {step === 0 ? <Requirements /> : null}
 
@@ -205,7 +223,7 @@ function Wizard() {
         />
       ) : null}
 
-      {error ? <Text style={[styles.error, { color: colors.danger }]}>{t(error)}</Text> : null}
+      {error ? <Small tone="accent">{t(error)}</Small> : null}
 
       {!uploading ? (
         <View style={styles.nav}>
@@ -225,62 +243,33 @@ function Wizard() {
           ) : null}
         </View>
       ) : null}
-    </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-    gap: 20,
-    maxWidth: 640,
-    width: '100%',
-    alignSelf: 'center',
+  header: {
+    gap: space.sm,
   },
   step: {
-    fontSize: 14,
-    fontWeight: '600',
+    textTransform: 'uppercase',
   },
-  error: {
-    fontSize: 15,
+  stepBar: {
+    flexDirection: 'row',
+    gap: space.xs,
+  },
+  stepSegment: {
+    flex: 1,
+    height: 2,
   },
   nav: {
     flexDirection: 'row',
-    gap: 12,
+    gap: space.md,
   },
   navItem: {
     flex: 1,
   },
-  requirements: {
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 14,
-    gap: 6,
-  },
   requirementsTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  requirementsBody: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  notice: {
-    // Web'de bu ekran uzun bir kapsayıcının içinde açılıyor; flex ile ortalamak metni
-    // sayfanın dibine düşürüyordu. Üstten hizalayıp genişliği sınırlıyoruz.
-    padding: 24,
-    paddingTop: 32,
-    gap: 12,
-    width: '100%',
-    maxWidth: 560,
-    alignSelf: 'center',
-  },
-  noticeTitle: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  noticeBody: {
-    fontSize: 16,
-    lineHeight: 22,
+    textTransform: 'uppercase',
   },
 });

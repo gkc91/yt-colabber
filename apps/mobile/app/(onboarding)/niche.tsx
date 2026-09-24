@@ -1,11 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
-import { Text, View } from '@/components/Themed';
+import { Screen } from '@/components/Screen';
+import { Small, Title } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { saveNicheAndLanguage, useNiches } from '@/features/onboarding/api';
 import { LANGUAGES } from '@/features/onboarding/options';
@@ -27,10 +29,10 @@ export default function NicheStep() {
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <Screen gap={space.xxl} style={styles.page}>
       <View style={styles.section}>
-        <Text style={styles.title}>{t('onboarding.nicheTitle')}</Text>
-        <Text style={styles.hint}>{t('onboarding.nicheHint')}</Text>
+        <Title>{t('onboarding.nicheTitle')}</Title>
+        <Small tone="muted">{t('onboarding.nicheHint')}</Small>
         {niches.isPending ? (
           <ActivityIndicator />
         ) : (
@@ -48,7 +50,7 @@ export default function NicheStep() {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.title}>{t('onboarding.languageTitle')}</Text>
+        <Title>{t('onboarding.languageTitle')}</Title>
         <View style={styles.chips} accessibilityRole="radiogroup">
           {LANGUAGES.map((lang) => (
             <Chip
@@ -61,46 +63,27 @@ export default function NicheStep() {
         </View>
       </View>
 
-      {save.error || niches.error ? (
-        <Text style={styles.error}>{t('auth.genericError')}</Text>
-      ) : null}
+      {save.error || niches.error ? <Small tone="accent">{t('auth.genericError')}</Small> : null}
       <Button
         title={t('onboarding.continue')}
         onPress={() => save.mutate()}
         disabled={nicheId === null}
         loading={save.isPending}
       />
-    </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-    paddingTop: 64,
-    gap: 32,
-    maxWidth: 640,
-    width: '100%',
-    alignSelf: 'center',
+  page: {
+    paddingTop: space.xxxl,
   },
   section: {
-    gap: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  hint: {
-    fontSize: 15,
-    lineHeight: 21,
-    opacity: 0.7,
+    gap: space.md,
   },
   chips: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
-  },
-  error: {
-    color: '#c62828',
+    gap: space.sm,
   },
 });

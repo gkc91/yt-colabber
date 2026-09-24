@@ -1,11 +1,12 @@
 import { router } from 'expo-router';
 import { useEffect } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import { Card } from '@/components/Card';
+import { Screen } from '@/components/Screen';
+import { Body, Heading, Small, Title } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
 import {
@@ -21,7 +22,6 @@ import { t, type MessageKey } from '@/i18n';
 export default function Paywall() {
   const { session } = useSession();
   const userId = session?.user.id;
-  const colors = Colors[useColorScheme()];
 
   const balance = useBalance(userId);
   const options = usePurchaseOptions();
@@ -39,29 +39,25 @@ export default function Paywall() {
   const purchaseError = purchase.error ? purchaseErrorKey(purchase.error) : null;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <Screen gap={space.lg}>
       <View style={styles.header}>
-        <Text style={styles.title}>{t('paywall.title')}</Text>
-        <Text style={[styles.body, { color: colors.muted }]}>
-          {t('paywall.balance', { count: balance.data ?? 0 })}
-        </Text>
-        <Text style={[styles.body, { color: colors.muted }]}>{t('paywall.earnInstead')}</Text>
+        <Title>{t('paywall.title')}</Title>
+        <Small tone="muted">{t('paywall.balance', { count: balance.data ?? 0 })}</Small>
+        <Small tone="muted">{t('paywall.earnInstead')}</Small>
       </View>
 
       {options.isPending ? <ActivityIndicator /> : null}
 
       {unavailable ? (
-        <View style={[styles.card, { borderColor: colors.border }]}>
-          <Text style={styles.cardTitle}>{t('paywall.unavailable.title')}</Text>
-          <Text style={[styles.body, { color: colors.muted }]}>
-            {t(`paywall.unavailable.${loadErrorKey}` as MessageKey)}
-          </Text>
-        </View>
+        <Card>
+          <Heading>{t('paywall.unavailable.title')}</Heading>
+          <Small tone="muted">{t(`paywall.unavailable.${loadErrorKey}` as MessageKey)}</Small>
+        </Card>
       ) : null}
 
       {loadErrorKey && !unavailable ? (
         <View style={styles.section}>
-          <Text style={[styles.body, { color: colors.danger }]}>{t('paywall.errors.load')}</Text>
+          <Small tone="accent">{t('paywall.errors.load')}</Small>
           <Button
             title={t('paywall.retry')}
             variant="secondary"
@@ -81,19 +77,17 @@ export default function Paywall() {
       ))}
 
       {purchase.isSuccess ? (
-        <Text style={styles.result}>
+        <Body style={styles.result}>
           {purchase.data.kind === 'pro'
             ? t('paywall.result.pro')
             : purchase.data.outcome === 'credited'
               ? t('paywall.result.credited', { balance: purchase.data.balance })
               : t('paywall.result.pending')}
-        </Text>
+        </Body>
       ) : null}
 
       {purchaseError ? (
-        <Text style={[styles.body, { color: colors.danger }]}>
-          {t(`paywall.errors.${purchaseError}` as MessageKey)}
-        </Text>
+        <Small tone="accent">{t(`paywall.errors.${purchaseError}` as MessageKey)}</Small>
       ) : null}
 
       {options.data?.length ? (
@@ -105,15 +99,15 @@ export default function Paywall() {
             loading={restore.isPending}
           />
           {restore.isSuccess ? (
-            <Text style={[styles.body, { color: colors.muted }]}>
+            <Small tone="muted">
               {restore.data.proActive ? t('paywall.restored') : t('paywall.restoredNothing')}
-            </Text>
+            </Small>
           ) : null}
         </View>
       ) : null}
 
       <Button title={t('paywall.close')} variant="secondary" onPress={() => router.back()} />
-    </ScrollView>
+    </Screen>
   );
 }
 
@@ -126,74 +120,49 @@ function OptionCard({
   busy: boolean;
   onBuy: () => void;
 }) {
-  const colors = Colors[useColorScheme()];
   const pro = option.kind === 'pro';
 
   return (
-    <View style={[styles.card, { borderColor: colors.border }]}>
+    <Card>
       <View style={styles.cardHead}>
-        <Text style={styles.cardTitle}>
+        <Heading style={styles.cardTitle}>
           {pro
             ? t(`paywall.options.${option.productId}` as MessageKey)
             : t('paywall.options.credits', { count: option.credits })}
-        </Text>
-        <Text style={styles.price}>{option.priceString}</Text>
+        </Heading>
+        {/* Fiyat mağazadan gelir; rakam hizalı dursun. */}
+        <Heading style={styles.price}>{option.priceString}</Heading>
       </View>
-      <Text style={[styles.body, { color: colors.muted }]}>
+      <Small tone="muted">
         {pro
           ? t('paywall.options.proBody', { count: option.credits })
           : t('paywall.options.creditsBody')}
-      </Text>
+      </Small>
       <Button title={t('paywall.buy')} onPress={onBuy} disabled={busy} />
-    </View>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    gap: 16,
-    maxWidth: 560,
-    width: '100%',
-    alignSelf: 'center',
-  },
   header: {
-    gap: 6,
+    gap: space.sm,
   },
   section: {
-    gap: 8,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-  },
-  body: {
-    fontSize: 15,
-    lineHeight: 21,
-  },
-  card: {
-    borderWidth: 1,
-    borderRadius: 14,
-    padding: 16,
-    gap: 10,
+    gap: space.sm,
   },
   cardHead: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'baseline',
     justifyContent: 'space-between',
-    gap: 12,
+    gap: space.md,
   },
   cardTitle: {
-    fontSize: 17,
-    fontWeight: '700',
+    flexShrink: 1,
   },
   price: {
-    fontSize: 17,
-    fontWeight: '600',
+    fontVariant: ['tabular-nums'],
   },
   result: {
-    fontSize: 15,
-    lineHeight: 21,
     fontWeight: '600',
   },
 });

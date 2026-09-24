@@ -1,9 +1,9 @@
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import { Card } from '@/components/Card';
+import { Body, Meta, Small } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
 import {
@@ -25,15 +25,15 @@ export function AiSummary({
   submissionId: string;
   summary: string | null;
 }) {
-  const colors = Colors[useColorScheme()];
   const status = useAiSummaryStatus(submissionId, summary === null);
   const generate = useGenerateAiSummary(submissionId);
 
+  // Yazılmış özet raporun ilk sözüdür: kart değil, sayfanın kendi sesi.
   if (summary) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>{t('results.aiSummary.title')}</Text>
-        <Text style={styles.body}>{summary}</Text>
+      <View style={styles.written}>
+        <Meta style={styles.label}>{t('results.aiSummary.title')}</Meta>
+        <Body>{summary}</Body>
       </View>
     );
   }
@@ -46,9 +46,9 @@ export function AiSummary({
   const { reason } = status.data;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('results.aiSummary.title')}</Text>
-      <Text style={[styles.body, { color: colors.muted }]}>{explain(status.data)}</Text>
+    <Card gap={space.md}>
+      <Meta style={styles.label}>{t('results.aiSummary.title')}</Meta>
+      <Small tone="muted">{explain(status.data)}</Small>
 
       {reason === 'ok' ? (
         <>
@@ -57,27 +57,27 @@ export function AiSummary({
             onPress={() => generate.mutate()}
             loading={generate.isPending}
           />
-          <Text style={[styles.note, { color: colors.muted }]}>
+          <Meta>
             {t('results.aiSummary.quota', {
               used: status.data.used,
               limit: status.data.limit,
             })}
-          </Text>
+          </Meta>
         </>
       ) : null}
 
       {generate.isPending ? <ActivityIndicator /> : null}
 
       {generate.error ? (
-        <Text style={[styles.body, { color: colors.danger }]}>
+        <Small tone="accent">
           {t(
             `results.aiSummary.errors.${
               generate.error instanceof AiSummaryError ? generate.error.message : 'summary_failed'
             }` as MessageKey,
           )}
-        </Text>
+        </Small>
       ) : null}
-    </View>
+    </Card>
   );
 }
 
@@ -100,18 +100,10 @@ function explain(status: AiSummaryStatus): string {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 10,
+  written: {
+    gap: space.sm,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  body: {
-    fontSize: 15,
-    lineHeight: 22,
-  },
-  note: {
-    fontSize: 13,
+  label: {
+    textTransform: 'uppercase',
   },
 });

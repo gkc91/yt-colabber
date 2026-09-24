@@ -149,7 +149,8 @@
       "store_error": "The store could not complete that. Nothing was charged.",
       "not_configured": "This build has no store keys, so buying is off.",
       "web_unsupported": "Purchases only work in the mobile app."
-    }
+    },
+    "headerTitle": "Credits"
   },
   "notFound": {
     "title": "Oops!",
@@ -276,10 +277,10 @@
     "noData": "Nothing here yet.",
     "thumbnails": {
       "title": "Thumbnails",
-      "rate": "{rate}% clicked",
       "winner": "Winner",
       "noWinner": "Too close to call a winner yet.",
-      "detail": "{picked} of {shown} reviewers · {seconds}s to decide"
+      "detail": "{picked} of {shown} reviewers · {seconds}s to decide",
+      "clicked": "clicked"
     },
     "hook": {
       "title": "First 60 seconds",
@@ -316,7 +317,8 @@
         "no_access": "This test is not yours.",
         "ai_summary_unavailable": "Summaries are switched off right now. Nothing was used up."
       }
-    }
+    },
+    "reviewsLabel": "reviews in"
   },
   "report": {
     "title": "Report this",

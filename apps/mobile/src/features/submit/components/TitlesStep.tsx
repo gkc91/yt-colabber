@@ -1,8 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
+import { Small, Title } from '@/components/Type';
 import { TextField } from '@/components/TextField';
-import { Text, View } from '@/components/Themed';
+import { space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import { MAX_TITLE_LENGTH, MAX_TITLES } from '../rules';
@@ -18,8 +19,8 @@ export function TitlesStep({ titles, onChange }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('submit.wizard.titlesTitle')}</Text>
-      <Text style={styles.hint}>{t('submit.wizard.titlesHint')}</Text>
+      <Title>{t('submit.wizard.titlesTitle')}</Title>
+      <Small tone="muted">{t('submit.wizard.titlesHint')}</Small>
 
       {titles.map((title, index) => (
         <TextField
@@ -46,15 +47,6 @@ export function TitlesStep({ titles, onChange }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  hint: {
-    fontSize: 15,
-    lineHeight: 21,
-    opacity: 0.7,
+    gap: space.md,
   },
 });

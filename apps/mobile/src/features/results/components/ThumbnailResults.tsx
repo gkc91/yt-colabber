@@ -1,9 +1,12 @@
 import { Image } from 'expo-image';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
+import { Card } from '@/components/Card';
+import { Section } from '@/components/Section';
+import { Meta, Small, Stat } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { radius, space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import { percent, pickRate, winnerIndex, type ThumbnailStat } from '../rules';
@@ -15,18 +18,14 @@ type Props = {
 
 /** Thumbnail başına gösterim, seçilme oranı, ortalama karar süresi, kazanan (PRODUCT §7). */
 export function ThumbnailResults({ stats, thumbnailUrls }: Props) {
-  const colors = Colors[useColorScheme()];
   const winner = winnerIndex(stats);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>{t('results.thumbnails.title')}</Text>
-      {stats.length === 0 ? (
-        <Text style={[styles.empty, { color: colors.muted }]}>{t('results.noData')}</Text>
-      ) : null}
+    <Section title={t('results.thumbnails.title')}>
+      {stats.length === 0 ? <Small tone="muted">{t('results.noData')}</Small> : null}
 
       {stats.map((stat) => (
-        <View key={stat.idx} style={[styles.card, { borderColor: colors.border }]}>
+        <Card key={stat.idx} style={styles.card} gap={space.lg}>
           <Image
             source={{ uri: thumbnailUrls[stat.idx] }}
             style={styles.thumbnail}
@@ -34,79 +33,64 @@ export function ThumbnailResults({ stats, thumbnailUrls }: Props) {
             accessibilityIgnoresInvertColors
           />
           <View style={styles.stats}>
-            <View style={styles.rateRow}>
-              <Text style={styles.rate}>
-                {t('results.thumbnails.rate', { rate: percent(pickRate(stat)) })}
-              </Text>
-              {winner === stat.idx ? (
-                <Text style={[styles.winner, { color: colors.tint }]}>
-                  {t('results.thumbnails.winner')}
-                </Text>
-              ) : null}
-            </View>
-            <Text style={[styles.detail, { color: colors.muted }]}>
+            <Stat
+              value={`${percent(pickRate(stat))}%`}
+              label={t('results.thumbnails.clicked')}
+              tone={winner === stat.idx ? 'positive' : 'ink'}
+            />
+            {winner === stat.idx ? <WinnerBadge /> : null}
+            <Meta>
               {t('results.thumbnails.detail', {
                 picked: stat.picked,
                 shown: stat.shown,
                 seconds: ((stat.avg_decision_ms ?? 0) / 1000).toFixed(1),
               })}
-            </Text>
+            </Meta>
           </View>
-        </View>
+        </Card>
       ))}
 
       {stats.length > 1 && winner === null ? (
-        <Text style={[styles.empty, { color: colors.muted }]}>
-          {t('results.thumbnails.noWinner')}
-        </Text>
+        <Small tone="muted">{t('results.thumbnails.noWinner')}</Small>
       ) : null}
+    </Section>
+  );
+}
+
+/** Kazanan rozeti: dolgu değil, çerçeve. Sayfada tek "işe yarıyor" işareti. */
+function WinnerBadge() {
+  const colors = Colors[useColorScheme()];
+  return (
+    <View style={[styles.badge, { borderColor: colors.positive }]}>
+      <Meta tone="positive" style={styles.badgeLabel}>
+        {t('results.thumbnails.winner')}
+      </Meta>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 12,
-  },
-  heading: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  empty: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
   card: {
     flexDirection: 'row',
-    gap: 12,
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 10,
     alignItems: 'center',
   },
   thumbnail: {
     width: 120,
     aspectRatio: 16 / 9,
-    borderRadius: 8,
+    borderRadius: radius.button,
   },
   stats: {
     flex: 1,
-    gap: 4,
+    gap: space.sm,
+    alignItems: 'flex-start',
   },
-  rateRow: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    gap: 8,
+  badge: {
+    borderWidth: StyleSheet.hairlineWidth * 2,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.md,
+    paddingVertical: 2,
   },
-  rate: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  winner: {
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  detail: {
-    fontSize: 13,
+  badgeLabel: {
+    textTransform: 'uppercase',
   },
 });

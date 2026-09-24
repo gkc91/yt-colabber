@@ -1,11 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import { Rule } from '@/components/Card';
+import { Screen } from '@/components/Screen';
+import { Body, Stat } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { rateReview, resultsQueryKey, useResults, type ResultReview } from '@/features/results/api';
 import { AiSummary } from '@/features/results/components/AiSummary';
 import { HookResults } from '@/features/results/components/HookResults';
@@ -16,7 +17,6 @@ import { t } from '@/i18n';
 
 export default function SubmissionResultsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const colors = Colors[useColorScheme()];
   const queryClient = useQueryClient();
 
   const results = useResults(id);
@@ -37,17 +37,17 @@ export default function SubmissionResultsScreen() {
 
   if (results.isPending) {
     return (
-      <View style={styles.center}>
+      <Screen center>
         <ActivityIndicator />
-      </View>
+      </Screen>
     );
   }
 
   if (results.error || !results.data) {
     return (
-      <View style={styles.center}>
-        <Text style={styles.message}>{t('results.notFound')}</Text>
-      </View>
+      <Screen center>
+        <Body>{t('results.notFound')}</Body>
+      </Screen>
     );
   }
 
@@ -69,16 +69,18 @@ export default function SubmissionResultsScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={[styles.progress, { color: colors.muted }]}>
-        {t('submit.reviewsProgress', {
-          received: submission.received_reviews,
-          requested: submission.requested_reviews,
-        })}
-      </Text>
+    <Screen gap={space.xxl}>
+      {/* Raporun künyesi: kaç kişinin baktığı, her şeyden önce. */}
+      <View style={styles.header}>
+        <Stat
+          value={`${submission.received_reviews}/${submission.requested_reviews}`}
+          label={t('results.reviewsLabel')}
+        />
+        <Rule />
+      </View>
 
       {submission.received_reviews === 0 ? (
-        <Text style={styles.message}>{t('results.waiting')}</Text>
+        <Body tone="muted">{t('results.waiting')}</Body>
       ) : (
         <>
           <AiSummary submissionId={id} summary={submission.ai_summary} />
@@ -93,31 +95,12 @@ export default function SubmissionResultsScreen() {
           />
         </>
       )}
-    </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    gap: 28,
-    maxWidth: 640,
-    width: '100%',
-    alignSelf: 'center',
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
-  progress: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  message: {
-    fontSize: 16,
-    lineHeight: 22,
-    textAlign: 'center',
+  header: {
+    gap: space.lg,
   },
 });

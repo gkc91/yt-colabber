@@ -1,24 +1,10 @@
-import { StyleSheet } from 'react-native';
-
-import { Text, View } from '@/components/Themed';
+import { Screen } from '@/components/Screen';
+import { Body } from '@/components/Type';
 
 export function PlaceholderScreen({ message }: { message: string }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.message}>{message}</Text>
-    </View>
+    <Screen center>
+      <Body tone="muted">{message}</Body>
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
-  message: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});

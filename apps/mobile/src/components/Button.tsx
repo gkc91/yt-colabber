@@ -2,6 +2,7 @@ import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { fonts, layout, radius, space } from '@/design/tokens';
 
 type Props = {
   title: string;
@@ -44,14 +45,15 @@ export function Button({ title, onPress, variant = 'primary', disabled, loading 
 
 const styles = StyleSheet.create({
   base: {
-    minHeight: 48,
-    borderRadius: 12,
-    paddingHorizontal: 16,
+    minHeight: layout.minTouch + space.xs,
+    borderRadius: radius.button,
+    paddingHorizontal: space.lg,
     alignItems: 'center',
     justifyContent: 'center',
   },
   label: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.heading,
+    letterSpacing: -0.2,
   },
 });

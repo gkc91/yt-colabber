@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { ActivityIndicator, Alert, Platform, ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, Alert, Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
-import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import { Screen } from '@/components/Screen';
+import { Section } from '@/components/Section';
+import { Meta, Small, Stat } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { signOut } from '@/features/auth/api';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
@@ -34,7 +35,6 @@ import { t, type MessageKey } from '@/i18n';
 export default function ProfileScreen() {
   const { session } = useSession();
   const userId = session?.user.id as string;
-  const colors = Colors[useColorScheme()];
   const queryClient = useQueryClient();
 
   const profile = useProfile(userId);
@@ -77,9 +77,9 @@ export default function ProfileScreen() {
 
   if (profile.isPending || niches.isPending || scope.isPending) {
     return (
-      <View style={styles.center}>
+      <Screen center>
         <ActivityIndicator />
-      </View>
+      </Screen>
     );
   }
 
@@ -105,36 +105,44 @@ export default function ProfileScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <Screen gap={space.xxl}>
       {/* ---------- özet ---------- */}
-      <View style={styles.section}>
-        <Text style={styles.heading}>{t('profile.stats.title')}</Text>
+      <Section title={t('profile.stats.title')}>
         <View style={styles.stats}>
-          <Stat label={t('credits.balance')} value={String(balance.data ?? '—')} />
           <Stat
+            style={styles.stat}
+            label={t('credits.balance')}
+            value={String(balance.data ?? '—')}
+          />
+          <Stat
+            style={styles.stat}
             label={t('profile.stats.reputation')}
             value={Number(profile.data?.reputation ?? 1).toFixed(2)}
           />
-          <Stat label={t('profile.stats.given')} value={String(profile.data?.reviews_given ?? 0)} />
           <Stat
+            style={styles.stat}
+            label={t('profile.stats.given')}
+            value={String(profile.data?.reviews_given ?? 0)}
+          />
+          <Stat
+            style={styles.stat}
             label={t('profile.stats.received')}
             value={String(profile.data?.reviews_received ?? 0)}
           />
         </View>
         {profile.data?.is_flagged ? (
-          <Text style={[styles.body, { color: colors.danger }]}>{t('profile.stats.flagged')}</Text>
+          <Small tone="accent">{t('profile.stats.flagged')}</Small>
         ) : null}
-      </View>
+      </Section>
 
       {/* ---------- kanal ve niş ---------- */}
-      <View style={styles.section}>
-        <Text style={styles.heading}>{t('profile.yourChannel.title')}</Text>
-        <Text style={[styles.body, { color: colors.muted }]}>
+      <Section title={t('profile.yourChannel.title')}>
+        <Small tone="muted">
           {t('profile.yourChannel.body', {
             niche: ownNiche?.name ?? '—',
             language: ownLanguage?.label ?? profile.data?.language ?? '—',
           })}
-        </Text>
+        </Small>
 
         {changingNiche ? (
           <>
@@ -148,9 +156,7 @@ export default function ProfileScreen() {
                 />
               ))}
             </View>
-            {nicheError ? (
-              <Text style={[styles.body, { color: colors.danger }]}>{nicheError}</Text>
-            ) : null}
+            {nicheError ? <Small tone="accent">{nicheError}</Small> : null}
             <Button
               title={t('report.cancel')}
               variant="secondary"
@@ -159,11 +165,11 @@ export default function ProfileScreen() {
           </>
         ) : (
           <>
-            <Text style={[styles.hint, { color: colors.muted }]}>
+            <Meta>
               {nicheUnlocked
                 ? t('profile.niche.canChange')
                 : t('profile.niche.locked', { days: daysLeft })}
-            </Text>
+            </Meta>
             <Button
               title={t('profile.niche.change')}
               variant="secondary"
@@ -172,16 +178,15 @@ export default function ProfileScreen() {
             />
           </>
         )}
-      </View>
+      </Section>
 
       {/* ---------- değerlendirme kapsamı ---------- */}
-      <View style={styles.section}>
-        <Text style={styles.heading}>{t('profile.scope.title')}</Text>
-        <Text style={[styles.body, { color: colors.muted }]}>{t('profile.scope.body')}</Text>
+      <Section title={t('profile.scope.title')}>
+        <Small tone="muted">{t('profile.scope.body')}</Small>
 
-        <Text style={styles.label}>
+        <Meta style={styles.label}>
           {t('profile.scope.niches', { used: alsoNicheIds.length, max: MAX_EXTRA_NICHES })}
-        </Text>
+        </Meta>
         <View style={styles.chips}>
           {niches.data
             ?.filter((niche) => niche.id !== profile.data?.niche_id)
@@ -201,9 +206,9 @@ export default function ProfileScreen() {
             ))}
         </View>
 
-        <Text style={styles.label}>
+        <Meta style={styles.label}>
           {t('profile.scope.languages', { used: alsoLanguages.length, max: MAX_EXTRA_LANGUAGES })}
-        </Text>
+        </Meta>
         <View style={styles.chips}>
           {LANGUAGES.filter((language) => language.code !== profile.data?.language).map(
             (language) => (
@@ -229,100 +234,50 @@ export default function ProfileScreen() {
           disabled={!dirty}
           loading={saveScope.isPending}
         />
-      </View>
+      </Section>
 
       {/* ---------- kredi geçmişi ---------- */}
-      <View style={styles.section}>
-        <Text style={styles.heading}>{t('profile.credits.title')}</Text>
+      <Section title={t('profile.credits.title')}>
         {credits.isPending ? <ActivityIndicator /> : <CreditHistory entries={credits.data ?? []} />}
-      </View>
+      </Section>
 
       {/* ---------- hesap ---------- */}
-      <View style={styles.section}>
-        <Text style={styles.heading}>{t('profile.account.title')}</Text>
+      <Section title={t('profile.account.title')}>
         <Button
           title={t('profile.account.signOut')}
           variant="secondary"
           onPress={() => signOut()}
         />
-        <Text style={[styles.hint, { color: colors.muted }]}>
-          {t('profile.account.deleteHint')}
-        </Text>
-        {removeAccount.error ? (
-          <Text style={[styles.body, { color: colors.danger }]}>{t('auth.genericError')}</Text>
-        ) : null}
+        <Meta>{t('profile.account.deleteHint')}</Meta>
+        {removeAccount.error ? <Small tone="accent">{t('auth.genericError')}</Small> : null}
         <Button
           title={t('profile.account.delete')}
           variant="secondary"
           onPress={confirmDelete}
           loading={removeAccount.isPending}
         />
-      </View>
-    </ScrollView>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  const colors = Colors[useColorScheme()];
-  return (
-    <View style={styles.stat}>
-      <Text style={[styles.statLabel, { color: colors.muted }]}>{label}</Text>
-      <Text style={styles.statValue}>{value}</Text>
-    </View>
+      </Section>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    gap: 28,
-    maxWidth: 640,
-    width: '100%',
-    alignSelf: 'center',
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  section: {
-    gap: 10,
-  },
-  heading: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
   label: {
-    fontSize: 15,
-    fontWeight: '600',
-    marginTop: 4,
-  },
-  body: {
-    fontSize: 15,
-    lineHeight: 21,
-  },
-  hint: {
-    fontSize: 13,
-    lineHeight: 19,
+    textTransform: 'uppercase',
+    marginTop: space.xs,
   },
   chips: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: space.sm,
   },
   stats: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 20,
+    rowGap: space.lg,
   },
   stat: {
-    gap: 2,
-  },
-  statLabel: {
-    fontSize: 13,
-  },
-  statValue: {
-    fontSize: 22,
-    fontWeight: '700',
+    // İki sütunlu künye: sayılar alt alta hizalansın.
+    minWidth: '45%',
   },
 });

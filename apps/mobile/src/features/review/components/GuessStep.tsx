@@ -1,11 +1,12 @@
 import { Image } from 'expo-image';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
+import { Heading, Meta } from '@/components/Type';
 import { TextField } from '@/components/TextField';
-import { Text, View } from '@/components/Themed';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { radius, space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import { countWords, isGuessLongEnough, MIN_GUESS_WORDS } from '../rules';
@@ -31,7 +32,8 @@ export function GuessStep({ thumbnailUrl, title, guess, onChange, onContinue }: 
         contentFit="cover"
         accessibilityIgnoresInvertColors
       />
-      <Text style={styles.title}>{title}</Text>
+      {/* Başlık YouTube'daki gibi durur: burada da ölçtüğümüz şey vaat (DESIGN.md §2). */}
+      <Heading>{title}</Heading>
 
       <TextField
         label={t('review.guess.question')}
@@ -41,9 +43,7 @@ export function GuessStep({ thumbnailUrl, title, guess, onChange, onContinue }: 
         multiline
         maxLength={300}
       />
-      <Text style={[styles.counter, { color: colors.muted }]}>
-        {t('review.guess.words', { words, min: MIN_GUESS_WORDS })}
-      </Text>
+      <Meta>{t('review.guess.words', { words, min: MIN_GUESS_WORDS })}</Meta>
 
       <Button title={t('review.next')} onPress={onContinue} disabled={!isGuessLongEnough(guess)} />
     </View>
@@ -52,19 +52,12 @@ export function GuessStep({ thumbnailUrl, title, guess, onChange, onContinue }: 
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
+    gap: space.md,
   },
   thumbnail: {
     width: '100%',
     aspectRatio: 16 / 9,
-    borderRadius: 12,
-    borderWidth: 1,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  counter: {
-    fontSize: 13,
+    borderRadius: radius.card,
+    borderWidth: StyleSheet.hairlineWidth * 2,
   },
 });

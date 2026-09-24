@@ -1,11 +1,13 @@
 import { Link, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
-import { ActivityIndicator, FlatList, Pressable, StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
+import { Card } from '@/components/Card';
+import { Body, Heading, Meta } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { layout, space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { useMySubmissions, type MySubmission } from '@/features/submit/api';
 import { remainingTime } from '@/features/submit/rules';
@@ -13,6 +15,7 @@ import { t, type MessageKey } from '@/i18n';
 
 export default function SubmissionsScreen() {
   const { session } = useSession();
+  const colors = Colors[useColorScheme()];
   const submissions = useMySubmissions(session?.user.id);
   const refetchSubmissions = submissions.refetch;
 
@@ -24,7 +27,7 @@ export default function SubmissionsScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
         data={submissions.data ?? []}
         keyExtractor={(item) => item.id}
@@ -40,7 +43,9 @@ export default function SubmissionsScreen() {
           submissions.isPending ? (
             <ActivityIndicator style={styles.loading} />
           ) : (
-            <Text style={styles.empty}>{t('submit.empty')}</Text>
+            <Body tone="muted" style={styles.empty}>
+              {t('submit.empty')}
+            </Body>
           )
         }
       />
@@ -54,32 +59,27 @@ export default function SubmissionsScreen() {
 }
 
 function SubmissionRow({ submission }: { submission: MySubmission }) {
-  const colors = Colors[useColorScheme()];
   const left = remainingTime(submission.closes_at);
   const isOpen = submission.status === 'open';
 
   return (
-    <View style={[styles.row, { borderColor: colors.border }]}>
-      <Text style={styles.rowTitle} numberOfLines={1}>
-        {submission.title_options[0]}
-      </Text>
+    <Card gap={space.sm}>
+      <Heading numberOfLines={1}>{submission.title_options[0]}</Heading>
       <View style={styles.rowMeta}>
-        <Text style={[styles.rowStatus, { color: colors.muted }]}>
-          {t(`submit.status.${submission.status}` as MessageKey)}
-        </Text>
-        <Text style={styles.rowCount}>
+        <Meta>{t(`submit.status.${submission.status}` as MessageKey)}</Meta>
+        <Meta style={styles.rowCount}>
           {t('submit.reviewsProgress', {
             received: submission.received_reviews,
             requested: submission.requested_reviews,
           })}
-        </Text>
+        </Meta>
       </View>
-      <Text style={[styles.rowTime, { color: colors.muted }]}>
+      <Meta>
         {isOpen && !left.expired
           ? t('submit.remaining', { hours: left.hours, minutes: left.minutes })
           : t('submit.closed')}
-      </Text>
-    </View>
+      </Meta>
+    </Card>
   );
 }
 
@@ -88,45 +88,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
-    padding: 16,
-    gap: 12,
+    paddingHorizontal: layout.gutter,
+    paddingTop: space.lg,
+    gap: space.md,
     flexGrow: 1,
+    width: '100%',
+    maxWidth: layout.maxWidth,
+    alignSelf: 'center',
   },
   loading: {
-    marginTop: 48,
+    marginTop: space.xxxl,
   },
   empty: {
-    marginTop: 48,
-    fontSize: 16,
-    lineHeight: 22,
-    textAlign: 'center',
-    paddingHorizontal: 16,
-  },
-  row: {
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 16,
-    gap: 6,
-  },
-  rowTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    marginTop: space.xxxl,
   },
   rowMeta: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  rowStatus: {
-    fontSize: 14,
+    gap: space.md,
   },
   rowCount: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  rowTime: {
-    fontSize: 13,
+    fontVariant: ['tabular-nums'],
   },
   footer: {
-    padding: 16,
+    paddingHorizontal: layout.gutter,
+    paddingVertical: space.lg,
+    width: '100%',
+    maxWidth: layout.maxWidth,
+    alignSelf: 'center',
   },
 });

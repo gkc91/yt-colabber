@@ -1,11 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { z } from 'zod';
 
 import { Button } from '@/components/Button';
+import { Rule } from '@/components/Card';
+import { Screen } from '@/components/Screen';
+import { Body, Display, Meta, Small } from '@/components/Type';
 import { TextField } from '@/components/TextField';
-import { Text, View } from '@/components/Themed';
+import { space } from '@/design/tokens';
 import { sendMagicLink, signInWithGoogle } from '@/features/auth/api';
 import { t } from '@/i18n';
 
@@ -34,15 +37,17 @@ export default function SignIn() {
       style={styles.flex}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      <Screen gap={space.xl} style={styles.page}>
+        {/* Ad üstte ve büyük; ortalanmış bir şablon girişi değil (DESIGN.md §6). */}
         <View style={styles.header}>
-          <Text style={styles.title}>{t('auth.title')}</Text>
-          <Text style={styles.tagline}>{t('auth.tagline')}</Text>
+          <Display>{t('auth.title')}</Display>
+          <Body tone="muted">{t('auth.tagline')}</Body>
         </View>
+        <Rule />
 
         {magicLink.isSuccess ? (
           <View style={styles.section}>
-            <Text style={styles.notice}>{t('auth.linkSent')}</Text>
+            <Body>{t('auth.linkSent')}</Body>
             <Button
               title={t('auth.useAnotherEmail')}
               variant="secondary"
@@ -68,7 +73,7 @@ export default function SignIn() {
           </View>
         )}
 
-        <Text style={styles.or}>{t('auth.or')}</Text>
+        <Meta style={styles.or}>{t('auth.or')}</Meta>
         <Button
           title={t('auth.google')}
           variant="secondary"
@@ -76,8 +81,8 @@ export default function SignIn() {
           loading={google.isPending}
         />
 
-        {error ? <Text style={styles.error}>{error.message || t('auth.genericError')}</Text> : null}
-      </ScrollView>
+        {error ? <Small tone="accent">{error.message || t('auth.genericError')}</Small> : null}
+      </Screen>
     </KeyboardAvoidingView>
   );
 }
@@ -86,39 +91,16 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: 24,
-    gap: 20,
-    maxWidth: 480,
-    width: '100%',
-    alignSelf: 'center',
+  page: {
+    paddingTop: space.xxxl,
   },
   header: {
-    gap: 8,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-  },
-  tagline: {
-    fontSize: 16,
-    lineHeight: 22,
+    gap: space.md,
   },
   section: {
-    gap: 12,
-  },
-  notice: {
-    fontSize: 16,
-    lineHeight: 22,
+    gap: space.md,
   },
   or: {
-    textAlign: 'center',
-    opacity: 0.6,
-  },
-  error: {
-    color: '#c62828',
-    textAlign: 'center',
+    textTransform: 'uppercase',
   },
 });

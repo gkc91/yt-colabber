@@ -1,14 +1,15 @@
 import { useEventListener } from 'expo';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
+import { Body, Meta } from '@/components/Type';
 import { TextField } from '@/components/TextField';
-import { Text, View } from '@/components/Themed';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { radius, space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
 import { ReportSheet } from '@/features/reports/ReportSheet';
@@ -72,16 +73,16 @@ export function HookStep({
       {!decided ? (
         <Button title={t('review.hook.leave')} variant="secondary" onPress={markLeft} />
       ) : (
-        <Text style={styles.decision}>
+        <Body style={styles.decision}>
           {leftAt === null
             ? t('review.hook.watchedAll')
             : t('review.hook.leftAt', { second: Math.floor(leftAt) })}
-        </Text>
+        </Body>
       )}
 
       {decided ? (
         <>
-          <Text style={styles.label}>{t('review.hook.tagsTitle')}</Text>
+          <Meta style={styles.label}>{t('review.hook.tagsTitle')}</Meta>
           <View style={styles.tags}>
             {REASON_TAGS.map((tag) => (
               <Chip
@@ -120,26 +121,24 @@ export function HookStep({
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
+    gap: space.md,
   },
   video: {
     width: '100%',
     aspectRatio: 16 / 9,
-    borderRadius: 12,
-    borderWidth: 1,
+    borderRadius: radius.card,
+    borderWidth: StyleSheet.hairlineWidth * 2,
     backgroundColor: '#000',
   },
   decision: {
-    fontSize: 16,
     fontWeight: '600',
   },
   label: {
-    fontSize: 16,
-    fontWeight: '600',
+    textTransform: 'uppercase',
   },
   tags: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: space.sm,
   },
 });

@@ -1,10 +1,11 @@
 import { Image } from 'expo-image';
-import { Pressable, StyleSheet, Platform } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
+import { Meta, Small, Title } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { radius, space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import type { PickedThumbnail } from '../media.types';
@@ -22,8 +23,8 @@ export function ThumbnailsStep({ thumbnails, busy, onAdd, onRemove }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('submit.wizard.thumbnailsTitle')}</Text>
-      <Text style={styles.hint}>{t('submit.wizard.thumbnailsHint')}</Text>
+      <Title>{t('submit.wizard.thumbnailsTitle')}</Title>
+      <Small tone="muted">{t('submit.wizard.thumbnailsHint')}</Small>
 
       {thumbnails.map((thumbnail, index) => (
         <View key={thumbnail.uri} style={styles.item}>
@@ -33,10 +34,8 @@ export function ThumbnailsStep({ thumbnails, busy, onAdd, onRemove }: Props) {
             contentFit="cover"
             accessibilityIgnoresInvertColors
           />
-          <Pressable accessibilityRole="button" onPress={() => onRemove(index)}>
-            <Text style={[styles.remove, { color: colors.danger }]}>
-              {t('submit.wizard.removeThumbnail')}
-            </Text>
+          <Pressable accessibilityRole="button" onPress={() => onRemove(index)} hitSlop={space.sm}>
+            <Meta tone="accent">{t('submit.wizard.removeThumbnail')}</Meta>
           </Pressable>
         </View>
       ))}
@@ -59,28 +58,15 @@ export function ThumbnailsStep({ thumbnails, busy, onAdd, onRemove }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  hint: {
-    fontSize: 15,
-    lineHeight: 21,
-    opacity: 0.7,
+    gap: space.md,
   },
   item: {
-    gap: 6,
+    gap: space.sm,
   },
   preview: {
     width: '100%',
     aspectRatio: 16 / 9,
-    borderRadius: 12,
-    borderWidth: 1,
-  },
-  remove: {
-    fontSize: 14,
-    fontWeight: '600',
+    borderRadius: radius.card,
+    borderWidth: StyleSheet.hairlineWidth * 2,
   },
 });

@@ -1,7 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
+import { Body, Title } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import type { PickedClip, PickedThumbnail } from '../media.types';
@@ -31,23 +32,23 @@ export function ConfirmStep({
 }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('submit.wizard.confirmTitle')}</Text>
-      <Text style={styles.summary}>
+      <Title>{t('submit.wizard.confirmTitle')}</Title>
+      <Body>
         {t('submit.wizard.confirmSummary', {
           thumbnails: thumbnails.length,
           titles: titles.length,
           seconds: clip.durationSeconds,
           count: requested,
         })}
-      </Text>
+      </Body>
 
       {uploading ? (
         <View style={styles.progressBlock}>
-          <Text style={styles.progress}>
+          <Body tone="muted">
             {progress && progress.done < progress.total
               ? t('submit.wizard.uploading', { done: progress.done, total: progress.total })
               : t('submit.wizard.creating')}
-          </Text>
+          </Body>
           <Button title={t('submit.wizard.cancel')} variant="secondary" onPress={onCancel} />
         </View>
       ) : (
@@ -59,20 +60,9 @@ export function ConfirmStep({
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  summary: {
-    fontSize: 16,
-    lineHeight: 22,
+    gap: space.md,
   },
   progressBlock: {
-    gap: 12,
-  },
-  progress: {
-    fontSize: 16,
+    gap: space.md,
   },
 });

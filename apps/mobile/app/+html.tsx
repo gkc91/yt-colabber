@@ -27,7 +27,7 @@ export default function Root({ children }: { children: ReactNode }) {
           name="description"
           content="Test your thumbnail, title and first 60 seconds with real people in your niche before you publish."
         />
-        <meta name="theme-color" content="#2f95dc" />
+        <meta name="theme-color" content="#FAF9F7" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png" />
       </head>
@@ -36,12 +36,14 @@ export default function Root({ children }: { children: ReactNode }) {
   );
 }
 
+// Kâğıt zemin ilk boyada da doğru olsun: uygulama yüklenirken beyaz parlamasın
+// (DESIGN.md §3 paper/surface).
 const responsiveBackground = `
 body {
-  background-color: #fff;
+  background-color: #FAF9F7;
 }
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #000;
+    background-color: #0F1115;
   }
 }`;

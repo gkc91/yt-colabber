@@ -1,9 +1,11 @@
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
+import { Rule } from '@/components/Card';
+import { Body, Meta, Small, Title } from '@/components/Type';
+import { layout, space } from '@/design/tokens';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { useSession } from '@/features/auth/session';
@@ -37,12 +39,16 @@ export default function ReviewScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* Kredi her zaman aynı yerde: üstte, tek satır, altında çizgi. */}
       <View style={styles.balance} accessibilityRole="summary">
-        <Text style={[styles.balanceLabel, { color: colors.muted }]}>{t('credits.balance')}</Text>
-        <Text style={styles.balanceValue} testID="credit-balance">
-          {balance.data ?? t('credits.loading')}
-        </Text>
+        <View style={styles.balanceRow}>
+          <Meta style={styles.balanceLabel}>{t('credits.balance')}</Meta>
+          <Title style={styles.balanceValue} testID="credit-balance">
+            {balance.data ?? t('credits.loading')}
+          </Title>
+        </View>
+        <Rule />
       </View>
 
       <View style={styles.body}>
@@ -50,8 +56,10 @@ export default function ReviewScreen() {
 
         {!task.isPending && assignment ? (
           <>
-            <Text style={styles.title}>{t('review.ready.title')}</Text>
-            <Text style={styles.text}>{t('review.ready.body')}</Text>
+            <Title style={styles.centered}>{t('review.ready.title')}</Title>
+            <Body tone="muted" style={styles.centered}>
+              {t('review.ready.body')}
+            </Body>
             <Button
               title={t('review.ready.start')}
               onPress={() => {
@@ -67,8 +75,10 @@ export default function ReviewScreen() {
 
         {!task.isPending && !assignment ? (
           <>
-            <Text style={styles.title}>{t('review.empty.title')}</Text>
-            <Text style={styles.text}>{t('review.empty.body')}</Text>
+            <Title style={styles.centered}>{t('review.empty.title')}</Title>
+            <Body tone="muted" style={styles.centered}>
+              {t('review.empty.body')}
+            </Body>
             {pushSupported && pushState === 'denied' ? (
               <Button
                 title={t('review.empty.enablePush')}
@@ -81,13 +91,15 @@ export default function ReviewScreen() {
               />
             ) : null}
             {pushState === 'granted' ? (
-              <Text style={[styles.text, { color: colors.muted }]}>{t('review.empty.pushOn')}</Text>
+              <Meta style={styles.centered}>{t('review.empty.pushOn')}</Meta>
             ) : null}
           </>
         ) : null}
 
         {task.error ? (
-          <Text style={[styles.text, { color: colors.danger }]}>{errorText(task.error)}</Text>
+          <Small tone="accent" style={styles.centered}>
+            {errorText(task.error)}
+          </Small>
         ) : null}
       </View>
     </View>
@@ -105,37 +117,32 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   balance: {
+    paddingHorizontal: layout.gutter,
+    paddingTop: space.lg,
+  },
+  balanceRow: {
     flexDirection: 'row',
     alignItems: 'baseline',
     justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingBottom: space.md,
   },
   balanceLabel: {
-    fontSize: 15,
+    textTransform: 'uppercase',
   },
   balanceValue: {
-    fontSize: 28,
-    fontWeight: '700',
+    fontVariant: ['tabular-nums'],
   },
   body: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
-    gap: 12,
+    paddingHorizontal: layout.gutter,
+    gap: space.lg,
     maxWidth: 480,
     width: '100%',
     alignSelf: 'center',
   },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 22,
+  centered: {
     textAlign: 'center',
   },
 });

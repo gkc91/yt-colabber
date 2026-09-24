@@ -5,6 +5,7 @@ import type { ColorValue } from 'react-native';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { headerTitleStyle } from '@/design/navigationTheme';
 import { t } from '@/i18n';
 
 function TabIcon({ name, color }: { name: SymbolViewProps['name']; color: ColorValue }) {
@@ -18,6 +19,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarInactiveTintColor: Colors[colorScheme].muted,
+        headerTitleStyle,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation.
         headerShown: useClientOnlyValue(false, true),

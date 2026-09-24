@@ -1,11 +1,10 @@
 import { router } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
-import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import { Meta, Small, Title } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import {
@@ -24,13 +23,12 @@ type Props = {
 };
 
 export function CountStep({ requested, balance, isPro, onChange }: Props) {
-  const colors = Colors[useColorScheme()];
   const missing = creditCost(requested) - balance;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('submit.wizard.countTitle')}</Text>
-      <Text style={styles.hint}>{t('submit.wizard.countHint')}</Text>
+      <Title>{t('submit.wizard.countTitle')}</Title>
+      <Small tone="muted">{t('submit.wizard.countHint')}</Small>
 
       <View style={styles.options} accessibilityRole="radiogroup">
         {reviewCountOptions(isPro).map((count) => (
@@ -47,15 +45,13 @@ export function CountStep({ requested, balance, isPro, onChange }: Props) {
         ))}
       </View>
 
-      <Text style={[styles.balance, { color: colors.muted }]}>
-        {t('submit.wizard.balance', { balance })}
-      </Text>
+      <Meta>{t('submit.wizard.balance', { balance })}</Meta>
 
       {!canAfford(balance, requested) ? (
         <View style={styles.shortfall}>
-          <Text style={[styles.warning, { color: colors.danger }]}>
+          <Small tone="accent" style={styles.warning}>
             {t('submit.wizard.notEnough', { missing })}
-          </Text>
+          </Small>
           <Button
             title={t('submit.wizard.getCredits')}
             variant="secondary"
@@ -69,30 +65,17 @@ export function CountStep({ requested, balance, isPro, onChange }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  hint: {
-    fontSize: 15,
-    lineHeight: 21,
-    opacity: 0.7,
+    gap: space.md,
   },
   options: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
-  },
-  balance: {
-    fontSize: 15,
+    gap: space.sm,
   },
   shortfall: {
-    gap: 8,
+    gap: space.sm,
   },
   warning: {
-    fontSize: 15,
     fontWeight: '600',
   },
 });

@@ -1,7 +1,8 @@
-import { StyleSheet, Platform } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
+import { Body, Small, Title } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import type { PickedClip } from '../media.types';
@@ -16,24 +17,22 @@ type Props = {
 export function ClipStep({ clip, busy, progress, onPick }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('submit.wizard.clipTitle')}</Text>
-      <Text style={styles.hint}>
+      <Title>{t('submit.wizard.clipTitle')}</Title>
+      <Small tone="muted">
         {Platform.OS === 'web' ? t('submit.wizard.clipHintWeb') : t('submit.wizard.clipHint')}
-      </Text>
+      </Small>
 
       {clip ? (
-        <Text style={styles.ready}>
+        <Body tone="positive" style={styles.ready}>
           {t('submit.wizard.clipReady', {
             seconds: clip.durationSeconds,
             megabytes: (clip.bytes / (1024 * 1024)).toFixed(1),
           })}
-        </Text>
+        </Body>
       ) : null}
 
       {busy ? (
-        <Text style={styles.progress}>
-          {t('submit.wizard.compressing', { percent: Math.round(progress * 100) })}
-        </Text>
+        <Body>{t('submit.wizard.compressing', { percent: Math.round(progress * 100) })}</Body>
       ) : (
         <Button
           title={
@@ -53,22 +52,9 @@ export function ClipStep({ clip, busy, progress, onPick }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  hint: {
-    fontSize: 15,
-    lineHeight: 21,
-    opacity: 0.7,
+    gap: space.md,
   },
   ready: {
-    fontSize: 16,
     fontWeight: '600',
-  },
-  progress: {
-    fontSize: 16,
   },
 });

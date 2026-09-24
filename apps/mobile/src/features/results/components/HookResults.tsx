@@ -1,8 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
+import { Rule } from '@/components/Card';
+import { Section } from '@/components/Section';
+import { Body, Meta, Small, Stat } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
 import { HISTOGRAM_BUCKETS, leaveHistogram, percent, sortedTags, type HookStat } from '../rules';
@@ -15,103 +18,69 @@ export function HookResults({ hook, clipSeconds }: Props) {
   const buckets = leaveHistogram(hook.leave_seconds, clipSeconds);
   const peak = Math.max(1, ...buckets);
   const bucketSeconds = Math.max(1, Math.round(clipSeconds / HISTOGRAM_BUCKETS));
+  // İzleyiciyi en çok kaybettiğin an sayfadaki tek kırmızı: asıl haber o (DESIGN.md §3).
+  const worst = buckets.some((count) => count > 0) ? buckets.indexOf(peak) : -1;
+  const tags = sortedTags(hook.tags);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>{t('results.hook.title')}</Text>
-
+    <Section title={t('results.hook.title')} gap={space.lg}>
       <View style={styles.summary}>
+        <Stat value={`${percent(hook.finished_ratio)}%`} label={t('results.hook.finished')} />
         <Stat
-          label={t('results.hook.finished')}
-          value={`${percent(hook.finished_ratio)}%`}
-          color={colors.muted}
-        />
-        <Stat
-          label={t('results.hook.median')}
           value={hook.median_leave === null ? '—' : `${Math.round(hook.median_leave)}s`}
-          color={colors.muted}
+          label={t('results.hook.median')}
         />
       </View>
 
-      <View style={styles.chart} accessibilityLabel={t('results.hook.chartLabel')}>
-        {buckets.map((count, index) => (
-          <View key={index} style={styles.barColumn}>
-            <View
-              style={[
-                styles.bar,
-                {
-                  height: `${(count / peak) * 100}%`,
-                  backgroundColor: count > 0 ? colors.tint : colors.border,
-                },
-              ]}
-            />
+      <View>
+        <View style={styles.chart} accessibilityLabel={t('results.hook.chartLabel')}>
+          {buckets.map((count, index) => (
+            <View key={index} style={styles.barColumn}>
+              <View
+                style={[
+                  styles.bar,
+                  {
+                    height: `${(count / peak) * 100}%`,
+                    backgroundColor:
+                      index === worst ? colors.tint : count > 0 ? colors.text : colors.border,
+                  },
+                ]}
+              />
+            </View>
+          ))}
+        </View>
+        <Rule />
+        <View style={styles.axis}>
+          <Meta>0s</Meta>
+          <Meta>{t('results.hook.bucket', { seconds: bucketSeconds })}</Meta>
+          <Meta>{clipSeconds}s</Meta>
+        </View>
+      </View>
+
+      <View style={styles.tags}>
+        <Meta style={styles.tagsLabel}>{t('results.hook.tags')}</Meta>
+        {tags.length === 0 ? <Small tone="muted">{t('results.noData')}</Small> : null}
+        {tags.map(({ tag, count }) => (
+          <View key={tag} style={styles.tagRow}>
+            <Body>{t(`review.tags.${tag}` as MessageKey)}</Body>
+            <Body style={styles.tagCount}>{count}</Body>
           </View>
         ))}
       </View>
-      <View style={styles.axis}>
-        <Text style={[styles.axisLabel, { color: colors.muted }]}>0s</Text>
-        <Text style={[styles.axisLabel, { color: colors.muted }]}>
-          {t('results.hook.bucket', { seconds: bucketSeconds })}
-        </Text>
-        <Text style={[styles.axisLabel, { color: colors.muted }]}>{clipSeconds}s</Text>
-      </View>
-
-      <Text style={styles.subheading}>{t('results.hook.tags')}</Text>
-      {sortedTags(hook.tags).length === 0 ? (
-        <Text style={[styles.muted, { color: colors.muted }]}>{t('results.noData')}</Text>
-      ) : (
-        sortedTags(hook.tags).map(({ tag, count }) => (
-          <View key={tag} style={styles.tagRow}>
-            <Text style={styles.tagName}>{t(`review.tags.${tag}` as MessageKey)}</Text>
-            <Text style={[styles.tagCount, { color: colors.muted }]}>{count}</Text>
-          </View>
-        ))
-      )}
-    </View>
-  );
-}
-
-function Stat({ label, value, color }: { label: string; value: string; color: string }) {
-  return (
-    <View style={styles.stat}>
-      <Text style={[styles.statLabel, { color }]}>{label}</Text>
-      <Text style={styles.statValue}>{value}</Text>
-    </View>
+    </Section>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 12,
-  },
-  heading: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  subheading: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginTop: 4,
-  },
   summary: {
     flexDirection: 'row',
-    gap: 24,
-  },
-  stat: {
-    gap: 2,
-  },
-  statLabel: {
-    fontSize: 13,
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: '700',
+    gap: space.xxl,
   },
   chart: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    gap: 4,
-    height: 96,
+    gap: space.xs,
+    height: 120,
   },
   barColumn: {
     flex: 1,
@@ -120,28 +89,29 @@ const styles = StyleSheet.create({
   },
   bar: {
     width: '100%',
-    minHeight: 3,
-    borderRadius: 3,
+    minHeight: 2,
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
   },
   axis: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: space.sm,
   },
-  axisLabel: {
-    fontSize: 12,
+  tags: {
+    gap: space.sm,
   },
-  muted: {
-    fontSize: 14,
+  tagsLabel: {
+    textTransform: 'uppercase',
   },
   tagRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  tagName: {
-    fontSize: 15,
+    alignItems: 'baseline',
+    gap: space.md,
+    minHeight: 28,
   },
   tagCount: {
-    fontSize: 15,
-    fontWeight: '700',
+    fontVariant: ['tabular-nums'],
   },
 });

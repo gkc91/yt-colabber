@@ -7,8 +7,9 @@
 ## Önce oku
 1. `docs/PRODUCT.md` — ekranlar, akışlar, iş kuralları. Ürün kararı buradadır; kod buna uyar.
 2. `docs/ARCHITECTURE.md` — stack, klasör yapısı, sınırlar.
-3. `docs/TASKS.md` — sıralı görevler. Her oturumda ilk tamamlanmamış görevi al, bitir, işaretle, commit'le.
-4. `supabase/migrations/*.sql` — veri modeli ve tüm iş mantığı fonksiyonları. Şema burada, kodda değil.
+3. `docs/DESIGN.md` — arayüz sözleşmesi: renk, tipografi, boşluk, yasaklılar. Ekran yazan buna uyar.
+4. `docs/TASKS.md` — sıralı görevler. Her oturumda ilk tamamlanmamış görevi al, bitir, işaretle, commit'le.
+5. `supabase/migrations/*.sql` — veri modeli ve tüm iş mantığı fonksiyonları. Şema burada, kodda değil.
 
 ## Stack (değiştirme, tartışma)
 - Mobil + web: **Expo SDK (güncel) + expo-router + TypeScript**. Tek kod tabanı iOS/Android/web.

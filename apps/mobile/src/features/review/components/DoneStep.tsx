@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import * as Linking from 'expo-linking';
 import { router } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import { Body, Display, Meta } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { t } from '@/i18n';
 
 import { fetchReviewedChannel } from '../api';
@@ -19,7 +18,6 @@ type Props = { submissionId: string };
  * testi "tanımayan birinin tepkisi" olmaktan çıkardı. Ziyaret sayılmaz, ödül değildir.
  */
 export function DoneStep({ submissionId }: Props) {
-  const colors = Colors[useColorScheme()];
   const channel = useQuery({
     queryKey: ['reviewed-channel', submissionId],
     queryFn: () => fetchReviewedChannel(submissionId),
@@ -29,14 +27,17 @@ export function DoneStep({ submissionId }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.reward}>{t('review.done.reward')}</Text>
-      <Text style={styles.body}>{t('review.done.body')}</Text>
+      {/* Kredi kazanıldı: sayfadaki tek büyük rakam odur. */}
+      <Display tone="positive" style={styles.centered}>
+        {t('review.done.reward')}
+      </Display>
+      <Body tone="muted" style={styles.centered}>
+        {t('review.done.body')}
+      </Body>
 
       {url ? (
         <View style={styles.channel}>
-          <Text style={[styles.channelHint, { color: colors.muted }]}>
-            {t('review.done.channelHint')}
-          </Text>
+          <Meta style={styles.centered}>{t('review.done.channelHint')}</Meta>
           <Button
             title={
               channel.data?.channel_title
@@ -56,25 +57,14 @@ export function DoneStep({ submissionId }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 16,
+    gap: space.lg,
     alignItems: 'stretch',
   },
-  reward: {
-    fontSize: 32,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  body: {
-    fontSize: 16,
-    lineHeight: 22,
+  centered: {
     textAlign: 'center',
   },
   channel: {
-    gap: 8,
-    marginTop: 8,
-  },
-  channelHint: {
-    fontSize: 14,
-    textAlign: 'center',
+    gap: space.sm,
+    marginTop: space.sm,
   },
 });

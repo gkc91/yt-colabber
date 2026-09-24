@@ -1,13 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Modal, Pressable, StyleSheet } from 'react-native';
+import { Modal, Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
+import { Meta, Small, Title } from '@/components/Type';
 import { TextField } from '@/components/TextField';
-import { Text, View } from '@/components/Themed';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { radius, space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
 import { reportContent, REPORT_REASONS, type ReportReason, type ReportTarget } from './api';
@@ -35,20 +36,25 @@ export function ReportSheet({ target, label }: Props) {
   });
 
   if (done) {
-    return <Text style={[styles.done, { color: colors.muted }]}>{t('report.thanks')}</Text>;
+    return <Meta>{t('report.thanks')}</Meta>;
   }
 
   return (
     <>
-      <Pressable accessibilityRole="button" onPress={() => setOpen(true)}>
-        <Text style={[styles.trigger, { color: colors.muted }]}>{label}</Text>
+      <Pressable accessibilityRole="button" onPress={() => setOpen(true)} hitSlop={space.sm}>
+        <Meta style={styles.trigger}>{label}</Meta>
       </Pressable>
 
       <Modal visible={open} animationType="slide" transparent onRequestClose={() => setOpen(false)}>
         <View style={styles.backdrop}>
-          <View style={[styles.sheet, { borderColor: colors.border }]}>
-            <Text style={styles.title}>{t('report.title')}</Text>
-            <Text style={[styles.body, { color: colors.muted }]}>{t('report.body')}</Text>
+          <View
+            style={[
+              styles.sheet,
+              { borderColor: colors.border, backgroundColor: colors.background },
+            ]}
+          >
+            <Title>{t('report.title')}</Title>
+            <Small tone="muted">{t('report.body')}</Small>
 
             <View style={styles.reasons} accessibilityRole="radiogroup">
               {REPORT_REASONS.map((value) => (
@@ -71,9 +77,9 @@ export function ReportSheet({ target, label }: Props) {
             />
 
             {send.error ? (
-              <Text style={[styles.body, { color: colors.danger }]}>
+              <Small tone="accent">
                 {t(`report.errors.${reportErrorKey(send.error)}` as MessageKey)}
-              </Text>
+              </Small>
             ) : null}
 
             <Button
@@ -98,11 +104,7 @@ function reportErrorKey(error: Error): string {
 
 const styles = StyleSheet.create({
   trigger: {
-    fontSize: 13,
     textDecorationLine: 'underline',
-  },
-  done: {
-    fontSize: 13,
   },
   backdrop: {
     flex: 1,
@@ -110,23 +112,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
   sheet: {
-    padding: 20,
-    gap: 12,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    borderWidth: 1,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  body: {
-    fontSize: 14,
-    lineHeight: 20,
+    padding: space.xl,
+    gap: space.md,
+    borderTopLeftRadius: radius.card,
+    borderTopRightRadius: radius.card,
+    borderWidth: StyleSheet.hairlineWidth * 2,
   },
   reasons: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: space.sm,
   },
 });

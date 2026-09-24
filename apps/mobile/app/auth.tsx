@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Text, View } from '@/components/Themed';
+import { Screen } from '@/components/Screen';
+import { Body } from '@/components/Type';
 import { createSessionFromUrl } from '@/features/auth/api';
 import { useSession } from '@/features/auth/session';
 import { t } from '@/i18n';
@@ -40,32 +41,24 @@ export default function AuthCallback() {
   }, [code, url, session]);
 
   return (
-    <View style={styles.container}>
+    <Screen center style={styles.center}>
       {failed ? (
         <>
-          <Text style={styles.message}>{t('auth.linkFailed')}</Text>
+          <Body>{t('auth.linkFailed')}</Body>
           <Button title={t('auth.backToSignIn')} onPress={() => router.replace('/sign-in')} />
         </>
       ) : (
         <>
           <ActivityIndicator />
-          <Text style={styles.message}>{t('auth.signingIn')}</Text>
+          <Body tone="muted">{t('auth.signingIn')}</Body>
         </>
       )}
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  center: {
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-    gap: 16,
-  },
-  message: {
-    fontSize: 16,
-    textAlign: 'center',
   },
 });

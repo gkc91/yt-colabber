@@ -1,11 +1,12 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
+import { Card } from '@/components/Card';
+import { Screen } from '@/components/Screen';
+import { Body, Meta, Small } from '@/components/Type';
+import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { fetchNextTask, submitReview } from '@/features/review/api';
 import { DoneStep } from '@/features/review/components/DoneStep';
@@ -29,7 +30,6 @@ export default function ReviewTaskScreen() {
   const { taskId } = useLocalSearchParams<{ taskId: string }>();
   const { session } = useSession();
   const queryClient = useQueryClient();
-  const colors = Colors[useColorScheme()];
 
   // Görev zaten açık olduğu için next_review_task aynı görevi döner (0007).
   const task = useQuery({ queryKey: ['review-task'], queryFn: fetchNextTask });
@@ -66,25 +66,25 @@ export default function ReviewTaskScreen() {
 
   if (completedSubmissionId) {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <Screen gap={space.lg}>
         <DoneStep submissionId={completedSubmissionId} />
-      </ScrollView>
+      </Screen>
     );
   }
 
   if (task.isPending || media.isPending) {
     return (
-      <View style={styles.center}>
+      <Screen center>
         <ActivityIndicator />
-      </View>
+      </Screen>
     );
   }
 
   if (!assignment) {
     return (
-      <View style={styles.center}>
-        <Text style={styles.message}>{t('review.errors.task_expired')}</Text>
-      </View>
+      <Screen center>
+        <Body>{t('review.errors.task_expired')}</Body>
+      </Screen>
     );
   }
 
@@ -142,12 +142,12 @@ export default function ReviewTaskScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+    <Screen gap={space.lg}>
       {isDemo ? (
-        <View style={[styles.demo, { borderColor: colors.border }]}>
-          <Text style={styles.demoTitle}>{t('review.demo.title')}</Text>
-          <Text style={[styles.demoBody, { color: colors.muted }]}>{t('review.demo.body')}</Text>
-        </View>
+        <Card gap={space.sm}>
+          <Meta style={styles.demoTitle}>{t('review.demo.title')}</Meta>
+          <Small tone="muted">{t('review.demo.body')}</Small>
+        </Card>
       ) : null}
       {stage === 'feed' ? <FeedStep items={items} onPick={onPick} /> : null}
 
@@ -174,8 +174,8 @@ export default function ReviewTaskScreen() {
         />
       ) : null}
 
-      {error ? <Text style={[styles.message, { color: colors.danger }]}>{error}</Text> : null}
-    </ScrollView>
+      {error ? <Small tone="accent">{error}</Small> : null}
+    </Screen>
   );
 }
 
@@ -190,36 +190,7 @@ function submitErrorText(error: unknown): string {
 }
 
 const styles = StyleSheet.create({
-  demo: {
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 14,
-    gap: 4,
-  },
   demoTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  demoBody: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  container: {
-    padding: 20,
-    gap: 16,
-    maxWidth: 640,
-    width: '100%',
-    alignSelf: 'center',
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
-  message: {
-    fontSize: 16,
-    lineHeight: 22,
-    textAlign: 'center',
+    textTransform: 'uppercase',
   },
 });

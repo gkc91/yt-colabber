@@ -1,12 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
+import { Screen } from '@/components/Screen';
+import { Heading, Small, Title } from '@/components/Type';
 import { TextField } from '@/components/TextField';
-import { Text, View } from '@/components/Themed';
+import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { completeOnboarding, type SubscriberBand } from '@/features/onboarding/api';
 import { BANDS } from '@/features/onboarding/options';
@@ -49,10 +51,10 @@ export default function ChannelStep() {
       style={styles.flex}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      <Screen gap={space.xxl} style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.title}>{t('onboarding.channelTitle')}</Text>
-          <Text style={styles.hint}>{t('onboarding.channelHint')}</Text>
+          <Title>{t('onboarding.channelTitle')}</Title>
+          <Small tone="muted">{t('onboarding.channelHint')}</Small>
           <TextField
             label={t('onboarding.channelLabel')}
             placeholder={t('onboarding.channelPlaceholder')}
@@ -67,7 +69,7 @@ export default function ChannelStep() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.subtitle}>{t('onboarding.bandTitle')}</Text>
+          <Heading>{t('onboarding.bandTitle')}</Heading>
           <View style={styles.chips} accessibilityRole="radiogroup">
             {BANDS.map((option) => (
               <Chip
@@ -80,14 +82,14 @@ export default function ChannelStep() {
           </View>
         </View>
 
-        {finish.error ? <Text style={styles.error}>{t('auth.genericError')}</Text> : null}
+        {finish.error ? <Small tone="accent">{t('auth.genericError')}</Small> : null}
         <Button
           title={t('onboarding.finish')}
           onPress={onFinish}
           disabled={url.trim().length === 0}
           loading={finish.isPending}
         />
-      </ScrollView>
+      </Screen>
     </KeyboardAvoidingView>
   );
 }
@@ -96,36 +98,15 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  container: {
-    padding: 24,
-    paddingTop: 64,
-    gap: 32,
-    maxWidth: 640,
-    width: '100%',
-    alignSelf: 'center',
+  page: {
+    paddingTop: space.xxxl,
   },
   section: {
-    gap: 12,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  subtitle: {
-    fontSize: 17,
-    fontWeight: '600',
-  },
-  hint: {
-    fontSize: 15,
-    lineHeight: 21,
-    opacity: 0.7,
+    gap: space.md,
   },
   chips: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
-  },
-  error: {
-    color: '#c62828',
+    gap: space.sm,
   },
 });
