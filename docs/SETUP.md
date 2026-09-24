@@ -127,6 +127,20 @@ node scripts/check-purchases.mjs
 İstemci anahtarları `.env` içinde: `EXPO_PUBLIC_RC_IOS_KEY`, `EXPO_PUBLIC_RC_ANDROID_KEY`.
 Boşsa satın alma katmanı `not_configured` döner ve paywall satın alma düğmesi göstermez.
 
+## Web sürümü (apps/mobile → Cloudflare Pages, E2)
+```powershell
+pnpm check:web    # expo export --platform web + scripts/check-web-export.mjs
+```
+Cloudflare Pages projesi `clickable-app`:
+- Build command: `pnpm install --frozen-lockfile && pnpm --filter mobile build:web`
+- Build output: `apps/mobile/dist`
+- Env: `NODE_VERSION=24`, `PNPM_VERSION=12.5.1`, `EXPO_PUBLIC_SUPABASE_URL`,
+  `EXPO_PUBLIC_SUPABASE_ANON_KEY` (ikisi de herkese açık değerler).
+
+`apps/mobile/public/_redirects` dinamik rotaları statik dosyalara eşler
+(`/review/:id` → `review/[taskId].html`) ve kalan her adresi uygulamaya düşürür.
+Web'de submission oluşturma ve satın alma YOK (PRODUCT §14): iki ekran da "uygulamada aç" der.
+
 ## Örnek (demo) testler
 ```powershell
 node scripts/seed-demo.mjs          # yerel stack; manifest seeds/demo/manifest.json

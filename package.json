@@ -18,7 +18,9 @@
     "format:check": "prettier --check .",
     "test": "pnpm -r --if-present test",
     "build:landing": "pnpm --filter landing build",
-    "check:landing": "pnpm --filter landing build && node scripts/check-landing.mjs"
+    "check:landing": "pnpm --filter landing build && node scripts/check-landing.mjs",
+    "build:web": "pnpm --filter mobile build:web",
+    "check:web": "pnpm --filter mobile build:web && node scripts/check-web-export.mjs"
   },
   "devDependencies": {
     "prettier": "^3.6.2",

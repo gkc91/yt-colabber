@@ -109,3 +109,6 @@
 - 2026-09-24 C5: Sıra önce dosya, sonra işaret. Tersi olsaydı işaretlenmiş ama dosyası duran, bir daha hiç silinmeyecek kayıtlar kalırdı; bu sırada en kötü ihtimal aynı dosyayı bir kez daha silmeye çalışmak, o da zararsız.
 - 2026-09-24 C5: `cleanup-media` yalnızca service_role anahtarıyla çağrılabiliyor — silme geri alınamaz, kullanıcı JWT'siyle tetiklenmemeli. Testte anon anahtarla çağrı 403 alıyor ve dosya duruyor.
 - 2026-09-24 C5: Açık testin klibi asla silinmiyor (`status <> 'open'`). Mutasyon testi: bu koşul kaldırılınca 015 testi düşüyor.
+- 2026-09-24 E2: Web dışa aktarımı `output: static` ile kalıyor (her rota için HTML). Dinamik rotalar dosya sisteminde `[taskId].html` adıyla üretildiği için Cloudflare'de `_redirects` ile eşleniyor; kalan adresler `index.html`'e düşüyor, yani derin bağlantı 404 vermiyor.
+- 2026-09-24 E2: `scripts/check-web-export.mjs` dışa aktarımı dağıtımdan önce denetliyor. En kritik kontrol: Supabase adresinin pakete gömülü olması — env verilmeden alınan bir build tarayıcıda açılır açılmaz patlar ve bunu ancak kullanıcı fark ederdi.
+- 2026-09-24 E2: PWA asgari düzeyde (manifest + tema rengi + ikon): telefondan 'ana ekrana ekle' çalışsın diye. Servis worker/çevrimdışı yok — değerlendirme akışı zaten ağ gerektiriyor, sahte bir çevrimdışı deneyim faydadan çok kafa karışıklığı yaratır.

@@ -21,7 +21,15 @@ export default function Root({ children }: { children: ReactNode }) {
 
         {/* Using raw CSS styles as an escape-hatch to ensure the background color never flickers in dark-mode. */}
         <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
-        {/* Add any additional <head> elements that you want globally available on web... */}
+        {/* Web/PWA (E2): telefondan "ana ekrana ekle" ile açılabilsin, sekmede adı görünsün. */}
+        <title>Clickable</title>
+        <meta
+          name="description"
+          content="Test your thumbnail, title and first 60 seconds with real people in your niche before you publish."
+        />
+        <meta name="theme-color" content="#2f95dc" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon.png" />
       </head>
       <body>{children}</body>
     </html>
