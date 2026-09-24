@@ -55,7 +55,7 @@
     "lint": "expo lint && prettier --check .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "build:web": "expo export --platform web"
+    "build:web": "expo export --platform web --clear"
   },
   "private": true
 }

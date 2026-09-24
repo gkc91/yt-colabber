@@ -123,3 +123,4 @@
 - 2026-09-24 E5: Thumbnail farklı ele alınıyor: görsel yeniden boyutlandırma tarayıcıda ucuz, 1280×720'ye ortadan kırparak biz yapıyoruz (cihazdakiyle aynı hedef).
 - 2026-09-24 E5: `PickedThumbnail/PickedClip` artık `extension` taşıyor. Web'de dosyalar `blob:` adresiyle geliyor ve adreste uzantı yok; depolama yolu uzantıya bağlı (paths.ts, RLS düzeni) — uzantı tipten türetilip ayrıca taşınıyor.
 - 2026-09-24 E5: Yükleme ekranının başına "What to have ready" paneli kondu. Kuralı hata mesajıyla öğretmek yerine baştan söylüyoruz; metin platforma göre değişiyor (web'de "sıkıştırma yok", uygulamada "60 saniyeye kesilir").
+- 2026-09-24 E2 (bulgu): `expo export` Metro önbelleği yüzünden ESKİ `EXPO_PUBLIC_*` değerleriyle paket üretebiliyor — env değiştirildiği hâlde paketteki Supabase adresi değişmedi, `scripts/check-web-export.mjs` yakaladı. `build:web` artık `--clear` ile çalışıyor; yanlış ortama bakan bir dağıtım sessizce çıkmasın.

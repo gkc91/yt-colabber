@@ -30,6 +30,14 @@ jobs:
         run: pnpm format:check
       - name: Landing build + SEO checks
         run: pnpm check:landing
+      - name: Web export + checks
+        # Sahte ama GEÇERLİ değerler: kontrolün asıl işi, build sırasında verilen adresin
+        # pakete gerçekten gömüldüğünü doğrulamak. Env'siz alınan bir build tarayıcıda
+        # açılır açılmaz patlar (E2).
+        env:
+          EXPO_PUBLIC_SUPABASE_URL: https://ci-placeholder.supabase.co
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
+        run: pnpm check:web
 
   db:
     runs-on: ubuntu-latest
