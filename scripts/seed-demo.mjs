@@ -62,6 +62,13 @@ async function linkedEnv() {
     key = (await rl.question('Anahtarı yapıştır ve Enter: ')).trim();
     rl.close();
   }
+  // Publishable/anon anahtar herkese açıktır ve yönetici işlemi yapamaz; 401'i beklemeden söyle.
+  if (key.startsWith('sb_publishable_')) {
+    console.error(
+      '\nBu publishable anahtar. Gereken: API Keys → "Secret keys" bölümündeki sb_secret_… anahtarı.',
+    );
+    process.exit(1);
+  }
   return { url: `https://${ref}.supabase.co`, key };
 }
 
