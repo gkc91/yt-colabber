@@ -9,6 +9,42 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      ai_summary_runs: {
+        Row: {
+          created_at: string
+          id: string
+          profile_id: string
+          submission_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          profile_id: string
+          submission_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          profile_id?: string
+          submission_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_summary_runs_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_summary_runs_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: true
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blocks: {
         Row: {
           blocked_id: string
@@ -785,8 +821,15 @@ export type Database = {
       }
     }
     Functions: {
+      ai_summary_limit: { Args: never; Returns: number }
+      ai_summary_min_reviews: { Args: never; Returns: number }
+      ai_summary_status: { Args: { p_submission: string }; Returns: Json }
       balance_of: { Args: { p: string }; Returns: number }
       change_niche: { Args: { p_niche_id: number }; Returns: undefined }
+      claim_ai_summary: {
+        Args: { p_profile: string; p_submission: string }
+        Returns: string
+      }
       close_stale_submissions: { Args: never; Returns: undefined }
       collab_candidates: { Args: { p_limit?: number }; Returns: Json }
       collab_like: { Args: { p_to: string }; Returns: string }
@@ -831,6 +874,12 @@ export type Database = {
         Returns: Json
       }
       next_review_task: { Args: never; Returns: Json }
+      niches_to_refresh: {
+        Args: never
+        Returns: {
+          slug: string
+        }[]
+      }
       queue_task_reminders: { Args: never; Returns: number }
       rate_review: {
         Args: {
@@ -841,6 +890,10 @@ export type Database = {
         Returns: undefined
       }
       register_device: { Args: { p_device_id: string }; Returns: undefined }
+      release_ai_summary_claim: {
+        Args: { p_submission: string }
+        Returns: undefined
+      }
       report_content: {
         Args: {
           p_note?: string

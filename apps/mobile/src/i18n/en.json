@@ -290,6 +290,24 @@
       "notHelpful": "Not helpful",
       "watchedAll": "Watched the whole clip",
       "leftAt": "Stopped at {second}s"
+    },
+    "aiSummary": {
+      "title": "AI summary",
+      "ready": "Five blunt points from what your reviewers actually did, plus the single change worth making first.",
+      "generate": "Write the summary",
+      "quota": "{used} of {limit} summaries used in the last 30 days.",
+      "proRequired": "Pro turns your results into five points and names the one change to make first.",
+      "notEnoughReviews": "Needs {need} reviews to be worth writing — you have {have}. Three people are not a pattern.",
+      "monthlyLimit": "You have used all {limit} summaries for the last 30 days. The oldest one frees up as it ages out.",
+      "errors": {
+        "summary_failed": "The summary could not be written. Nothing was used up — try again.",
+        "pro_required": "That needs Pro.",
+        "not_enough_reviews": "Not enough reviews yet.",
+        "monthly_limit": "You have used all your summaries for the last 30 days.",
+        "in_progress": "A summary is already being written for this test.",
+        "no_access": "This test is not yours.",
+        "ai_summary_unavailable": "Summaries are switched off right now. Nothing was used up."
+      }
     }
   },
   "report": {

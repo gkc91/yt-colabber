@@ -10,6 +10,8 @@
 import { admin, userFromRequest, json } from "../_shared/supabase.ts";
 
 const MODEL = "claude-haiku-4-5";
+/** Yerel testte sahte bir uca yönlendirilir (notify'daki EXPO_PUSH_URL ile aynı yöntem). */
+const ANTHROPIC_URL = Deno.env.get("ANTHROPIC_BASE_URL") ?? "https://api.anthropic.com";
 const MAX_TOKENS = 700;
 /** Sonuç JSON'u ne kadar büyük olursa olsun istem sınırlı kalsın (maliyet öngörülebilir olsun). */
 const MAX_RESULTS_CHARS = 12_000;
@@ -79,7 +81,7 @@ Deno.serve(async (req) => {
       });
       if (resultsError) throw new Error(resultsError.message);
 
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch(`${ANTHROPIC_URL}/v1/messages`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

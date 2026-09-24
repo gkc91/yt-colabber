@@ -101,3 +101,6 @@
 - 2026-09-24 D2: Web'de ve anahtarsız derlemede paywall boş liste yerine nedenini söyleyen bir panel gösterir ("satın alma uygulamada olur; burada değerlendirme yapıp kredi kazanabilirsin").
 - 2026-09-24 D2: Paywall'ın ilk cümlesi satın almaya değil kazanmaya işaret ediyor ("verdiğin her değerlendirme 1 kredi"). Kredi ekonomisinin tamamı buna dayanıyor; paywall'ı bunu gizleyecek şekilde kurmak arz tarafını kurutur (GROWTH §1).
 - 2026-09-24 D2: vitest'e `@/` takma adı eklendi; saf modüller artık kaynak kodla aynı biçimde içe aktarılıyor. `purchaseErrorKey` ayrı saf dosyaya alındı — `purchaseApi` mağaza SDK'sını çektiği için test edilemiyordu.
+- 2026-09-24 D3: Model çağrısının adresi `ANTHROPIC_BASE_URL` ile değiştirilebilir (notify'daki EXPO_PUSH_URL ile aynı yöntem). Böylece `scripts/check-ai-summary.mjs` sahte bir uca konuşuyor: uçtan uca test para harcamıyor ve model hatası gibi yolları da deneyebiliyoruz.
+- 2026-09-24 D3: Anthropic anahtarı ayrı bir Console workspace'inde ('Clickable') üretildi ve süresiz seçildi. Varsayılan 30 gün, Pro kullanıcının özetini bir ay sonra sessizce bozardı; karşılığında rotasyon bizim sorumluluğumuz.
+- 2026-09-24 D3: Arayüz hiçbir kuralı kendisi hesaplamıyor; `ai_summary_status` sebep kodunu ve kalan hakkı döndürüyor, ekran onu yazıyor. Durum okunamazsa bölüm hiç gösterilmiyor — olmayan bir özelliği vaat etmemek için.

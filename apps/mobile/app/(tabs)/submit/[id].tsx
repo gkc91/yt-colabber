@@ -7,6 +7,7 @@ import { Text, View } from '@/components/Themed';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { rateReview, resultsQueryKey, useResults, type ResultReview } from '@/features/results/api';
+import { AiSummary } from '@/features/results/components/AiSummary';
 import { HookResults } from '@/features/results/components/HookResults';
 import { ReviewList } from '@/features/results/components/ReviewList';
 import { ThumbnailResults } from '@/features/results/components/ThumbnailResults';
@@ -80,6 +81,7 @@ export default function SubmissionResultsScreen() {
         <Text style={styles.message}>{t('results.waiting')}</Text>
       ) : (
         <>
+          <AiSummary submissionId={id} summary={submission.ai_summary} />
           <ThumbnailResults stats={thumbnails} thumbnailUrls={media.data?.thumbnails ?? []} />
           <HookResults hook={hook} clipSeconds={submission.clip_duration_seconds} />
           <ReviewList
