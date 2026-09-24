@@ -111,8 +111,37 @@
   },
   "paywall": {
     "title": "Credits and Pro",
-    "body": "Buying credits is not built yet. It arrives with the store release.",
-    "close": "Close"
+    "balance": "You have {count} credits.",
+    "earnInstead": "Every review you give earns one credit — buying is only for when you would rather not spend the time.",
+    "buy": "Buy",
+    "retry": "Try again",
+    "restore": "Restore purchases",
+    "restored": "Your Pro subscription is active again.",
+    "restoredNothing": "Nothing to restore on this account.",
+    "close": "Close",
+    "options": {
+      "credits": "{count} credits",
+      "creditsBody": "One credit pays for one reviewer on one test. Credits never expire.",
+      "pro_monthly": "Pro — monthly",
+      "pro_yearly": "Pro — yearly",
+      "proBody": "{count} credits every month, priority in the queue, up to 25 reviewers per test and an AI summary of your results."
+    },
+    "result": {
+      "credited": "Done — your balance is now {balance} credits.",
+      "pending": "Payment went through. The credits land as soon as the store confirms it, usually within a minute.",
+      "pro": "Pro is active. This month’s credits arrive in a moment."
+    },
+    "unavailable": {
+      "title": "Buying happens in the app",
+      "web_unsupported": "Purchases run through the App Store and Google Play, so they only work in the mobile app. You can still review, read results and earn credits here.",
+      "not_configured": "This build has no store keys, so buying is off. Earning credits by reviewing works as usual."
+    },
+    "errors": {
+      "load": "The store did not answer. Check your connection and try again.",
+      "store_error": "The store could not complete that. Nothing was charged.",
+      "not_configured": "This build has no store keys, so buying is off.",
+      "web_unsupported": "Purchases only work in the mobile app."
+    }
   },
   "notFound": {
     "title": "Oops!",

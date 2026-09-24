@@ -96,3 +96,8 @@
 - 2026-09-24 D1: `CANCELLATION` Pro'yu kapatmaz — RevenueCat'te iptal, dönem sonuna kadar erişimi bitirmez. Kapatma yalnızca `EXPIRATION` ve `BILLING_ISSUE` ile olur.
 - 2026-09-24 D1: İstemci kredi vermez; satın alma bitince bakiye sunucudan okunur. `src/lib/purchases.ts` yalnızca mağaza akışını yürütür ve Pro hakkını okur (web'de `purchases.web.ts` ile kapalı, PRODUCT §14).
 - 2026-09-24 D1: RevenueCat `appUserID` = Supabase kullanıcı kimliği. Oturum açılınca `configure`, çıkışta `logOut` çağrılıyor; aksi halde cihazdaki satın alma bir sonraki kullanıcıya bağlanırdı.
+- 2026-09-24 D2: Satın alma bittiğinde kredi HENÜZ yoktur — webhook'un ulaşması gerekir. Paywall bakiyeyi ~20 saniye yokluyor (`waitForCredits`); gelirse yeni bakiyeyi yazıyor, gelmezse "ödeme tamam, kredi birazdan düşecek" diyor. Sahte bir "başarılı" ekranı göstermek, kredi gelmediğinde güveni bitirirdi.
+- 2026-09-24 D2: Kullanıcı mağaza ekranını kapatırsa (`cancelled`) hata gösterilmez; iptal bir hata değildir.
+- 2026-09-24 D2: Web'de ve anahtarsız derlemede paywall boş liste yerine nedenini söyleyen bir panel gösterir ("satın alma uygulamada olur; burada değerlendirme yapıp kredi kazanabilirsin").
+- 2026-09-24 D2: Paywall'ın ilk cümlesi satın almaya değil kazanmaya işaret ediyor ("verdiğin her değerlendirme 1 kredi"). Kredi ekonomisinin tamamı buna dayanıyor; paywall'ı bunu gizleyecek şekilde kurmak arz tarafını kurutur (GROWTH §1).
+- 2026-09-24 D2: vitest'e `@/` takma adı eklendi; saf modüller artık kaynak kodla aynı biçimde içe aktarılıyor. `purchaseErrorKey` ayrı saf dosyaya alındı — `purchaseApi` mağaza SDK'sını çektiği için test edilemiyordu.
