@@ -30,6 +30,15 @@ import { t, type MessageKey } from '@/i18n';
 
 const STEPS = 5;
 
+/**
+ * Aynı kural, iki farklı çözüm: uygulamada seçici videoyu kırpıyor, tarayıcıda
+ * kullanıcının editöründen 60 saniyelik dışa aktarması gerekiyor.
+ */
+function clipErrorKey(code: string): string {
+  if (code === 'clip_too_long' && Platform.OS === 'web') return 'clip_too_long_web';
+  return code;
+}
+
 export default function NewSubmission() {
   // E5: masaüstünden de test açılabiliyor. Fark: cihazda uzun video 60 saniyeye kesilip
   // sıkıştırılıyor, tarayıcıda sıkıştırma yok — dosya zaten kurallara uymalı.
@@ -102,7 +111,7 @@ function Wizard() {
     } catch (e) {
       setError(
         e instanceof ClipError
-          ? (`submit.errors.${e.code}` as MessageKey)
+          ? (`submit.errors.${clipErrorKey(e.code)}` as MessageKey)
           : 'submit.errors.unknown',
       );
     } finally {

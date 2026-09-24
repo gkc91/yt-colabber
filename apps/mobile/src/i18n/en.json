@@ -106,7 +106,8 @@
       "clip_too_short": "The clip is shorter than 5 seconds.",
       "clip_too_large": "Even after compression this clip is over 8 MB. Try a shorter or simpler clip.",
       "unknown": "Something went wrong. Please try again.",
-      "clip_wrong_type": "That file type is not supported. Export an MP4 (or MOV)."
+      "clip_wrong_type": "That file type is not supported. Export an MP4 (or MOV).",
+      "clip_too_long_web": "That clip is longer than 60 seconds. Export just the first 60 seconds from your editor."
     },
     "requirements": {
       "title": "What to have ready",
