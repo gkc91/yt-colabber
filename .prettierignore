@@ -7,3 +7,6 @@ apps/mobile/src/lib/database.types.ts
 supabase
 docs
 *.md
+
+# Oturum günlükleri hook tarafından yazılıyor, depoya girmiyor (.gitignore) — biçim denetimi de dışında.
+production/session-logs/
