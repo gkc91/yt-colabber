@@ -204,8 +204,28 @@ Uygulama oluşturuldu: **Clickable**, `app.clickable.mobile`, Lampwick Games hes
 - [x] İçerik derecelendirmesi: IARC anketi dolduruldu ve gönderildi → ESRB 13+, PEGI Ebeveyn Rehberliği, USK 12+
 - [x] Oturum açma bilgileri: şifresiz giriş talimatı eklendi
 
-Kalanlar: hedef kitle ve içerik, veri güvenliği (§4'teki tablo), resmi kurum / finans / sağlık
-beyanları, uygulama kategorisi ve iletişim bilgileri, **telefon ekran görüntüleri** (§3).
+- [x] Hedef kitle: 18 yaş ve üstü
+- [x] Veri güvenliği: `store/play/data-safety.csv` içe aktarıldı (aşağıya bak)
+- [x] Reklam kimliği: kullanılmıyor
+- [x] Resmi kurum / finans / sağlık: hiçbiri
+- [x] Kategori: Video Oynatıcılar ve Düzenleyiciler · iletişim: support@clickabletest.com, clickabletest.com
+
+**Kalan tek şey: telefon ekran görüntüleri** (§3).
+
+### Veri güvenliği formu CSV ile dolduruldu
+
+Play Console "CSV'ye aktar / CSV'den içe aktar" düğmeleri boş anketi indirip dolu hâlini geri
+yüklemeye izin veriyor. Yüzlerce onay kutusunu elle tıklamak yerine:
+
+```powershell
+# 1) Konsolda "CSV'ye aktar" → indirilen dosya
+node scripts/data-safety-csv.mjs <indirilen.csv> store/play/data-safety.csv
+# 2) Konsolda "CSV'den içe aktar" → store/play/data-safety.csv
+```
+
+Cevapların kuralı `scripts/data-safety-csv.mjs` içinde ve gerekçesi §4'te. Ürün yeni bir veri
+toplamaya başlarsa script güncellenir, form yeniden üretilir — hangi kutunun neden işaretli
+olduğu kaybolmaz.
 
 ## 7. Sürüm öncesi kontrol listesi
 
