@@ -193,6 +193,20 @@ Account deletion: Profile tab -> Account -> Delete my account. Also documented a
 https://clickabletest.com/delete-account
 ```
 
+## 6b. Play Console'da yapılanlar (25 Eylül 2026)
+
+Uygulama oluşturuldu: **Clickable**, `app.clickable.mobile`, Lampwick Games hesabı
+(uygulama kimliği 4972807803680658983). Tamamlananlar:
+
+- [x] Mağaza girişi: ad, kısa ve tam açıklama, uygulama simgesi, öne çıkan görsel (taslak kaydedildi)
+- [x] Gizlilik politikası: https://clickabletest.com/privacy
+- [x] Reklam beyanı: reklam yok
+- [x] İçerik derecelendirmesi: IARC anketi dolduruldu ve gönderildi → ESRB 13+, PEGI Ebeveyn Rehberliği, USK 12+
+- [x] Oturum açma bilgileri: şifresiz giriş talimatı eklendi
+
+Kalanlar: hedef kitle ve içerik, veri güvenliği (§4'teki tablo), resmi kurum / finans / sağlık
+beyanları, uygulama kategorisi ve iletişim bilgileri, **telefon ekran görüntüleri** (§3).
+
 ## 7. Sürüm öncesi kontrol listesi
 
 - [ ] `node scripts/make-icons.mjs` çalıştırıldı, ikonlar güncel
