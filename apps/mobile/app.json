@@ -12,6 +12,7 @@
       "bundleIdentifier": "app.clickable.mobile"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "backgroundColor": "#FAF9F7",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

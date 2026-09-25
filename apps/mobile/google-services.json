@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1010499952930",
+    "project_id": "clickable-8f58f",
+    "storage_bucket": "clickable-8f58f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010499952930:android:44bb84c44dcf23d338857b",
+        "android_client_info": {
+          "package_name": "app.clickable.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4TP3NQub8jO4eoOmty3EOSsioLKwveA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

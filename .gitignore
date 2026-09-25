@@ -43,3 +43,8 @@ seeds/demo/*
 !seeds/demo/README.md
 !seeds/demo/manifest.example.json
 !seeds/demo/manifest.json
+
+# FCM servis hesabı anahtarı asla repoya girmez. EAS'te saklanır (proje kimlik bilgileri).
+# google-services.json ise gizli DEĞİL: her APK'nın içinde taşınıyor, repoda durur.
+*firebase-adminsdk*.json
+fcm-v1-key.json
