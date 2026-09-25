@@ -21,32 +21,43 @@ const PAPER = '#FAF9F7';
 const INK = '#16161A';
 const ACCENT = '#D92D20';
 
-/** Klasik imleç oku; 0,0'dan başlayıp ~52x82 birimlik kutuya sığar. */
-const CURSOR = 'M0,0 L0,72 L17,55 L29,82 L44,75 L32,49 L52,49 Z';
-
 /**
- * İşaret her zaman 1024'lük bir koordinat sisteminde çizilir; `size` yalnızca çıktı
- * çözünürlüğüdür. Böylece 96 px favicon ile 1024 px ikon birebir aynı kompozisyondur.
+ * İşaret: dört thumbnail, biri seçilmiş. Ürünün sorusu bu — "hangisine tıklanır?" —
+ * ve 48 px'te bile dört blokla tek kırmızı ayırt ediliyor. (Önceki tek kart + imleç
+ * denemesi küçükken siyah bir kutuya dönüşüyordu; sahibi haklı olarak beğenmedi.)
+ *
+ * Her şey 1024'lük koordinat sisteminde çizilir; `size` yalnızca çıktı çözünürlüğüdür,
+ * böylece favicon ile mağaza ikonu birebir aynı kompozisyondur.
  *
  * @param size çıktı kenar uzunluğu
  * @param scale işaretin büyüklüğü (Android ön planı güvenli alan için küçültür)
  * @param bg zemin rengi ya da null (şeffaf)
- * @param mono tek renk (monokrom ikon) ya da null
+ * @param mono tek renk (monokrom ikon): seçili kart tam opak, diğerleri soluk
  */
 function mark({ size = 1024, scale = 1, bg = PAPER, mono = null } = {}) {
-  // Kompozisyon: mürekkep thumbnail, sağ alt köşesini delip kâğıdın üstüne taşan kırmızı
-  // imleç. İmlecin gövdesi kâğıt üstünde durduğu için kontura gerek yok — kontur çerçeveyi
-  // kemiriyor ve kaza gibi görünüyordu.
+  const W = 372;
+  const H = 209; // 16:9
+  const GAP = 40;
+  const x0 = (1024 - (2 * W + GAP)) / 2;
+  const y0 = (1024 - (2 * H + GAP)) / 2;
+  const tile = (x, y, chosen) =>
+    `<rect x="${x}" y="${y}" width="${W}" height="${H}" rx="20" fill="${
+      chosen ? (mono ?? ACCENT) : (mono ?? INK)
+    }"${mono && !chosen ? ' opacity="0.35"' : ''}/>`;
+
+  const grid = [
+    tile(x0, y0, false),
+    // Seçilen: sağ üst. Göz sol üstten sonra oraya gider.
+    tile(x0 + W + GAP, y0, true),
+    tile(x0, y0 + H + GAP, false),
+    tile(x0 + W + GAP, y0 + H + GAP, false),
+  ].join('');
+
   const shapes =
     scale === 0
       ? ''
       : `<g transform="translate(512 512) scale(${scale}) translate(-512 -512)">
-    <g transform="translate(42 -34)">
-      <rect x="150" y="300" width="610" height="343" rx="28" fill="${mono ?? INK}"/>
-      <g transform="translate(596 500) scale(3.4)">
-        <path d="${CURSOR}" fill="${mono ?? ACCENT}" stroke="${bg ?? PAPER}" stroke-width="7" stroke-linejoin="round"/>
-      </g>
-    </g>
+    ${grid}
   </g>`;
 
   return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 1024 1024">

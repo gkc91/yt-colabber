@@ -77,3 +77,16 @@ Her ekran dört durumu da tanımlar: **yükleniyor, boş, hata, dolu.**
 
 Hareket yalnızca **anlam taşıyorsa** vardır: sonucun ortaya çıkışı, kredinin artışı.
 Dekoratif animasyon yok. Süre 150-200 ms, `ease-out`.
+
+## 9. Uygulama ikonu
+
+Dört thumbnail, biri seçilmiş (sağ üst, `accent`). Ürünün sorusu bu: **hangisine tıklanır?**
+Kâğıt zemin, `ink` kartlar, tek kırmızı — uygulamanın içiyle aynı dil.
+
+- Tek kaynak: `node scripts/make-icons.mjs`. Uygulama ikonu, Android uyarlanabilir ikon
+  (ön plan/zemin/monokrom), açılış işareti, favicon ve mağaza ikonu oradan üretilir.
+  Elle düzeltilmiş bir PNG kimse tarafından güncellenemez; renk değişirse script çalıştırılır.
+- Ölçüt **48 px**: ana ekranda ikon o boyutta görünür. Denenip elenen tasarım (tek kart +
+  imleç) küçükken siyah bir kutuya dönüşüyordu.
+- Monokrom sürümde seçili kart tam opak, diğerleri %35 — hiyerarşi tek renkte de duruyor.
+
