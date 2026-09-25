@@ -11,8 +11,9 @@ import Colors from '@/constants/Colors';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
 import {
+  PushUnavailable,
   enablePushNotifications,
-  getPushPermission,
+  pushStatus,
   pushSupported,
 } from '@/features/notifications/api';
 import { useNextTask } from '@/features/review/api';
@@ -25,7 +26,11 @@ export default function ReviewScreen() {
   const balance = useBalance(session?.user.id);
   const task = useNextTask(!!session);
   const assignment = task.data;
-  const [pushState, setPushState] = useState<'unknown' | 'granted' | 'denied'>('unknown');
+  // 'failed': izin var ama token alınamadı (Android'de Firebase eksikse olur). Bunu
+  // "kullanıcı reddetti" diye göstermek yanlış olur — hiçbir şey gelmeyeceğini söylemeliyiz.
+  const [pushState, setPushState] = useState<'unknown' | 'granted' | 'denied' | 'failed'>(
+    'unknown',
+  );
   const refetchTask = task.refetch;
   const refetchBalance = balance.refetch;
 
@@ -33,9 +38,11 @@ export default function ReviewScreen() {
     useCallback(() => {
       refetchTask();
       refetchBalance();
-      if (pushSupported)
-        getPushPermission().then((p) => setPushState(p === 'granted' ? 'granted' : 'denied'));
-    }, [refetchTask, refetchBalance]),
+      if (pushSupported && session)
+        pushStatus(session.user.id)
+          .then((p) => setPushState(p === 'granted' ? 'granted' : 'denied'))
+          .catch(() => setPushState('denied'));
+    }, [refetchTask, refetchBalance, session]),
   );
 
   return (
@@ -95,12 +102,19 @@ export default function ReviewScreen() {
                 onPress={() =>
                   enablePushNotifications(session?.user.id as string)
                     .then((result) => setPushState(result === 'granted' ? 'granted' : 'denied'))
-                    .catch(() => setPushState('denied'))
+                    .catch((error) =>
+                      setPushState(error instanceof PushUnavailable ? 'failed' : 'denied'),
+                    )
                 }
               />
             ) : null}
             {pushState === 'granted' ? (
               <Meta style={styles.centered}>{t('review.empty.pushOn')}</Meta>
+            ) : null}
+            {pushState === 'failed' ? (
+              <Small tone="accent" style={styles.centered}>
+                {t('review.empty.pushFailed')}
+              </Small>
             ) : null}
           </>
         ) : null}

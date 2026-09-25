@@ -6,14 +6,39 @@ import { supabase } from '@/lib/supabase';
 
 export type PushPermission = 'granted' | 'denied' | 'unsupported';
 
-/** Web'de push yok (PRODUCT §14: web değerlendirme ve sonuç içindir). */
-export const pushSupported = Platform.OS !== 'web';
-
-export async function getPushPermission(): Promise<PushPermission> {
+/**
+ * Bildirimlerin gerçekten açık olması iki şart: işletim sistemi izni VE sunucuda kayıtlı
+ * bir token. İkincisi olmadan kuyruk kimseye ulaşmaz. Ekran yalnızca izne bakarsa
+ * "haber veririz" yazar ama hiçbir şey gelmez — bir süre öyle oldu.
+ */
+export async function pushStatus(userId: string): Promise<PushPermission> {
   if (!pushSupported) return 'unsupported';
   const { status } = await Notifications.getPermissionsAsync();
-  return status === 'granted' ? 'granted' : 'denied';
+  if (status !== 'granted') return 'denied';
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('expo_push_token')
+    .eq('id', userId)
+    .single();
+  if (error) throw error;
+  return data.expo_push_token ? 'granted' : 'denied';
 }
+
+/**
+ * Token alınamazsa fırlatır. Çağıran bunu "kullanıcı reddetti" ile karıştırmamalı:
+ * Android'de token almak Firebase yapılandırması ister (google-services.json + EAS'te
+ * FCM V1 anahtarı); eksikse izin verilmiş olsa bile burası patlar.
+ */
+export class PushUnavailable extends Error {
+  constructor(readonly cause: unknown) {
+    super('push_unavailable');
+    this.name = 'PushUnavailable';
+  }
+}
+
+/** Web'de push yok (PRODUCT §14: web değerlendirme ve sonuç içindir). */
+export const pushSupported = Platform.OS !== 'web';
 
 /**
  * İzin ister, Expo push token'ı alır ve profile yazar. Token sunucuda tutulur:
@@ -35,7 +60,12 @@ export async function enablePushNotifications(userId: string): Promise<PushPermi
   }
 
   const projectId = Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId;
-  const token = await Notifications.getExpoPushTokenAsync(projectId ? { projectId } : undefined);
+  let token: Awaited<ReturnType<typeof Notifications.getExpoPushTokenAsync>>;
+  try {
+    token = await Notifications.getExpoPushTokenAsync(projectId ? { projectId } : undefined);
+  } catch (error) {
+    throw new PushUnavailable(error);
+  }
 
   const { error } = await supabase
     .from('profiles')
