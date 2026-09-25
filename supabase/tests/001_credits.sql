@@ -17,6 +17,10 @@ insert into auth.users (id, email, raw_user_meta_data) values
 insert into niches (slug, name) values ('test-credits', 'Test niche (credits)');
 update profiles set niche_id = (select id from niches where slug = 'test-credits'), onboarding_done = true
   where id::text like 'aaaaaaaa-0000-0000-0000-00000000000_';
+-- Test açan kişinin kanalı olmalı: niş artık kanaldan okunuyor (0020).
+insert into channels (profile_id, youtube_url, channel_title, niche_id)
+values ('aaaaaaaa-0000-0000-0000-000000000001', 'https://www.youtube.com/@owner', 'Owner',
+        (select id from niches where slug = 'test-credits'));
 -- next_review_task 5 decoy ister
 insert into niche_thumbnail_cache (niche_id, video_id, title, thumbnail_url)
 select (select id from niches where slug = 'test-credits'), 'test_decoy_'||g, 'Decoy '||g, 'https://example.test/'||g||'.jpg'

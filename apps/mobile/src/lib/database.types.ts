@@ -7,6 +7,31 @@ export type Json =
   | Json[]
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       ai_summary_runs: {
@@ -84,6 +109,9 @@ export type Database = {
           channel_title: string | null
           created_at: string
           id: string
+          language: string
+          niche_changed_at: string | null
+          niche_id: number
           profile_id: string
           youtube_channel_id: string | null
           youtube_url: string
@@ -93,6 +121,9 @@ export type Database = {
           channel_title?: string | null
           created_at?: string
           id?: string
+          language?: string
+          niche_changed_at?: string | null
+          niche_id: number
           profile_id: string
           youtube_channel_id?: string | null
           youtube_url: string
@@ -102,15 +133,25 @@ export type Database = {
           channel_title?: string | null
           created_at?: string
           id?: string
+          language?: string
+          niche_changed_at?: string | null
+          niche_id?: number
           profile_id?: string
           youtube_channel_id?: string | null
           youtube_url?: string
         }
         Relationships: [
           {
+            foreignKeyName: "channels_niche_id_fkey"
+            columns: ["niche_id"]
+            isOneToOne: false
+            referencedRelation: "niches"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "channels_profile_id_fkey"
             columns: ["profile_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
@@ -695,6 +736,8 @@ export type Database = {
       submissions: {
         Row: {
           ai_summary: string | null
+          channel_id: string | null
+          clip_deleted_at: string | null
           clip_duration_seconds: number
           clip_path: string
           closes_at: string
@@ -714,6 +757,8 @@ export type Database = {
         }
         Insert: {
           ai_summary?: string | null
+          channel_id?: string | null
+          clip_deleted_at?: string | null
           clip_duration_seconds: number
           clip_path: string
           closes_at?: string
@@ -733,6 +778,8 @@ export type Database = {
         }
         Update: {
           ai_summary?: string | null
+          channel_id?: string | null
+          clip_deleted_at?: string | null
           clip_duration_seconds?: number
           clip_path?: string
           closes_at?: string
@@ -751,6 +798,13 @@ export type Database = {
           title_options?: string[]
         }
         Relationships: [
+          {
+            foreignKeyName: "submissions_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "submissions_niche_id_fkey"
             columns: ["niche_id"]
@@ -821,15 +875,31 @@ export type Database = {
       }
     }
     Functions: {
+      add_channel: {
+        Args: {
+          p_band?: Database["public"]["Enums"]["subscriber_band"]
+          p_channel_title?: string
+          p_language?: string
+          p_niche_id: number
+          p_youtube_channel_id?: string
+          p_youtube_url: string
+        }
+        Returns: string
+      }
       ai_summary_limit: { Args: never; Returns: number }
       ai_summary_min_reviews: { Args: never; Returns: number }
       ai_summary_status: { Args: { p_submission: string }; Returns: Json }
       balance_of: { Args: { p: string }; Returns: number }
+      change_channel_niche: {
+        Args: { p_channel_id: string; p_niche_id: number }
+        Returns: undefined
+      }
       change_niche: { Args: { p_niche_id: number }; Returns: undefined }
       claim_ai_summary: {
         Args: { p_profile: string; p_submission: string }
         Returns: string
       }
+      clip_retention_days: { Args: never; Returns: number }
       close_stale_submissions: { Args: never; Returns: undefined }
       collab_candidates: { Args: { p_limit?: number }; Returns: Json }
       collab_like: { Args: { p_to: string }; Returns: string }
@@ -847,6 +917,7 @@ export type Database = {
       }
       create_submission: {
         Args: {
+          p_channel_id?: string
           p_clip_duration: number
           p_clip_path: string
           p_requested: number
@@ -856,6 +927,13 @@ export type Database = {
         Returns: string
       }
       expire_tasks: { Args: never; Returns: undefined }
+      expired_clips: {
+        Args: { p_limit?: number }
+        Returns: {
+          clip_path: string
+          id: string
+        }[]
+      }
       grant_purchase: {
         Args: {
           p_credits: number
@@ -869,6 +947,7 @@ export type Database = {
         Returns: undefined
       }
       is_pro: { Args: { p: string }; Returns: boolean }
+      mark_clips_deleted: { Args: { p_ids: string[] }; Returns: number }
       media_paths: {
         Args: { p_submission_id?: string; p_task_id?: string }
         Returns: Json
@@ -927,6 +1006,7 @@ export type Database = {
         }
         Returns: string
       }
+      trigger_cleanup_clips: { Args: never; Returns: undefined }
       trigger_notify: { Args: never; Returns: undefined }
       trigger_refresh_niche_cache: { Args: never; Returns: undefined }
     }
@@ -1080,6 +1160,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       collab_type: [

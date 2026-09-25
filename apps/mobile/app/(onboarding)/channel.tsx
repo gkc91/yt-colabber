@@ -13,7 +13,7 @@ import { useSession } from '@/features/auth/session';
 import { completeOnboarding, type SubscriberBand } from '@/features/onboarding/api';
 import { BANDS } from '@/features/onboarding/options';
 import { parseYouTubeChannelUrl, type YouTubeChannelRef } from '@/features/onboarding/youtube';
-import { profileQueryKey } from '@/features/profile/api';
+import { profileQueryKey, useProfile } from '@/features/profile/api';
 import { track } from '@/lib/track';
 import { t } from '@/i18n';
 
@@ -21,6 +21,8 @@ export default function ChannelStep() {
   const { session } = useSession();
   const userId = session?.user.id as string;
   const queryClient = useQueryClient();
+  // Niş bir önceki adımda profile yazıldı; kanal onu devralır (0020: test kanalın nişine gider).
+  const profile = useProfile(userId);
 
   const [url, setUrl] = useState('');
   const [urlError, setUrlError] = useState<string | null>(null);
@@ -28,7 +30,13 @@ export default function ChannelStep() {
 
   const finish = useMutation({
     mutationFn: (input: { channel: YouTubeChannelRef; band: SubscriberBand | null }) =>
-      completeOnboarding(userId, input.channel, input.band),
+      completeOnboarding(
+        userId,
+        input.channel,
+        input.band,
+        profile.data?.niche_id as number,
+        profile.data?.language ?? 'en',
+      ),
     onSuccess: async () => {
       track.capture('onboarding_done');
       await queryClient.invalidateQueries({ queryKey: profileQueryKey(userId) });

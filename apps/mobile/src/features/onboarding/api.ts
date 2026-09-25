@@ -29,21 +29,35 @@ export async function saveNicheAndLanguage(userId: string, nicheId: number, lang
   if (error) throw error;
 }
 
+/**
+ * Kanal satırını client yazmaz: niş kanalda durduğu için serbest yazma, "ayda bir niş
+ * değiştirme" kuralını delerdi (0020). Ekleme `add_channel` fonksiyonundan geçer.
+ */
+export async function addChannel(input: {
+  channel: YouTubeChannelRef;
+  band: SubscriberBand | null;
+  nicheId: number;
+  language: string;
+}) {
+  const { data, error } = await supabase.rpc('add_channel', {
+    p_youtube_url: input.channel.url,
+    p_youtube_channel_id: input.channel.kind === 'channel' ? input.channel.channelId : undefined,
+    p_band: input.band ?? undefined,
+    p_niche_id: input.nicheId,
+    p_language: input.language,
+  });
+  if (error) throw error;
+  return data as string;
+}
+
 export async function completeOnboarding(
   userId: string,
   channel: YouTubeChannelRef,
   band: SubscriberBand | null,
+  nicheId: number,
+  language: string,
 ) {
-  const { error: channelError } = await supabase.from('channels').upsert(
-    {
-      profile_id: userId,
-      youtube_url: channel.url,
-      youtube_channel_id: channel.kind === 'channel' ? channel.channelId : null,
-      band,
-    },
-    { onConflict: 'profile_id' },
-  );
-  if (channelError) throw channelError;
+  await addChannel({ channel, band, nicheId, language });
 
   const { error } = await supabase
     .from('profiles')

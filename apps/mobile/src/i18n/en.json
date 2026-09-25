@@ -93,7 +93,9 @@
       "done": "Your test is live. Reviews will arrive over the next 72 hours.",
       "addThumbnailWeb": "Choose from your computer",
       "pickClipWeb": "Choose a video file",
-      "clipHintWeb": "Your first 60 seconds, exported as MP4 or MOV at 720p and under 8 MB. Nothing is compressed here, so a longer or heavier file is refused."
+      "clipHintWeb": "Your first 60 seconds, exported as MP4 or MOV at 720p and under 8 MB. Nothing is compressed here, so a longer or heavier file is refused.",
+      "channelTitle": "Which channel is this for?",
+      "channelHint": "Reviewers are matched to the channel's niche, so pick the one publishing this video."
     },
     "errors": {
       "insufficient_credits": "Not enough credits for this test.",

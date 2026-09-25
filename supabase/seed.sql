@@ -38,7 +38,9 @@ update profiles p set
   onboarding_done = true
 where p.id in ('11111111-1111-1111-1111-111111111111','22222222-2222-2222-2222-222222222222','33333333-3333-3333-3333-333333333333');
 
-insert into channels (profile_id, youtube_url, channel_title, band) values
-  ('11111111-1111-1111-1111-111111111111', 'https://www.youtube.com/@alice-animates', 'Alice Animates', 'b100_1k'),
-  ('22222222-2222-2222-2222-222222222222', 'https://www.youtube.com/@bob-draws',      'Bob Draws',      'b0_100'),
-  ('33333333-3333-3333-3333-333333333333', 'https://www.youtube.com/@cara-frames',    'Cara Frames',    'b1k_10k');
+-- Kanalın kendi nişi var (0020): test bu nişe gider, profilin nişi ise kişinin
+-- neyi değerlendirdiğini söyler.
+insert into channels (profile_id, youtube_url, channel_title, band, niche_id, language) values
+  ('11111111-1111-1111-1111-111111111111', 'https://www.youtube.com/@alice-animates', 'Alice Animates', 'b100_1k', (select id from niches where slug='animation'), 'en'),
+  ('22222222-2222-2222-2222-222222222222', 'https://www.youtube.com/@bob-draws',      'Bob Draws',      'b0_100', (select id from niches where slug='animation'), 'en'),
+  ('33333333-3333-3333-3333-333333333333', 'https://www.youtube.com/@cara-frames',    'Cara Frames',    'b1k_10k', (select id from niches where slug='animation'), 'en');

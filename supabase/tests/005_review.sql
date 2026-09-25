@@ -11,17 +11,20 @@ insert into auth.users (id, email) values
 insert into niches (slug, name) values ('test-review', 'Test niche (review)');
 update profiles set niche_id = (select id from niches where slug = 'test-review'), onboarding_done = true
   where id::text like 'ffffffff-0000-0000-0000-00000000000_';
-insert into channels (profile_id, youtube_url, channel_title)
-values ('ffffffff-0000-0000-0000-000000000001', 'https://www.youtube.com/@owner-channel', 'Owner Channel');
+insert into channels (id, profile_id, youtube_url, channel_title, niche_id)
+values ('cccc1111-0000-0000-0000-000000000001', 'ffffffff-0000-0000-0000-000000000001',
+        'https://www.youtube.com/@owner-channel', 'Owner Channel',
+        (select id from niches where slug = 'test-review'));
 -- feed ızgarası 5 decoy ister
 insert into niche_thumbnail_cache (niche_id, video_id, title, thumbnail_url, channel_title)
 select (select id from niches where slug = 'test-review'), 'review_decoy_'||g, 'Decoy '||g,
        'https://example.test/'||g||'.jpg', 'Decoy channel '||g
 from generate_series(1,5) g;
 
-insert into submissions (id, owner_id, niche_id, title_options, thumbnail_paths, clip_path,
-                         clip_duration_seconds, requested_reviews)
+insert into submissions (id, owner_id, channel_id, niche_id, title_options, thumbnail_paths,
+                         clip_path, clip_duration_seconds, requested_reviews)
 values ('aaaa1111-0000-0000-0000-000000000001', 'ffffffff-0000-0000-0000-000000000001',
+        'cccc1111-0000-0000-0000-000000000001',
         (select id from niches where slug = 'test-review'),
         array['Only title option'], array['thumbs/o/a.jpg'], 'clips/o/clip.mp4', 42, 5);
 

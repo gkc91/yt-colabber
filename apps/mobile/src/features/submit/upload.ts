@@ -8,6 +8,8 @@ export type UploadProgress = { done: number; total: number };
 
 export type SubmitInput = {
   userId: string;
+  /** Testin hangi kanala ait olduğu; niş ve dil buradan okunur (0020). */
+  channelId: string | null;
   thumbnails: PickedThumbnail[];
   titles: string[];
   clip: PickedClip;
@@ -50,6 +52,7 @@ export async function uploadAndCreate(
 
     if (stop()) throw new Cancelled();
     const submission: NewSubmission = {
+      channelId: input.channelId,
       titles: input.titles,
       thumbnailPaths: uploaded.slice(0, -1),
       clipPath,

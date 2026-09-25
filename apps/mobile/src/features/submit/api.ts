@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { submissionErrorCode, type ReviewCount } from './rules';
 
 export type NewSubmission = {
+  channelId: string | null;
   titles: string[];
   thumbnailPaths: string[];
   clipPath: string;
@@ -22,6 +23,7 @@ export class SubmissionFailed extends Error {
 /** Krediyi düşen ve submission'ı açan tek yer Postgres'tir (create_submission). */
 export async function createSubmission(input: NewSubmission): Promise<string> {
   const { data, error } = await supabase.rpc('create_submission', {
+    p_channel_id: input.channelId ?? undefined,
     p_title_options: input.titles,
     p_thumbnail_paths: input.thumbnailPaths,
     p_clip_path: input.clipPath,

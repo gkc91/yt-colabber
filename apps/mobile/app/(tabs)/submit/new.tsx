@@ -5,12 +5,15 @@ import { Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { Chip } from '@/components/Chip';
+import { Section } from '@/components/Section';
 import { Screen } from '@/components/Screen';
 import { Label, Small } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
+import { channelLabel, useMyChannels } from '@/features/channels/api';
 import { useBalance } from '@/features/credits/api';
 import { useIsPro } from '@/features/profile/api';
 import { SubmissionFailed } from '@/features/submit/api';
@@ -96,6 +99,14 @@ function Wizard() {
   const [clip, setClip] = useState<PickedClip | null>(null);
   const [requested, setRequested] = useState<ReviewCount>(5);
 
+  // Testin nişi kanaldan geliyor (0020). Tek kanalı olan kimseye soru sorulmaz;
+  // birden fazlası varsa seçim zorunlu, çünkü yanlış kanal = yanlış niş = bozuk sonuç.
+  const channels = useMyChannels(userId);
+  const [pickedChannelId, setPickedChannelId] = useState<string | null>(null);
+  const onlyChannel = channels.data?.length === 1 ? channels.data[0].id : null;
+  const channelId = onlyChannel ?? pickedChannelId;
+  const mustPickChannel = (channels.data?.length ?? 0) > 1 && !channelId;
+
   const [busy, setBusy] = useState(false);
   const [clipProgress, setClipProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
@@ -142,7 +153,7 @@ function Wizard() {
     setUploadProgress({ done: 0, total: thumbnails.length + 1 });
     try {
       await uploadAndCreate(
-        { userId, thumbnails, titles: cleanTitles(titles), clip, requested },
+        { userId, channelId, thumbnails, titles: cleanTitles(titles), clip, requested },
         { onProgress: setUploadProgress, isCancelled: () => cancelled.current },
       );
       track.capture('submission_created', {
@@ -165,13 +176,14 @@ function Wizard() {
   };
 
   const titleProblem = validateTitles(titles);
-  const canGoNext = [
-    thumbnails.length > 0,
-    titleProblem === null,
-    clip !== null,
-    canAfford(balance, requested),
-    true,
-  ][step];
+  const canGoNext =
+    [
+      thumbnails.length > 0,
+      titleProblem === null,
+      clip !== null,
+      canAfford(balance, requested),
+      true,
+    ][step] && !mustPickChannel;
 
   const goNext = () => {
     if (step === 1 && titleProblem) {
@@ -188,6 +200,23 @@ function Wizard() {
         <Label>{t('submit.wizard.step', { current: step + 1, total: STEPS })}</Label>
         <StepBar step={step} total={STEPS} />
       </View>
+
+      {step === 0 && (channels.data?.length ?? 0) > 1 ? (
+        <Section title={t('submit.wizard.channelTitle')}>
+          <Small tone="muted">{t('submit.wizard.channelHint')}</Small>
+          <View style={styles.channels}>
+            {channels.data?.map((channel) => (
+              <Chip
+                key={channel.id}
+                role="radio"
+                label={channelLabel(channel)}
+                selected={channelId === channel.id}
+                onPress={() => setPickedChannelId(channel.id)}
+              />
+            ))}
+          </View>
+        </Section>
+      ) : null}
 
       {step === 0 ? <Requirements /> : null}
 
@@ -247,6 +276,11 @@ function Wizard() {
 
 const styles = StyleSheet.create({
   header: {
+    gap: space.sm,
+  },
+  channels: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: space.sm,
   },
   stepBar: {
