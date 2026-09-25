@@ -7,7 +7,7 @@
 // Fail-closed: anahtar yoksa model hiç çağrılmaz ve `submissions.ai_summary` kirletilmez.
 // (Eski hâli anahtar yokken isteği yine gönderiyor, dönen hata metnini özet diye kaydediyordu;
 // alan dolduğu için de bir daha üretilemiyordu.)
-import { admin, userFromRequest, json } from "../_shared/supabase.ts";
+import { admin, userFromRequest, json, preflight } from "../_shared/supabase.ts";
 
 const MODEL = "claude-haiku-4-5";
 /** Yerel testte sahte bir uca yönlendirilir (notify'daki EXPO_PUSH_URL ile aynı yöntem). */
@@ -45,6 +45,9 @@ function buildPrompt(titles: unknown, results: unknown): string {
 }
 
 Deno.serve(async (req) => {
+  const options = preflight(req);
+  if (options) return options;
+
   try {
     const apiKey = Deno.env.get("ANTHROPIC_API_KEY");
     if (!apiKey) return json({ error: "ai_summary_unavailable" }, 503);

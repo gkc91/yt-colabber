@@ -3,7 +3,7 @@
 -- aynı örneği ikinci kez alıyor mu, kendi nişinde gerçek test varsa o mu önce geliyor.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(5);
+select plan(6);
 
 -- ---------- arrange ----------
 insert into niches (slug, name) values ('fa-own', 'Own Niche'), ('fa-other', 'Other Niche');
@@ -54,16 +54,22 @@ select isnt((select submission_id from taken where step='first'),
   'fa000000-0000-0000-0000-0000000000aa'::uuid,
   'başka nişin gerçek testi boş nişteki kişiye gitmez');
 
--- ---------- test_same_demo_is_not_given_twice ----------
-update review_tasks set expires_at = now() - interval '1 second'
-  where reviewer_id = 'fa000000-0000-0000-0000-000000000003';
+-- ---------- test_completed_demo_leaves_the_screen_empty ----------
+-- (Süresi dolan örnek GERİ gelir — 0019, 017_demo_retry.sql. Burada tamamlananı deniyoruz.)
+update review_tasks set assigned_at = now() - interval '60 seconds'
+  where reviewer_id = 'fa000000-0000-0000-0000-000000000003' and status = 'assigned';
 set local request.jwt.claims to '{"sub":"fa000000-0000-0000-0000-000000000003","role":"authenticated"}';
 set local role authenticated;
+select isnt(
+  submit_review((select id from review_tasks where reviewer_id='fa000000-0000-0000-0000-000000000003'
+                   and status='assigned'),
+                true, 0, 1500, 'A guess about the demo clip', null, 30, '{}', null, 45),
+  null, 'başka nişten gelen örnek test değerlendirilebilir');
 insert into taken select 'second', (next_review_task()->'task'->>'submission_id')::uuid, null, null;
 reset role;
 
 select is((select submission_id from taken where step='second'), null,
-  'aynı örnek test ikinci kez verilmez; başka örnek yoksa ekran boş');
+  'tamamlanan örnek bir daha gelmez; başka örnek yoksa ekran boş');
 
 -- ---------- test_real_test_in_own_niche_comes_first ----------
 select create_demo_submission('fa000000-0000-0000-0000-000000000001', 'fa-other',

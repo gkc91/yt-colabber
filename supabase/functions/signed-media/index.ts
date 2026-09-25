@@ -1,7 +1,7 @@
 // Görev sahibi (reviewer) veya submission sahibi için 60 dk signed URL üretir.
 // Yetki kararı burada DEĞİL, Postgres'teki media_paths() fonksiyonundadır (0004, pgTAP ile test edilir).
 // Bu fonksiyon yalnızca o kararı uygular ve imzalar.
-import { admin, json, userClient } from "../_shared/supabase.ts";
+import { admin, json, preflight, userClient } from "../_shared/supabase.ts";
 
 const SIGNED_URL_TTL_SECONDS = 60 * 60;
 
@@ -17,6 +17,8 @@ const STATUS: Record<string, number> = {
 type MediaPaths = { role: "reviewer" | "owner"; thumbnails: string[]; clip: string };
 
 Deno.serve(async (req) => {
+  const options = preflight(req);
+  if (options) return options;
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
   try {

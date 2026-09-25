@@ -144,6 +144,16 @@ Web'de submission oluşturma ve satın alma YOK (PRODUCT §14): iki ekran da "uy
 Supabase → Auth → URL Configuration'da `https://app.clickabletest.com/**` ve
 `https://clickable-app.pages.dev/**` yönlendirme listesinde; yoksa web'de giriş dönmez.
 
+## Edge Function dağıtımından sonra (zorunlu)
+```powershell
+pnpm exec supabase functions deploy signed-media ai-summary delete-account
+node scripts/check-cors.mjs --linked
+```
+Tarayıcıdan çağrılan fonksiyonlar CORS ön kontrolünü (OPTIONS) karşılamak zorunda. Yerel
+stack'te Kong bu başlıkları kendisi ekler, bu yüzden eksiklik yalnızca canlıda görünür:
+2026-09-25'te `signed-media` ön kontrole 405 döndüğü için değerlendirme ekranında thumbnail
+boş kaldı ve klip oynamadı. Kontrol anahtar istemez.
+
 ## Örnek (demo) testler
 ```powershell
 node scripts/seed-demo.mjs          # yerel stack; manifest seeds/demo/manifest.json

@@ -1,6 +1,8 @@
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
-import { Tabs } from 'expo-router';
-import type { ColorValue } from 'react-native';
+import { Tabs } from 'expo-router/js-tabs';
+import { useWindowDimensions, type ColorValue } from 'react-native';
+
+import { StudioSidebar } from '@/components/StudioSidebar';
 
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -12,12 +14,18 @@ function TabIcon({ name, color }: { name: SymbolViewProps['name']; color: ColorV
   return <SymbolView name={name} tintColor={color} size={26} />;
 }
 
+/** Bu genişlikten sonra alt sekmeler yerine Studio'daki gibi sol menü. */
+const SIDEBAR_BREAKPOINT = 900;
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const wide = useWindowDimensions().width >= SIDEBAR_BREAKPOINT;
 
   return (
     <Tabs
+      tabBar={wide ? (props) => <StudioSidebar {...props} /> : undefined}
       screenOptions={{
+        tabBarPosition: wide ? 'left' : 'bottom',
         tabBarActiveTintColor: Colors[colorScheme].tint,
         tabBarInactiveTintColor: Colors[colorScheme].muted,
         headerTitleStyle,

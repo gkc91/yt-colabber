@@ -3,11 +3,13 @@
 // görevleri), Storage'daki kendi dosyaları.
 // Silinmeyen: BAŞKALARININ testlerine yazdığı değerlendirmeler — kimliği düşer (reviewer_id
 // null olur, 0013). Aksi halde o testlerin sonuçları ve sayaçları bozulurdu.
-import { admin, json, userFromRequest } from "../_shared/supabase.ts";
+import { admin, json, preflight, userFromRequest } from "../_shared/supabase.ts";
 
 const MEDIA_FOLDERS = ["thumbs", "clips"];
 
 Deno.serve(async (req) => {
+  const options = preflight(req);
+  if (options) return options;
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
   try {
