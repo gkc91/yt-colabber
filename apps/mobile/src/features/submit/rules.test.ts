@@ -1,13 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  MAX_TITLE_LENGTH,
+  PRO_REVIEW_COUNT,
   canAfford,
   cleanTitles,
   creditCost,
-  MAX_TITLE_LENGTH,
-  PRO_REVIEW_COUNT,
   remainingTime,
   reviewCountOptions,
+  showsCountdown,
   submissionErrorCode,
   validateClipDuration,
   validateTitles,
@@ -67,5 +68,20 @@ describe('submission rules', () => {
       minutes: 30,
     });
     expect(remainingTime('2026-09-23T09:59:00Z', now).expired).toBe(true);
+  });
+});
+
+describe('showsCountdown', () => {
+  it('test_open_real_test_counts_down', () => {
+    expect(showsCountdown(false, 'open')).toBe(true);
+  });
+
+  it('test_demo_test_never_counts_down', () => {
+    // Örnek test kapanmaz; listede "876567 saat kaldı" yazıyordu (2026-09-25).
+    expect(showsCountdown(true, 'open')).toBe(false);
+  });
+
+  it('test_closed_test_shows_its_status_instead', () => {
+    expect(showsCountdown(false, 'completed')).toBe(false);
   });
 });

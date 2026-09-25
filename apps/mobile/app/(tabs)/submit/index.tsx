@@ -4,13 +4,14 @@ import { ActivityIndicator, FlatList, Pressable, StyleSheet, View } from 'react-
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { Progress } from '@/components/Progress';
 import { Body, Heading, Meta } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { layout, space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { useMySubmissions, type MySubmission } from '@/features/submit/api';
-import { remainingTime } from '@/features/submit/rules';
+import { remainingTime, showsCountdown } from '@/features/submit/rules';
 import { t, type MessageKey } from '@/i18n';
 
 export default function SubmissionsScreen() {
@@ -60,25 +61,28 @@ export default function SubmissionsScreen() {
 
 function SubmissionRow({ submission }: { submission: MySubmission }) {
   const left = remainingTime(submission.closes_at);
-  const isOpen = submission.status === 'open';
+  const counting = showsCountdown(submission.is_demo, submission.status) && !left.expired;
 
   return (
-    <Card gap={space.sm}>
-      <Heading numberOfLines={1}>{submission.title_options[0]}</Heading>
+    <Card gap={space.md}>
+      <Heading numberOfLines={2}>{submission.title_options[0]}</Heading>
+      {/* Sayı + çubuk: "3/5" okumadan da nerede olduğu görünsün. */}
+      <Progress done={submission.received_reviews} total={submission.requested_reviews} />
       <View style={styles.rowMeta}>
-        <Meta>{t(`submit.status.${submission.status}` as MessageKey)}</Meta>
         <Meta style={styles.rowCount}>
           {t('submit.reviewsProgress', {
             received: submission.received_reviews,
             requested: submission.requested_reviews,
           })}
         </Meta>
+        <Meta>
+          {counting
+            ? t('submit.remaining', { hours: left.hours, minutes: left.minutes })
+            : submission.is_demo
+              ? t('submit.status.demo')
+              : t(`submit.status.${submission.status}` as MessageKey)}
+        </Meta>
       </View>
-      <Meta>
-        {isOpen && !left.expired
-          ? t('submit.remaining', { hours: left.hours, minutes: left.minutes })
-          : t('submit.closed')}
-      </Meta>
     </Card>
   );
 }

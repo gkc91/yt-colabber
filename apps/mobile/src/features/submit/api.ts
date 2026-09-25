@@ -35,7 +35,9 @@ export async function createSubmission(input: NewSubmission): Promise<string> {
 export async function fetchMySubmissions(userId: string) {
   const { data, error } = await supabase
     .from('submissions')
-    .select('id, status, requested_reviews, received_reviews, created_at, closes_at, title_options')
+    .select(
+      'id, status, requested_reviews, received_reviews, created_at, closes_at, title_options, is_demo',
+    )
     .eq('owner_id', userId)
     .order('created_at', { ascending: false });
   if (error) throw error;

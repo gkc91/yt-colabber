@@ -3,7 +3,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import { Rule } from '@/components/Card';
+import { Progress } from '@/components/Progress';
 import { Screen } from '@/components/Screen';
 import { Body, Stat } from '@/components/Type';
 import { space } from '@/design/tokens';
@@ -76,7 +76,7 @@ export default function SubmissionResultsScreen() {
           value={`${submission.received_reviews}/${submission.requested_reviews}`}
           label={t('results.reviewsLabel')}
         />
-        <Rule />
+        <Progress done={submission.received_reviews} total={submission.requested_reviews} />
       </View>
 
       {submission.received_reviews === 0 ? (

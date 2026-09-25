@@ -55,7 +55,8 @@
       "open": "Collecting reviews",
       "completed": "Done",
       "cancelled": "Cancelled",
-      "hidden": "Hidden"
+      "hidden": "Hidden",
+      "demo": "Practice test"
     },
     "wizard": {
       "step": "Step {current} of {total}",
@@ -160,8 +161,11 @@
   "review": {
     "ready": {
       "title": "A test is waiting",
-      "body": "Three quick steps: pick what you'd click, say what you expect, then watch the first seconds. About two minutes.",
-      "start": "Start reviewing"
+      "body": "About two minutes. You earn a credit for it.",
+      "start": "Start reviewing",
+      "step1": "Pick the one you would click",
+      "step2": "Say what you expect it to be about",
+      "step3": "Watch the opening, stop when you would stop"
     },
     "empty": {
       "title": "Nothing to review right now",

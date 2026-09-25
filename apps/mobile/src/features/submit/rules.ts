@@ -99,3 +99,11 @@ export function remainingTime(closesAt: string | Date, now: Date = new Date()) {
     minutes: totalMinutes % 60,
   };
 }
+
+/**
+ * Geri sayım yalnızca kapanacak testlerde gösterilir. Örnek testler kapanmaz (0014:
+ * closes_at yüz yıl ileride) ve listede "876567 saat kaldı" yazıyordu — sayı doğru,
+ * gösterilmesi yanlıştı.
+ */
+export const showsCountdown = (isDemo: boolean, status: string): boolean =>
+  !isDemo && status === 'open';

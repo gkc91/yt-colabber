@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Rule } from '@/components/Card';
+import { Card, Rule } from '@/components/Card';
 import { Body, Meta, Small, Title } from '@/components/Type';
 import { layout, space } from '@/design/tokens';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -57,9 +57,18 @@ export default function ReviewScreen() {
         {!task.isPending && assignment ? (
           <>
             <Title style={styles.centered}>{t('review.ready.title')}</Title>
-            <Body tone="muted" style={styles.centered}>
-              {t('review.ready.body')}
-            </Body>
+            {/* Üç adım tek tek yazılı: insan neye gireceğini bilerek başlasın. */}
+            <Card gap={space.sm} style={styles.steps}>
+              {[t('review.ready.step1'), t('review.ready.step2'), t('review.ready.step3')].map(
+                (step, index) => (
+                  <View key={step} style={styles.step}>
+                    <Meta style={styles.stepNumber}>{index + 1}</Meta>
+                    <Small style={styles.stepText}>{step}</Small>
+                  </View>
+                ),
+              )}
+            </Card>
+            <Meta style={styles.centered}>{t('review.ready.body')}</Meta>
             <Button
               title={t('review.ready.start')}
               onPress={() => {
@@ -144,5 +153,20 @@ const styles = StyleSheet.create({
   },
   centered: {
     textAlign: 'center',
+  },
+  steps: {
+    width: '100%',
+  },
+  step: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: space.md,
+  },
+  stepNumber: {
+    fontVariant: ['tabular-nums'],
+    minWidth: 14,
+  },
+  stepText: {
+    flex: 1,
   },
 });
