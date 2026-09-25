@@ -1,0 +1,129 @@
+---
+// Hesap silme sayfası. Google Play "Data deletion" politikası, uygulama içi silmenin
+// yanında HERKESE AÇIK bir adres ister: hesabı olan biri uygulamayı kurmadan da silme
+// talebi edebilmeli. Play Console'da bu adres istenir.
+import Base from '../../layouts/Base.astro';
+import { CONTACT_EMAIL, WEB_APP_URL, type Locale } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Delete your Clickable account | Clickable',
+    description:
+      'How to delete your Clickable account and what happens to your tests, clips, reviews and credits.',
+    h1: 'Delete your account',
+    lead:
+      'You can delete your account from inside the app at any time. It takes two taps and it is immediate — we do not ask you why and there is nothing to cancel.',
+    steps: {
+      h: 'In the app',
+      items: [
+        'Open Clickable and go to the Profile tab.',
+        'Scroll to Account and tap “Delete my account”.',
+        'Confirm. The account and its data are removed right away.',
+      ],
+    },
+    web: {
+      h: 'No phone at hand?',
+      body: 'The browser version signs in with the same account and has the same Profile tab.',
+      link: 'Open Clickable in your browser',
+    },
+    deleted: {
+      h: 'What is deleted',
+      items: [
+        'Your account and sign-in email.',
+        'Your profile: handle, niche, language, channel link, credit balance and reputation.',
+        'Your tests, including every thumbnail and clip you uploaded.',
+        'Your credit history and the review tasks assigned to you.',
+        'Your push notification token, if you had notifications on.',
+      ],
+    },
+    kept: {
+      h: 'What stays',
+      items: [
+        'Reviews you wrote on other people’s tests stay, with your identity removed. They are part of someone else’s results; deleting them would silently change numbers other creators already acted on.',
+        'Purchase records held by Apple, Google and RevenueCat. We cannot delete those; ask the store.',
+      ],
+    },
+    contact: {
+      h: 'Cannot get into the app?',
+      body: 'Write from the address you signed up with and we will delete the account for you within 30 days:',
+    },
+  },
+  tr: {
+    title: 'Clickable hesabını sil | Clickable',
+    description:
+      'Clickable hesabını nasıl silersin; testlerine, kliplerine, değerlendirmelerine ve kredilerine ne olur.',
+    h1: 'Hesabını sil',
+    lead:
+      'Hesabını uygulama içinden istediğin an silebilirsin. İki dokunuş sürer ve hemen gerçekleşir — sebebini sormuyoruz, iptal edilecek bir şey yok.',
+    steps: {
+      h: 'Uygulamada',
+      items: [
+        'Clickable’ı aç ve Profil sekmesine git.',
+        'Hesap bölümüne in, “Hesabımı sil”e dokun.',
+        'Onayla. Hesap ve verileri anında kaldırılır.',
+      ],
+    },
+    web: {
+      h: 'Telefon yanında değil mi?',
+      body: 'Tarayıcı sürümü aynı hesapla açılır ve aynı Profil sekmesine sahiptir.',
+      link: 'Clickable’ı tarayıcıda aç',
+    },
+    deleted: {
+      h: 'Silinenler',
+      items: [
+        'Hesabın ve giriş e-postan.',
+        'Profilin: kullanıcı adı, niş, dil, kanal bağlantısı, kredi bakiyesi ve itibar.',
+        'Testlerin — yüklediğin bütün thumbnail’lar ve klipler dahil.',
+        'Kredi geçmişin ve sana atanmış değerlendirme görevlerin.',
+        'Bildirim iznini açtıysan bildirim anahtarın.',
+      ],
+    },
+    kept: {
+      h: 'Kalanlar',
+      items: [
+        'Başkalarının testlerine yazdığın değerlendirmeler kalır, kimliğin düşer. Onlar başka birinin sonuçlarının parçası; silmek, o kişinin çoktan karar verdiği sayıları sessizce değiştirirdi.',
+        'Apple, Google ve RevenueCat’in tuttuğu satın alma kayıtları. Onları biz silemeyiz; mağazaya başvurman gerekir.',
+      ],
+    },
+    contact: {
+      h: 'Uygulamaya giremiyor musun?',
+      body: 'Kayıt olduğun adresten yaz, hesabı 30 gün içinde biz silelim:',
+    },
+  },
+}[locale];
+---
+
+<Base
+  path="/delete-account"
+  locale={locale}
+  title={copy.title}
+  description={copy.description}
+>
+  <section>
+    <div class="wrap prose">
+      <h1>{copy.h1}</h1>
+      <p>{copy.lead}</p>
+
+      <h2>{copy.steps.h}</h2>
+      <ol>{copy.steps.items.map((item) => <li>{item}</li>)}</ol>
+
+      <h2>{copy.web.h}</h2>
+      <p>{copy.web.body} <a href={WEB_APP_URL}>{copy.web.link}</a></p>
+
+      <h2>{copy.deleted.h}</h2>
+      <ul>{copy.deleted.items.map((item) => <li>{item}</li>)}</ul>
+
+      <h2>{copy.kept.h}</h2>
+      <ul>{copy.kept.items.map((item) => <li>{item}</li>)}</ul>
+
+      <h2>{copy.contact.h}</h2>
+      <p>{copy.contact.body} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+    </div>
+  </section>
+</Base>

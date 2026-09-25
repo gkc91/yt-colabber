@@ -1,0 +1,58 @@
+---
+// 404. Cloudflare Pages, 404.html YOKSA bilinmeyen adresleri ana sayfaya 200 ile düşürüyor
+// (2026-09-25 bulgusu: /faq gibi var olmayan her adres ana sayfayı döndürüyordu). Bu hem
+// arama motoru için "yumuşak 404" hem de kullanıcı için kafa karıştırıcı.
+import Base from '../../layouts/Base.astro';
+import { localePath, type Locale } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy = {
+  en: {
+    title: 'Page not found | Clickable',
+    description: 'That page does not exist.',
+    h1: 'That page does not exist',
+    body: 'The link is probably old or mistyped. These are the pages worth your time:',
+    links: [
+      ['/', 'What Clickable does'],
+      ['/thumbnail-test', 'Thumbnail test'],
+      ['/hook-test', 'Hook test'],
+      ['/for/gaming', 'Pages for your niche'],
+    ],
+  },
+  tr: {
+    title: 'Sayfa bulunamadı | Clickable',
+    description: 'Böyle bir sayfa yok.',
+    h1: 'Böyle bir sayfa yok',
+    body: 'Bağlantı büyük ihtimalle eski ya da yanlış yazılmış. Vaktine değecek sayfalar:',
+    links: [
+      ['/', 'Clickable ne yapıyor'],
+      ['/thumbnail-test', 'Thumbnail testi'],
+      ['/hook-test', 'Hook testi'],
+      ['/for/gaming', 'Nişine özel sayfalar'],
+    ],
+  },
+}[locale];
+---
+
+<Base path="/" locale={locale} title={copy.title} description={copy.description} noindex>
+  <section>
+    <div class="wrap prose">
+      <h1>{copy.h1}</h1>
+      <p>{copy.body}</p>
+      <ul>
+        {
+          copy.links.map(([href, label]) => (
+            <li>
+              <a href={localePath(href, locale)}>{label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

@@ -10,9 +10,11 @@ interface Props {
   description: string;
   /** Extra schema.org objects for this page (FAQPage, BreadcrumbList...). */
   schema?: Record<string, unknown>[];
+  /** 404 gibi dizine girmemesi gereken sayfalar: canonical ve hreflang da yazılmaz. */
+  noindex?: boolean;
 }
 
-const { path, locale, title, description, schema = [] } = Astro.props;
+const { path, locale, title, description, schema = [], noindex = false } = Astro.props;
 const t = ui(locale);
 const url = canonical(path, locale);
 
@@ -44,9 +46,11 @@ const softwareApplication = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={url} />
-    {LOCALES.map((other) => <link rel="alternate" hreflang={other} href={canonical(path, other)} />)}
-    <link rel="alternate" hreflang="x-default" href={canonical(path, 'en')} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : null}
+    {!noindex && <link rel="canonical" href={url} />}
+    {!noindex &&
+      LOCALES.map((other) => <link rel="alternate" hreflang={other} href={canonical(path, other)} />)}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={canonical(path, 'en')} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Clickable" />
     <meta property="og:locale" content={locale === 'tr' ? 'tr_TR' : 'en_US'} />

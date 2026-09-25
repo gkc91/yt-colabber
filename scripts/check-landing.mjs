@@ -26,9 +26,15 @@ const NICHES = [
   'travel',
   'kids',
 ];
-const ROUTES = ['/', '/thumbnail-test', '/hook-test', '/privacy', '/terms'].concat(
-  NICHES.map((slug) => `/for/${slug}`),
-);
+const ROUTES = [
+  '/',
+  '/thumbnail-test',
+  '/hook-test',
+  '/privacy',
+  '/terms',
+  // Play "Data deletion" politikası bu adresi ister; kaybolursa mağaza incelemesi düşer.
+  '/delete-account',
+].concat(NICHES.map((slug) => `/for/${slug}`));
 
 const results = [];
 const check = (name, ok, detail = '') => {
@@ -181,6 +187,21 @@ check(
 );
 check('og.png var', existsSync(join(DIST, 'og.png')));
 check('favicon var', existsSync(join(DIST, 'favicon.svg')));
+
+// ---------- 404 ----------
+// Cloudflare Pages, 404.html yoksa bilinmeyen adresleri ana sayfaya 200 ile düşürüyor:
+// arama motoru için yumuşak 404, kullanıcı için yanlış sayfa (2026-09-25 bulgusu).
+for (const locale of LOCALES) {
+  const file = locale === 'en' ? '404.html' : `${locale}/404.html`;
+  const path = join(DIST, file);
+  const exists = existsSync(path);
+  check(`404 sayfası üretildi: ${file}`, exists);
+  if (exists) {
+    const html = readFileSync(path, 'utf8');
+    check(`404 dizine girmiyor: ${file}`, /name="robots"[^>]*noindex/.test(html));
+    check(`404 canonical yazmıyor: ${file}`, !/rel="canonical"/.test(html));
+  }
+}
 
 const failed = results.filter((ok) => !ok).length;
 console.log(`\n${results.length - failed}/${results.length} passed`);

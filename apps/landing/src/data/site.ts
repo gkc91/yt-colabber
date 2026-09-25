@@ -62,5 +62,6 @@ export const ROUTES: string[] = [
   '/hook-test',
   '/privacy',
   '/terms',
+  '/delete-account',
   ...NICHES.map((niche) => `/for/${niche.slug}`),
 ];
