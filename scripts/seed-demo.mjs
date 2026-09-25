@@ -184,9 +184,17 @@ const { data: current } = await admin
   .eq('is_demo', true);
 const already = new Set((current ?? []).map((row) => row.title_options[0]));
 
+// --replace-media: var olan örnek testlerin dosyalarını yeniden yükler. Yollar
+// deterministik olduğu için submission satırına dokunmaya gerek yok; aynı yoldaki nesnenin
+// içeriği değişir. Klibi küçültünce ya da thumbnail'ı yenileyince kullanılır.
+// Not: imzalı adresler CDN'de bir saate kadar eski dosyayı sunabilir.
+const replaceMedia = process.argv.includes('--replace-media');
+
 let added = 0;
+let replaced = 0;
 for (const entry of manifest.submissions) {
-  if (already.has(entry.titles[0])) {
+  const exists = already.has(entry.titles[0]);
+  if (exists && !replaceMedia) {
     console.log(`atlandı (zaten var): ${entry.titles[0]}`);
     continue;
   }
@@ -199,6 +207,12 @@ for (const entry of manifest.submissions) {
     thumbnailPaths.push(await upload(owner, 'thumbs', thumbnail));
   }
   const clipPath = await upload(owner, 'clips', entry.clip);
+
+  if (exists) {
+    console.log(`medya yenilendi: ${entry.titles[0]}`);
+    replaced += 1;
+    continue;
+  }
 
   const { data, error } = await admin.rpc('create_demo_submission', {
     p_owner: owner,
@@ -217,4 +231,8 @@ for (const entry of manifest.submissions) {
   added += 1;
 }
 
-console.log(`\n${added} örnek test eklendi.`);
+const summary = replaced
+  ? `${replaced} örnek testin medyası yenilendi`
+  : `${added} örnek test eklendi`;
+console.log(`
+${summary}.`);

@@ -1,7 +1,7 @@
 import { useEventListener } from 'expo';
-import { useVideoPlayer, VideoView } from 'expo-video';
+import { useVideoPlayer, VideoView, type VideoPlayerStatus } from 'expo-video';
 import { useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
@@ -28,6 +28,14 @@ type Props = {
   onFinish: (leftAt: number | null) => void;
 };
 
+/** Oynat düğmesinin yazısı durumu söyler: yükleniyor, hata, ya da hazır. */
+const overlayKey = (status: VideoPlayerStatus) =>
+  status === 'error'
+    ? 'review.hook.playAgain'
+    : status === 'loading'
+      ? 'review.hook.loading'
+      : 'review.hook.play';
+
 /** Adım 3 — hook testi: klip oynar, "buradan çıktım" ya da sonuna kadar (PRODUCT §5). */
 export function HookStep({
   submissionId,
@@ -46,7 +54,9 @@ export function HookStep({
   // bulgu: değerlendirme 0 sn izlemeyle kaydedildi). Oynamadıysa büyük bir "oynat" düğmesi
   // gösteririz; dokunuş kullanıcı hareketi sayıldığı için ses açık başlar.
   const [started, setStarted] = useState(false);
-  const [failed, setFailed] = useState(false);
+  // Oynatıcının durumu ekranda görünmeli: yüklenirken sessiz duran bir kare kullanıcıya
+  // "video yok, buraya resim koymuşlar" dedirtiyor (2026-09-25 bulgusu).
+  const [status, setStatus] = useState<VideoPlayerStatus>('idle');
 
   const player = useVideoPlayer(clipUrl, (instance) => {
     instance.timeUpdateEventInterval = 1;
@@ -56,12 +66,9 @@ export function HookStep({
   useEventListener(player, 'playingChange', ({ isPlaying }) => {
     if (isPlaying) setStarted(true);
   });
-  useEventListener(player, 'statusChange', ({ status }) => setFailed(status === 'error'));
+  useEventListener(player, 'statusChange', ({ status: next }) => setStatus(next));
 
-  const play = () => {
-    setFailed(false);
-    player.play();
-  };
+  const play = () => player.play();
 
   useEventListener(player, 'playToEnd', () => {
     setReachedEnd(true);
@@ -91,14 +98,21 @@ export function HookStep({
       {!started && !decided ? (
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={t('review.hook.play')}
+          accessibilityLabel={t(overlayKey(status))}
           onPress={play}
+          disabled={status === 'loading'}
           style={styles.overlay}
         >
           <View style={[styles.playButton, { backgroundColor: colors.background }]}>
-            <Heading>{t('review.hook.play')}</Heading>
+            {status === 'loading' ? (
+              <ActivityIndicator />
+            ) : (
+              <Heading>{t(overlayKey(status))}</Heading>
+            )}
           </View>
-          {failed ? <Small style={styles.overlayNote}>{t('review.hook.loadFailed')}</Small> : null}
+          {status === 'error' ? (
+            <Small style={styles.overlayNote}>{t('review.hook.loadFailed')}</Small>
+          ) : null}
         </Pressable>
       ) : null}
 

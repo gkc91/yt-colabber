@@ -189,7 +189,9 @@
       "submit": "Send review",
       "play": "Tap to play",
       "loadFailed": "The clip didn't load. Check your connection and tap to try again.",
-      "tagsTitleStayed": "What kept you watching? (pick any)"
+      "tagsTitleStayed": "What kept you watching? (pick any)",
+      "loading": "Loading…",
+      "playAgain": "Tap to try again"
     },
     "tags": {
       "slow_intro": "Slow intro",
