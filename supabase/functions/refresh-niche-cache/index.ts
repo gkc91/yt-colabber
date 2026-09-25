@@ -94,6 +94,15 @@ async function fetchStats(ids: string[]): Promise<Candidate[]> {
 }
 
 Deno.serve(async (req) => {
+  // Yalnızca service_role. Kullanıcı JWT'si `verify_jwt`ten geçer ama tam tur 4.500 kota
+  // birimi harcıyor (günlük hak 10.000): oturumu olan herkes tetikleyebilseydi birkaç
+  // istekle niş önbelleği güne kadar yenilenemez hale gelirdi.
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!serviceKey) return json({ error: "service_key_missing" }, 500);
+  if (req.headers.get("Authorization") !== `Bearer ${serviceKey}`) {
+    return new Response("forbidden", { status: 403 });
+  }
+
   if (!KEY) return json({ error: "missing_youtube_api_key" }, 500);
 
   // Tek niş yenilemek için: {"niche":"animation"}. Arama başına 100 kota birimi gider,

@@ -21,11 +21,15 @@ export function useNiches() {
   return useQuery({ queryKey: ['niches'], queryFn: fetchNiches, staleTime: Infinity });
 }
 
-export async function saveNicheAndLanguage(userId: string, nicheId: number, language: string) {
-  const { error } = await supabase
-    .from('profiles')
-    .update({ niche_id: nicheId, language })
-    .eq('id', userId);
+/**
+ * İlk niş RPC'den yazılır. Doğrudan UPDATE artık RLS'e takılıyor (0021): niş sütunu
+ * serbest olsaydı "ayda bir niş değiştirme" kuralı tek istekle aşılırdı.
+ */
+export async function saveNicheAndLanguage(_userId: string, nicheId: number, language: string) {
+  const { error } = await supabase.rpc('set_initial_niche', {
+    p_niche_id: nicheId,
+    p_language: language,
+  });
   if (error) throw error;
 }
 

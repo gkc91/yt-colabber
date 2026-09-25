@@ -42,7 +42,15 @@ function message(row: Row, token: string) {
   };
 }
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
+  // Yalnızca service_role. Kullanıcı JWT'si `verify_jwt`ten geçer ama bu uç kullanıcıya
+  // ait bir iş yapmıyor; oturumu olan herkesin tetikleyebilmesi için bir sebep yok.
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!serviceKey) return json({ error: "service_key_missing" }, 500);
+  if (req.headers.get("Authorization") !== `Bearer ${serviceKey}`) {
+    return new Response("forbidden", { status: 403 });
+  }
+
   const sb = admin();
 
   const { data, error } = await sb

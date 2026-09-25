@@ -987,6 +987,10 @@ export type Database = {
         Args: { p_body: string; p_match: string }
         Returns: number
       }
+      set_initial_niche: {
+        Args: { p_language?: string; p_niche_id: number }
+        Returns: undefined
+      }
       submission_results: {
         Args: { p_id: string; p_uid?: string }
         Returns: Json
