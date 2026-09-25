@@ -95,12 +95,14 @@ export function HookStep({
         playsInline
         accessibilityLabel={t('review.hook.video')}
       />
-      {!started && !decided ? (
+      {/* Oynatma başladıktan sonra da ara belleğe alma olabilir: o anda ekranda donmuş bir
+          kare kalıyor ve "fotoğraf koymuşlar" gibi görünüyor (2026-09-25, telefonda). */}
+      {(!started || status === 'loading') && !decided ? (
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t(overlayKey(status))}
           onPress={play}
-          disabled={status === 'loading'}
+          disabled={started || status === 'loading'}
           style={styles.overlay}
         >
           <View style={[styles.playButton, { backgroundColor: colors.background }]}>
