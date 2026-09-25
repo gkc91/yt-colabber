@@ -5,7 +5,7 @@ import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
-import { Body, Heading, Meta, Small } from '@/components/Type';
+import { Body, Heading, Label, Small } from '@/components/Type';
 import { TextField } from '@/components/TextField';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
@@ -137,9 +137,9 @@ export function HookStep({
       {decided ? (
         <>
           {/* Bıraktıysa neyin kaçırdığını, sonuna kadar izlediyse neyin tuttuğunu sorarız. */}
-          <Meta style={styles.label}>
+          <Label>
             {t(leftAt === null ? 'review.hook.tagsTitleStayed' : 'review.hook.tagsTitle')}
-          </Meta>
+          </Label>
           <View style={styles.tags}>
             {tagsFor(leftAt).map((tag) => (
               <Chip
@@ -209,9 +209,6 @@ const styles = StyleSheet.create({
   },
   decision: {
     fontWeight: '600',
-  },
-  label: {
-    textTransform: 'uppercase',
   },
   tags: {
     flexDirection: 'row',

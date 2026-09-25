@@ -7,6 +7,7 @@ import { StyleSheet, Text as RNText, View, type TextProps, type ViewStyle } from
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { fonts, space, type } from '@/design/tokens';
+import { caps } from '@/i18n';
 
 type Tone = 'ink' | 'muted' | 'accent' | 'positive' | 'onTint';
 
@@ -53,6 +54,15 @@ export const Body = make('body');
 export const Small = make('small');
 export const Meta = make('meta', undefined, 'muted');
 
+/**
+ * Büyük harfli küçük etiket (CREDITS, PRACTICE TEST…). Büyütmeyi CSS değil bu bileşen
+ * yapar; `textTransform` Android'de cihazın diline göre çalışıyor ve Türkçe bir
+ * telefonda İngilizce metni bozuyordu.
+ */
+export function Label({ children, ...rest }: Props) {
+  return <Meta {...rest}>{typeof children === 'string' ? caps(children) : children}</Meta>;
+}
+
 /** Sonuç ekranlarının kahramanı: büyük sayı + sessiz etiket. */
 export function Stat({
   value,
@@ -70,7 +80,7 @@ export function Stat({
       <Display tone={tone} style={styles.statValue}>
         {value}
       </Display>
-      <Meta style={styles.statLabel}>{label}</Meta>
+      <Label>{label}</Label>
     </View>
   );
 }
@@ -82,8 +92,5 @@ const styles = StyleSheet.create({
   statValue: {
     // Rakamlar hizalı dursun: "73%" ile "8%" alt alta kaymasın.
     fontVariant: ['tabular-nums'],
-  },
-  statLabel: {
-    textTransform: 'uppercase',
   },
 });

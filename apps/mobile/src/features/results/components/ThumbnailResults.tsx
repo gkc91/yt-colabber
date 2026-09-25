@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Card } from '@/components/Card';
 import { Section } from '@/components/Section';
-import { Meta, Small, Stat } from '@/components/Type';
+import { Label, Meta, Small, Stat } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { radius, space } from '@/design/tokens';
@@ -62,9 +62,7 @@ function WinnerBadge() {
   const colors = Colors[useColorScheme()];
   return (
     <View style={[styles.badge, { borderColor: colors.positive }]}>
-      <Meta tone="positive" style={styles.badgeLabel}>
-        {t('results.thumbnails.winner')}
-      </Meta>
+      <Label tone="positive">{t('results.thumbnails.winner')}</Label>
     </View>
   );
 }
@@ -89,8 +87,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     paddingHorizontal: space.md,
     paddingVertical: 2,
-  },
-  badgeLabel: {
-    textTransform: 'uppercase',
   },
 });

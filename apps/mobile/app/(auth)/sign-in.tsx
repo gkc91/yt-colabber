@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { Button } from '@/components/Button';
 import { Rule } from '@/components/Card';
 import { Screen } from '@/components/Screen';
-import { Body, Display, Meta, Small } from '@/components/Type';
+import { Body, Display, Label, Small } from '@/components/Type';
 import { TextField } from '@/components/TextField';
 import { space } from '@/design/tokens';
 import { sendMagicLink, signInWithGoogle } from '@/features/auth/api';
@@ -73,7 +73,7 @@ export default function SignIn() {
           </View>
         )}
 
-        <Meta style={styles.or}>{t('auth.or')}</Meta>
+        <Label>{t('auth.or')}</Label>
         <Button
           title={t('auth.google')}
           variant="secondary"
@@ -99,8 +99,5 @@ const styles = StyleSheet.create({
   },
   section: {
     gap: space.md,
-  },
-  or: {
-    textTransform: 'uppercase',
   },
 });

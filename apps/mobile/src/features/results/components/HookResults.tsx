@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Rule } from '@/components/Card';
 import { Section } from '@/components/Section';
-import { Body, Meta, Small, Stat } from '@/components/Type';
+import { Body, Label, Meta, Small, Stat } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { space } from '@/design/tokens';
@@ -74,7 +74,7 @@ export function HookResults({ hook, clipSeconds }: Props) {
 function TagList({ title, rows }: { title: string; rows: { tag: string; count: number }[] }) {
   return (
     <View style={styles.tags}>
-      <Meta style={styles.tagsLabel}>{title}</Meta>
+      <Label>{title}</Label>
       {rows.length === 0 ? <Small tone="muted">{t('results.noData')}</Small> : null}
       {rows.map(({ tag, count }) => (
         <View key={tag} style={styles.tagRow}>
@@ -115,9 +115,6 @@ const styles = StyleSheet.create({
   },
   tags: {
     gap: space.sm,
-  },
-  tagsLabel: {
-    textTransform: 'uppercase',
   },
   tagRow: {
     flexDirection: 'row',

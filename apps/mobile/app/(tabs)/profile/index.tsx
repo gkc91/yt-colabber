@@ -6,7 +6,7 @@ import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
 import { Section } from '@/components/Section';
-import { Meta, Small, Stat } from '@/components/Type';
+import { Label, Meta, Small, Stat } from '@/components/Type';
 import { space } from '@/design/tokens';
 import { signOut } from '@/features/auth/api';
 import { useSession } from '@/features/auth/session';
@@ -184,9 +184,9 @@ export default function ProfileScreen() {
       <Section title={t('profile.scope.title')}>
         <Small tone="muted">{t('profile.scope.body')}</Small>
 
-        <Meta style={styles.label}>
+        <Label style={styles.label}>
           {t('profile.scope.niches', { used: alsoNicheIds.length, max: MAX_EXTRA_NICHES })}
-        </Meta>
+        </Label>
         <View style={styles.chips}>
           {niches.data
             ?.filter((niche) => niche.id !== profile.data?.niche_id)
@@ -206,9 +206,9 @@ export default function ProfileScreen() {
             ))}
         </View>
 
-        <Meta style={styles.label}>
+        <Label style={styles.label}>
           {t('profile.scope.languages', { used: alsoLanguages.length, max: MAX_EXTRA_LANGUAGES })}
-        </Meta>
+        </Label>
         <View style={styles.chips}>
           {LANGUAGES.filter((language) => language.code !== profile.data?.language).map(
             (language) => (
@@ -263,7 +263,6 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   label: {
-    textTransform: 'uppercase',
     marginTop: space.xs,
   },
   chips: {

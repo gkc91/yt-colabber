@@ -1,5 +1,15 @@
 import en from './en.json';
 
+/**
+ * Arayüz metinlerinin dili. Büyük harfe çevirme bu dile göre yapılır, cihazınkine
+ * göre değil: Android'de `textTransform: 'uppercase'` cihazın yerel ayarını kullanır
+ * ve Türkçe bir telefonda İngilizce "practice" kelimesi "PRACTİCE" olur (i → İ).
+ */
+export const UI_LOCALE = 'en';
+
+/** Etiketleri büyütmenin tek doğru yolu; stil dosyasında textTransform kullanma. */
+export const caps = (text: string): string => text.toLocaleUpperCase(UI_LOCALE);
+
 type Messages = typeof en;
 
 type Leaves<T, P extends string = ''> = {

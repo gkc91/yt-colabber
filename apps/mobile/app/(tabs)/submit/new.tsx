@@ -6,7 +6,7 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
-import { Meta, Small } from '@/components/Type';
+import { Label, Small } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { space } from '@/design/tokens';
@@ -52,7 +52,7 @@ export default function NewSubmission() {
 function Requirements() {
   return (
     <Card gap={space.sm}>
-      <Meta style={styles.requirementsTitle}>{t('submit.requirements.title')}</Meta>
+      <Label>{t('submit.requirements.title')}</Label>
       <Small tone="muted">{t('submit.requirements.thumbnails')}</Small>
       <Small tone="muted">{t('submit.requirements.titles')}</Small>
       <Small tone="muted">
@@ -185,9 +185,7 @@ function Wizard() {
   return (
     <Screen gap={space.xl}>
       <View style={styles.header}>
-        <Meta style={styles.step}>
-          {t('submit.wizard.step', { current: step + 1, total: STEPS })}
-        </Meta>
+        <Label>{t('submit.wizard.step', { current: step + 1, total: STEPS })}</Label>
         <StepBar step={step} total={STEPS} />
       </View>
 
@@ -251,9 +249,6 @@ const styles = StyleSheet.create({
   header: {
     gap: space.sm,
   },
-  step: {
-    textTransform: 'uppercase',
-  },
   stepBar: {
     flexDirection: 'row',
     gap: space.xs,
@@ -268,8 +263,5 @@ const styles = StyleSheet.create({
   },
   navItem: {
     flex: 1,
-  },
-  requirementsTitle: {
-    textTransform: 'uppercase',
   },
 });

@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
-import { Body, Meta, Small } from '@/components/Type';
+import { Body, Label, Small } from '@/components/Type';
 import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { fetchNextTask, submitReview } from '@/features/review/api';
@@ -156,7 +156,7 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
     <Screen gap={space.lg}>
       {isDemo ? (
         <Card gap={space.sm}>
-          <Meta style={styles.demoTitle}>{t('review.demo.title')}</Meta>
+          <Label>{t('review.demo.title')}</Label>
           <Small tone="muted">{t('review.demo.body')}</Small>
         </Card>
       ) : null}
@@ -199,9 +199,3 @@ function submitErrorText(error: unknown): string {
   }
   return t('auth.genericError');
 }
-
-const styles = StyleSheet.create({
-  demoTitle: {
-    textTransform: 'uppercase',
-  },
-});

@@ -49,6 +49,10 @@ Kurallar:
 - Ölçek (dp): 40 / 28 / 20 / 17 / 15 / 13. Aradaki değerler uydurulmaz.
 - Sayılar **büyük ve tabular**: "%73" bir başlıktan daha büyük olabilir — rapor hissi buradan gelir.
 - Metin satır uzunluğu 640 dp'yi geçmez; geniş ekranda içerik ortalanır, yayılmaz.
+- **Büyük harf yalnızca `Label` bileşeniyle yapılır**, `textTransform: 'uppercase'` ile değil.
+  Android'de `textTransform` cihazın diline göre çalışır: Türkçe bir telefonda İngilizce
+  "practice test" etiketi "PRACTİCE TEST" oluyordu (i → İ). `Label`, metni arayüzün dilinde
+  büyütür (`caps()`), cihazınkinde değil.
 
 ## 5. Boşluk ve biçim
 
@@ -102,12 +106,13 @@ Değerler `src/design/tokens.ts` adlarıyla yazılır, ham sayıyla değil.
 | `Button` (primary) | Dolgu `tint`, yazı `onTint`, `radius.button`, yükseklik en az `minTouch + xs`, yatay iç boşluk `lg`, yazı 16 / `fonts.heading`. Basılıyken ve pasifken %60 saydam. Yükleniyorsa yazı yerine gösterge. |
 | `Button` (secondary) | Zemin yok, saç teli çerçeve `line`, yazı `ink`. Ölçüler primary ile aynı. |
 | `Chip` | Seçili: dolgu `ink`, yazı `paper`. Seçili değil: `surface` zemin + saç teli çerçeve. `radius.pill`, iç boşluk `lg × sm`. **Kırmızı değil** — profilde beş seçili niş sayfayı kırmızıya boğuyordu. |
-| `TextField` | Etiket `Meta` büyük harf; alan `surface` zemin, `radius.button`, en az `minTouch + xs` yükseklik, gövde punto. Odakta çerçeve 2px `ink`, hatada 2px `accent` + altında `Small` hata metni. |
+| `Label` | Büyük harfli küçük etiket (CREDITS, PRACTICE TEST). `Meta` puntosu, `muted` ton, büyütmeyi kendisi yapar. Stil dosyasında `textTransform` kullanılmaz. |
+| `TextField` | Etiket `Label`; alan `surface` zemin, `radius.button`, en az `minTouch + xs` yükseklik, gövde punto. Odakta çerçeve 2px `ink`, hatada 2px `accent` + altında `Small` hata metni. |
 | `Card` | `surface` zemin, saç teli `line` çerçeve, `radius.card`, iç boşluk `lg`. Gölge yok. |
 | `Rule` | Saç teli yatay çizgi. Başlık ile içerik arasını ayırır. |
 | `Section` | `Heading` + sağında isteğe bağlı sessiz `Meta` sayaç + `Rule` + içerik. Rapor ritmi bu üçlüden çıkar. |
 | `Screen` | Sayfa çerçevesi: `paper` zemin, `maxWidth 640`, kenar boşluğu `gutter`, üstte `xl` altta `xxxl`. `center` türevi boş/hata ekranları için. |
-| `Stat` | Büyük tabular sayı (`display`) + altında büyük harf `Meta` etiket. Sonuç ekranlarının kahramanı. |
+| `Stat` | Büyük tabular sayı (`display`) + altında `Label`. Sonuç ekranlarının kahramanı. |
 | `Progress` | 3px yüksekliğinde çubuk; dolu kısım `ink`, tamamlandıysa `positive`, zemin `line`. Sayının yanında durur, onun yerine geçmez. |
 | `StudioSidebar` | Geniş ekranda sol menü: marka, kimlik (baş harf + ad + niş), bölümler, altta kredi. Seçili bölüm `tint` renkli ve `fonts.heading`. |
 

@@ -2,7 +2,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
-import { Body, Meta, Small } from '@/components/Type';
+import { Body, Label, Meta, Small } from '@/components/Type';
 import { space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
@@ -32,7 +32,7 @@ export function AiSummary({
   if (summary) {
     return (
       <View style={styles.written}>
-        <Meta style={styles.label}>{t('results.aiSummary.title')}</Meta>
+        <Label>{t('results.aiSummary.title')}</Label>
         <Body>{summary}</Body>
       </View>
     );
@@ -47,7 +47,7 @@ export function AiSummary({
 
   return (
     <Card gap={space.md}>
-      <Meta style={styles.label}>{t('results.aiSummary.title')}</Meta>
+      <Label>{t('results.aiSummary.title')}</Label>
       <Small tone="muted">{explain(status.data)}</Small>
 
       {reason === 'ok' ? (
@@ -102,8 +102,5 @@ function explain(status: AiSummaryStatus): string {
 const styles = StyleSheet.create({
   written: {
     gap: space.sm,
-  },
-  label: {
-    textTransform: 'uppercase',
   },
 });

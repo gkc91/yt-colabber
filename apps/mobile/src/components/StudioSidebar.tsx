@@ -5,7 +5,7 @@ import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Rule } from '@/components/Card';
-import { Body, Heading, Meta, Title } from '@/components/Type';
+import { Body, Heading, Label, Meta, Title } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { fonts, layout, radius, space } from '@/design/tokens';
@@ -96,7 +96,7 @@ export function StudioSidebar({ state, descriptors, navigation }: BottomTabBarPr
       <View style={styles.footer}>
         <Rule />
         <View style={styles.credits}>
-          <Meta style={styles.upper}>{t('credits.balance')}</Meta>
+          <Label>{t('credits.balance')}</Label>
           <Heading style={styles.number}>{String(balance.data ?? '—')}</Heading>
         </View>
       </View>
@@ -157,9 +157,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'baseline',
     paddingHorizontal: space.md,
-  },
-  upper: {
-    textTransform: 'uppercase',
   },
   number: {
     fontVariant: ['tabular-nums'],

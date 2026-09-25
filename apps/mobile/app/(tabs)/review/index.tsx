@@ -4,7 +4,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card, Rule } from '@/components/Card';
-import { Body, Meta, Small, Title } from '@/components/Type';
+import { Body, Label, Meta, Small, Title } from '@/components/Type';
 import { layout, space } from '@/design/tokens';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
@@ -43,7 +43,7 @@ export default function ReviewScreen() {
       {/* Kredi her zaman aynı yerde: üstte, tek satır, altında çizgi. */}
       <View style={styles.balance} accessibilityRole="summary">
         <View style={styles.balanceRow}>
-          <Meta style={styles.balanceLabel}>{t('credits.balance')}</Meta>
+          <Label>{t('credits.balance')}</Label>
           <Title style={styles.balanceValue} testID="credit-balance">
             {balance.data ?? t('credits.loading')}
           </Title>
@@ -134,9 +134,6 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
     justifyContent: 'space-between',
     paddingBottom: space.md,
-  },
-  balanceLabel: {
-    textTransform: 'uppercase',
   },
   balanceValue: {
     fontVariant: ['tabular-nums'],

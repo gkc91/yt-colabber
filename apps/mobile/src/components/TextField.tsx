@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 
-import { Meta, Small } from '@/components/Type';
+import { Label, Small } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { layout, radius, space, type } from '@/design/tokens';
@@ -20,7 +20,7 @@ export function TextField({ label, error, style, onFocus, onBlur, ...inputProps 
 
   return (
     <View style={styles.wrapper}>
-      <Meta style={styles.label}>{label}</Meta>
+      <Label>{label}</Label>
       <TextInput
         accessibilityLabel={label}
         placeholderTextColor={colors.muted}
@@ -52,9 +52,6 @@ export function TextField({ label, error, style, onFocus, onBlur, ...inputProps 
 const styles = StyleSheet.create({
   wrapper: {
     gap: space.sm,
-  },
-  label: {
-    textTransform: 'uppercase',
   },
   input: {
     minHeight: layout.minTouch + space.xs,
