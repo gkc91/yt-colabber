@@ -82,6 +82,10 @@ export function HookStep({
         style={[styles.video, { borderColor: colors.border }]}
         contentFit="contain"
         nativeControls={false}
+        // Telefon tarayıcıları bu bayrak olmadan videoyu sayfa içinde oynatmayı reddeder
+        // (2026-09-25 canlı bulgu: PC'de oynadı, telefonda oynamadı; veri yüklenmişti,
+        // readyState 4, hata yoktu — engelleyen tek şey buydu).
+        playsInline
         accessibilityLabel={t('review.hook.video')}
       />
       {!started && !decided ? (

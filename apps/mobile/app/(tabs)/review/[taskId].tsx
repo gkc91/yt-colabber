@@ -26,8 +26,19 @@ import { t } from '@/i18n';
 
 type Stage = 'feed' | 'guess' | 'hook';
 
+/**
+ * Rota aynı kaldığı için ekran görevden göreve YENİDEN KULLANILIR: state sıfırlanmaz ve
+ * "+1 kredi" ekranı bir sonraki göreve taşınırdı (2026-09-25 canlı bulgu: "Review another"
+ * → "Start reviewing" → yine bitiş ekranı). Akışı taskId ile anahtarlayıp her görevde
+ * baştan kurduruyoruz; tek tek state temizlemek yerine, çünkü unutulan bir alan aynı hatayı
+ * sessizce geri getirir.
+ */
 export default function ReviewTaskScreen() {
   const { taskId } = useLocalSearchParams<{ taskId: string }>();
+  return <ReviewTaskFlow key={taskId} taskId={taskId} />;
+}
+
+function ReviewTaskFlow({ taskId }: { taskId: string }) {
   const { session } = useSession();
   const queryClient = useQueryClient();
 
