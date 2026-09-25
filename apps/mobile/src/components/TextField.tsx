@@ -1,47 +1,67 @@
-import { StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
+// Metin alanı. Etiket + alan + hata, hepsi tek yerde (DESIGN.md §10).
+//
+// Odak durumu var: yazdığın alan mürekkep çerçeveye döner. Bu süs değil — telefonda
+// klavye açıkken hangi alanda olduğunu gösteren tek işaret o.
+import { useState } from 'react';
+import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 
+import { Meta, Small } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { layout, radius, space, type } from '@/design/tokens';
 
 type Props = TextInputProps & { label: string; error?: string | null };
 
-export function TextField({ label, error, style, ...inputProps }: Props) {
+export function TextField({ label, error, style, onFocus, onBlur, ...inputProps }: Props) {
   const colors = Colors[useColorScheme()];
+  const [focused, setFocused] = useState(false);
+
+  const borderColor = error ? colors.danger : focused ? colors.text : colors.border;
 
   return (
     <View style={styles.wrapper}>
-      <Text style={[styles.label, { color: colors.text }]}>{label}</Text>
+      <Meta style={styles.label}>{label}</Meta>
       <TextInput
         accessibilityLabel={label}
         placeholderTextColor={colors.muted}
+        onFocus={(event) => {
+          setFocused(true);
+          onFocus?.(event);
+        }}
+        onBlur={(event) => {
+          setFocused(false);
+          onBlur?.(event);
+        }}
         style={[
           styles.input,
-          { color: colors.text, borderColor: error ? colors.danger : colors.border },
+          {
+            color: colors.text,
+            backgroundColor: colors.surface,
+            borderColor,
+            borderWidth: focused || error ? 2 : StyleSheet.hairlineWidth * 2,
+          },
           style,
         ]}
         {...inputProps}
       />
-      {error ? <Text style={[styles.error, { color: colors.danger }]}>{error}</Text> : null}
+      {error ? <Small tone="accent">{error}</Small> : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
-    gap: 6,
+    gap: space.sm,
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
+    textTransform: 'uppercase',
   },
   input: {
-    minHeight: 48,
-    borderWidth: 1,
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    fontSize: 16,
-  },
-  error: {
-    fontSize: 13,
+    minHeight: layout.minTouch + space.xs,
+    borderRadius: radius.button,
+    paddingHorizontal: space.md,
+    paddingVertical: space.md,
+    fontSize: type.body.size,
+    lineHeight: type.body.lineHeight,
   },
 });

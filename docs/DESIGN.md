@@ -90,3 +90,44 @@ Kâğıt zemin, `ink` kartlar, tek kırmızı — uygulamanın içiyle aynı dil
   imleç) küçükken siyah bir kutuya dönüşüyordu.
 - Monokrom sürümde seçili kart tam opak, diğerleri %35 — hiyerarşi tek renkte de duruyor.
 
+## 10. Bileşen kataloğu
+
+Ekran yazan kişi burada tanımlı olanı kullanır; yeni bir şey uyduracaksa önce buraya yazar.
+Sebep: ilkeler (renk, tip, boşluk) tek başına yetmiyor — düğmenin yüksekliği ya da girdinin
+odak durumu yazılı değilse her yeni ekranda yeniden icat ediliyor ve arayüz dağılıyor.
+Değerler `src/design/tokens.ts` adlarıyla yazılır, ham sayıyla değil.
+
+| Bileşen | Tanım |
+|---|---|
+| `Button` (primary) | Dolgu `tint`, yazı `onTint`, `radius.button`, yükseklik en az `minTouch + xs`, yatay iç boşluk `lg`, yazı 16 / `fonts.heading`. Basılıyken ve pasifken %60 saydam. Yükleniyorsa yazı yerine gösterge. |
+| `Button` (secondary) | Zemin yok, saç teli çerçeve `line`, yazı `ink`. Ölçüler primary ile aynı. |
+| `Chip` | Seçili: dolgu `ink`, yazı `paper`. Seçili değil: `surface` zemin + saç teli çerçeve. `radius.pill`, iç boşluk `lg × sm`. **Kırmızı değil** — profilde beş seçili niş sayfayı kırmızıya boğuyordu. |
+| `TextField` | Etiket `Meta` büyük harf; alan `surface` zemin, `radius.button`, en az `minTouch + xs` yükseklik, gövde punto. Odakta çerçeve 2px `ink`, hatada 2px `accent` + altında `Small` hata metni. |
+| `Card` | `surface` zemin, saç teli `line` çerçeve, `radius.card`, iç boşluk `lg`. Gölge yok. |
+| `Rule` | Saç teli yatay çizgi. Başlık ile içerik arasını ayırır. |
+| `Section` | `Heading` + sağında isteğe bağlı sessiz `Meta` sayaç + `Rule` + içerik. Rapor ritmi bu üçlüden çıkar. |
+| `Screen` | Sayfa çerçevesi: `paper` zemin, `maxWidth 640`, kenar boşluğu `gutter`, üstte `xl` altta `xxxl`. `center` türevi boş/hata ekranları için. |
+| `Stat` | Büyük tabular sayı (`display`) + altında büyük harf `Meta` etiket. Sonuç ekranlarının kahramanı. |
+| `Progress` | 3px yüksekliğinde çubuk; dolu kısım `ink`, tamamlandıysa `positive`, zemin `line`. Sayının yanında durur, onun yerine geçmez. |
+| `StudioSidebar` | Geniş ekranda sol menü: marka, kimlik (baş harf + ad + niş), bölümler, altta kredi. Seçili bölüm `tint` renkli ve `fonts.heading`. |
+
+## 11. Ekran genişliği
+
+| Genişlik | Davranış |
+|---|---|
+| < 900 dp | Alt sekme çubuğu (telefon). İçerik tek sütun, `maxWidth 640` ile ortalanır. |
+| ≥ 900 dp | Alt sekmeler yerine 248 dp sol menü (`StudioSidebar`). İçerik yine 640 dp ile sınırlı. |
+
+- Dokunma hedefi her yerde en az 44 dp; `Button` ve `TextField` bunu `minTouch + xs` ile alır.
+- Uzun metin 640 dp'yi geçmez. Geniş ekranda sütun büyümez, boşluk büyür.
+
+## 12. Yazılı olmayanlar
+
+Dürüst liste — buraya yazılmamış olan şey kararlaştırılmamıştır, bir sonraki ekranı yazan
+uydurmak yerine buraya ekler:
+
+- Hareket: süre ve eğri (§8 yalnızca "ne zaman" diyor, "nasıl" demiyor).
+- Boş durum illüstrasyonu: yok, olmayacak da — boş ekran metinle konuşur.
+- Bildirim/uyarı şeridi (toast) biçimi: henüz hiç kullanılmadı.
+- Tablo: gelmedi. Geldiğinde satır yüksekliği ve hizalama burada tanımlanır.
+
