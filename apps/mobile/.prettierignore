@@ -1,2 +1,5 @@
 src/lib/database.types.ts
 production/session-logs/
+
+# Google üretiyor, elle biçimlendirilmez.
+google-services.json
