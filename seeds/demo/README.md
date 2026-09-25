@@ -5,6 +5,32 @@ testler. Sahte kullanıcı değil: hepsi `demo@clickable.app` hesabına ait, uyg
 **"Örnek test"** rozetiyle gösterilir, kredi düşmez, kapanmaz ve sıralamada gerçek
 testlerin arkasında durur (migration 0014).
 
+## Kanallar
+
+Örnek testler ortak `demo@clickable.app` hesabına ya da manifest'teki bir **kanala** ait
+olur. Kanal hesabı gerçek bir kanalı temsil eder: değerlendirme bitince gösterilen
+bağlantı o kanala gider (PRODUCT §5) ve kanal sahibi kendi sonuçlarını okuyabilir.
+
+```json
+{
+  "channels": {
+    "money-rematch": {
+      "email": "moneyrematch@clickabletest.com",
+      "handle": "moneyrematch",
+      "display_name": "Money Rematch",
+      "channel_title": "Money Rematch",
+      "niche": "finance",
+      "language": "en",
+      "youtube_url": "https://www.youtube.com/@MoneyRematch"
+    }
+  },
+  "submissions": [{ "channel": "money-rematch", "titles": ["..."], "thumbnails": ["a.jpg"], "clip": "a.mp4", "clip_duration_seconds": 58 }]
+}
+```
+
+`youtube_url` isteğe bağlıdır; yoksa bitiş ekranında kanal düğmesi hiç görünmez.
+Kanal bilgileri her çalıştırmada güncellenir, testler ise başlığa bakılarak bir kez eklenir.
+
 ## Ne koyulur
 
 Gerçek, izlenebilir bir ilk 60 saniye. İlk kaynak kendi kanallarımız:

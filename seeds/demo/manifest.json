@@ -1,31 +1,70 @@
 {
+  "channels": {
+    "money-rematch": {
+      "email": "moneyrematch@clickabletest.com",
+      "handle": "moneyrematch",
+      "display_name": "Money Rematch",
+      "channel_title": "Money Rematch",
+      "niche": "finance",
+      "language": "en"
+    },
+    "let-me-finish": {
+      "email": "letmefinish@clickabletest.com",
+      "handle": "letmefinish",
+      "display_name": "Let Me Finish",
+      "channel_title": "Let Me Finish",
+      "niche": "education",
+      "language": "en"
+    }
+  },
   "submissions": [
     {
-      "niche": "animation",
-      "language": "en",
-      "titles": ["I Animated a Stickman War (1 vs 100)", "Stickman Army vs One Hero"],
-      "thumbnails": ["demo-stickman-a.jpg", "demo-stickman-b.jpg"],
-      "clip": "demo-stickman.mp4",
-      "clip_duration_seconds": 45
-    },
-    {
-      "niche": "animation",
-      "language": "en",
-      "titles": ["I Drew Every Day for 30 Days — Here Is What Changed"],
-      "thumbnails": ["demo-30days.jpg"],
-      "clip": "demo-30days.mp4",
-      "clip_duration_seconds": 52
-    },
-    {
-      "niche": "animation",
-      "language": "en",
+      "channel": "money-rematch",
       "titles": [
-        "Why Your Animation Looks Bad (and 3 Fixes)",
-        "Stop Making These Animation Mistakes"
+        "The 30-Year Rent vs Buy Simulation: Who Wins?",
+        "Rent vs Buy: Who's Richer After 30 Years?"
       ],
-      "thumbnails": ["demo-badanim.jpg"],
-      "clip": "demo-badanim.mp4",
-      "clip_duration_seconds": 38
+      "thumbnails": ["mr-ep01-a.jpg", "mr-ep01-b.jpg"],
+      "clip": "mr-ep01.mp4",
+      "clip_duration_seconds": 58
+    },
+    {
+      "channel": "money-rematch",
+      "titles": [
+        "Real Estate vs Stocks: Who's Richer After 30 Years?",
+        "Her Rental House Lost Money for 9 Years. She Still Won."
+      ],
+      "thumbnails": ["mr-ep02-a.jpg", "mr-ep02-b.jpg"],
+      "clip": "mr-ep02.mp4",
+      "clip_duration_seconds": 58
+    },
+    {
+      "channel": "money-rematch",
+      "titles": [
+        "Leasing vs Buying a Car: Who's Richer After 10 Years?",
+        "He Leased Cars for 10 Years. Here's What He Owns Now."
+      ],
+      "thumbnails": ["mr-ep03-a.jpg", "mr-ep03-b.jpg"],
+      "clip": "mr-ep03.mp4",
+      "clip_duration_seconds": 58
+    },
+    {
+      "channel": "let-me-finish",
+      "titles": ["Did Women Win the Vote, or Did Men Give It to Them?"],
+      "thumbnails": ["lmf-ep13-a.jpg", "lmf-ep13-b.jpg"],
+      "clip": "lmf-ep13.mp4",
+      "clip_duration_seconds": 58
+    },
+    {
+      "channel": "let-me-finish",
+      "titles": [
+        "Is Time Travel Possible? You're Doing It Right Now",
+        "Is Time Travel Possible? What Physics Actually Allows",
+        "Time Travel Is Real. You Just Can't Come Back"
+      ],
+      "thumbnails": ["lmf-ep15-a.jpg"],
+      "clip": "lmf-ep15.mp4",
+      "clip_duration_seconds": 58
     }
   ]
 }

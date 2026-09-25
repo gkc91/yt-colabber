@@ -96,27 +96,53 @@ if (process.argv.includes('--list')) {
   process.exit(0);
 }
 
-// ---------- demo sahibi hesap ----------
-async function demoOwner() {
-  const { data: list, error: listError } = await admin.auth.admin.listUsers({
-    page: 1,
-    perPage: 1000,
-  });
-  if (listError) throw listError;
-  const existing = list.users.find((user) => user.email === DEMO_EMAIL);
-  if (existing) return existing.id;
-
-  const { data, error } = await admin.auth.admin.createUser({
-    email: DEMO_EMAIL,
-    email_confirm: true,
-  });
+// ---------- kanal hesapları ----------
+// Örnek testler ya ortak demo hesabına ya da manifest'teki bir KANALA ait olur. Kanal
+// hesabı gerçek bir kanalı temsil eder: değerlendirme bittikten sonra gösterilen bağlantı
+// (PRODUCT §5) o kanala gider ve sahibi kendi sonuçlarını okuyabilir.
+async function findUser(email) {
+  const { data, error } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
   if (error) throw error;
-  await admin
-    .from('profiles')
-    .update({ handle: 'clickable', onboarding_done: true })
-    .eq('id', data.user.id);
-  console.log(`demo hesabı oluşturuldu: ${DEMO_EMAIL}`);
-  return data.user.id;
+  return data.users.find((user) => user.email === email) ?? null;
+}
+
+async function ensureOwner({
+  email,
+  handle,
+  display_name,
+  niche,
+  language,
+  youtube_url,
+  channel_title,
+}) {
+  let user = await findUser(email);
+  if (!user) {
+    const { data, error } = await admin.auth.admin.createUser({ email, email_confirm: true });
+    if (error) throw error;
+    user = data.user;
+    console.log(`hesap oluşturuldu: ${email}`);
+  }
+
+  const patch = { onboarding_done: true };
+  if (handle) patch.handle = handle;
+  if (display_name) patch.display_name = display_name;
+  if (language) patch.language = language;
+  if (niche) {
+    const { data: row, error } = await admin.from('niches').select('id').eq('slug', niche).single();
+    if (error) throw new Error(`niş bulunamadı: ${niche}`);
+    patch.niche_id = row.id;
+  }
+  const { error: profileError } = await admin.from('profiles').update(patch).eq('id', user.id);
+  if (profileError) throw profileError;
+
+  // Kanal bağlantısı isteğe bağlı: yoksa bitiş ekranında bağlantı düğmesi hiç çıkmaz.
+  if (youtube_url) {
+    const { error } = await admin
+      .from('channels')
+      .upsert({ profile_id: user.id, youtube_url, channel_title }, { onConflict: 'profile_id' });
+    if (error) throw error;
+  }
+  return user.id;
 }
 
 async function upload(ownerId, folder, file) {
@@ -141,7 +167,16 @@ if (!existsSync(MANIFEST)) {
 }
 
 const manifest = JSON.parse(readFileSync(MANIFEST, 'utf8'));
-const ownerId = await demoOwner();
+
+// Ortak demo hesabı yalnızca kanalı olmayan kayıtlar için açılır.
+const channels = manifest.channels ?? {};
+const ownerIds = {};
+for (const [key, channel] of Object.entries(channels)) {
+  ownerIds[key] = await ensureOwner(channel);
+}
+let sharedOwnerId = null;
+const sharedOwner = async () =>
+  (sharedOwnerId ??= await ensureOwner({ email: DEMO_EMAIL, handle: 'clickable' }));
 
 const { data: current } = await admin
   .from('submissions')
@@ -156,15 +191,18 @@ for (const entry of manifest.submissions) {
     continue;
   }
 
+  const owner = entry.channel ? ownerIds[entry.channel] : await sharedOwner();
+  if (!owner) throw new Error(`manifest'te kanal tanımı yok: ${entry.channel}`);
+
   const thumbnailPaths = [];
   for (const thumbnail of entry.thumbnails) {
-    thumbnailPaths.push(await upload(ownerId, 'thumbs', thumbnail));
+    thumbnailPaths.push(await upload(owner, 'thumbs', thumbnail));
   }
-  const clipPath = await upload(ownerId, 'clips', entry.clip);
+  const clipPath = await upload(owner, 'clips', entry.clip);
 
   const { data, error } = await admin.rpc('create_demo_submission', {
-    p_owner: ownerId,
-    p_niche_slug: entry.niche,
+    p_owner: owner,
+    p_niche_slug: entry.niche ?? channels[entry.channel]?.niche,
     p_title_options: entry.titles,
     p_thumbnail_paths: thumbnailPaths,
     p_clip_path: clipPath,
@@ -172,7 +210,10 @@ for (const entry of manifest.submissions) {
     p_language: entry.language ?? 'en',
   });
   if (error) throw error;
-  console.log(`eklendi: ${entry.titles[0]} (${entry.niche}) → ${data}`);
+  const niche = entry.niche ?? channels[entry.channel]?.niche;
+  console.log(
+    `eklendi: ${entry.titles[0]} (${niche}${entry.channel ? `, ${entry.channel}` : ''}) → ${data}`,
+  );
   added += 1;
 }
 
