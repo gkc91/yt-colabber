@@ -20,6 +20,9 @@ const sharp = require(resolve(sharpPath));
 const PAPER = '#FAF9F7';
 const INK = '#16161A';
 const ACCENT = '#D92D20';
+// Koyu tema (tokens.ts palette.dark): açılış ekranı için.
+const DARK_INK = '#F2F4F7';
+const DARK_ACCENT = '#FF5A4D';
 
 /**
  * İşaret: dört thumbnail, biri seçilmiş. Ürünün sorusu bu — "hangisine tıklanır?" —
@@ -33,8 +36,10 @@ const ACCENT = '#D92D20';
  * @param scale işaretin büyüklüğü (Android ön planı güvenli alan için küçültür)
  * @param bg zemin rengi ya da null (şeffaf)
  * @param mono tek renk (monokrom ikon): seçili kart tam opak, diğerleri soluk
+ * @param ink seçilmemiş kartların rengi (koyu temada açık mürekkep)
+ * @param accent seçilen kartın rengi
  */
-function mark({ size = 1024, scale = 1, bg = PAPER, mono = null } = {}) {
+function mark({ size = 1024, scale = 1, bg = PAPER, mono = null, ink = INK, accent = ACCENT } = {}) {
   const W = 372;
   const H = 209; // 16:9
   const GAP = 40;
@@ -42,7 +47,7 @@ function mark({ size = 1024, scale = 1, bg = PAPER, mono = null } = {}) {
   const y0 = (1024 - (2 * H + GAP)) / 2;
   const tile = (x, y, chosen) =>
     `<rect x="${x}" y="${y}" width="${W}" height="${H}" rx="20" fill="${
-      chosen ? (mono ?? ACCENT) : (mono ?? INK)
+      chosen ? (mono ?? accent) : (mono ?? ink)
     }"${mono && !chosen ? ' opacity="0.35"' : ''}/>`;
 
   const grid = [
@@ -79,8 +84,13 @@ const files = [
     `${out}/android-icon-monochrome.png`,
     mark({ size: 1024, scale: 0.7, bg: null, mono: '#000000' }),
   ],
-  // Açılış ekranı işareti (zemin app.json'dan gelir).
+  // Açılış ekranı işareti (zemin app.json'dan gelir). Koyu temada mürekkep zemine
+  // karışacağı için ayrı bir dosya: aynı kompozisyon, koyu paletin renkleriyle.
   [`${out}/splash-icon.png`, mark({ size: 512, scale: 0.55, bg: null })],
+  [
+    `${out}/splash-icon-dark.png`,
+    mark({ size: 512, scale: 0.55, bg: null, ink: DARK_INK, accent: DARK_ACCENT }),
+  ],
   [`${out}/favicon.png`, mark({ size: 96 })],
   // Play mağaza ikonu 512x512.
   ['store/icon-512.png', mark({ size: 512 })],
