@@ -9,6 +9,7 @@ import { space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
 import { HISTOGRAM_BUCKETS, leaveHistogram, percent, sortedTags, type HookStat } from '../rules';
+import { isPositiveTag } from '@/features/review/rules';
 
 type Props = { hook: HookStat; clipSeconds: number };
 
@@ -21,6 +22,10 @@ export function HookResults({ hook, clipSeconds }: Props) {
   // İzleyiciyi en çok kaybettiğin an sayfadaki tek kırmızı: asıl haber o (DESIGN.md §3).
   const worst = buckets.some((count) => count > 0) ? buckets.indexOf(peak) : -1;
   const tags = sortedTags(hook.tags);
+  // İki ayrı soru, iki ayrı liste: "neden bıraktılar" ile "ne tuttu" aynı başlık altında
+  // toplanırsa sahibin okuduğu şey yanlış olur.
+  const stopped = tags.filter((entry) => !isPositiveTag(entry.tag));
+  const stayed = tags.filter((entry) => isPositiveTag(entry.tag));
 
   return (
     <Section title={t('results.hook.title')} gap={space.lg}>
@@ -57,17 +62,27 @@ export function HookResults({ hook, clipSeconds }: Props) {
         </View>
       </View>
 
-      <View style={styles.tags}>
-        <Meta style={styles.tagsLabel}>{t('results.hook.tags')}</Meta>
-        {tags.length === 0 ? <Small tone="muted">{t('results.noData')}</Small> : null}
-        {tags.map(({ tag, count }) => (
-          <View key={tag} style={styles.tagRow}>
-            <Body>{t(`review.tags.${tag}` as MessageKey)}</Body>
-            <Body style={styles.tagCount}>{count}</Body>
-          </View>
-        ))}
-      </View>
+      {stopped.length > 0 || tags.length === 0 ? (
+        <TagList title={t('results.hook.tags')} rows={stopped} />
+      ) : null}
+      {stayed.length > 0 ? <TagList title={t('results.hook.tagsPositive')} rows={stayed} /> : null}
     </Section>
+  );
+}
+
+/** Etiket listesi: ad solda, sayı sağda, hizalı rakamlar. */
+function TagList({ title, rows }: { title: string; rows: { tag: string; count: number }[] }) {
+  return (
+    <View style={styles.tags}>
+      <Meta style={styles.tagsLabel}>{title}</Meta>
+      {rows.length === 0 ? <Small tone="muted">{t('results.noData')}</Small> : null}
+      {rows.map(({ tag, count }) => (
+        <View key={tag} style={styles.tagRow}>
+          <Body>{t(`review.tags.${tag}` as MessageKey)}</Body>
+          <Body style={styles.tagCount}>{count}</Body>
+        </View>
+      ))}
+    </View>
   );
 }
 

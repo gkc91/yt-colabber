@@ -1,16 +1,20 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  GRID_SIZE,
+  LEAVE_TAGS,
+  REASON_TAGS,
+  STAY_TAGS,
   buildFeedItems,
   countWords,
-  GRID_SIZE,
   isGuessLongEnough,
+  isPositiveTag,
   leaveSecondFor,
-  REASON_TAGS,
   secondsSince,
+  tagsFor,
   toggleTag,
-  watchedSecondsFor,
   type Decoy,
+  watchedSecondsFor,
 } from './rules';
 
 const decoys: Decoy[] = Array.from({ length: 5 }, (_, i) => ({
@@ -65,13 +69,39 @@ describe('review rules', () => {
   it('test_review_tags_toggle_and_stay_in_the_fixed_list', () => {
     expect(toggleTag([], 'slow_intro')).toEqual(['slow_intro']);
     expect(toggleTag(['slow_intro', 'bad_audio'], 'slow_intro')).toEqual(['bad_audio']);
-    expect(REASON_TAGS).toHaveLength(8);
+    // REASON_TAGS iki sorunun birleşimi; sayıyı sabitlemek yerine kapsamı doğruluyoruz.
+    expect(REASON_TAGS).toHaveLength(LEAVE_TAGS.length + STAY_TAGS.length + 1);
     expect(REASON_TAGS).toContain('didnt_match_thumbnail');
+    expect(REASON_TAGS).toContain('strong_hook');
   });
 
   it('test_review_elapsed_seconds_never_go_negative', () => {
     const start = 1_000_000;
     expect(secondsSince(start, start + 25_400)).toBe(25);
     expect(secondsSince(start, start - 5_000)).toBe(0);
+  });
+});
+
+describe('tagsFor', () => {
+  it('test_leaving_early_asks_what_went_wrong', () => {
+    expect(tagsFor(12)).toEqual(LEAVE_TAGS);
+  });
+
+  it('test_watching_to_the_end_asks_what_worked', () => {
+    // Sonuna kadar izleyene "neden bıraktın" sorulamaz: sahibe yanlış veri gider.
+    expect(tagsFor(null)).toEqual(STAY_TAGS);
+    expect(tagsFor(null)).not.toContain('slow_intro');
+  });
+
+  it('test_the_two_sets_never_overlap', () => {
+    const leave = new Set<string>(LEAVE_TAGS);
+    expect(STAY_TAGS.some((tag) => leave.has(tag))).toBe(false);
+  });
+
+  it('test_positive_tags_are_recognised_for_the_results_screen', () => {
+    expect(isPositiveTag('strong_hook')).toBe(true);
+    expect(isPositiveTag('slow_intro')).toBe(false);
+    // Eski değerlendirmelerde duran etiket; sonuçlarda olumlu tarafta görünmeli.
+    expect(isPositiveTag('kept_watching')).toBe(true);
   });
 });

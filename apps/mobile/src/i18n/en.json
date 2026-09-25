@@ -183,12 +183,13 @@
       "leave": "I'd stop watching here",
       "watchedAll": "You watched the whole clip.",
       "leftAt": "You stopped at {second}s.",
-      "tagsTitle": "Why? (pick any)",
+      "tagsTitle": "Why did you stop? (pick any)",
       "commentLabel": "Anything to add? (optional)",
       "commentPlaceholder": "One line for the creator",
       "submit": "Send review",
       "play": "Tap to play",
-      "loadFailed": "The clip didn't load. Check your connection and tap to try again."
+      "loadFailed": "The clip didn't load. Check your connection and tap to try again.",
+      "tagsTitleStayed": "What kept you watching? (pick any)"
     },
     "tags": {
       "slow_intro": "Slow intro",
@@ -198,7 +199,13 @@
       "too_long_setup": "Setup too long",
       "visual_quality": "Visual quality",
       "didnt_match_thumbnail": "Didn't match the thumbnail",
-      "kept_watching": "Kept me watching"
+      "kept_watching": "Kept me watching",
+      "strong_hook": "Strong opening",
+      "clear_promise": "I knew what I'd get",
+      "got_to_the_point": "Got to the point",
+      "good_energy": "Good energy",
+      "good_visuals": "Looked good",
+      "wanted_the_answer": "I wanted the answer"
     },
     "done": {
       "reward": "+1 credit",
@@ -290,7 +297,8 @@
       "median": "Median drop-off",
       "chartLabel": "When reviewers stopped watching",
       "bucket": "{seconds}s per bar",
-      "tags": "Why they stopped"
+      "tags": "Why they stopped",
+      "tagsPositive": "What kept them watching"
     },
     "reviews": {
       "title": "What they expected",

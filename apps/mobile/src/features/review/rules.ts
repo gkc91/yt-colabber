@@ -5,8 +5,15 @@ export const GRID_SIZE = DECOY_COUNT + 1;
 export const MIN_GUESS_WORDS = 5;
 export const MIN_REVIEW_SECONDS = 20; // sunucu da ölçer (0003)
 
-/** Sabit sebep etiketleri; sunucu bunları serbest metin olarak saklar. */
-export const REASON_TAGS = [
+/**
+ * Sebep etiketleri iki ayrı listedir ve hangisinin sorulacağını kararın KENDİSİ belirler:
+ * sonuna kadar izleyen birine "neden bıraktın" diye sormak anlamsızdır ve sahibe yanlış
+ * veri gider (2026-09-25, sahibin uyarısı). Bıraktıysa neyin kaçırdığını, izlediyse neyin
+ * tuttuğunu sorarız.
+ *
+ * Sunucu etiketleri serbest metin olarak saklar; doğrulama burada.
+ */
+export const LEAVE_TAGS = [
   'slow_intro',
   'unclear_promise',
   'bad_audio',
@@ -14,10 +21,33 @@ export const REASON_TAGS = [
   'too_long_setup',
   'visual_quality',
   'didnt_match_thumbnail',
-  'kept_watching',
 ] as const;
 
+export const STAY_TAGS = [
+  'strong_hook',
+  'clear_promise',
+  'got_to_the_point',
+  'good_energy',
+  'good_visuals',
+  'wanted_the_answer',
+] as const;
+
+/** `kept_watching` artık seçilmiyor ama eski değerlendirmelerde var; sonuçlarda gösterilir. */
+export const LEGACY_POSITIVE_TAGS = ['kept_watching'] as const;
+
+export const REASON_TAGS = [...LEAVE_TAGS, ...STAY_TAGS, ...LEGACY_POSITIVE_TAGS] as const;
+
 export type ReasonTag = (typeof REASON_TAGS)[number];
+
+/** leftAt null = sonuna kadar izledi. */
+export function tagsFor(leftAt: number | null): readonly ReasonTag[] {
+  return leftAt === null ? STAY_TAGS : LEAVE_TAGS;
+}
+
+const POSITIVE = new Set<string>([...STAY_TAGS, ...LEGACY_POSITIVE_TAGS]);
+
+/** Sonuç ekranı etiketleri iki başlık altında toplar. */
+export const isPositiveTag = (tag: string): boolean => POSITIVE.has(tag);
 
 export type Decoy = {
   video_id: string;

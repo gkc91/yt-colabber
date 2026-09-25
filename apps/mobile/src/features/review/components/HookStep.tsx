@@ -14,7 +14,7 @@ import { t, type MessageKey } from '@/i18n';
 
 import { ReportSheet } from '@/features/reports/ReportSheet';
 
-import { REASON_TAGS, toggleTag, type ReasonTag } from '../rules';
+import { tagsFor, toggleTag, type ReasonTag } from '../rules';
 
 type Props = {
   submissionId: string;
@@ -120,9 +120,12 @@ export function HookStep({
 
       {decided ? (
         <>
-          <Meta style={styles.label}>{t('review.hook.tagsTitle')}</Meta>
+          {/* Bıraktıysa neyin kaçırdığını, sonuna kadar izlediyse neyin tuttuğunu sorarız. */}
+          <Meta style={styles.label}>
+            {t(leftAt === null ? 'review.hook.tagsTitleStayed' : 'review.hook.tagsTitle')}
+          </Meta>
           <View style={styles.tags}>
-            {REASON_TAGS.map((tag) => (
+            {tagsFor(leftAt).map((tag) => (
               <Chip
                 key={tag}
                 label={t(`review.tags.${tag}` as MessageKey)}
