@@ -106,6 +106,13 @@ group by s.id, n.name
 order by 3 desc;
 ```
 
+## 6b. Örnek testleri bir kişiye yeniden açmak
+
+Havuz bir değerlendirici için tükendiğinde (0019: biten örnek test geri gelmez) denemeye
+devam edebilmek için `docs/sql/ornek-testleri-yeniden-ac.sql` kullanılır. **Yalnızca okuma
+değil, yazma yapar** ve ekonomiyi elle düzeltir: sayaçları geri alır, kazanılmış krediyi
+silmez ama aynı sayıda negatif satırla dengeler. Günlük işleyişin parçası değildir.
+
 ## 7. Olay tarafı (PostHog)
 
 Yukarıdakiler "ne oldu" sorusuna cevap verir; "nerede bıraktı" sorusuna PostHog
