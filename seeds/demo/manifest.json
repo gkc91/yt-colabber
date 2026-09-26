@@ -24,7 +24,10 @@
         "The 30-Year Rent vs Buy Simulation: Who Wins?",
         "Rent vs Buy: Who's Richer After 30 Years?"
       ],
-      "thumbnails": ["mr-ep01-a.jpg", "mr-ep01-b.jpg"],
+      "thumbnails": [
+        "mr-ep01-a.jpg",
+        "mr-ep01-b.jpg"
+      ],
       "clip": "mr-ep01.mp4",
       "clip_duration_seconds": 58
     },
@@ -34,7 +37,10 @@
         "Real Estate vs Stocks: Who's Richer After 30 Years?",
         "Her Rental House Lost Money for 9 Years. She Still Won."
       ],
-      "thumbnails": ["mr-ep02-a.jpg", "mr-ep02-b.jpg"],
+      "thumbnails": [
+        "mr-ep02-a.jpg",
+        "mr-ep02-b.jpg"
+      ],
       "clip": "mr-ep02.mp4",
       "clip_duration_seconds": 58
     },
@@ -44,14 +50,22 @@
         "Leasing vs Buying a Car: Who's Richer After 10 Years?",
         "He Leased Cars for 10 Years. Here's What He Owns Now."
       ],
-      "thumbnails": ["mr-ep03-a.jpg", "mr-ep03-b.jpg"],
+      "thumbnails": [
+        "mr-ep03-a.jpg",
+        "mr-ep03-b.jpg"
+      ],
       "clip": "mr-ep03.mp4",
       "clip_duration_seconds": 58
     },
     {
       "channel": "let-me-finish",
-      "titles": ["Did Women Win the Vote, or Did Men Give It to Them?"],
-      "thumbnails": ["lmf-ep13-a.jpg", "lmf-ep13-b.jpg"],
+      "titles": [
+        "Did Women Win the Vote, or Did Men Give It to Them?"
+      ],
+      "thumbnails": [
+        "lmf-ep13-a.jpg",
+        "lmf-ep13-b.jpg"
+      ],
       "clip": "lmf-ep13.mp4",
       "clip_duration_seconds": 58
     },
@@ -62,8 +76,36 @@
         "Is Time Travel Possible? What Physics Actually Allows",
         "Time Travel Is Real. You Just Can't Come Back"
       ],
-      "thumbnails": ["lmf-ep15-a.jpg"],
+      "thumbnails": [
+        "lmf-ep15-a.jpg"
+      ],
       "clip": "lmf-ep15.mp4",
+      "clip_duration_seconds": 58
+    },
+    {
+      "channel": "let-me-finish",
+      "titles": [
+        "Is the Earth Flat? A Professor vs a Flat Earther",
+        "How Do We Know the Earth Is Round? (Try It at Home)"
+      ],
+      "thumbnails": [
+        "lmf-ep05-a.jpg",
+        "lmf-ep05-b.jpg"
+      ],
+      "clip": "lmf-ep05.mp4",
+      "clip_duration_seconds": 58
+    },
+    {
+      "channel": "let-me-finish",
+      "titles": [
+        "Is Self-Improvement a Scam? A Professor vs a Guru",
+        "Does Growth Mindset Work? The Self-Help Industry on Trial"
+      ],
+      "thumbnails": [
+        "lmf-ep06-a.jpg",
+        "lmf-ep06-b.jpg"
+      ],
+      "clip": "lmf-ep06.mp4",
       "clip_duration_seconds": 58
     }
   ]
