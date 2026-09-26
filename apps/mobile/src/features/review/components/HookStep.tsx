@@ -19,6 +19,7 @@ import { tagsFor, toggleTag, type ReasonTag } from '../rules';
 type Props = {
   submissionId: string;
   clipUrl: string;
+  vertical?: boolean;
   comment: string;
   tags: ReasonTag[];
   submitting: boolean;
@@ -40,6 +41,7 @@ const overlayKey = (status: VideoPlayerStatus) =>
 export function HookStep({
   submissionId,
   clipUrl,
+  vertical = false,
   comment,
   tags,
   submitting,
@@ -86,7 +88,11 @@ export function HookStep({
     <View style={styles.container}>
       <VideoView
         player={player}
-        style={[styles.video, { borderColor: colors.border }]}
+        style={[
+          styles.video,
+          vertical ? styles.videoVertical : styles.videoHorizontal,
+          { borderColor: colors.border },
+        ]}
         contentFit="contain"
         nativeControls={false}
         // Telefon tarayıcıları bu bayrak olmadan videoyu sayfa içinde oynatmayı reddeder
@@ -103,7 +109,7 @@ export function HookStep({
           accessibilityLabel={t(overlayKey(status))}
           onPress={play}
           disabled={started || status === 'loading'}
-          style={styles.overlay}
+          style={[styles.overlay, vertical ? styles.videoVertical : styles.videoHorizontal]}
         >
           <View style={[styles.playButton, { backgroundColor: colors.background }]}>
             {status === 'loading' ? (
@@ -185,7 +191,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    aspectRatio: 16 / 9,
     alignItems: 'center',
     justifyContent: 'center',
     gap: space.md,
@@ -202,10 +207,18 @@ const styles = StyleSheet.create({
   },
   video: {
     width: '100%',
-    aspectRatio: 16 / 9,
     borderRadius: radius.card,
     borderWidth: StyleSheet.hairlineWidth * 2,
     backgroundColor: '#000',
+  },
+  videoHorizontal: {
+    aspectRatio: 16 / 9,
+  },
+  // Dikey klip ekranı boydan boya kaplamasın: altındaki soru ve düğmeler görünür kalmalı.
+  videoVertical: {
+    aspectRatio: 9 / 16,
+    maxHeight: 420,
+    alignSelf: 'center',
   },
   decision: {
     fontWeight: '600',

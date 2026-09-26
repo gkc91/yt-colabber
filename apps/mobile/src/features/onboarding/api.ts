@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 
 import { addChannel } from '@/features/channels/api';
 
-import type { YouTubeChannelRef } from './youtube';
+import type { ChannelRef } from './channelUrl';
 
 export type SubscriberBand = Database['public']['Enums']['subscriber_band'];
 
@@ -37,7 +37,7 @@ export async function saveNicheAndLanguage(_userId: string, nicheId: number, lan
 
 export async function completeOnboarding(
   userId: string,
-  channel: YouTubeChannelRef,
+  channel: ChannelRef,
   band: SubscriberBand | null,
   nicheId: number,
   language: string,

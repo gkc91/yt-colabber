@@ -112,6 +112,7 @@ export type Database = {
           language: string
           niche_changed_at: string | null
           niche_id: number
+          platform: string
           profile_id: string
           youtube_channel_id: string | null
           youtube_url: string
@@ -124,6 +125,7 @@ export type Database = {
           language?: string
           niche_changed_at?: string | null
           niche_id: number
+          platform?: string
           profile_id: string
           youtube_channel_id?: string | null
           youtube_url: string
@@ -136,6 +138,7 @@ export type Database = {
           language?: string
           niche_changed_at?: string | null
           niche_id?: number
+          platform?: string
           profile_id?: string
           youtube_channel_id?: string | null
           youtube_url?: string
@@ -340,6 +343,7 @@ export type Database = {
           channel_title: string | null
           fetched_at: string
           id: number
+          is_vertical: boolean
           niche_id: number
           thumbnail_url: string
           title: string
@@ -350,6 +354,7 @@ export type Database = {
           channel_title?: string | null
           fetched_at?: string
           id?: number
+          is_vertical?: boolean
           niche_id: number
           thumbnail_url: string
           title: string
@@ -360,6 +365,7 @@ export type Database = {
           channel_title?: string | null
           fetched_at?: string
           id?: number
+          is_vertical?: boolean
           niche_id?: number
           thumbnail_url?: string
           title?: string
@@ -745,6 +751,7 @@ export type Database = {
           id: string
           is_demo: boolean
           is_priority: boolean
+          is_vertical: boolean
           language: string
           niche_id: number
           owner_id: string
@@ -766,6 +773,7 @@ export type Database = {
           id?: string
           is_demo?: boolean
           is_priority?: boolean
+          is_vertical?: boolean
           language?: string
           niche_id: number
           owner_id: string
@@ -787,6 +795,7 @@ export type Database = {
           id?: string
           is_demo?: boolean
           is_priority?: boolean
+          is_vertical?: boolean
           language?: string
           niche_id?: number
           owner_id?: string
@@ -881,6 +890,7 @@ export type Database = {
           p_channel_title?: string
           p_language?: string
           p_niche_id: number
+          p_platform?: string
           p_youtube_channel_id?: string
           p_youtube_url: string
         }
@@ -920,11 +930,16 @@ export type Database = {
           p_channel_id?: string
           p_clip_duration: number
           p_clip_path: string
+          p_is_vertical?: boolean
           p_requested: number
           p_thumbnail_paths: string[]
           p_title_options: string[]
         }
         Returns: string
+      }
+      decoy_keywords: {
+        Args: { p_niche_id: number; p_title: string }
+        Returns: string[]
       }
       expire_tasks: { Args: never; Returns: undefined }
       expired_clips: {
@@ -958,6 +973,10 @@ export type Database = {
         Returns: {
           slug: string
         }[]
+      }
+      pick_decoys: {
+        Args: { p_niche_id: number; p_title: string; p_vertical?: boolean }
+        Returns: Json
       }
       queue_task_reminders: { Args: never; Returns: number }
       rate_review: {

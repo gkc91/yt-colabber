@@ -13,12 +13,14 @@ import { MAX_THUMBNAILS } from '../rules';
 
 type Props = {
   thumbnails: PickedThumbnail[];
+  /** Dikey testte kapak da dikey: önizleme yanlış oranda gösterilirse kırpılmış sanılır. */
+  vertical?: boolean;
   busy: boolean;
   onAdd: () => void;
   onRemove: (index: number) => void;
 };
 
-export function ThumbnailsStep({ thumbnails, busy, onAdd, onRemove }: Props) {
+export function ThumbnailsStep({ thumbnails, vertical = false, busy, onAdd, onRemove }: Props) {
   const colors = Colors[useColorScheme()];
 
   return (
@@ -30,7 +32,11 @@ export function ThumbnailsStep({ thumbnails, busy, onAdd, onRemove }: Props) {
         <View key={thumbnail.uri} style={styles.item}>
           <Image
             source={{ uri: thumbnail.uri }}
-            style={[styles.preview, { borderColor: colors.border }]}
+            style={[
+              styles.preview,
+              vertical ? styles.previewVertical : styles.previewHorizontal,
+              { borderColor: colors.border },
+            ]}
             contentFit="cover"
             accessibilityIgnoresInvertColors
           />
@@ -63,9 +69,17 @@ const styles = StyleSheet.create({
   item: {
     gap: space.sm,
   },
+  previewHorizontal: {
+    aspectRatio: 16 / 9,
+  },
+  previewVertical: {
+    aspectRatio: 9 / 16,
+    maxHeight: 360,
+    alignSelf: 'center',
+    width: 'auto',
+  },
   preview: {
     width: '100%',
-    aspectRatio: 16 / 9,
     borderRadius: radius.card,
     borderWidth: StyleSheet.hairlineWidth * 2,
   },

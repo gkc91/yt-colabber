@@ -12,7 +12,7 @@ import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { completeOnboarding, type SubscriberBand } from '@/features/onboarding/api';
 import { BANDS } from '@/features/onboarding/options';
-import { parseYouTubeChannelUrl, type YouTubeChannelRef } from '@/features/onboarding/youtube';
+import { parseChannelUrl, type ChannelRef } from '@/features/onboarding/channelUrl';
 import { profileQueryKey, useProfile } from '@/features/profile/api';
 import { track } from '@/lib/track';
 import { t } from '@/i18n';
@@ -29,7 +29,7 @@ export default function ChannelStep() {
   const [band, setBand] = useState<SubscriberBand | null>(null);
 
   const finish = useMutation({
-    mutationFn: (input: { channel: YouTubeChannelRef; band: SubscriberBand | null }) =>
+    mutationFn: (input: { channel: ChannelRef; band: SubscriberBand | null }) =>
       completeOnboarding(
         userId,
         input.channel,
@@ -45,7 +45,7 @@ export default function ChannelStep() {
   });
 
   const onFinish = () => {
-    const channel = parseYouTubeChannelUrl(url);
+    const channel = parseChannelUrl(url);
     if (!channel) {
       setUrlError(t('onboarding.channelInvalid'));
       return;

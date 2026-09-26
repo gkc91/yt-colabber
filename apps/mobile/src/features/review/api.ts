@@ -20,6 +20,8 @@ export type ReviewAssignment = {
   clipDurationSeconds: number;
   /** Örnek test (0014): arayüzde rozetle gösterilir, kredi ödülü aynıdır. */
   isDemo: boolean;
+  /** Dikey test: ızgara ve oynatıcı 9:16 çizilir (0024). */
+  isVertical: boolean;
 };
 
 type NextTaskResponse = {
@@ -27,6 +29,7 @@ type NextTaskResponse = {
   title?: string;
   clip_duration_seconds?: number;
   is_demo?: boolean;
+  is_vertical?: boolean;
 };
 
 /** Sunucu görevi seçer ve açar; aynı kişiye aynı submission iki kez gelmez (0001/0007). */
@@ -41,6 +44,7 @@ export async function fetchNextTask(): Promise<ReviewAssignment | null> {
     title: response.title ?? '',
     clipDurationSeconds: response.clip_duration_seconds ?? 0,
     isDemo: response.is_demo ?? false,
+    isVertical: response.is_vertical ?? false,
   };
 }
 

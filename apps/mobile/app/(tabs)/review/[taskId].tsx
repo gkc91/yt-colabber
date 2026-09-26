@@ -100,7 +100,7 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
     );
   }
 
-  const { task: reviewTask, title, clipDurationSeconds, isDemo } = assignment;
+  const { task: reviewTask, title, clipDurationSeconds, isDemo, isVertical } = assignment;
   const candidateThumbnail = media.data?.thumbnails[0] ?? '';
   const items = buildFeedItems(
     { title, thumbnailUrl: candidateThumbnail },
@@ -162,12 +162,13 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
           <Small tone="muted">{t('review.demo.body')}</Small>
         </Card>
       ) : null}
-      {stage === 'feed' ? <FeedStep items={items} onPick={onPick} /> : null}
+      {stage === 'feed' ? <FeedStep items={items} vertical={isVertical} onPick={onPick} /> : null}
 
       {stage === 'reveal' && pick ? (
         <RevealStep
           picked={items[pick.position]}
           candidate={items.find((item) => item.kind === 'candidate') as (typeof items)[number]}
+          vertical={isVertical}
           onContinue={() => setStage('guess')}
         />
       ) : null}
@@ -184,6 +185,7 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
 
       {stage === 'hook' ? (
         <HookStep
+          vertical={isVertical}
           submissionId={reviewTask.submission_id}
           clipUrl={media.data?.clip ?? ''}
           comment={comment}

@@ -18,6 +18,7 @@ import { useBalance } from '@/features/credits/api';
 import { useIsPro } from '@/features/profile/api';
 import { SubmissionFailed } from '@/features/submit/api';
 import { ClipStep } from '@/features/submit/components/ClipStep';
+import { FormatStep } from '@/features/submit/components/FormatStep';
 import { ConfirmStep } from '@/features/submit/components/ConfirmStep';
 import { CountStep } from '@/features/submit/components/CountStep';
 import { ThumbnailsStep } from '@/features/submit/components/ThumbnailsStep';
@@ -29,12 +30,19 @@ import {
   type PickedClip,
   type PickedThumbnail,
 } from '@/features/submit/media';
-import { canAfford, cleanTitles, validateTitles, type ReviewCount } from '@/features/submit/rules';
+import {
+  canAfford,
+  cleanTitles,
+  orientationMatches,
+  validateTitles,
+  type ClipFormat,
+  type ReviewCount,
+} from '@/features/submit/rules';
 import { Cancelled, uploadAndCreate, type UploadProgress } from '@/features/submit/upload';
 import { track } from '@/lib/track';
 import { t, type MessageKey } from '@/i18n';
 
-const STEPS = 5;
+const STEPS = 6;
 
 /**
  * Aynı kural, iki farklı çözüm: uygulamada seçici videoyu kırpıyor, tarayıcıda
@@ -98,6 +106,9 @@ function Wizard() {
   const [titles, setTitles] = useState<string[]>(['']);
   const [clip, setClip] = useState<PickedClip | null>(null);
   const [requested, setRequested] = useState<ReviewCount>(5);
+  // İlk soru: yön. Thumbnail'dan da klipten de önce sorulur, çünkü ikisinin oranını da
+  // bu belirliyor ve sonradan öğrenmek kabul edilmiş bir kapağı geri almak demekti.
+  const [format, setFormat] = useState<ClipFormat | null>(null);
 
   // Testin nişi kanaldan geliyor (0020). Tek kanalı olan kimseye soru sorulmaz;
   // birden fazlası varsa seçim zorunlu, çünkü yanlış kanal = yanlış niş = bozuk sonuç.
@@ -153,7 +164,14 @@ function Wizard() {
     setUploadProgress({ done: 0, total: thumbnails.length + 1 });
     try {
       await uploadAndCreate(
-        { userId, channelId, thumbnails, titles: cleanTitles(titles), clip, requested },
+        {
+          userId,
+          channelId,
+          thumbnails,
+          titles: cleanTitles(titles),
+          clip: { ...clip, isVertical: format === 'vertical' },
+          requested,
+        },
         { onProgress: setUploadProgress, isCancelled: () => cancelled.current },
       );
       track.capture('submission_created', {
@@ -186,7 +204,12 @@ function Wizard() {
     ][step] && !mustPickChannel;
 
   const goNext = () => {
-    if (step === 1 && titleProblem) {
+    // Klip seçilen orana uymuyorsa ızgara yanlış havuzdan beslenir; sebebini söyleyip durdur.
+    if (step === 3 && clip && format && !orientationMatches(format, clip.isVertical)) {
+      setError('submit.errors.clip_orientation');
+      return;
+    }
+    if (step === 2 && titleProblem) {
       setError(`submit.errors.${titleProblem}` as MessageKey);
       return;
     }
@@ -201,7 +224,9 @@ function Wizard() {
         <StepBar step={step} total={STEPS} />
       </View>
 
-      {step === 0 && (channels.data?.length ?? 0) > 1 ? (
+      {step === 0 ? <FormatStep format={format} onChange={setFormat} /> : null}
+
+      {step === 1 && (channels.data?.length ?? 0) > 1 ? (
         <Section title={t('submit.wizard.channelTitle')}>
           <Small tone="muted">{t('submit.wizard.channelHint')}</Small>
           <View style={styles.channels}>
@@ -218,24 +243,25 @@ function Wizard() {
         </Section>
       ) : null}
 
-      {step === 0 ? <Requirements /> : null}
+      {step === 1 ? <Requirements /> : null}
 
-      {step === 0 ? (
+      {step === 1 ? (
         <ThumbnailsStep
           thumbnails={thumbnails}
+          vertical={format === 'vertical'}
           busy={busy}
           onAdd={addThumbnails}
           onRemove={(index) => setThumbnails((current) => current.filter((_, i) => i !== index))}
         />
       ) : null}
-      {step === 1 ? <TitlesStep titles={titles} onChange={setTitles} /> : null}
-      {step === 2 ? (
+      {step === 2 ? <TitlesStep titles={titles} onChange={setTitles} /> : null}
+      {step === 3 ? (
         <ClipStep clip={clip} busy={busy} progress={clipProgress} onPick={chooseClip} />
       ) : null}
-      {step === 3 ? (
+      {step === 4 ? (
         <CountStep requested={requested} balance={balance} isPro={isPro} onChange={setRequested} />
       ) : null}
-      {step === 4 && clip ? (
+      {step === 5 && clip ? (
         <ConfirmStep
           thumbnails={thumbnails}
           titles={cleanTitles(titles)}

@@ -12,6 +12,7 @@ import {
   submissionErrorCode,
   validateClipDuration,
   validateTitles,
+  orientationMatches,
 } from './rules';
 
 describe('submission rules', () => {
@@ -83,5 +84,18 @@ describe('showsCountdown', () => {
 
   it('test_closed_test_shows_its_status_instead', () => {
     expect(showsCountdown(false, 'completed')).toBe(false);
+  });
+});
+
+describe('orientationMatches', () => {
+  it('test_submit_orientation_accepts_a_matching_clip', () => {
+    expect(orientationMatches('vertical', true)).toBe(true);
+    expect(orientationMatches('horizontal', false)).toBe(true);
+  });
+
+  // Uyuşmazsa ızgara yanlış havuzdan beslenir ve sonuç gerçekte olacağından iyi çıkar.
+  it('test_submit_orientation_rejects_a_clip_of_the_other_shape', () => {
+    expect(orientationMatches('vertical', false)).toBe(false);
+    expect(orientationMatches('horizontal', true)).toBe(false);
   });
 });

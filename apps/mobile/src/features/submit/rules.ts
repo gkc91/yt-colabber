@@ -107,3 +107,14 @@ export function remainingTime(closesAt: string | Date, now: Date = new Date()) {
  */
 export const showsCountdown = (isDemo: boolean, status: string): boolean =>
   !isDemo && status === 'open';
+
+/** Test açılırken ilk sorulan şey: video hangi orana çekildi. */
+export type ClipFormat = 'horizontal' | 'vertical';
+
+/**
+ * Seçilen format ile klibin gerçek oranı uyuşuyor mu. Uyuşmazsa ızgara yanlış havuzdan
+ * beslenir (0024) ve sonuç gerçekte olacağından iyi çıkar — sessiz bir ölçüm hatası,
+ * o yüzden yüklemeden önce durduruluyor.
+ */
+export const orientationMatches = (format: ClipFormat, clipIsVertical: boolean): boolean =>
+  (format === 'vertical') === clipIsVertical;

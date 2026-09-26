@@ -10,6 +10,7 @@ export type NewSubmission = {
   thumbnailPaths: string[];
   clipPath: string;
   clipDurationSeconds: number;
+  isVertical: boolean;
   requested: ReviewCount;
 };
 
@@ -28,6 +29,7 @@ export async function createSubmission(input: NewSubmission): Promise<string> {
     p_thumbnail_paths: input.thumbnailPaths,
     p_clip_path: input.clipPath,
     p_clip_duration: input.clipDurationSeconds,
+    p_is_vertical: input.isVertical,
     p_requested: input.requested,
   });
   if (error) throw new SubmissionFailed(submissionErrorCode(error.message));

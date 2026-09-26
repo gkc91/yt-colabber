@@ -10,11 +10,13 @@ import type { FeedItem } from '../rules';
 
 type Props = {
   items: FeedItem[];
+  /** Dikey testte ızgara da dikey olmalı: 9:16 bir kapak 16:9 kutuda kırpılır (0024). */
+  vertical?: boolean;
   onPick: (index: number) => void;
 };
 
 /** Adım 1 — feed testi: aday, niş videolarının arasında 2 sütunlu ızgarada (PRODUCT §5). */
-export function FeedStep({ items, onPick }: Props) {
+export function FeedStep({ items, vertical = false, onPick }: Props) {
   const colors = Colors[useColorScheme()];
 
   return (
@@ -31,7 +33,11 @@ export function FeedStep({ items, onPick }: Props) {
           >
             <Image
               source={{ uri: item.thumbnailUrl }}
-              style={[styles.thumbnail, { borderColor: colors.border }]}
+              style={[
+                styles.thumbnail,
+                vertical ? styles.vertical : styles.horizontal,
+                { borderColor: colors.border },
+              ]}
               contentFit="cover"
               transition={100}
               accessibilityIgnoresInvertColors
@@ -67,9 +73,14 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     width: '100%',
-    aspectRatio: 16 / 9,
     borderRadius: 8,
     borderWidth: 1,
+  },
+  horizontal: {
+    aspectRatio: 16 / 9,
+  },
+  vertical: {
+    aspectRatio: 9 / 16,
   },
   title: {
     fontSize: 14,

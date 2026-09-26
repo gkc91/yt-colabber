@@ -57,6 +57,7 @@ export async function uploadAndCreate(
       thumbnailPaths: uploaded.slice(0, -1),
       clipPath,
       clipDurationSeconds: input.clip.durationSeconds,
+      isVertical: input.clip.isVertical,
       requested: input.requested,
     };
     return await createSubmission(submission);

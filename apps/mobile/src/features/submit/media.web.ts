@@ -81,12 +81,16 @@ export async function pickThumbnails(slotsLeft: number): Promise<PickedThumbnail
   return prepared;
 }
 
-/** Dosyanın süresini tarayıcıya okutur; metadata gelmezse süre bilinmiyor demektir. */
-function readDuration(url: string): Promise<number> {
+/** Süre ve ölçüler aynı metadata okumasından gelir; iki kez yüklemeye gerek yok. */
+function readClipMeta(url: string): Promise<{ durationSeconds: number; isVertical: boolean }> {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
     video.preload = 'metadata';
-    video.onloadedmetadata = () => resolve(video.duration);
+    video.onloadedmetadata = () =>
+      resolve({
+        durationSeconds: video.duration,
+        isVertical: video.videoHeight > video.videoWidth,
+      });
     video.onerror = () => reject(new ClipError('clip_wrong_type'));
     video.src = url;
   });
@@ -97,14 +101,15 @@ export async function pickClip(): Promise<PickedClip | null> {
   if (!file) return null;
 
   const url = URL.createObjectURL(file);
-  let durationSeconds: number;
+  let meta: { durationSeconds: number; isVertical: boolean };
   try {
-    durationSeconds = await readDuration(url);
+    meta = await readClipMeta(url);
   } catch (error) {
     URL.revokeObjectURL(url);
     throw error;
   }
 
+  const { durationSeconds } = meta;
   const problem = validateClipFile({
     durationSeconds,
     bytes: file.size,
@@ -119,6 +124,7 @@ export async function pickClip(): Promise<PickedClip | null> {
     uri: url,
     bytes: file.size,
     durationSeconds: Math.round(durationSeconds),
+    isVertical: meta.isVertical,
     extension: CLIP_EXTENSIONS[file.type.split(';')[0]] ?? 'mp4',
   };
 }

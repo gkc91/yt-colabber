@@ -13,6 +13,7 @@ import type { FeedItem } from '../rules';
 type Props = {
   picked: FeedItem;
   candidate: FeedItem;
+  vertical?: boolean;
   onContinue: () => void;
 };
 
@@ -22,7 +23,7 @@ type Props = {
  * içinde buluyordu kendini. Ölçüm buraya gelindiğinde bitmiş oluyor (tıklama kaydedildi),
  * o yüzden burada adayı göstermek testi bozmaz.
  */
-export function RevealStep({ picked, candidate, onContinue }: Props) {
+export function RevealStep({ picked, candidate, vertical = false, onContinue }: Props) {
   const colors = Colors[useColorScheme()];
   const hit = picked.kind === 'candidate';
 
@@ -39,7 +40,11 @@ export function RevealStep({ picked, candidate, onContinue }: Props) {
             <Label>{t('review.reveal.youPicked')}</Label>
             <Image
               source={{ uri: picked.thumbnailUrl }}
-              style={[styles.thumbnail, { borderColor: colors.border }]}
+              style={[
+                styles.thumbnail,
+                vertical ? styles.vertical : styles.horizontal,
+                { borderColor: colors.border },
+              ]}
               contentFit="cover"
               accessibilityIgnoresInvertColors
             />
@@ -51,7 +56,11 @@ export function RevealStep({ picked, candidate, onContinue }: Props) {
           <Label>{t('review.reveal.tested')}</Label>
           <Image
             source={{ uri: candidate.thumbnailUrl }}
-            style={[styles.thumbnail, { borderColor: colors.border }]}
+            style={[
+              styles.thumbnail,
+              vertical ? styles.vertical : styles.horizontal,
+              { borderColor: colors.border },
+            ]}
             contentFit="cover"
             accessibilityIgnoresInvertColors
           />
@@ -78,8 +87,13 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     width: '100%',
-    aspectRatio: 16 / 9,
     borderRadius: radius.card,
     borderWidth: StyleSheet.hairlineWidth,
+  },
+  horizontal: {
+    aspectRatio: 16 / 9,
+  },
+  vertical: {
+    aspectRatio: 9 / 16,
   },
 });

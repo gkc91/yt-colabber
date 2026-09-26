@@ -8,6 +8,8 @@ export type PickedClip = {
   uri: string;
   bytes: number;
   durationSeconds: number;
+  /** Shorts/Reels/TikTok dikey çekilir; ızgara ve oynatıcı buna göre çizilir (0024). */
+  isVertical: boolean;
   extension?: string;
 };
 

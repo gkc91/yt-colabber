@@ -13,7 +13,7 @@ import { useSession } from '@/features/auth/session';
 import { ChannelFailed, addChannel, channelsQueryKey } from '@/features/channels/api';
 import { useNiches, type SubscriberBand } from '@/features/onboarding/api';
 import { BANDS, LANGUAGES } from '@/features/onboarding/options';
-import { parseYouTubeChannelUrl } from '@/features/onboarding/youtube';
+import { parseChannelUrl } from '@/features/onboarding/channelUrl';
 import { t, type MessageKey } from '@/i18n';
 
 /**
@@ -49,7 +49,7 @@ export default function AddChannel() {
   });
 
   const onSave = () => {
-    const channel = parseYouTubeChannelUrl(url);
+    const channel = parseChannelUrl(url);
     if (!channel) {
       setUrlError(t('onboarding.channelInvalid'));
       return;

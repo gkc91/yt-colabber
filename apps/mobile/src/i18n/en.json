@@ -29,11 +29,11 @@
     "nicheHint": "You'll review videos from this niche, and your tests go to people in it.",
     "languageTitle": "Which language are your videos in?",
     "continue": "Continue",
-    "channelTitle": "Your YouTube channel",
-    "channelHint": "Only used to show who you are. We never post, like or subscribe on YouTube.",
-    "channelLabel": "Channel URL",
+    "channelTitle": "Your channel",
+    "channelHint": "YouTube, Instagram or TikTok. Only used to show who you are — we never post, like or follow anywhere.",
+    "channelLabel": "Channel or profile link",
     "channelPlaceholder": "youtube.com/@yourchannel",
-    "channelInvalid": "Paste your channel link, like youtube.com/@name or youtube.com/channel/UC…",
+    "channelInvalid": "Paste a channel or profile link: youtube.com/@name, instagram.com/name or tiktok.com/@name. A post link will not work.",
     "bandTitle": "Subscribers (optional)",
     "finish": "Start",
     "bands": {
@@ -95,7 +95,17 @@
       "pickClipWeb": "Choose a video file",
       "clipHintWeb": "Your first 60 seconds, exported as MP4 or MOV at 720p and under 8 MB. Nothing is compressed here, so a longer or heavier file is refused.",
       "channelTitle": "Which channel is this for?",
-      "channelHint": "Reviewers are matched to the channel's niche, so pick the one publishing this video."
+      "channelHint": "Reviewers are matched to the channel's niche, so pick the one publishing this video.",
+      "formatTitle": "How was this shot?",
+      "formatHint": "Reviewers see it the way people will: a vertical clip among vertical videos, a wide one among wide videos.",
+      "format": {
+        "horizontal": "Wide 16:9",
+        "vertical": "Tall 9:16"
+      },
+      "formatWhere": {
+        "horizontal": "A normal YouTube video.",
+        "vertical": "Shorts, Reels, TikTok."
+      }
     },
     "errors": {
       "insufficient_credits": "Not enough credits for this test.",
@@ -110,7 +120,8 @@
       "clip_too_large": "Even after compression this clip is over 8 MB. Try a shorter or simpler clip.",
       "unknown": "Something went wrong. Please try again.",
       "clip_wrong_type": "That file type is not supported. Export an MP4 (or MOV).",
-      "clip_too_long_web": "That clip is longer than 60 seconds. Export just the first 60 seconds from your editor."
+      "clip_too_long_web": "That clip is longer than 60 seconds. Export just the first 60 seconds from your editor.",
+      "clip_orientation": "That clip is not the shape you picked. Go back a step and change it, or choose another clip."
     },
     "requirements": {
       "title": "What to have ready",
@@ -300,7 +311,7 @@
       "body": "Each channel has its own niche. A test goes to the niche of the channel that publishes it.",
       "add": "Add a channel",
       "addTitle": "Add a channel",
-      "addHint": "Reviewers are matched to this channel's niche, so pick the one it publishes in.",
+      "addHint": "YouTube, Instagram or TikTok. Reviewers are matched to this channel's niche, so pick the one it publishes in.",
       "nicheTitle": "What does this channel make?",
       "languageTitle": "What language?",
       "save": "Add channel",
@@ -312,7 +323,8 @@
         "niche_change_too_soon": "You changed this channel's niche recently. Try again next month.",
         "unknown_niche": "Pick a niche.",
         "not_owner": "That channel is not yours.",
-        "unknown": "That did not work. Try again."
+        "unknown": "That did not work. Try again.",
+        "unknown_platform": "We only take YouTube, Instagram and TikTok links for now."
       }
     }
   },

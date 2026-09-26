@@ -62,6 +62,9 @@ export async function pickClip(onProgress?: (ratio: number) => void): Promise<Pi
 
   const asset = result.assets[0];
   const durationSeconds = Math.round((asset.duration ?? 0) / 1000);
+  // Seçicinin verdiği ölçüler sıkıştırmadan ÖNCE okunur: compress yalnızca küçültüyor,
+  // oranı değiştirmiyor.
+  const isVertical = (asset.height ?? 0) > (asset.width ?? 0);
   const durationProblem = validateClipDuration(durationSeconds);
   if (durationProblem) throw new ClipError(durationProblem);
 
@@ -74,7 +77,7 @@ export async function pickClip(onProgress?: (ratio: number) => void): Promise<Pi
   const bytes = await fileSize(compressedUri);
   if (bytes > MAX_CLIP_BYTES) throw new ClipError('clip_too_large');
 
-  return { uri: compressedUri, bytes, durationSeconds };
+  return { uri: compressedUri, bytes, durationSeconds, isVertical };
 }
 
 async function fileSize(uri: string): Promise<number> {

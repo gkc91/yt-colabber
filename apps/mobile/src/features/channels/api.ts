@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/lib/database.types';
-import type { YouTubeChannelRef } from '@/features/onboarding/youtube';
+import type { ChannelRef } from '@/features/onboarding/channelUrl';
 
 type SubscriberBand = Database['public']['Enums']['subscriber_band'];
 
@@ -44,14 +44,15 @@ export const channelLabel = (channel: Channel): string =>
  * "ayda bir niş değiştirme" kuralını delerdi.
  */
 export async function addChannel(input: {
-  channel: YouTubeChannelRef;
+  channel: ChannelRef;
   band: SubscriberBand | null;
   nicheId: number;
   language: string;
 }) {
   const { data, error } = await supabase.rpc('add_channel', {
     p_youtube_url: input.channel.url,
-    p_youtube_channel_id: input.channel.kind === 'channel' ? input.channel.channelId : undefined,
+    p_youtube_channel_id: input.channel.channelId ?? undefined,
+    p_platform: input.channel.platform,
     p_band: input.band ?? undefined,
     p_niche_id: input.nicheId,
     p_language: input.language,
