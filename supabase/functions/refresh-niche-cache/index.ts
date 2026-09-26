@@ -6,13 +6,17 @@ import { admin, json } from "../_shared/supabase.ts";
 const KEY = Deno.env.get("YOUTUBE_API_KEY") ?? "";
 
 const MIN_VIEWS = 1_000;
-// Shorts elenir: dikey thumbnail'lar feed ızgarasında yamuk durur ve aday thumbnail'e
-// benzemez. Süre filtresini aramada değil burada uyguluyoruz — arama filtresi (medium)
-// aday havuzunu gereksiz daraltıyordu.
+// İki ayrı havuz toplanıyor: yatay testin komşuları uzun videolar, dikey testin komşuları
+// Shorts (0024). Eskiden Shorts tamamen eleniyordu çünkü dikey test diye bir şey yoktu.
 const MIN_DURATION_SECONDS = 61;
+const MAX_SHORT_SECONDS = 60;
 const MAX_VIEWS = 500_000;
 const PER_NICHE = 200;
 const QUERIES_PER_NICHE = 3;
+// Dikey tur daha az sorgu kullanıyor: arama başına 100 kota birimi gidiyor ve günlük hak
+// 10.000. 15 niş × (3 + 2) sorgu = 7.500 birim; üçer olsaydı 9.000'e çıkıp hiç pay
+// bırakmazdı.
+const SHORT_QUERIES_PER_NICHE = 2;
 const SEARCH_PAGE_SIZE = 50;
 
 type Candidate = {
@@ -22,6 +26,7 @@ type Candidate = {
   thumbnail_url: string;
   view_count: number;
   duration_seconds?: number;
+  is_vertical?: boolean;
 };
 
 /** "PT4M13S" → 253 */
@@ -55,20 +60,23 @@ async function youtube(path: string, params: Record<string, string>) {
   return body;
 }
 
-async function searchVideoIds(query: string): Promise<string[]> {
+async function searchVideoIds(query: string, vertical = false): Promise<string[]> {
   const body = await youtube("search", {
     part: "snippet",
     type: "video",
     maxResults: String(SEARCH_PAGE_SIZE),
     order: "relevance",
-    q: query,
+    // API en-boy oranı vermiyor. Dikeyi iki işaretle kestiriyoruz: Shorts araması ve
+    // 60 saniye sınırı. Kestirim olduğu için yanlış sınıflanan birkaç video olabilir;
+    // ızgaranın tamamı bozulmaz, o satır sadece yanlış havuzda durur.
+    ...(vertical ? { videoDuration: "short", q: `${query} #shorts` } : { q: query }),
   });
   return (body.items ?? [])
     .map((item: { id?: { videoId?: string } }) => item.id?.videoId)
     .filter((id: string | undefined): id is string => !!id);
 }
 
-async function fetchStats(ids: string[]): Promise<Candidate[]> {
+async function fetchStats(ids: string[], vertical = false): Promise<Candidate[]> {
   const body = await youtube("videos", {
     part: "snippet,statistics,contentDetails",
     id: ids.join(","),
@@ -88,9 +96,14 @@ async function fetchStats(ids: string[]): Promise<Candidate[]> {
         candidate.title &&
         candidate.view_count >= MIN_VIEWS &&
         candidate.view_count <= MAX_VIEWS &&
-        candidate.duration_seconds >= MIN_DURATION_SECONDS,
+        (vertical
+          ? candidate.duration_seconds <= MAX_SHORT_SECONDS
+          : candidate.duration_seconds >= MIN_DURATION_SECONDS),
     )
-    .map(({ duration_seconds: _duration, ...row }: Candidate) => row);
+    .map(({ duration_seconds: _duration, ...row }: Candidate) => ({
+      ...row,
+      is_vertical: vertical,
+    }));
 }
 
 Deno.serve(async (req) => {
@@ -106,7 +119,7 @@ Deno.serve(async (req) => {
   if (!KEY) return json({ error: "missing_youtube_api_key" }, 500);
 
   // Tek niş yenilemek için: {"niche":"animation"}. Arama başına 100 kota birimi gider,
-  // tam tur 4.500 birim; günlük hak 10.000. Elle denerken tek nişle çalış.
+  // tam tur 7.500 birim (yatay + dikey); günlük hak 10.000. Elle denerken tek nişle çalış.
   const { niche: onlyNiche = null } = await req.json().catch(() => ({}));
 
   const sb = admin();
@@ -123,15 +136,18 @@ Deno.serve(async (req) => {
     if (queries.length === 0) continue;
 
     try {
-      const ids = new Set<string>();
-      for (const query of queries) {
-        for (const id of await searchVideoIds(query)) ids.add(id);
-      }
-
       const candidates: Candidate[] = [];
-      const idList = [...ids];
-      for (let i = 0; i < idList.length; i += 50) {
-        candidates.push(...(await fetchStats(idList.slice(i, i + 50))));
+
+      for (const vertical of [false, true]) {
+        const ids = new Set<string>();
+        const round = vertical ? queries.slice(0, SHORT_QUERIES_PER_NICHE) : queries;
+        for (const query of round) {
+          for (const id of await searchVideoIds(query, vertical)) ids.add(id);
+        }
+        const idList = [...ids];
+        for (let i = 0; i < idList.length; i += 50) {
+          candidates.push(...(await fetchStats(idList.slice(i, i + 50), vertical)));
+        }
       }
       if (candidates.length === 0) {
         report[niche.slug] = 0;

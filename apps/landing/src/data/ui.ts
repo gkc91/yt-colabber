@@ -4,7 +4,7 @@ import type { Locale } from './site';
 export const UI = {
   en: {
     brand: 'Clickable',
-    tagline: 'Pre-publish feedback for small YouTube channels',
+    tagline: 'Pre-publish feedback for small channels — YouTube, Reels, TikTok',
     nav: {
       thumbnail: 'Thumbnail test',
       hook: 'Hook test',
@@ -22,13 +22,13 @@ export const UI = {
       privacy: 'Privacy',
       terms: 'Terms',
       language: 'Türkçe',
-      rights: 'Clickable. Not affiliated with YouTube or Google.',
+      rights: 'Clickable. Not affiliated with YouTube, Google, Instagram or TikTok.',
     },
     skip: 'Skip to content',
   },
   tr: {
     brand: 'Clickable',
-    tagline: 'Küçük YouTube kanalları için yayın öncesi geri bildirim',
+    tagline: 'Küçük kanallar için yayın öncesi geri bildirim — YouTube, Reels, TikTok',
     nav: {
       thumbnail: 'Thumbnail testi',
       hook: 'Hook testi',
@@ -46,7 +46,7 @@ export const UI = {
       privacy: 'Gizlilik',
       terms: 'Şartlar',
       language: 'English',
-      rights: 'Clickable. YouTube veya Google ile bağlantılı değildir.',
+      rights: 'Clickable. YouTube, Google, Instagram veya TikTok ile bağlantılı değildir.',
     },
     skip: 'İçeriğe geç',
   },
