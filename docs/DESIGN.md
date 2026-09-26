@@ -111,6 +111,13 @@ Değerler `src/design/tokens.ts` adlarıyla yazılır, ham sayıyla değil.
 | `Card` | `surface` zemin, saç teli `line` çerçeve, `radius.card`, iç boşluk `lg`. Gölge yok. |
 | `Rule` | Saç teli yatay çizgi. Başlık ile içerik arasını ayırır. |
 | `Section` | `Heading` + sağında isteğe bağlı sessiz `Meta` sayaç + `Rule` + içerik. Rapor ritmi bu üçlüden çıkar. |
+
+**Satır içi metin kuralı:** `flexDirection: 'row'` + `alignItems: 'baseline'` olan bir satırda
+büyüyecek metne **`flex: 1` verilir**. Verilmezse Android metni dar ölçüp ikinci satıra
+taşırıyor ve satır yüksekliği baseline'a göre hesaplandığı için o satır kırpılıyor —
+profil ekranında "Also review" başlığı telefonda "Also" görünüyordu. Web aynı düzeni
+sorunsuz çizdiği için tarayıcı önizlemesi bu hatayı göstermiyor; kural yazılı olmak
+zorunda.
 | `Screen` | Sayfa çerçevesi: `paper` zemin, `maxWidth 640`, kenar boşluğu `gutter`, üstte `xl` altta `xxxl`. `center` türevi boş/hata ekranları için. |
 | `Stat` | Büyük tabular sayı (`display`) + altında `Label`. Sonuç ekranlarının kahramanı. |
 | `Progress` | 3px yüksekliğinde çubuk; dolu kısım `ink`, tamamlandıysa `positive`, zemin `line`. Sayının yanında durur, onun yerine geçmez. |

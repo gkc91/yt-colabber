@@ -24,7 +24,7 @@ export function Section({
   return (
     <View style={[styles.section, style]}>
       <View style={styles.header}>
-        <Heading>{title}</Heading>
+        <Heading style={styles.title}>{title}</Heading>
         {note ? <Meta>{note}</Meta> : null}
       </View>
       <Rule />
@@ -42,5 +42,12 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
     justifyContent: 'space-between',
     gap: space.sm,
+  },
+  // Satırda büyüyecek metne genişliğini AÇIKÇA vermek gerekiyor. Yoksa Android
+  // ölçümü dar çıkarıyor, başlık ikinci satıra taşıyor ve satır yüksekliği baseline'a
+  // göre olduğu için o satır kırpılıyor: "Also review" ekranda "Also" görünüyordu.
+  // Web'de aynı düzen sorunsuz çizdiği için önizlemede fark edilmiyor.
+  title: {
+    flex: 1,
   },
 });

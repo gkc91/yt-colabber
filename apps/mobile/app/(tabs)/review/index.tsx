@@ -50,7 +50,7 @@ export default function ReviewScreen() {
       {/* Kredi her zaman aynı yerde: üstte, tek satır, altında çizgi. */}
       <View style={styles.balance} accessibilityRole="summary">
         <View style={styles.balanceRow}>
-          <Label>{t('credits.balance')}</Label>
+          <Label style={styles.balanceLabelText}>{t('credits.balance')}</Label>
           <Title style={styles.balanceValue} testID="credit-balance">
             {balance.data ?? t('credits.loading')}
           </Title>
@@ -148,6 +148,9 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
     justifyContent: 'space-between',
     paddingBottom: space.md,
+  },
+  balanceLabelText: {
+    flex: 1,
   },
   balanceValue: {
     fontVariant: ['tabular-nums'],

@@ -78,7 +78,7 @@ function TagList({ title, rows }: { title: string; rows: { tag: string; count: n
       {rows.length === 0 ? <Small tone="muted">{t('results.noData')}</Small> : null}
       {rows.map(({ tag, count }) => (
         <View key={tag} style={styles.tagRow}>
-          <Body>{t(`review.tags.${tag}` as MessageKey)}</Body>
+          <Body style={styles.tagLabel}>{t(`review.tags.${tag}` as MessageKey)}</Body>
           <Body style={styles.tagCount}>{count}</Body>
         </View>
       ))}
@@ -122,6 +122,10 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
     gap: space.md,
     minHeight: 28,
+  },
+  // Bkz. Section.tsx: baseline satırında büyüyen metne flex verilmezse Android kırpıyor.
+  tagLabel: {
+    flex: 1,
   },
   tagCount: {
     fontVariant: ['tabular-nums'],

@@ -96,7 +96,7 @@ export function StudioSidebar({ state, descriptors, navigation }: BottomTabBarPr
       <View style={styles.footer}>
         <Rule />
         <View style={styles.credits}>
-          <Label>{t('credits.balance')}</Label>
+          <Label style={styles.creditsLabel}>{t('credits.balance')}</Label>
           <Heading style={styles.number}>{String(balance.data ?? '—')}</Heading>
         </View>
       </View>
@@ -157,6 +157,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'baseline',
     paddingHorizontal: space.md,
+  },
+  creditsLabel: {
+    flex: 1,
   },
   number: {
     fontVariant: ['tabular-nums'],
