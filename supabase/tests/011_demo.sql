@@ -46,7 +46,7 @@ select ok(
 -- ---------- test_demo_function_is_service_role_only ----------
 select ok(
   not has_function_privilege('authenticated',
-    'create_demo_submission(uuid, text, text[], text[], text, int, text)', 'execute'),
+    'create_demo_submission(uuid, text, text[], text[], text, int, text, boolean)', 'execute'),
   'kullanıcılar demo test açamaz');
 
 -- ---------- test_real_submission_comes_before_demo ----------

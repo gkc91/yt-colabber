@@ -15,6 +15,14 @@
       "channel_title": "Let Me Finish",
       "niche": "education",
       "language": "en"
+    },
+    "word-origins": {
+      "email": "wordorigins@clickabletest.com",
+      "handle": "wordorigins",
+      "display_name": "Word Origins",
+      "channel_title": "Word Origins",
+      "niche": "education",
+      "language": "en"
     }
   },
   "submissions": [
@@ -107,6 +115,45 @@
       ],
       "clip": "lmf-ep06.mp4",
       "clip_duration_seconds": 58
+    },
+    {
+      "channel": "word-origins",
+      "titles": [
+        "Six Dots From a Blind Teenager Became a Global Alphabet"
+      ],
+      "thumbnails": [
+        "v3-braille-a.jpg",
+        "v3-braille-b.jpg"
+      ],
+      "clip": "v3-braille.mp4",
+      "clip_duration_seconds": 56,
+      "is_vertical": true
+    },
+    {
+      "channel": "word-origins",
+      "titles": [
+        "The Titan Who Actually Held Up the Sky"
+      ],
+      "thumbnails": [
+        "v3-atlas-a.jpg",
+        "v3-atlas-b.jpg"
+      ],
+      "clip": "v3-atlas.mp4",
+      "clip_duration_seconds": 48,
+      "is_vertical": true
+    },
+    {
+      "channel": "word-origins",
+      "titles": [
+        "A Self-Taught Genius Became the World's Amp"
+      ],
+      "thumbnails": [
+        "v3-ampere-a.jpg",
+        "v3-ampere-b.jpg"
+      ],
+      "clip": "v3-ampere.mp4",
+      "clip_duration_seconds": 51,
+      "is_vertical": true
     }
   ]
 }

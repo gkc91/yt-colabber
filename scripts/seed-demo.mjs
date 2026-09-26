@@ -222,6 +222,8 @@ for (const entry of manifest.submissions) {
     p_clip_path: clipPath,
     p_clip_duration: entry.clip_duration_seconds,
     p_language: entry.language ?? 'en',
+    // Dikey örnek test (0026): ızgara dikey decoy havuzundan beslenir.
+    p_is_vertical: entry.is_vertical ?? false,
   });
   if (error) throw error;
   const niche = entry.niche ?? channels[entry.channel]?.niche;
