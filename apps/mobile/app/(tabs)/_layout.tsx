@@ -63,6 +63,10 @@ export default function TabLayout() {
       <Tabs.Screen name="submit/new" options={{ href: null, title: t('submit.newTest') }} />
       <Tabs.Screen name="submit/[id]" options={{ href: null, title: t('results.title') }} />
       <Tabs.Screen
+        name="profile/add-channel"
+        options={{ href: null, title: t('profile.channels.addTitle') }}
+      />
+      <Tabs.Screen
         name="profile/index"
         options={{
           title: t('tabs.profile'),

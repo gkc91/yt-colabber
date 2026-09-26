@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import type { Database } from '@/lib/database.types';
 import { supabase } from '@/lib/supabase';
 
+import { addChannel } from '@/features/channels/api';
+
 import type { YouTubeChannelRef } from './youtube';
 
 export type SubscriberBand = Database['public']['Enums']['subscriber_band'];
@@ -31,27 +33,6 @@ export async function saveNicheAndLanguage(_userId: string, nicheId: number, lan
     p_language: language,
   });
   if (error) throw error;
-}
-
-/**
- * Kanal satırını client yazmaz: niş kanalda durduğu için serbest yazma, "ayda bir niş
- * değiştirme" kuralını delerdi (0020). Ekleme `add_channel` fonksiyonundan geçer.
- */
-export async function addChannel(input: {
-  channel: YouTubeChannelRef;
-  band: SubscriberBand | null;
-  nicheId: number;
-  language: string;
-}) {
-  const { data, error } = await supabase.rpc('add_channel', {
-    p_youtube_url: input.channel.url,
-    p_youtube_channel_id: input.channel.kind === 'channel' ? input.channel.channelId : undefined,
-    p_band: input.band ?? undefined,
-    p_niche_id: input.nicheId,
-    p_language: input.language,
-  });
-  if (error) throw error;
-  return data as string;
 }
 
 export async function completeOnboarding(

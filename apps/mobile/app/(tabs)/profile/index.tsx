@@ -1,12 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { ActivityIndicator, Alert, Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
 import { Section } from '@/components/Section';
-import { Label, Meta, Small, Stat } from '@/components/Type';
+import {
+  ChannelFailed,
+  changeChannelNiche,
+  channelLabel,
+  channelsQueryKey,
+  useMyChannels,
+} from '@/features/channels/api';
+import { Body, Label, Meta, Small, Stat } from '@/components/Type';
 import { space } from '@/design/tokens';
 import { signOut } from '@/features/auth/api';
 import { useSession } from '@/features/auth/session';
@@ -49,6 +57,25 @@ export default function ProfileScreen() {
   const dirty = edited !== null;
 
   const [changingNiche, setChangingNiche] = useState(false);
+
+  // Kanallar: her birinin kendi nişi var, test o nişe gider (0020).
+  const channels = useMyChannels(userId);
+  const [editingChannel, setEditingChannel] = useState<string | null>(null);
+  const [channelError, setChannelError] = useState<MessageKey | null>(null);
+  const switchChannelNiche = useMutation({
+    mutationFn: changeChannelNiche,
+    onSuccess: async () => {
+      setEditingChannel(null);
+      setChannelError(null);
+      await queryClient.invalidateQueries({ queryKey: channelsQueryKey(userId) });
+    },
+    onError: (e) =>
+      setChannelError(
+        e instanceof ChannelFailed
+          ? (`profile.channels.errors.${e.code}` as MessageKey)
+          : 'auth.genericError',
+      ),
+  });
   const [nicheError, setNicheError] = useState<string | null>(null);
 
   const saveScope = useMutation({
@@ -180,6 +207,45 @@ export default function ProfileScreen() {
         )}
       </Section>
 
+      {/* ---------- kanallar ---------- */}
+      {/* Testin nişi kanaldan okunuyor (0020); bu yüzden kanal listesi profilin bir
+          süsü değil, testin nereye gideceğini gösteren tek yer. */}
+      <Section title={t('profile.channels.title')}>
+        <Small tone="muted">{t('profile.channels.body')}</Small>
+        {channels.data?.map((channel) => (
+          <View key={channel.id} style={styles.channelRow}>
+            <Body>{channelLabel(channel)}</Body>
+            <Meta>{niches.data?.find((n) => n.id === channel.niche_id)?.name ?? '—'}</Meta>
+            {editingChannel === channel.id ? (
+              <View style={styles.chips} accessibilityRole="radiogroup">
+                {niches.data?.map((niche) => (
+                  <Chip
+                    key={niche.id}
+                    label={niche.name}
+                    selected={niche.id === channel.niche_id}
+                    onPress={() =>
+                      switchChannelNiche.mutate({ channelId: channel.id, nicheId: niche.id })
+                    }
+                  />
+                ))}
+              </View>
+            ) : (
+              <Button
+                title={t('profile.channels.changeNiche')}
+                variant="secondary"
+                onPress={() => setEditingChannel(channel.id)}
+              />
+            )}
+          </View>
+        ))}
+        {channelError ? <Small tone="accent">{t(channelError)}</Small> : null}
+        <Button
+          title={t('profile.channels.add')}
+          variant="secondary"
+          onPress={() => router.push('/profile/add-channel')}
+        />
+      </Section>
+
       {/* ---------- değerlendirme kapsamı ---------- */}
       <Section title={t('profile.scope.title')}>
         <Small tone="muted">{t('profile.scope.body')}</Small>
@@ -264,6 +330,10 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   label: {
     marginTop: space.xs,
+  },
+  channelRow: {
+    gap: space.sm,
+    paddingBottom: space.md,
   },
   chips: {
     flexDirection: 'row',

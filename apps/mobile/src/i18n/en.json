@@ -234,13 +234,13 @@
     },
     "demo": {
       "title": "Practice test",
-      "body": "This one stays open so there is always something to review, and it still earns you a credit. Answer honestly — a real creator reads these results."
+      "body": "Practice tests stay open, so there is always something to review, and they still earn you a credit. Answer exactly as you would for anyone else."
     }
   },
   "profile": {
     "yourChannel": {
-      "title": "Your channel",
-      "body": "Your tests go to {niche} creators who make videos in {language}."
+      "title": "What you review",
+      "body": "You review {niche} tests in {language}."
     },
     "scope": {
       "title": "Also review",
@@ -286,6 +286,26 @@
       "delete": "Delete my account",
       "deleteHint": "Deleting removes your account, your tests and your credit history. Reviews you wrote on other people's tests stay, without your name, so their results keep working.",
       "deleteConfirm": "This cannot be undone. Your account, your tests and your credits will be deleted."
+    },
+    "channels": {
+      "title": "Your channels",
+      "body": "Each channel has its own niche. A test goes to the niche of the channel that publishes it.",
+      "add": "Add a channel",
+      "addTitle": "Add a channel",
+      "addHint": "Reviewers are matched to this channel's niche, so pick the one it publishes in.",
+      "nicheTitle": "What does this channel make?",
+      "languageTitle": "What language?",
+      "save": "Add channel",
+      "changeNiche": "Change niche",
+      "errors": {
+        "channel_limit": "Five channels is the limit for one account.",
+        "channel_taken": "That YouTube channel is already linked to an account.",
+        "channel_url_required": "Add the channel address.",
+        "niche_change_too_soon": "You changed this channel's niche recently. Try again next month.",
+        "unknown_niche": "Pick a niche.",
+        "not_owner": "That channel is not yours.",
+        "unknown": "That did not work. Try again."
+      }
     }
   },
   "results": {
