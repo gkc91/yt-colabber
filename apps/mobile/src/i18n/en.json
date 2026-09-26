@@ -235,6 +235,14 @@
     "demo": {
       "title": "Practice test",
       "body": "Practice tests stay open, so there is always something to review, and they still earn you a credit. Answer exactly as you would for anyone else."
+    },
+    "reveal": {
+      "hitTitle": "That was the one being tested",
+      "missTitle": "Here is the one being tested",
+      "body": "Your click is already recorded. Now watch its opening and say what you think.",
+      "youPicked": "You picked",
+      "tested": "Being tested",
+      "continue": "Continue"
     }
   },
   "profile": {

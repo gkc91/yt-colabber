@@ -12,6 +12,7 @@ import { fetchNextTask, submitReview } from '@/features/review/api';
 import { DoneStep } from '@/features/review/components/DoneStep';
 import { FeedStep } from '@/features/review/components/FeedStep';
 import { GuessStep } from '@/features/review/components/GuessStep';
+import { RevealStep } from '@/features/review/components/RevealStep';
 import { HookStep } from '@/features/review/components/HookStep';
 import {
   buildFeedItems,
@@ -24,7 +25,7 @@ import { storage } from '@/lib/storage';
 import { track } from '@/lib/track';
 import { t } from '@/i18n';
 
-type Stage = 'feed' | 'guess' | 'hook';
+type Stage = 'feed' | 'reveal' | 'guess' | 'hook';
 
 /**
  * Rota aynı kaldığı için ekran görevden göreve YENİDEN KULLANILIR: state sıfırlanmaz ve
@@ -113,7 +114,8 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
       position: index,
       ms: Date.now() - feedShownAt.current,
     });
-    setStage('guess');
+    // Ölçüm burada biter; aradaki ekran neyin test edildiğini gösterir.
+    setStage('reveal');
   };
 
   const onFinish = async (leftAt: number | null) => {
@@ -161,6 +163,14 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
         </Card>
       ) : null}
       {stage === 'feed' ? <FeedStep items={items} onPick={onPick} /> : null}
+
+      {stage === 'reveal' && pick ? (
+        <RevealStep
+          picked={items[pick.position]}
+          candidate={items.find((item) => item.kind === 'candidate') as (typeof items)[number]}
+          onContinue={() => setStage('guess')}
+        />
+      ) : null}
 
       {stage === 'guess' ? (
         <GuessStep
