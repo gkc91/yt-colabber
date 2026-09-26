@@ -7,7 +7,7 @@
 --                    "Şu video seçilmemeli" demek rastgele geçip kalabilirdi.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(8);
+select plan(10);
 
 -- ---------- arrange ----------
 insert into niches (slug, name) values ('rd-niche', 'Decoy niche'), ('rd-other', 'Other niche');
@@ -86,6 +86,26 @@ select is(
        'Is Time Travel Possible?')) d
    where d->>'video_id' = 'rd_foreign'),
   0, 'pick_decoys: başka nişin videosu ızgaraya giremez');
+
+-- ---------- test_decoys_match_the_orientation ----------
+-- Dikey bir aday 16:9 komşular arasında sırıtır ve test gerçekte olacağından İYİ sonuç
+-- verir (0024). Yön ızgarayı böler, değerlendirici havuzunu değil.
+insert into niche_thumbnail_cache (niche_id, video_id, title, thumbnail_url, is_vertical)
+select (select id from niches where slug = 'rd-niche'), 'rd_dik_' || g,
+       'Vertical Travel Clip ' || g, 'https://example.test/d' || g || '.jpg', true
+from generate_series(1, 8) g;
+
+select is(
+  (select count(*)::int from jsonb_array_elements(
+     pick_decoys((select id from niches where slug='rd-niche'), 'Time Travel', true)) d
+   where d->>'video_id' like 'rd_dik%'),
+  5, 'pick_decoys: dikey testin beş komşusu da dikey');
+
+select is(
+  (select count(*)::int from jsonb_array_elements(
+     pick_decoys((select id from niches where slug='rd-niche'), 'Time Travel', false)) d
+   where d->>'video_id' like 'rd_dik%'),
+  0, 'pick_decoys: yatay testin ızgarasına dikey video girmez');
 
 select * from finish();
 rollback;
