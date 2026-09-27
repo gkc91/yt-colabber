@@ -6,6 +6,9 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
+// apps/landing/src/data/site.ts ile aynı adres; orada değişirse burası da değişmeli.
+const CONTACT_EMAIL = 'support@clickabletest.com';
+
 const DIST = 'apps/landing/dist';
 const SITE = 'https://clickabletest.com';
 const LOCALES = ['en', 'tr'];
@@ -201,6 +204,24 @@ for (const locale of LOCALES) {
     check(`404 dizine girmiyor: ${file}`, /name="robots"[^>]*noindex/.test(html));
     check(`404 canonical yazmıyor: ${file}`, !/rel="canonical"/.test(html));
   }
+}
+
+// ---------- e-posta adresi ----------
+// Cloudflare'in "Email Address Obfuscation" özelliği sayfadaki adresleri —düz metin
+// olanları da— /cdn-cgi/l/email-protection bağlantısına çeviriyor ve o adres 404 dönüyor.
+// 2026-09-27 SEO denetimi altı sayfada "critical" verdi. Kaçış işareti `<!--email_off-->`;
+// adres yazan yeni bir sayfa eklendiğinde işaret unutulursa hata sessizce geri gelir.
+// Zaten okunmuş sayfaları kullanıyoruz: ROUTES'taki her sayfa `pages` içinde.
+for (const { path, html } of pages) {
+  const addresses = html.split(CONTACT_EMAIL).length - 1;
+  if (addresses === 0) continue;
+  const open = html.split('<!--email_off-->').length - 1;
+  const close = html.split('<!--/email_off-->').length - 1;
+  check(
+    `e-posta Cloudflare gizlemesinden korunuyor: ${path}`,
+    open > 0 && open === close && addresses === open * 2,
+    `${addresses} adres, ${open} açılış, ${close} kapanış`,
+  );
 }
 
 const failed = results.filter((ok) => !ok).length;

@@ -1,0 +1,25 @@
+---
+// İletişim adresini yazan tek yer.
+//
+// Neden bir bileşen: Cloudflare'in "Email Address Obfuscation" özelliği, sayfadaki e-posta
+// adreslerini —düz metin olanları da— `/cdn-cgi/l/email-protection#…` bağlantısına çeviriyor
+// ve o adres tek başına 404 dönüyor. JavaScript çalışırsa tarayıcı adresi geri çözüyor,
+// çalışmazsa insan tıklayınca 404 görüyor; tarayıcı/denetleyici de kırık bağlantı sayıyor
+// (2026-09-27 SEO denetimi: altı sayfada "critical").
+//
+// Adres zaten Play listemizde herkese açık olduğu için gizlemek bize bir şey kazandırmıyor,
+// yalnızca hesap silme sayfasının iletişim yolunu kırıyordu. Cloudflare'in kendi kaçış
+// işareti `<!--email_off-->` ile o sayfalarda özellik devre dışı bırakılıyor.
+import { CONTACT_EMAIL } from '../data/site';
+
+interface Props {
+  /** true: tıklanabilir mailto. false: yalnızca metin (cümlenin içinde geçerken). */
+  link?: boolean;
+}
+
+const { link = true } = Astro.props;
+---
+
+<!--email_off-->{
+  link ? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> : CONTACT_EMAIL
+}<!--/email_off-->

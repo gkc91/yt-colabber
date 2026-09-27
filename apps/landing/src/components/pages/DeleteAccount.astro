@@ -3,7 +3,8 @@
 // yanında HERKESE AÇIK bir adres ister: hesabı olan biri uygulamayı kurmadan da silme
 // talebi edebilmeli. Play Console'da bu adres istenir.
 import Base from '../../layouts/Base.astro';
-import { CONTACT_EMAIL, WEB_APP_URL, type Locale } from '../../data/site';
+import Email from '../Email.astro';
+import { WEB_APP_URL, type Locale } from '../../data/site';
 
 interface Props {
   locale: Locale;
@@ -37,7 +38,7 @@ const copy = {
       items: [
         'Your account and sign-in email.',
         'Your profile: handle, niche, language, channel link, credit balance and reputation.',
-        'Your tests, including every thumbnail and clip you uploaded.',
+        'Your tests, including every thumbnail and clip you uploaded. A test still collecting reviews goes with them, and anyone part-way through reviewing it loses the task; they keep the credits they have already earned.',
         'Your credit history and the review tasks assigned to you.',
         'Your push notification token, if you had notifications on.',
       ],
@@ -79,7 +80,7 @@ const copy = {
       items: [
         'Hesabın ve giriş e-postan.',
         'Profilin: kullanıcı adı, niş, dil, kanal bağlantısı, kredi bakiyesi ve itibar.',
-        'Testlerin — yüklediğin bütün thumbnail’lar ve klipler dahil.',
+        'Testlerin — yüklediğin bütün thumbnail’lar ve klipler dahil. Değerlendirme toplamaya devam eden bir testin varsa o da gider; o sırada onu değerlendiren biri görevini kaybeder, ama kazandığı krediler onda kalır.',
         'Kredi geçmişin ve sana atanmış değerlendirme görevlerin.',
         'Bildirim iznini açtıysan bildirim anahtarın.',
       ],
@@ -123,7 +124,7 @@ const copy = {
       <ul>{copy.kept.items.map((item) => <li>{item}</li>)}</ul>
 
       <h2>{copy.contact.h}</h2>
-      <p>{copy.contact.body} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+      <p>{copy.contact.body} <Email /></p>
     </div>
   </section>
 </Base>

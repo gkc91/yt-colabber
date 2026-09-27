@@ -64,7 +64,7 @@ const copy = {
           h: 'Your rights and contact',
           items: [
             'You can ask for a copy of your data, a correction, or deletion.',
-            `Write to ${CONTACT_EMAIL}.`,
+            'Write to {email}.',
           ],
         },
       ],
@@ -120,7 +120,7 @@ const copy = {
           h: 'Haklarını kullanma ve iletişim',
           items: [
             'Verinin bir kopyasını, düzeltilmesini ya da silinmesini isteyebilirsin.',
-            `${CONTACT_EMAIL} adresine yaz.`,
+            '{email} adresine yaz.',
           ],
         },
       ],
@@ -175,7 +175,7 @@ const copy = {
           h: 'Availability and changes',
           items: [
             'The service is provided as is, without a guarantee of uninterrupted availability.',
-            `These terms can change; the date above says when they last did. Questions go to ${CONTACT_EMAIL}.`,
+            'These terms can change; the date above says when they last did. Questions go to {email}.',
           ],
         },
       ],
@@ -228,7 +228,7 @@ const copy = {
           h: 'Hizmet ve değişiklikler',
           items: [
             'Hizmet olduğu gibi sunulur; kesintisiz erişim garantisi verilmez.',
-            `Bu şartlar değişebilir; yukarıdaki tarih en son ne zaman değiştiğini söyler. Sorular: ${CONTACT_EMAIL}.`,
+            'Bu şartlar değişebilir; yukarıdaki tarih en son ne zaman değiştiğini söyler. Sorular: {email}.',
           ],
         },
       ],
@@ -237,6 +237,15 @@ const copy = {
 } as const;
 
 const c = copy[kind][locale];
+
+/**
+ * Metnin içindeki `{email}` yer tutucusu. Cloudflare'in e-posta gizlemesi düz metin
+ * adresleri de `/cdn-cgi/l/email-protection` bağlantısına çeviriyor ve o adres 404
+ * dönüyor (bkz. components/Email.astro). `<!--email_off-->` ile bu sayfalarda kapatılıyor.
+ */
+const EMAIL_HTML =
+  `<!--email_off--><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><!--/email_off-->`;
+const withEmail = (text: string) => text.replace('{email}', EMAIL_HTML);
 const path = kind === 'privacy' ? '/privacy' : '/terms';
 const updatedLabel = locale === 'tr' ? 'Son güncelleme' : 'Last updated';
 ---
@@ -251,9 +260,13 @@ const updatedLabel = locale === 'tr' ? 'Son güncelleme' : 'Last updated';
           <>
             <h2>{section.h}</h2>
             <ul>
-              {section.items.map((item) => (
-                <li>{item}</li>
-              ))}
+              {section.items.map((item) =>
+                item.includes('{email}') ? (
+                  <li set:html={withEmail(item)} />
+                ) : (
+                  <li>{item}</li>
+                ),
+              )}
             </ul>
           </>
         ))
