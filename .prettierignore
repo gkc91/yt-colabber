@@ -10,3 +10,6 @@ docs
 
 # Oturum günlükleri hook tarafından yazılıyor, depoya girmiyor (.gitignore) — biçim denetimi de dışında.
 production/session-logs/
+
+# Google üretiyor, elle biçimlendirilmez.
+apps/mobile/google-services.json

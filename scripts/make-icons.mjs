@@ -39,7 +39,14 @@ const DARK_ACCENT = '#FF5A4D';
  * @param ink seçilmemiş kartların rengi (koyu temada açık mürekkep)
  * @param accent seçilen kartın rengi
  */
-function mark({ size = 1024, scale = 1, bg = PAPER, mono = null, ink = INK, accent = ACCENT } = {}) {
+function mark({
+  size = 1024,
+  scale = 1,
+  bg = PAPER,
+  mono = null,
+  ink = INK,
+  accent = ACCENT,
+} = {}) {
   const W = 372;
   const H = 209; // 16:9
   const GAP = 40;

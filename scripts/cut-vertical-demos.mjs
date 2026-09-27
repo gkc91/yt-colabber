@@ -38,9 +38,27 @@ for (const id of idList.split(',')) {
 
   const clip = `${prefix}-${id}.mp4`;
   // Dikeyde uzun kenar yükseklik: 1280'e indiriyoruz, 720p'nin dikey karşılığı.
-  run(['-i', video, '-t', '58', '-vf', 'scale=-2:1280', '-c:v', 'libx264', '-crf', '26',
-       '-preset', 'medium', '-c:a', 'aac', '-b:a', '96k', '-movflags', '+faststart',
-       join(OUT, clip)]);
+  run([
+    '-i',
+    video,
+    '-t',
+    '58',
+    '-vf',
+    'scale=-2:1280',
+    '-c:v',
+    'libx264',
+    '-crf',
+    '26',
+    '-preset',
+    'medium',
+    '-c:a',
+    'aac',
+    '-b:a',
+    '96k',
+    '-movflags',
+    '+faststart',
+    join(OUT, clip),
+  ]);
 
   const thumbnails = [];
   COVER_SECONDS.forEach((second, index) => {
