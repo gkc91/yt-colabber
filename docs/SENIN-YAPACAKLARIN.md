@@ -75,19 +75,40 @@
 
 ## 5. Para tarafı (Faz D — ilk kullanıcılar gelene kadar bekleyebilir)
 
-- [ ] **RevenueCat hesabı** ve ürünlerin tanımlanması (PRODUCT §15: `credits_10`, `credits_30`,
-      `credits_100`, `pro_monthly`, `pro_yearly`). Kod tarafı hazır; sırayla:
-      1. RevenueCat projesi aç, iOS/Android uygulamalarını ekle (mağaza hesapları gerekiyor).
-      2. Ürünleri yukarıdaki kimliklerle tanımla; `pro_monthly` + `pro_yearly` için
-         **entitlement adı `pro`** olmalı (kod bu adı arıyor).
-      3. Tek bir Offering yap, beş ürünü de paket olarak ekle.
+- [ ] **RevenueCat hesabı ve ürünler.** Kod tarafı hazır (`src/lib/purchases.ts`, ürün
+      kimlikleri `src/features/credits/products.ts`). Sıra önemli: Play, uygulama içi ürün
+      tanımlamadan önce bir kanala yüklenmiş sürüm isteyebiliyor — önce E3'ün kapalı test
+      yüklemesini yap, sonra buraya dön.
+
+      **Ürünler ve fiyatlar** (PRODUCT.md §109 ile birebir aynı olmalı; 2026-09-27'de değişti):
+
+      | Kimlik | Tür | Fiyat | Kredi |
+      |---|---|---|---|
+      | `credits_10` | tek seferlik | $2.99 | 10 |
+      | `credits_30` | tek seferlik | $4.99 | 30 |
+      | `credits_100` | tek seferlik | $14.99 | 100 |
+      | `pro_monthly` | abonelik | $6.99/ay | 40/ay |
+      | `pro_yearly` | abonelik | $66.99/yıl | 40/ay |
+
+      Kural: paket büyüdükçe kredi ucuzlar, Pro her zaman en ucuzdur. Fiyatlar kodda değil
+      mağazada tutulduğu için bunu hiçbir test koruyamıyor — D4'te elle doğrulanacak.
+
+      1. RevenueCat projesi aç, Android uygulamasını ekle (`app.clickable.mobile`).
+      2. Ürünleri yukarıdaki kimliklerle tanımla. İki abonelik için **entitlement adı `pro`**
+         olmalı — kod bu adı arıyor (`ENTITLEMENT_PRO`).
+      3. Tek bir Offering aç, beş ürünü de paket olarak ekle.
       4. Webhook: `https://doentqtqklsetbxdprrg.supabase.co/functions/v1/revenuecat-webhook`,
-         Authorization `Bearer <kendi ürettiğin sır>`.
-      5. Aynı sırrı Supabase'e koy:
+         Authorization başlığı `Bearer <kendi ürettiğin sır>`.
+      5. Aynı sırrı Supabase'e koy — **bu adımı ben yapamıyorum, sır bende durmamalı**:
          `supabase secrets set RC_WEBHOOK_SECRET=<sır> --project-ref doentqtqklsetbxdprrg`
-         (şu an tanımlı değil; fonksiyon bilerek 500 `webhook_secret_missing` dönüyor).
-      6. iOS/Android public SDK anahtarlarını `.env` içine `EXPO_PUBLIC_RC_IOS_KEY` /
-         `EXPO_PUBLIC_RC_ANDROID_KEY` olarak yaz.
+         (şu an tanımlı değil; fonksiyon bilerek 500 `webhook_secret_missing` dönüyor —
+         sır yokken hiçbir isteği kabul etmiyor, fail-closed).
+      6. Android public SDK anahtarını `.env`'e `EXPO_PUBLIC_RC_ANDROID_KEY` olarak yaz
+         (iOS anahtarı Apple hesabı açılınca). `.env` bana kapalı, bu da sende.
+      7. Sonra D4: Play license tester ile beş ürünü de satın al, `credit_ledger`'da doğru
+         sebep ve miktarı gör. Pro'da 40 kredi HEMEN yazılmalı, aynı gün iptal-vazgeç
+         ikinci kez yazmamalı (0028).
+
 - [ ] **App Store Connect ve Play Console ödeme/vergi bilgileri.** SETUP.md'deki not: ödeme
       bilgilerine yalnızca 20/B istisna hesabını gir.
 - [ ] **Anthropic API anahtarı** (D3, Pro kullanıcılara AI özeti için) — **Pro satışa çıkmadan
