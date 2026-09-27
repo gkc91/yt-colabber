@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
@@ -106,6 +106,24 @@ export default function Paywall() {
         </View>
       ) : null}
 
+      {/* Mağazalar satın alma ekranında şartlara ve gizliliğe erişim istiyor. */}
+      <View style={styles.legal}>
+        <Small
+          tone="muted"
+          accessibilityRole="link"
+          onPress={() => Linking.openURL('https://clickabletest.com/terms')}
+        >
+          {t('paywall.legal.terms')}
+        </Small>
+        <Small
+          tone="muted"
+          accessibilityRole="link"
+          onPress={() => Linking.openURL('https://clickabletest.com/privacy')}
+        >
+          {t('paywall.legal.privacy')}
+        </Small>
+      </View>
+
       <Button title={t('paywall.close')} variant="secondary" onPress={() => router.back()} />
     </Screen>
   );
@@ -138,6 +156,19 @@ function OptionCard({
           ? t('paywall.options.proBody', { count: option.credits })
           : t('paywall.options.creditsBody')}
       </Small>
+      {/* Abonelikte yenilenme koşulu satın alma düğmesinin YANINDA durmak zorunda:
+          Apple 3.1.2 ve Play abonelik politikası bunu istiyor, California'nın otomatik
+          yenileme yasası (B&P §17603) açıklanmamış yenilemeyi iade sebebi sayıyor. */}
+      {pro ? (
+        <Small tone="muted">
+          {t(
+            option.productId === 'pro_yearly'
+              ? 'paywall.renewal.yearly'
+              : 'paywall.renewal.monthly',
+          )}{' '}
+          {t('paywall.renewal.cancel')}
+        </Small>
+      ) : null}
       <Button title={t('paywall.buy')} onPress={onBuy} disabled={busy} />
     </Card>
   );
@@ -158,6 +189,11 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     flexShrink: 1,
+  },
+  legal: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: space.xl,
   },
   price: {
     fontVariant: ['tabular-nums'],

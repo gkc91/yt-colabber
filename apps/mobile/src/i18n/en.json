@@ -164,7 +164,16 @@
       "not_configured": "This build has no store keys, so buying is off.",
       "web_unsupported": "Purchases only work in the mobile app."
     },
-    "headerTitle": "Credits"
+    "headerTitle": "Credits",
+    "renewal": {
+      "monthly": "Renews every month at the price above until you cancel.",
+      "yearly": "Renews every year at the price above until you cancel.",
+      "cancel": "Cancel any time in your store account — the subscription runs to the end of the period you paid for."
+    },
+    "legal": {
+      "terms": "Terms",
+      "privacy": "Privacy"
+    }
   },
   "notFound": {
     "title": "Oops!",
