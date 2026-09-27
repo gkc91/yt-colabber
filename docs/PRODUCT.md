@@ -62,8 +62,10 @@ Submission 72 saat açık kalır; sonunda gelen kadarıyla `completed`, kullanı
 ## 8. Kredi ekonomisi
 - Kayıt +5 · Değerlendirme +1 (reputation ≥ 0.5) · Submission −N · Süre dolunca iade.
 - IAP: `credits_10` / `credits_30` / `credits_100`. Pro aylık: 40 kredi + öncelikli kuyruk + 25'e kadar değerlendirici + AI özeti.
-- Pro kredisi **ödenmiş dönem başına bir kez** yazılır (0027), olay adına göre değil. İptal edip
-  vazgeçmek (UNCANCELLATION) yeni dönem açmaz, kredi üretmez.
+- Pro kredisi **aktif olunan her 30 günde bir kez** 40 (0028) — faturanın nasıl kesildiğine
+  bakmaz. Yıllık plan aylığın indirimli hâlidir, kredisi de aynı akar. Satın alma anında ilk
+  40 hemen yazılır, sonrakileri günlük cron getirir. İptal edip vazgeçmek (UNCANCELLATION)
+  30 gün içinde olduğu için kredi üretmez.
 
 ## 9. Politika sınırı (değişmez)
 Uygulama YouTube üzerinde hiçbir etkileşim üretmez ve istemez. İzlenme/abone vaadi verilmez: YouTube'un sahte etkileşim politikası takas ve şişirme hizmetlerini yasaklar (uyarı → ihtar → kanal kapatma), uygulama içi izlemeler YouTube'da izlenme sayılmaz ve ilgisiz aboneler CTR/izlenme süresini düşürerek erişimi azaltır. Vaadimiz: yayın öncesi düzeltme ile **mevcut gösterimden daha fazla izlenme**. Kanal URL'i yalnızca niş/profil içindir. "Abone ol / izle / yorum yap" görevleri, karşılıklı tanıtım kredisi, izlenme/abone takası: **hiçbiri, hiçbir zaman.** Collab modülü yalnızca tanıştırır.
@@ -108,7 +110,7 @@ Gerekçe: üreticiler kurguyu ve thumbnail'ı PC'de yapıyor; dosyayı telefona 
 kullanıcısını kaybettiriyor. Sunucu tarafı transcoding yine YOK.
 
 ## 15. Fiyat taslağı (RevenueCat ürün id'leri)
-`credits_10` $2.99 · `credits_30` $4.99 · `credits_100` $17.99 · `pro_monthly` $6.99 · `pro_yearly` $49.99. Mağaza yerel fiyatları otomatik.
+`credits_10` $2.99 · `credits_30` $4.99 · `credits_100` $17.99 · `pro_monthly` $6.99 · `pro_yearly` $66.99 (aylığın %20 indirimli hâli: 12 × $6.99 = $83.88). Mağaza yerel fiyatları otomatik.
 
 `credits_30` $6.99'dan $4.99'a indirildi (2026-09-26): aynı parayla Pro aylık daha çok kredi
 (40 vs 30) VE öncelikli kuyruk, 25 değerlendirici, AI özeti veriyordu — katalogda hiç kimsenin

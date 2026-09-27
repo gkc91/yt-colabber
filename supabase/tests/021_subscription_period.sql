@@ -1,11 +1,11 @@
--- 021_subscription_period.sql — Pro kredisi dönem başına bir kez (0027).
+-- 021_subscription_period.sql — Pro kredisi 30 günde bir (0027, 0028).
 --
--- Sorular: satın almada kredi geliyor mu, iptal-vazgeç döngüsü kredi basıyor mu (asıl
--- açık buydu), yenileme yeni dönem açtığı için kredi geliyor mu, kredi paketi bu kuraldan
--- etkileniyor mu.
+-- Sorular: satın almada kredi hemen geliyor mu, iptal-vazgeç döngüsü kredi basıyor mu
+-- (asıl açık buydu), 30 gün geçince aylık tur kredi yazıyor mu, YILLIK abone de aylık
+-- alıyor mu (kural faturaya değil geçen zamana bağlı), kredi paketi etkileniyor mu.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(7);
+select plan(9);
 
 -- ---------- arrange ----------
 insert into auth.users (id, email) values
@@ -35,25 +35,36 @@ select is(
     where profile_id = 'bbbb9999-0000-0000-0000-000000000001' and reason = 'subscription_grant'),
   40, 'üç kez iptal-vazgeç: kredi hâlâ 40');
 
--- ---------- test_subscription_renewal_opens_a_new_period ----------
-select grant_purchase('bbbb9999-0000-0000-0000-000000000001', 'evt_renewal', 'pro_monthly',
-  0, '{"type":"RENEWAL"}'::jsonb, true, now() + interval '60 days');
+-- ---------- test_subscription_monthly_round_waits_thirty_days ----------
+select is(grant_monthly_pro_credits(), 0,
+  'aylık tur: 30 gün dolmadan kredi yazmaz');
+
+-- Zamanı ileri almak yerine ledger satırını geriye alıyoruz: transaction içinde now()
+-- sabit, yani "30 gün sonra" ancak böyle kurulabiliyor.
+update credit_ledger set created_at = now() - interval '31 days'
+ where profile_id = 'bbbb9999-0000-0000-0000-000000000001' and reason = 'subscription_grant';
+
+select is(grant_monthly_pro_credits(), 1,
+  'aylık tur: 30 gün geçince kredi yazar');
 
 select is(
   (select coalesce(sum(delta), 0)::int from credit_ledger
     where profile_id = 'bbbb9999-0000-0000-0000-000000000001' and reason = 'subscription_grant'),
-  80, 'yenileme yeni dönem açar: +40');
+  80, 'ikinci ay: toplam 80 kredi');
 
-select is(
-  (select count(*)::int from credit_ledger
-    where profile_id = 'bbbb9999-0000-0000-0000-000000000001' and reason = 'subscription_grant'),
-  2, 'iki dönem, iki satır — ara olaylar satır açmadı');
+-- ---------- test_subscription_yearly_gets_monthly_credits ----------
+-- Yıllık plan "aylığın ucuz hâli": yenileme yılda bir gelir ama kredi aylık akmalı.
+-- Kural faturaya değil geçen zamana baktığı için ürün adının hiçbir önemi yok.
+insert into auth.users (id, email) values
+  ('bbbb9999-0000-0000-0000-000000000002', 'yearly@test.local');
+select grant_purchase('bbbb9999-0000-0000-0000-000000000002', 'evt_yearly', 'pro_yearly',
+  0, '{"type":"INITIAL_PURCHASE"}'::jsonb, true, now() + interval '365 days');
 
--- ---------- test_subscription_period_is_recorded ----------
-select is(
-  (select credits_granted_for = expires_at from subscriptions
-    where profile_id = 'bbbb9999-0000-0000-0000-000000000001'),
-  true, 'kredinin yazıldığı dönem abonelik satırında duruyor');
+update credit_ledger set created_at = now() - interval '31 days'
+ where profile_id = 'bbbb9999-0000-0000-0000-000000000002' and reason = 'subscription_grant';
+
+select is(grant_monthly_pro_credits(), 1,
+  'yıllık abone de 30 gün sonra kredi alır');
 
 -- ---------- test_subscription_credit_pack_is_unaffected ----------
 -- Paket satın alma abonelik kuralına takılmamalı: ayrı ürün, ayrı sebep.
@@ -70,6 +81,11 @@ select ok(
   not has_function_privilege('authenticated',
     'grant_purchase(uuid, text, text, int, jsonb, boolean, timestamptz)', 'execute'),
   'kullanıcılar kendilerine kredi yazamaz');
+
+select ok(
+  not has_function_privilege('authenticated', 'grant_pro_credits(uuid)', 'execute')
+  and not has_function_privilege('authenticated', 'grant_monthly_pro_credits()', 'execute'),
+  'aylık kredi fonksiyonları da yalnızca service role');
 
 select * from finish();
 rollback;
