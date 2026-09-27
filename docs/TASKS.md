@@ -80,7 +80,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 - [x] **D3. AI özeti** — Edge Function `ai-summary` (Claude Haiku), sadece Pro; prompt: değerlendirmeleri 5 maddeye indir + "değiştir" önerileri; `submissions.ai_summary`.
 - [x] **C5. Klip saklama süresi** — kapanan testin klibi 30 gün sonra silinir (cron + `storage.objects` temizliği); sonuç sayıları kalır. Gerekçe: depolama ve trafik en büyük altyapı kalemi (Supabase Free 5 GB trafik ≈ 40 test), üstelik yayınlanmamış videoyu gereğinden uzun tutmak gizlilik riski. Kabul: 30 günden eski kapalı testlerin `clip_path` dosyası yok, sonuçlar açılabiliyor, ekranda "klip süresi doldu" görünüyor; pgTAP + `scripts/check-*.mjs` ile doğrulanır.
 - [x] **C5. Çok kanallı hesap** — `channels` hesap başına birden fazla; kanalın kendi nişi/dili; `create_submission` nişi kanaldan okur; sihirbazda kanal seçici. Kabul: iki kanallı hesapta her testin nişi kendi kanalından gelir (018 testi).
-- [ ] **D4. Sandbox test** — iOS sandbox ve Play license tester ile satın alma → ledger doğrula.
+- [ ] **D4. Sandbox test** — iOS sandbox ve Play license tester ile satın alma → ledger doğrula. Kabul: (1) her ürün için satın alma sonrası `credit_ledger`'da doğru sebep ve miktar; (2) RevenueCat'teki fiyatlar PRODUCT.md §109 ile birebir; (3) kredi başına maliyet sıralaması bozulmamış — paket büyüdükçe ucuzlar, Pro en ucuz (fiyatlar mağazada tutulduğu için bunu kod değil bu adım yakalar); (4) Pro satın alınca 40 kredi HEMEN yazılıyor, aynı gün iptal-vazgeç ikinci kez yazmıyor.
 
 ## Faz E — Yayın
 

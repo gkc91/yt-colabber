@@ -110,8 +110,13 @@ Gerekçe: üreticiler kurguyu ve thumbnail'ı PC'de yapıyor; dosyayı telefona 
 kullanıcısını kaybettiriyor. Sunucu tarafı transcoding yine YOK.
 
 ## 15. Fiyat taslağı (RevenueCat ürün id'leri)
-`credits_10` $2.99 · `credits_30` $4.99 · `credits_100` $17.99 · `pro_monthly` $6.99 · `pro_yearly` $66.99 (aylığın %20 indirimli hâli: 12 × $6.99 = $83.88). Mağaza yerel fiyatları otomatik.
+`credits_10` $2.99 · `credits_30` $4.99 · `credits_100` $14.99 · `pro_monthly` $6.99 · `pro_yearly` $66.99 (aylığın %20 indirimli hâli: 12 × $6.99 = $83.88). Mağaza yerel fiyatları otomatik.
 
-`credits_30` $6.99'dan $4.99'a indirildi (2026-09-26): aynı parayla Pro aylık daha çok kredi
-(40 vs 30) VE öncelikli kuyruk, 25 değerlendirici, AI özeti veriyordu — katalogda hiç kimsenin
-almayacağı bir ürün duruyordu.
+Kredi başına: `credits_10` $0.299 · `credits_30` $0.166 · `credits_100` $0.150 ·
+`pro_monthly` $0.175 · `pro_yearly` $0.140. **Kural: paket büyüdükçe kredi ucuzlar, Pro her
+zaman en ucuzu.**
+
+Geçmiş (2026-09-26/27): `credits_30` $6.99'dan $4.99'a indirildi — aynı parayla Pro aylık daha
+çok kredi (40 vs 30) VE öncelikli kuyruk, 25 değerlendirici, AI özeti veriyordu; katalogda hiç
+kimsenin almayacağı bir ürün duruyordu. Ardından `credits_100` $17.99'dan $14.99'a indirildi:
+30'luk paket inince büyük paket küçükten pahalı kalmıştı ($0.180 vs $0.166).
