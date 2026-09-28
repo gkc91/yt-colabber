@@ -23,6 +23,7 @@
     "check:web": "pnpm --filter mobile build:web && node scripts/check-web-export.mjs"
   },
   "devDependencies": {
+    "playwright": "^1.63.0",
     "prettier": "^3.6.2",
     "supabase": "^2.117.0"
   }

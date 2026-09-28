@@ -230,7 +230,11 @@ olduğu kaybolmaz.
 ## 7. Sürüm öncesi kontrol listesi
 
 - [ ] `node scripts/make-icons.mjs` çalıştırıldı, ikonlar güncel
-- [ ] Ekran görüntüleri çekildi (yukarıdaki dört ekran)
+- [x] Ekran görüntüleri çekildi — `store/play/screenshots/`, 1080×1920 (2026-09-28).
+      `node scripts/store-screenshots.mjs` ile üretiliyor: elle çekilen görüntüler tasarım
+      değişince yeniden kurulamıyor (hangi test açıktı, kaç kredi vardı, hangi ızgara geldi),
+      script durumu SQL'den kurup ondan sonra çekiyor. Beş kare: değerlendirme kartı, içerik
+      listesi, profil, **ızgara** (ürünü tek karede anlatan) ve sonuç ekranı.
 - [x] `eas build --platform android --profile production` yeşil (2026-09-28, sürüm kodu 2).
       Paket doğrulandı: `base/assets/index.android.bundle` içinde gerçek Supabase adresi var,
       CI yer tutucusu yok. Bu kontrol gerekliydi — EAS `production` ortamı bir gün önce BOŞTU

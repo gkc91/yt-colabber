@@ -48,3 +48,6 @@ seeds/demo/*
 # google-services.json ise gizli DEĞİL: her APK'nın içinde taşınıyor, repoda durur.
 *firebase-adminsdk*.json
 fcm-v1-key.json
+
+# Mağaza ekran görüntüleri üretilmiş dosyalardır; script yeniden üretir.
+store/play/screenshots/
