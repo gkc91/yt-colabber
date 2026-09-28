@@ -30,10 +30,25 @@ const BLOCKING_LEVELS = new Set(["LIKELY", "VERY_LIKELY"]);
 
 type Row = { id: string; thumbnail_paths: string[]; screen_attempts: number };
 
+/**
+ * Baytları base64'e çevirir. `String.fromCharCode(...bytes)` ile tek seferde yapmak
+ * çalışmıyor: 200 KB'lık bir thumbnail argüman olarak yayıldığında çağrı yığını taşıyor
+ * ("Maximum call stack size exceeded") ve hata yalnızca GERÇEK boyutta bir görüntüyle
+ * ortaya çıkıyor — canlıda ilk denemede böyle yakalandı (2026-09-28).
+ */
+function toBase64(bytes: Uint8Array): string {
+  const CHUNK = 0x8000;
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK));
+  }
+  return btoa(binary);
+}
+
 async function safeSearch(key: string, images: Uint8Array[]) {
   const body = {
     requests: images.map((bytes) => ({
-      image: { content: btoa(String.fromCharCode(...bytes)) },
+      image: { content: toBase64(bytes) },
       features: [{ type: "SAFE_SEARCH_DETECTION" }],
     })),
   };
