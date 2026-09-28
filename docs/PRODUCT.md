@@ -38,7 +38,7 @@ Bir görev = bir submission için tek değerlendirici. Üç adım, toplam hedef 
 **Adım 3 — Hook testi (klip).** Klip oynar (≤60 sn). Değerlendirici istediği an "Buradan çıkardım" der ya da sonuna kadar izler. Sebep etiketleri (çoklu, sabit): `slow_intro`, `unclear_promise`, `bad_audio`, `low_energy`, `too_long_setup`, `visual_quality`, `didnt_match_thumbnail`, `kept_watching`. İsteğe bağlı 1 satır yorum.
 Kaydedilen: `leave_second` (null = sonuna kadar), `watched_seconds`, etiketler, yorum.
 
-**Sunucu doğrulaması:** `leave_second ≤ watched_seconds`; `time_spent_seconds ≥ 20`; aynı submission ikinci kez değerlendirilemez; kendi submission'ı değerlendirilemez.
+**Sunucu doğrulaması:** `leave_second ≤ watched_seconds`; `leave_second = null` ise `watched_seconds ≥ clip_duration - 2` (null "sonuna kadar izledi" demek, dolayısıyla izlenen süre de sonuna varmalı — yoksa hiç izlemeden en güçlü olumlu sinyal üretilebilir ve `flag_suspicious_reviewer`'ın "hep sıfırda bıraktı" kuralından kaçılır); `time_spent_seconds ≥ 20`; aynı submission ikinci kez değerlendirilemez; kendi submission'ı değerlendirilemez.
 
 Tamamlanınca: +1 kredi (reputation ≥ 0.5 ise; altındaysa kredi yok, uyarı).
 
