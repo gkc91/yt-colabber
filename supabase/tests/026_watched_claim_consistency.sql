@@ -49,7 +49,7 @@ set local role authenticated;
 -- ---------- test_claiming_a_full_watch_without_watching_is_rejected ----------
 select throws_ok(
   $$select submit_review('dd111111-3333-3333-3333-333333333333'::uuid, true, 2, 900,
-      'some guess words here', null, 0, array['kept_watching'], null, 30)$$,
+      'some guess words here please', null, 0, array['kept_watching'], null, 30)$$,
   'invalid_leave_second',
   '"sonuna kadar izledim" + izlenen süre sıfır reddedilir');
 
@@ -57,7 +57,7 @@ select throws_ok(
 -- Aynı çelişki, klibin ortasında: null yine "sonuna kadar" demek.
 select throws_ok(
   $$select submit_review('dd111111-3333-3333-3333-333333333333'::uuid, true, 2, 900,
-      'some guess words here', null, 30, array['kept_watching'], null, 30)$$,
+      'some guess words here please', null, 30, array['kept_watching'], null, 30)$$,
   'invalid_leave_second',
   'yarısını izleyip "sonuna kadar" demek de reddedilir');
 
@@ -78,7 +78,7 @@ set local role authenticated;
 -- Düzeltme dürüst davranışı bozmamalı: erken bırakmak değerli bir sinyal, hile değil.
 select isnt(
   (select submit_review('dd111111-3333-3333-3333-333333333333'::uuid, false, 2, 900,
-      'some guess words here', 3, 3, array['slow_intro'], null, 30)),
+      'some guess words here please', 3, 3, array['slow_intro'], null, 30)),
   null, 'üçüncü saniyede bırakmak geçerli bir değerlendirme');
 
 reset role;
