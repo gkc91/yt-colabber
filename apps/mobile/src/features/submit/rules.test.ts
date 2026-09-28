@@ -3,16 +3,19 @@ import { describe, expect, it } from 'vitest';
 import {
   MAX_TITLE_LENGTH,
   PRO_REVIEW_COUNT,
+  WIZARD_STEPS,
   canAfford,
+  canContinue,
   cleanTitles,
   creditCost,
+  orientationMatches,
   remainingTime,
   reviewCountOptions,
   showsCountdown,
   submissionErrorCode,
+  type WizardState,
   validateClipDuration,
   validateTitles,
-  orientationMatches,
 } from './rules';
 
 describe('submission rules', () => {
@@ -97,5 +100,53 @@ describe('orientationMatches', () => {
   it('test_submit_orientation_rejects_a_clip_of_the_other_shape', () => {
     expect(orientationMatches('vertical', false)).toBe(false);
     expect(orientationMatches('horizontal', true)).toBe(false);
+  });
+});
+
+describe('canContinue', () => {
+  // Sihirbazın en baştaki hâli: hiçbir şey seçilmemiş, hiçbir şey yüklenmemiş.
+  const empty: WizardState = {
+    format: null,
+    thumbnailCount: 0,
+    titlesProblem: 'no_titles',
+    hasClip: false,
+    affordable: false,
+  };
+
+  it('test_wizard_first_step_asks_only_for_the_format', () => {
+    // Asıl gerileme buydu: ilk adım, henüz yüklenmemiş thumbnail'ları soruyordu ve
+    // "Devam" hiç açılmıyordu — test açmak tamamen imkânsızdı (2026-09-28, canlıda).
+    expect(canContinue('format', empty)).toBe(false);
+    expect(canContinue('format', { ...empty, format: 'vertical' })).toBe(true);
+  });
+
+  it('test_wizard_first_step_does_not_wait_for_a_later_step', () => {
+    // Format seçiliyse, sonraki adımların hiçbiri ilk adımı kilitlememeli.
+    expect(canContinue('format', { ...empty, format: 'horizontal' })).toBe(true);
+  });
+
+  it('test_wizard_each_step_gates_on_its_own_field', () => {
+    expect(canContinue('thumbnails', empty)).toBe(false);
+    expect(canContinue('thumbnails', { ...empty, thumbnailCount: 1 })).toBe(true);
+
+    expect(canContinue('titles', empty)).toBe(false);
+    expect(canContinue('titles', { ...empty, titlesProblem: null })).toBe(true);
+
+    expect(canContinue('clip', empty)).toBe(false);
+    expect(canContinue('clip', { ...empty, hasClip: true })).toBe(true);
+
+    expect(canContinue('quantity', empty)).toBe(false);
+    expect(canContinue('quantity', { ...empty, affordable: true })).toBe(true);
+  });
+
+  it('test_wizard_last_step_is_always_continuable', () => {
+    // Özet adımında ileri gidilecek bir yer yok; kapı burada değil.
+    expect(canContinue('review', empty)).toBe(true);
+  });
+
+  it('test_wizard_steps_are_in_the_order_the_screens_render', () => {
+    // Bu dizinin sırası ekrandaki `step === 0..5` dallarıyla eşleşmek ZORUNDA; bir adım
+    // araya girip burası güncellenmezse hata sessizce geri gelir.
+    expect(WIZARD_STEPS).toEqual(['format', 'thumbnails', 'titles', 'clip', 'quantity', 'review']);
   });
 });

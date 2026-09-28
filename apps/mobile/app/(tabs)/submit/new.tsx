@@ -31,18 +31,20 @@ import {
   type PickedThumbnail,
 } from '@/features/submit/media';
 import {
+  WIZARD_STEPS,
   canAfford,
+  canContinue,
   cleanTitles,
   orientationMatches,
-  validateTitles,
   type ClipFormat,
   type ReviewCount,
+  validateTitles,
 } from '@/features/submit/rules';
 import { Cancelled, uploadAndCreate, type UploadProgress } from '@/features/submit/upload';
 import { track } from '@/lib/track';
 import { t, type MessageKey } from '@/i18n';
 
-const STEPS = 6;
+const STEPS = WIZARD_STEPS.length;
 
 /**
  * Aynı kural, iki farklı çözüm: uygulamada seçici videoyu kırpıyor, tarayıcıda
@@ -195,13 +197,13 @@ function Wizard() {
 
   const titleProblem = validateTitles(titles);
   const canGoNext =
-    [
-      thumbnails.length > 0,
-      titleProblem === null,
-      clip !== null,
-      canAfford(balance, requested),
-      true,
-    ][step] && !mustPickChannel;
+    canContinue(WIZARD_STEPS[step], {
+      format,
+      thumbnailCount: thumbnails.length,
+      titlesProblem: titleProblem,
+      hasClip: clip !== null,
+      affordable: canAfford(balance, requested),
+    }) && !mustPickChannel;
 
   const goNext = () => {
     // Klip seçilen orana uymuyorsa ızgara yanlış havuzdan beslenir; sebebini söyleyip durdur.

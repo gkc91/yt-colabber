@@ -118,3 +118,44 @@ export type ClipFormat = 'horizontal' | 'vertical';
  */
 export const orientationMatches = (format: ClipFormat, clipIsVertical: boolean): boolean =>
   (format === 'vertical') === clipIsVertical;
+
+/** Sihirbazın adımları, ekranda göründükleri sırayla. */
+export const WIZARD_STEPS = ['format', 'thumbnails', 'titles', 'clip', 'quantity', 'review'] as const;
+export type WizardStep = (typeof WIZARD_STEPS)[number];
+
+export type WizardState = {
+  format: ClipFormat | null;
+  thumbnailCount: number;
+  titlesProblem: TitlesProblem | null;
+  hasClip: boolean;
+  affordable: boolean;
+};
+
+/**
+ * O adımda "Devam" açılabilir mi.
+ *
+ * Neden burada ve neden adım ADIYLA (2026-09-28): bu mantık ekranın içinde, adım
+ * numarasıyla indekslenen bir dizi olarak duruyordu. `FormatStep` sihirbazın başına
+ * eklendiğinde dizi kaydırılmayı unuttu ve sihirbazın TAMAMI bir adım kaydı: ilk adım
+ * henüz yüklenmemiş thumbnail'ları soruyor, başlıklar adımı daha sonra seçilecek klibi
+ * bekliyordu. Test açmak tamamen imkânsız hâle geldi ve bu canlıya çıktı.
+ *
+ * Sıra numarası yerine ad kullanmak o hatayı imkânsız kılıyor: yeni bir adım araya
+ * girdiğinde eşleşme bozulmuyor, ve buradaki `switch` eksik bir adımda derlenmiyor.
+ */
+export function canContinue(step: WizardStep, state: WizardState): boolean {
+  switch (step) {
+    case 'format':
+      return state.format !== null;
+    case 'thumbnails':
+      return state.thumbnailCount > 0;
+    case 'titles':
+      return state.titlesProblem === null;
+    case 'clip':
+      return state.hasClip;
+    case 'quantity':
+      return state.affordable;
+    case 'review':
+      return true;
+  }
+}
