@@ -26,5 +26,6 @@
     "playwright": "^1.63.0",
     "prettier": "^3.6.2",
     "supabase": "^2.117.0"
-  }
+  },
+  "workspaces": ["apps/*"]
 }

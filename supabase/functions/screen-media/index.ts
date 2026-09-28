@@ -11,7 +11,7 @@
 // Görüntü Vision'a BAYT olarak gidiyor, imzalı adres olarak değil: depo özel ve Vision'ın
 // oradan çekebilmesi için adresin dışarı açılması gerekirdi. Bayt göndermek o soruyu
 // tamamen ortadan kaldırıyor.
-import { admin, json } from "../_shared/supabase.ts";
+import { admin, isInternalCall, json } from "../_shared/supabase.ts";
 
 const VISION_URL = "https://vision.googleapis.com/v1/images:annotate";
 const BATCH = 10;
@@ -75,11 +75,7 @@ function verdict(annotation: Record<string, string> | undefined): string | null 
 }
 
 Deno.serve(async (req) => {
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!serviceKey) return json({ error: "service_key_missing" }, 500);
-  if (req.headers.get("Authorization") !== `Bearer ${serviceKey}`) {
-    return new Response("forbidden", { status: 403 });
-  }
+  if (!isInternalCall(req)) return new Response("forbidden", { status: 403 });
 
   const visionKey = Deno.env.get("GOOGLE_VISION_API_KEY");
   if (!visionKey) return json({ error: "vision_key_missing" }, 500);

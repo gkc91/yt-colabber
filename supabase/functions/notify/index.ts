@@ -1,7 +1,7 @@
 // Bildirim kuyruğunu boşaltır: notifications tablosundaki gönderilmemiş satırları alır,
 // Expo Push API'ye yollar ve sonucu satıra yazar. Cron her 5 dakikada çağırır (0011).
 // Gönderim hatası veri kaybettirmez: satır kuyrukta kalır, attempts artar.
-import { admin, json } from "../_shared/supabase.ts";
+import { admin, isInternalCall, json } from "../_shared/supabase.ts";
 
 const EXPO_PUSH_URL = Deno.env.get("EXPO_PUSH_URL") ?? "https://exp.host/--/api/v2/push/send";
 const BATCH_SIZE = 100; // Expo tek istekte 100 mesaj kabul eder
@@ -51,11 +51,7 @@ function message(row: Row, token: string) {
 Deno.serve(async (req) => {
   // Yalnızca service_role. Kullanıcı JWT'si `verify_jwt`ten geçer ama bu uç kullanıcıya
   // ait bir iş yapmıyor; oturumu olan herkesin tetikleyebilmesi için bir sebep yok.
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!serviceKey) return json({ error: "service_key_missing" }, 500);
-  if (req.headers.get("Authorization") !== `Bearer ${serviceKey}`) {
-    return new Response("forbidden", { status: 403 });
-  }
+  if (!isInternalCall(req)) return new Response("forbidden", { status: 403 });
 
   const sb = admin();
 

@@ -6,16 +6,12 @@
 // Sıra önemli: önce dosya silinir, sonra satır işaretlenir. Tersi olsaydı işaretlenmiş ama
 // dosyası duran (bir daha hiç silinmeyecek) kayıtlar kalırdı. Bu sırada en kötü ihtimal
 // aynı dosyayı bir kez daha silmeye çalışmaktır ki o zararsızdır.
-import { admin, json } from "../_shared/supabase.ts";
+import { admin, isInternalCall, json } from "../_shared/supabase.ts";
 
 const BATCH = 100;
 
 Deno.serve(async (req) => {
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!serviceKey) return json({ error: "service_key_missing" }, 500);
-  if (req.headers.get("Authorization") !== `Bearer ${serviceKey}`) {
-    return new Response("forbidden", { status: 403 });
-  }
+  if (!isInternalCall(req)) return new Response("forbidden", { status: 403 });
 
   const sb = admin();
   const { data: expired, error } = await sb.rpc("expired_clips", { p_limit: BATCH });

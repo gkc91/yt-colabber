@@ -45,3 +45,29 @@ export const json = (body: unknown, status = 200) =>
     status,
     headers: { ...CORS_HEADERS, "content-type": "application/json" },
   });
+
+/**
+ * Bu çağrı veritabanının kendisinden mi geliyor.
+ *
+ * Neden ayrı bir sır (2026-09-28): bu fonksiyonları `pg_net` ile Postgres çağırıyor ve
+ * `net.http_request_queue` giden isteğin başlıklarını `headers jsonb` sütununda saklıyor.
+ * Oraya service_role anahtarını koyarsak, o satırı bir gün okuyabilen herkes veritabanının
+ * tamamını ele geçirir — RLS'i atlar, kredi defterine yazar.
+ *
+ * Bugün o satır erişilebilir değil: Supabase `net` şemasını Data API'den açmıyor ve
+ * `anon`/`authenticated` NOLOGIN rolleri, doğrudan bağlanamıyorlar. Yani bu bir açık
+ * kapatma değil, patlama yarıçapını küçültme: yarın o satır bir şekilde görünür olursa
+ * sızan şey "tarayıcıyı tetikleyebilirim" olsun, "veritabanı benim" değil.
+ *
+ * GEÇİŞ: NET_SHARED_SECRET tanımlıysa o kabul edilir; tanımlı değilse eski service_role
+ * karşılaştırmasına düşer. Böylece fonksiyonlar ve migration birbirini beklemeden,
+ * herhangi bir sırayla yayınlanabiliyor. Sır her yere yerleştikten sonra bu yedek kalkar.
+ */
+export function isInternalCall(req: Request): boolean {
+  const header = req.headers.get("Authorization") ?? "";
+  const shared = Deno.env.get("NET_SHARED_SECRET");
+  if (shared && header === `Bearer ${shared}`) return true;
+
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  return Boolean(serviceKey) && header === `Bearer ${serviceKey}`;
+}

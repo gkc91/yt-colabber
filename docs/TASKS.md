@@ -114,3 +114,4 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 
 ## Sonrası (planlanmadı, sıraya girmesin)
 YouTube read-only OAuth ile gerçek CTR/retention çekme ve oy-CTR korelasyonu · Türkçe dil · Ajans tier · R2 geçişi · Decoy'ları dile göre filtreleme (`niche_thumbnail_cache.language` + arama `relevanceLanguage`; şu an sorgular İngilizce ama sonuçlara başka diller karışabiliyor).
+- [ ] **S1. pg_net geçiş yedeğini kaldır** — `net_shared_secret` hem Vault'a hem edge fonksiyon ortamına (`NET_SHARED_SECRET`) yerleştikten ve dört cron işinin de çalıştığı görüldükten sonra: `net_auth_token()` içindeki `service_role_key` yedeği ve `isInternalCall` içindeki service_role karşılaştırması silinir. Kabul: giden hiçbir `net.http_post` başlığında service_role anahtarı yok, dört cron işi de yeşil.
