@@ -12,6 +12,7 @@ import { fetchNextTask, submitReview } from '@/features/review/api';
 import { DoneStep } from '@/features/review/components/DoneStep';
 import { FeedStep } from '@/features/review/components/FeedStep';
 import { GuessStep } from '@/features/review/components/GuessStep';
+import { ReportSheet } from '@/features/reports/ReportSheet';
 import { RevealStep } from '@/features/review/components/RevealStep';
 import { HookStep } from '@/features/review/components/HookStep';
 import {
@@ -186,7 +187,6 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
       {stage === 'hook' ? (
         <HookStep
           vertical={isVertical}
-          submissionId={reviewTask.submission_id}
           clipUrl={media.data?.clip ?? ''}
           comment={comment}
           tags={tags}
@@ -196,6 +196,15 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
           onFinish={onFinish}
         />
       ) : null}
+
+      {/* Rapor akışın HER adımında durur. Eskiden yalnızca son adımdaydı: ızgarada
+          alakasız ya da rahatsız edici bir şey gören kişi, şikâyet edebilmek için önce
+          başlık tahminini yazıp klibi açmak zorundaydı — yani içeriği tüketmeden
+          şikâyet edemiyordu. */}
+      <ReportSheet
+        target={{ type: 'submission', id: reviewTask.submission_id }}
+        label={t('report.reportTest')}
+      />
 
       {error ? <Small tone="accent">{error}</Small> : null}
     </Screen>

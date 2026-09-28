@@ -12,12 +12,9 @@ import Colors from '@/constants/Colors';
 import { radius, space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
-import { ReportSheet } from '@/features/reports/ReportSheet';
-
 import { tagsFor, toggleTag, type ReasonTag } from '../rules';
 
 type Props = {
-  submissionId: string;
   clipUrl: string;
   vertical?: boolean;
   comment: string;
@@ -39,7 +36,6 @@ const overlayKey = (status: VideoPlayerStatus) =>
 
 /** Adım 3 — hook testi: klip oynar, "buradan çıktım" ya da sonuna kadar (PRODUCT §5). */
 export function HookStep({
-  submissionId,
   clipUrl,
   vertical = false,
   comment,
@@ -171,10 +167,6 @@ export function HookStep({
             title={t('review.hook.submit')}
             onPress={() => onFinish(leftAt)}
             loading={submitting}
-          />
-          <ReportSheet
-            target={{ type: 'submission', id: submissionId }}
-            label={t('report.reportTest')}
           />
         </>
       ) : null}
