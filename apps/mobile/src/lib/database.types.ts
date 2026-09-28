@@ -70,6 +70,54 @@ export type Database = {
           },
         ]
       }
+      appeals: {
+        Row: {
+          created_at: string
+          id: string
+          note: string | null
+          profile_id: string
+          resolution_note: string | null
+          resolved_at: string | null
+          status: string
+          submission_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          profile_id: string
+          resolution_note?: string | null
+          resolved_at?: string | null
+          status?: string
+          submission_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          note?: string | null
+          profile_id?: string
+          resolution_note?: string | null
+          resolved_at?: string | null
+          status?: string
+          submission_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appeals_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appeals_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: true
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blocks: {
         Row: {
           blocked_id: string
@@ -561,6 +609,7 @@ export type Database = {
           created_at: string
           id: string
           note: string | null
+          overturned: boolean
           reason: string
           reporter_id: string
           target_id: string
@@ -570,6 +619,7 @@ export type Database = {
           created_at?: string
           id?: string
           note?: string | null
+          overturned?: boolean
           reason: string
           reporter_id: string
           target_id: string
@@ -579,6 +629,7 @@ export type Database = {
           created_at?: string
           id?: string
           note?: string | null
+          overturned?: boolean
           reason?: string
           reporter_id?: string
           target_id?: string
@@ -748,6 +799,8 @@ export type Database = {
           clip_path: string
           closes_at: string
           created_at: string
+          hidden_at: string | null
+          hidden_reason: string | null
           id: string
           is_demo: boolean
           is_priority: boolean
@@ -770,6 +823,8 @@ export type Database = {
           clip_path: string
           closes_at?: string
           created_at?: string
+          hidden_at?: string | null
+          hidden_reason?: string | null
           id?: string
           is_demo?: boolean
           is_priority?: boolean
@@ -792,6 +847,8 @@ export type Database = {
           clip_path?: string
           closes_at?: string
           created_at?: string
+          hidden_at?: string | null
+          hidden_reason?: string | null
           id?: string
           is_demo?: boolean
           is_priority?: boolean
@@ -899,6 +956,10 @@ export type Database = {
       ai_summary_limit: { Args: never; Returns: number }
       ai_summary_min_reviews: { Args: never; Returns: number }
       ai_summary_status: { Args: { p_submission: string }; Returns: Json }
+      appeal_submission: {
+        Args: { p_note?: string; p_submission_id: string }
+        Returns: string
+      }
       balance_of: { Args: { p: string }; Returns: number }
       change_channel_niche: {
         Args: { p_channel_id: string; p_niche_id: number }
@@ -917,6 +978,7 @@ export type Database = {
         Args: {
           p_clip_duration: number
           p_clip_path: string
+          p_is_vertical?: boolean
           p_language?: string
           p_niche_slug: string
           p_owner: string
@@ -949,6 +1011,8 @@ export type Database = {
           id: string
         }[]
       }
+      grant_monthly_pro_credits: { Args: never; Returns: number }
+      grant_pro_credits: { Args: { p_profile: string }; Returns: boolean }
       grant_purchase: {
         Args: {
           p_credits: number
@@ -988,6 +1052,10 @@ export type Database = {
         Returns: undefined
       }
       register_device: { Args: { p_device_id: string }; Returns: undefined }
+      reject_appeal: {
+        Args: { p_note?: string; p_submission_id: string }
+        Returns: undefined
+      }
       release_ai_summary_claim: {
         Args: { p_submission: string }
         Returns: undefined
@@ -999,6 +1067,15 @@ export type Database = {
           p_target_id: string
           p_target_type: string
         }
+        Returns: undefined
+      }
+      report_is_weighted: { Args: { p_reporter: string }; Returns: boolean }
+      report_threshold: {
+        Args: { p_reason: string; p_weighted: boolean }
+        Returns: number
+      }
+      restore_submission: {
+        Args: { p_note?: string; p_submission_id: string }
         Returns: undefined
       }
       reviewed_channel: { Args: { p_submission_id: string }; Returns: Json }
@@ -1048,7 +1125,11 @@ export type Database = {
         | "purchase"
         | "subscription_grant"
         | "admin"
-      notification_kind: "reviews_arriving" | "test_completed" | "tasks_waiting"
+      notification_kind:
+        | "reviews_arriving"
+        | "test_completed"
+        | "tasks_waiting"
+        | "submission_hidden"
       submission_status: "open" | "completed" | "cancelled" | "hidden"
       subscriber_band:
         | "b0_100"
@@ -1208,6 +1289,7 @@ export const Constants = {
         "reviews_arriving",
         "test_completed",
         "tasks_waiting",
+        "submission_hidden",
       ],
       submission_status: ["open", "completed", "cancelled", "hidden"],
       subscriber_band: [

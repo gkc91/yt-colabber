@@ -12,6 +12,7 @@ import { layout, space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { useMySubmissions, type MySubmission } from '@/features/submit/api';
 import { remainingTime, showsCountdown } from '@/features/submit/rules';
+import { AppealSheet } from '@/features/appeals/AppealSheet';
 import { t, type MessageKey } from '@/i18n';
 
 export default function SubmissionsScreen() {
@@ -83,6 +84,11 @@ function SubmissionRow({ submission }: { submission: MySubmission }) {
               : t(`submit.status.${submission.status}` as MessageKey)}
         </Meta>
       </View>
+
+      {/* Gizlenen test sessizce durmaz: sebebi ve itiraz yolu burada (0030). */}
+      {submission.status === 'hidden' ? (
+        <AppealSheet submissionId={submission.id} reason={submission.hidden_reason} />
+      ) : null}
     </Card>
   );
 }

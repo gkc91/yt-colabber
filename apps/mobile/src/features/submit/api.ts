@@ -40,7 +40,7 @@ export async function fetchMySubmissions(userId: string) {
   const { data, error } = await supabase
     .from('submissions')
     .select(
-      'id, status, requested_reviews, received_reviews, created_at, closes_at, title_options, is_demo',
+      'id, status, requested_reviews, received_reviews, created_at, closes_at, title_options, is_demo, hidden_reason',
     )
     .eq('owner_id', userId)
     .order('created_at', { ascending: false });

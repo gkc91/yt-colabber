@@ -129,6 +129,30 @@
       "titles": "1–3 titles, up to 100 characters each.",
       "clipApp": "Your video. The first 60 seconds are used; longer files are trimmed and compressed to 720p on your phone.",
       "clipWeb": "Your first 60 seconds as an MP4 or MOV, 8 MB or less — export it from your editor at 720p. The browser does not compress, so a longer or heavier file is refused."
+    },
+    "hidden": {
+      "title": "Paused after a report",
+      "reason": {
+        "inappropriate": "Someone reported this as inappropriate content.",
+        "abusive": "Someone reported this as abusive.",
+        "spam": "Someone reported this as spam or misleading.",
+        "copyright": "Someone reported this as not your content.",
+        "other": "Someone reported this."
+      },
+      "body": "Your unused credits are already back in your balance. If this was wrong, tell us and a person will look at it.",
+      "appeal": "Appeal this",
+      "noteLabel": "What should we know? (optional)",
+      "notePlaceholder": "It is my own video, filmed by me",
+      "send": "Send appeal",
+      "cancel": "Cancel",
+      "sent": "Appeal sent. We will look at it and write back.",
+      "errors": {
+        "already_appealed": "You have already appealed this one — we are looking at it.",
+        "not_hidden": "This test is not paused.",
+        "not_owner": "That is not your test.",
+        "unknown_submission": "That test no longer exists.",
+        "unknown": "That did not work. Try again."
+      }
     }
   },
   "paywall": {

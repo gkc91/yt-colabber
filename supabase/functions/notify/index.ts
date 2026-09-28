@@ -10,7 +10,7 @@ const MAX_ATTEMPTS = 5;
 type Row = {
   id: string;
   profile_id: string;
-  kind: "reviews_arriving" | "test_completed" | "tasks_waiting";
+  kind: "reviews_arriving" | "test_completed" | "tasks_waiting" | "submission_hidden";
   payload: Record<string, unknown>;
   attempts: number;
   profiles: { expo_push_token: string | null } | null;
@@ -28,6 +28,12 @@ const TEXTS: Record<Row["kind"], { title: string; body: string }> = {
   tasks_waiting: {
     title: "Tests are waiting in your niche",
     body: "A few creators need reviews. Each one earns you a credit.",
+  },
+  // Sahibi testinin durduğunu uygulamayı açtığında tesadüfen öğrenmemeli; itiraz süresi
+  // işliyor ve kredisi çoktan iade edilmiş oluyor.
+  submission_hidden: {
+    title: "One of your tests is paused",
+    body: "Someone reported it. Your unused credits are back — open the app to appeal.",
   },
 };
 
