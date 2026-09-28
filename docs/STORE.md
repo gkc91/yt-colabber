@@ -231,7 +231,11 @@ olduğu kaybolmaz.
 
 - [ ] `node scripts/make-icons.mjs` çalıştırıldı, ikonlar güncel
 - [ ] Ekran görüntüleri çekildi (yukarıdaki dört ekran)
-- [ ] `eas build --platform android --profile production` yeşil
+- [x] `eas build --platform android --profile production` yeşil (2026-09-28, sürüm kodu 2).
+      Paket doğrulandı: `base/assets/index.android.bundle` içinde gerçek Supabase adresi var,
+      CI yer tutucusu yok. Bu kontrol gerekliydi — EAS `production` ortamı bir gün önce BOŞTU
+      ve eksik anahtar derlemeyi değil uygulama açılışını patlatıyor (env.ts modül yüklenirken
+      `schema.parse` çağırıyor), yani "başarılı" derlenip incelemede çöken bir AAB çıkardı.
 - [ ] Play Console: Data safety, İçerik derecelendirme, Hedef kitle, Reklam beyanı dolduruldu
 - [ ] Gizlilik politikası ve hesap silme adresleri girildi
 - [ ] Kapalı test: 12 test kullanıcısı davet edildi, 14 günlük sayaç başladı
