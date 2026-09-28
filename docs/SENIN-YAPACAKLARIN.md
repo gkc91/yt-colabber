@@ -109,6 +109,20 @@
          sebep ve miktarı gör. Pro'da 40 kredi HEMEN yazılmalı, aynı gün iptal-vazgeç
          ikinci kez yazmamalı (0028).
 
+- [ ] **Google Cloud Vision anahtarı (yükleme taraması).** Kod hazır ve canlıda; anahtar
+      yokken tarama kapalı ve testler doğrudan açılıyor. Açmak için:
+      1. Google Cloud'da **`clickable-509507`** projesinde **Cloud Vision API**'yi etkinleştir.
+      2. API anahtarı üret ve **yalnızca Vision API ile sınırla** (Credentials → Restrict key).
+      3. İki yere konması gerekiyor, ikisi de farklı şeyi okuyor:
+         - Edge Function için: `supabase secrets set GOOGLE_VISION_API_KEY=<anahtar> --project-ref doentqtqklsetbxdprrg`
+         - Veritabanının "tarama açık mı" sorusu için, SQL Editor'da:
+           `select vault.create_secret('<anahtar>', 'google_vision_api_key');`
+      4. Anahtar bende durmamalı, bu yüzden ikisini de sen çalıştırıyorsun.
+
+      Maliyet: bin görüntü ~1,5 $. Test başına 1-3 thumbnail, yani yüz teste ~0,3 $.
+      Kapsam: yalnızca thumbnail. Klip taranmıyor — Video Intelligence dakikası ~0,10 $ ve
+      bir kredinin (0,166 $) yanında orantısız. Izgarada herkesin ilk gördüğü şey thumbnail.
+
 - [ ] **App Store Connect ve Play Console ödeme/vergi bilgileri.** SETUP.md'deki not: ödeme
       bilgilerine yalnızca 20/B istisna hesabını gir.
 - [ ] **Anthropic API anahtarı** (D3, Pro kullanıcılara AI özeti için) — **Pro satışa çıkmadan

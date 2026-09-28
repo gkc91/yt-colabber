@@ -811,6 +811,8 @@ export type Database = {
           received_reviews: number
           report_count: number
           requested_reviews: number
+          screen_attempts: number
+          screened_at: string | null
           status: Database["public"]["Enums"]["submission_status"]
           thumbnail_paths: string[]
           title_options: string[]
@@ -835,6 +837,8 @@ export type Database = {
           received_reviews?: number
           report_count?: number
           requested_reviews: number
+          screen_attempts?: number
+          screened_at?: string | null
           status?: Database["public"]["Enums"]["submission_status"]
           thumbnail_paths: string[]
           title_options: string[]
@@ -859,6 +863,8 @@ export type Database = {
           received_reviews?: number
           report_count?: number
           requested_reviews?: number
+          screen_attempts?: number
+          screened_at?: string | null
           status?: Database["public"]["Enums"]["submission_status"]
           thumbnail_paths?: string[]
           title_options?: string[]
@@ -1060,6 +1066,7 @@ export type Database = {
         Args: { p_submission: string }
         Returns: undefined
       }
+      release_stuck_screening: { Args: never; Returns: number }
       report_content: {
         Args: {
           p_note?: string
@@ -1079,6 +1086,15 @@ export type Database = {
         Returns: undefined
       }
       reviewed_channel: { Args: { p_submission_id: string }; Returns: Json }
+      screening_enabled: { Args: never; Returns: boolean }
+      screening_failed: {
+        Args: { p_reason?: string; p_submission_id: string }
+        Returns: undefined
+      }
+      screening_passed: {
+        Args: { p_submission_id: string }
+        Returns: undefined
+      }
       send_message: {
         Args: { p_body: string; p_match: string }
         Returns: number
@@ -1109,6 +1125,7 @@ export type Database = {
       trigger_cleanup_clips: { Args: never; Returns: undefined }
       trigger_notify: { Args: never; Returns: undefined }
       trigger_refresh_niche_cache: { Args: never; Returns: undefined }
+      trigger_screen_media: { Args: never; Returns: undefined }
     }
     Enums: {
       collab_type:
@@ -1130,7 +1147,12 @@ export type Database = {
         | "test_completed"
         | "tasks_waiting"
         | "submission_hidden"
-      submission_status: "open" | "completed" | "cancelled" | "hidden"
+      submission_status:
+        | "open"
+        | "completed"
+        | "cancelled"
+        | "hidden"
+        | "screening"
       subscriber_band:
         | "b0_100"
         | "b100_1k"
@@ -1291,7 +1313,13 @@ export const Constants = {
         "tasks_waiting",
         "submission_hidden",
       ],
-      submission_status: ["open", "completed", "cancelled", "hidden"],
+      submission_status: [
+        "open",
+        "completed",
+        "cancelled",
+        "hidden",
+        "screening",
+      ],
       subscriber_band: [
         "b0_100",
         "b100_1k",

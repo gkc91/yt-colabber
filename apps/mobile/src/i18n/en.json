@@ -56,7 +56,8 @@
       "completed": "Done",
       "cancelled": "Cancelled",
       "hidden": "Hidden",
-      "demo": "Practice test"
+      "demo": "Practice test",
+      "screening": "Checking…"
     },
     "wizard": {
       "step": "Step {current} of {total}",
@@ -153,7 +154,8 @@
         "unknown_submission": "That test no longer exists.",
         "unknown": "That did not work. Try again."
       }
-    }
+    },
+    "screeningNote": "We check every thumbnail before reviewers see it. This takes a moment."
   },
   "paywall": {
     "title": "Credits and Pro",

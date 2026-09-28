@@ -5,7 +5,7 @@ import { ActivityIndicator, FlatList, Pressable, StyleSheet, View } from 'react-
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Progress } from '@/components/Progress';
-import { Body, Heading, Meta } from '@/components/Type';
+import { Body, Heading, Meta, Small } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { layout, space } from '@/design/tokens';
@@ -84,6 +84,11 @@ function SubmissionRow({ submission }: { submission: MySubmission }) {
               : t(`submit.status.${submission.status}` as MessageKey)}
         </Meta>
       </View>
+
+      {/* Tarama bitene kadar test havuza girmiyor; sahibi beklediğini bilsin (0032). */}
+      {submission.status === 'screening' ? (
+        <Small tone="muted">{t('submit.screeningNote')}</Small>
+      ) : null}
 
       {/* Gizlenen test sessizce durmaz: sebebi ve itiraz yolu burada (0030). */}
       {submission.status === 'hidden' ? (
