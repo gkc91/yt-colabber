@@ -220,7 +220,9 @@
       "body": "No one in your niche is testing at the moment. Come back later, or turn on notifications so we can tell you when a test arrives.",
       "enablePush": "Tell me when a test arrives",
       "pushOn": "We'll let you know when a test shows up in your niche.",
-      "pushFailed": "Notifications aren't working on this device yet. We're fixing it — nothing you did is wrong."
+      "pushFailed": "Notifications aren't working on this device yet. We're fixing it — nothing you did is wrong.",
+      "limitTitle": "That's enough for today",
+      "limitBody": "You've reviewed a lot today — thank you. We cap it at 20 a day so every review stays worth reading. Come back tomorrow and your next one earns a credit again."
     },
     "next": "Next",
     "feed": {

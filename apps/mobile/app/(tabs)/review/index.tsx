@@ -16,7 +16,7 @@ import {
   pushStatus,
   pushSupported,
 } from '@/features/notifications/api';
-import { useNextTask } from '@/features/review/api';
+import { isAssignment, useNextTask } from '@/features/review/api';
 import { track } from '@/lib/track';
 import { t } from '@/i18n';
 
@@ -25,7 +25,10 @@ export default function ReviewScreen() {
   const colors = Colors[useColorScheme()];
   const balance = useBalance(session?.user.id);
   const task = useNextTask(!!session);
-  const assignment = task.data;
+  const result = task.data;
+  const assignment = result && isAssignment(result) ? result : null;
+  // Tavana çarpmak, nişin boş olmasıyla aynı şey değil: ayrı metin gösteriyoruz.
+  const atDailyLimit = !!result && !isAssignment(result) && result.reason === 'daily_limit';
   // 'failed': izin var ama token alınamadı (Android'de Firebase eksikse olur). Bunu
   // "kullanıcı reddetti" diye göstermek yanlış olur — hiçbir şey gelmeyeceğini söylemeliyiz.
   const [pushState, setPushState] = useState<'unknown' | 'granted' | 'denied' | 'failed'>(
@@ -91,11 +94,13 @@ export default function ReviewScreen() {
 
         {!task.isPending && !assignment ? (
           <>
-            <Title style={styles.centered}>{t('review.empty.title')}</Title>
+            <Title style={styles.centered}>
+              {t(atDailyLimit ? 'review.empty.limitTitle' : 'review.empty.title')}
+            </Title>
             <Body tone="muted" style={styles.centered}>
-              {t('review.empty.body')}
+              {t(atDailyLimit ? 'review.empty.limitBody' : 'review.empty.body')}
             </Body>
-            {pushSupported && pushState === 'denied' ? (
+            {!atDailyLimit && pushSupported && pushState === 'denied' ? (
               <Button
                 title={t('review.empty.enablePush')}
                 variant="secondary"

@@ -30,15 +30,27 @@ type NextTaskResponse = {
   clip_duration_seconds?: number;
   is_demo?: boolean;
   is_vertical?: boolean;
+  reason?: EmptyReason;
 };
 
+/**
+ * Görev yoksa NEDEN yok. Ayrımı korumak zorundayız: günlük tavana çarpan kullanıcıya
+ * "nişinde test yok" demek ürünün boş olduğunu düşündürür ve geri gelmez (0039).
+ */
+export type EmptyReason = 'daily_limit' | 'none_available';
+export type ReviewEmpty = { reason: EmptyReason };
+export type NextTaskResult = ReviewAssignment | ReviewEmpty;
+
+export const isAssignment = (result: NextTaskResult): result is ReviewAssignment =>
+  'task' in result;
+
 /** Sunucu görevi seçer ve açar; aynı kişiye aynı submission iki kez gelmez (0001/0007). */
-export async function fetchNextTask(): Promise<ReviewAssignment | null> {
+export async function fetchNextTask(): Promise<NextTaskResult> {
   const { data, error } = await supabase.rpc('next_review_task');
   if (error) throw error;
 
   const response = data as unknown as NextTaskResponse;
-  if (!response?.task) return null;
+  if (!response?.task) return { reason: response?.reason ?? 'none_available' };
   return {
     task: response.task,
     title: response.title ?? '',

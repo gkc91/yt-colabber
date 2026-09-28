@@ -8,7 +8,7 @@ import { Screen } from '@/components/Screen';
 import { Body, Label, Small } from '@/components/Type';
 import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
-import { fetchNextTask, submitReview } from '@/features/review/api';
+import { fetchNextTask, isAssignment, submitReview } from '@/features/review/api';
 import { DoneStep } from '@/features/review/components/DoneStep';
 import { FeedStep } from '@/features/review/components/FeedStep';
 import { GuessStep } from '@/features/review/components/GuessStep';
@@ -75,7 +75,8 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
     feedShownAt.current = now;
   }, []);
 
-  const assignment = task.data && task.data.task.id === taskId ? task.data : null;
+  const assignment =
+    task.data && isAssignment(task.data) && task.data.task.id === taskId ? task.data : null;
 
   if (completedSubmissionId) {
     return (
