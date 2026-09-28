@@ -42,6 +42,8 @@ Kaydedilen: `leave_second` (null = sonuna kadar), `watched_seconds`, etiketler, 
 
 Tamamlanınca: +1 kredi (reputation ≥ 0.5 ise; altındaysa kredi yok, uyarı).
 
+**Günlük tavan.** Kişi başı kayan 24 saatte en fazla 20 değerlendirme. Amaç kaliteyi yargılamak değil, kalitesiz değerlendirmenin hacmini sınırlamak: bir tarlacı konumu ve ayrılma saniyesini rastgeleleştirerek desen tespitinden kaçabilir ama hacim tavanından kaçamaz. 20, dürüst kullanıcıya değmeyecek kadar yüksek (bir değerlendirme dakikalar sürüyor, tipik kota 5-25). Tavana çarpan kullanıcıya "bugünlük bu kadar" denir; "nişinde test yok" DENMEZ — o, ürünün boş olduğunu düşündürür. Elindeki atanmış görev tavana takılmaz, bitirebilir.
+
 **Değerlendirme sonrası kanal bağlantısı.** "+1 kredi" ekranında test sahibinin kanalına giden isteğe bağlı bir bağlantı gösterilir ("Kanala göz at"). Kurallar: yalnızca değerlendirme GÖNDERİLDİKTEN sonra görünür (önce gösterilirse değerlendirici kanalı tanır ve feed/başlık testi "tanımayan biri"nin tepkisi olmaktan çıkar); krediyle ilişkisi yoktur; "abone ol" gibi bir çağrı kullanılmaz; ziyaret sayılmaz, ödüllendirilmez, raporlanmaz.
 
 ## 6. Submission akışı
