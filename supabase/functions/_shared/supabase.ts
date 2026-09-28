@@ -63,11 +63,14 @@ export const json = (body: unknown, status = 200) =>
  * karşılaştırmasına düşer. Böylece fonksiyonlar ve migration birbirini beklemeden,
  * herhangi bir sırayla yayınlanabiliyor. Sır her yere yerleştikten sonra bu yedek kalkar.
  */
-export function isInternalCall(req: Request): boolean {
-  const header = req.headers.get("Authorization") ?? "";
-  const shared = Deno.env.get("NET_SHARED_SECRET");
-  if (shared && header === `Bearer ${shared}`) return true;
+export const INTERNAL_HEADER = "x-internal-secret";
 
+export function isInternalCall(req: Request): boolean {
+  const shared = Deno.env.get("NET_SHARED_SECRET");
+  if (shared && req.headers.get(INTERNAL_HEADER) === shared) return true;
+
+  // Geçiş yedeği: 0037 yayınlanana kadar eski yol da kabul. Sır her yere yerleştikten
+  // ve dört cron işinin 200 döndüğü görüldükten sonra bu iki satır silinir.
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  return Boolean(serviceKey) && header === `Bearer ${serviceKey}`;
+  return Boolean(serviceKey) && req.headers.get("Authorization") === `Bearer ${serviceKey}`;
 }
