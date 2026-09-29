@@ -16,6 +16,7 @@
 // 200 + {ignored} döneriz; yalnızca gerçek hatalarda 5xx döneriz ki tekrar denesin.
 import { admin, json } from "../_shared/supabase.ts";
 import { signatureIsValid } from "../_shared/rcSignature.ts";
+import { baseProductId } from "../_shared/rcProduct.ts";
 
 /** Ürün → kredi. Sunucu tarafı yetkilidir; istemcideki katalog yalnızca gösterim içindir. */
 const CREDITS: Record<string, number> = {
@@ -71,7 +72,9 @@ Deno.serve(async (req) => {
 
   const type = event.type;
   const profileId = typeof event.app_user_id === "string" ? event.app_user_id : "";
-  const product = typeof event.product_id === "string" ? event.product_id : "";
+  // Play, kimliğin sonuna satın alma seçeneğini / temel planı ekleyebiliyor; katalog
+  // eşlemesi ondan önceki kısma bakıyor (bkz. rcProduct.ts).
+  const product = baseProductId(typeof event.product_id === "string" ? event.product_id : "");
 
   // Anonim RC kimliği ($RCAnonymousID:...) veya kimliksiz olay: kullanıcıya bağlayamayız.
   if (!UUID.test(profileId)) return json({ ok: true, ignored: "no_app_user_id" });
