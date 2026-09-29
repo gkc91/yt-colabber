@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { ActivityIndicator, Alert, Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
+import { Card } from '@/components/Card';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
 import { Section } from '@/components/Section';
@@ -14,11 +15,14 @@ import {
   channelsQueryKey,
   useMyChannels,
 } from '@/features/channels/api';
-import { Body, Label, Meta, Small, Stat } from '@/components/Type';
+import { Body, Heading, Label, Meta, Small, Stat } from '@/components/Type';
+import { useColorScheme } from '@/components/useColorScheme';
+import Colors from '@/constants/Colors';
 import { space } from '@/design/tokens';
 import { signOut } from '@/features/auth/api';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
+import { BuyCreditsButton } from '@/features/credits/BuyCreditsButton';
 import { useNiches } from '@/features/onboarding/api';
 import { LANGUAGES } from '@/features/onboarding/options';
 import {
@@ -30,6 +34,7 @@ import {
 } from '@/features/profile/api';
 import { CreditHistory } from '@/features/profile/components/CreditHistory';
 import { canChangeNiche, daysUntilNicheChange } from '@/features/profile/nicheChange';
+import { useIsPro } from '@/features/profile/api';
 import {
   MAX_EXTRA_LANGUAGES,
   MAX_EXTRA_NICHES,
@@ -48,6 +53,8 @@ export default function ProfileScreen() {
   const profile = useProfile(userId);
   const balance = useBalance(userId);
   const credits = useCreditHistory(userId);
+  const isPro = useIsPro(userId);
+  const colors = Colors[useColorScheme()];
   const niches = useNiches();
   const scope = useReviewScope(userId);
 
@@ -136,11 +143,13 @@ export default function ProfileScreen() {
       {/* ---------- özet ---------- */}
       <Section title={t('profile.stats.title')}>
         <View style={styles.stats}>
-          <Stat
-            style={styles.stat}
-            label={t('credits.balance')}
-            value={String(balance.data ?? '—')}
-          />
+          {/* Kredi sayısının yanında "+" (0047): "kredim az" diye bakan kişi tam burada. */}
+          <View style={styles.stat}>
+            <View style={styles.creditStat}>
+              <Stat label={t('credits.balance')} value={String(balance.data ?? '—')} />
+              <BuyCreditsButton />
+            </View>
+          </View>
           <Stat
             style={styles.stat}
             label={t('profile.stats.reputation')}
@@ -302,6 +311,24 @@ export default function ProfileScreen() {
         />
       </Section>
 
+      {/*
+        Pro (0047). Eskiden yalnızca paywall'ın içinde, listenin en altında bir seçenekti —
+        kullanıcı "çok aşağıda kalmış, belli bile olmuyor" dedi. Artık kendi kartı var ve
+        kenarlığı accent rengiyle: ekrandaki tek kırmızı vurgu odur (DESIGN.md §3 — kırmızı
+        yalnızca gerektiğinde belirir, o yüzden belirdiği yer dikkat çeker).
+      */}
+      <Card gap={space.sm} style={{ ...styles.pro, borderColor: colors.tint }}>
+        <Heading tone="accent">{t('profile.credits.proTitle')}</Heading>
+        {isPro.data ? (
+          <Small tone="muted">{t('profile.credits.proActive')}</Small>
+        ) : (
+          <>
+            <Small tone="muted">{t('profile.credits.proBody')}</Small>
+            <Button title={t('profile.credits.proCta')} onPress={() => router.push('/paywall')} />
+          </>
+        )}
+      </Card>
+
       {/* ---------- kredi geçmişi ---------- */}
       <Section title={t('profile.credits.title')}>
         {credits.isPending ? <ActivityIndicator /> : <CreditHistory entries={credits.data ?? []} />}
@@ -353,6 +380,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: space.sm,
+  },
+  creditStat: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+  },
+  pro: {
+    borderWidth: 1,
   },
   stats: {
     flexDirection: 'row',

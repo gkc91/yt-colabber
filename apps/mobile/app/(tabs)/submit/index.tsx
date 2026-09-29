@@ -10,8 +10,9 @@ import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { layout, space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
+import { useBalance } from '@/features/credits/api';
 import { useMySubmissions, type MySubmission } from '@/features/submit/api';
-import { remainingTime, showsCountdown } from '@/features/submit/rules';
+import { FREE_REVIEW_COUNTS, remainingTime, showsCountdown } from '@/features/submit/rules';
 import { AppealSheet } from '@/features/appeals/AppealSheet';
 import { t, type MessageKey } from '@/i18n';
 
@@ -20,6 +21,13 @@ export default function SubmissionsScreen() {
   const colors = Colors[useColorScheme()];
   const submissions = useMySubmissions(session?.user.id);
   const refetchSubmissions = submissions.refetch;
+
+  // En ucuz test 5 kredi. Altındaysa "Yeni test"e basmanın bir anlamı yok — sihirbazın
+  // SONUNDA öğrenmek yerine burada söylüyoruz (0047, kullanıcı istedi). Eşik sabit değil,
+  // katalogdan geliyor: fiyat değişirse metin de değişir.
+  const minimumCost = FREE_REVIEW_COUNTS[0];
+  const balance = useBalance(session?.user.id);
+  const shortOfCredits = balance.data !== undefined && balance.data < minimumCost;
 
   // Sihirbazdan dönünce liste tazelensin.
   useFocusEffect(
@@ -30,6 +38,20 @@ export default function SubmissionsScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
+      {shortOfCredits ? (
+        <Card gap={space.sm} style={styles.lowCredits}>
+          <Heading>{t('credits.lowTitle')}</Heading>
+          <Small tone="muted">{t('credits.lowBody', { min: minimumCost })}</Small>
+          {/* Değerlendirme önce: asıl yol o, satın alma zamanını harcamak istemeyene
+              (PRODUCT §9). Sıralama bilinçli. */}
+          <Button title={t('credits.lowReview')} onPress={() => router.navigate('/review')} />
+          <Button
+            title={t('credits.buyMore')}
+            variant="secondary"
+            onPress={() => router.push('/paywall')}
+          />
+        </Card>
+      ) : null}
       <FlatList
         data={submissions.data ?? []}
         keyExtractor={(item) => item.id}
@@ -111,6 +133,10 @@ function SubmissionRow({ submission }: { submission: MySubmission }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  lowCredits: {
+    marginHorizontal: layout.gutter,
+    marginTop: space.lg,
   },
   list: {
     paddingHorizontal: layout.gutter,

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
@@ -61,78 +61,77 @@ export default function AddChannel() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <Screen gap={space.xxl}>
-        <View style={styles.section}>
-          <Title>{t('profile.channels.addTitle')}</Title>
-          <Small tone="muted">{t('profile.channels.addHint')}</Small>
-          <TextField
-            label={t('onboarding.channelLabel')}
-            placeholder={t('onboarding.channelPlaceholder')}
-            value={url}
-            onChangeText={setUrl}
-            error={urlError}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="url"
-            inputMode="url"
-          />
-        </View>
-
-        <View style={styles.section}>
-          <Heading>{t('profile.channels.nicheTitle')}</Heading>
-          <View style={styles.chips} accessibilityRole="radiogroup">
-            {niches.data?.map((niche) => (
-              <Chip
-                key={niche.id}
-                label={niche.name}
-                selected={niche.id === nicheId}
-                onPress={() => setNicheId(niche.id)}
-              />
-            ))}
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Heading>{t('profile.channels.languageTitle')}</Heading>
-          <View style={styles.chips} accessibilityRole="radiogroup">
-            {LANGUAGES.map((option) => (
-              <Chip
-                key={option.code}
-                label={option.label}
-                selected={option.code === language}
-                onPress={() => setLanguage(option.code)}
-              />
-            ))}
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <Heading>{t('onboarding.bandTitle')}</Heading>
-          <View style={styles.chips} accessibilityRole="radiogroup">
-            {BANDS.map((option) => (
-              <Chip
-                key={option.value}
-                label={t(option.label)}
-                selected={option.value === band}
-                onPress={() => setBand(option.value === band ? null : option.value)}
-              />
-            ))}
-          </View>
-        </View>
-
-        {error ? <Small tone="accent">{t(error)}</Small> : null}
+    <Screen
+      gap={space.xxl}
+      footer={
         <Button
           title={t('profile.channels.save')}
           onPress={onSave}
           disabled={url.trim().length === 0 || nicheId === null}
           loading={save.isPending}
         />
-      </Screen>
-    </KeyboardAvoidingView>
+      }
+    >
+      <View style={styles.section}>
+        <Title>{t('profile.channels.addTitle')}</Title>
+        <Small tone="muted">{t('profile.channels.addHint')}</Small>
+        <TextField
+          label={t('onboarding.channelLabel')}
+          placeholder={t('onboarding.channelPlaceholder')}
+          value={url}
+          onChangeText={setUrl}
+          error={urlError}
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="url"
+          inputMode="url"
+        />
+      </View>
+
+      <View style={styles.section}>
+        <Heading>{t('profile.channels.nicheTitle')}</Heading>
+        <View style={styles.chips} accessibilityRole="radiogroup">
+          {niches.data?.map((niche) => (
+            <Chip
+              key={niche.id}
+              label={niche.name}
+              selected={niche.id === nicheId}
+              onPress={() => setNicheId(niche.id)}
+            />
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Heading>{t('profile.channels.languageTitle')}</Heading>
+        <View style={styles.chips} accessibilityRole="radiogroup">
+          {LANGUAGES.map((option) => (
+            <Chip
+              key={option.code}
+              label={option.label}
+              selected={option.code === language}
+              onPress={() => setLanguage(option.code)}
+            />
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Heading>{t('onboarding.bandTitle')}</Heading>
+        <View style={styles.chips} accessibilityRole="radiogroup">
+          {BANDS.map((option) => (
+            <Chip
+              key={option.value}
+              label={t(option.label)}
+              selected={option.value === band}
+              onPress={() => setBand(option.value === band ? null : option.value)}
+            />
+          ))}
+        </View>
+      </View>
+
+      {error ? <Small tone="accent">{t(error)}</Small> : null}
+    </Screen>
   );
 }
 

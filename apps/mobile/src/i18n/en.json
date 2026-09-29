@@ -6,7 +6,11 @@
   },
   "credits": {
     "balance": "Credits",
-    "loading": "…"
+    "loading": "…",
+    "buyMore": "Buy credits or go Pro",
+    "lowTitle": "Not enough credits to start a test",
+    "lowBody": "A test needs at least {min} credits. Review one video in your niche and you earn one credit — or buy a pack.",
+    "lowReview": "Review a video"
   },
   "auth": {
     "title": "Clickable",
@@ -23,6 +27,19 @@
     "linkFailed": "This sign-in link didn't work. It may have expired or been opened on another device.",
     "backToSignIn": "Back to sign in",
     "genericError": "Something went wrong. Please try again."
+  },
+  "welcome": {
+    "title": "Know before you publish",
+    "lede": "Clickable shows your thumbnail, title and first 60 seconds to real creators in your niche — and tells you what they actually thought.",
+    "step1Title": "Upload what you would publish",
+    "step1Body": "Up to three thumbnails, a few titles, and your first 60 seconds.",
+    "step2Title": "Real people in your niche decide",
+    "step2Body": "They pick, guess what the video is about, and say where they would stop watching.",
+    "step3Title": "Read the result, then publish",
+    "step3Body": "Which thumbnail won, which title was understood, and the second attention drops.",
+    "creditsTitle": "It runs on credits, not a subscription",
+    "creditsBody": "Review one video, earn one credit. Spend credits to have your own video tested. You start with five.",
+    "start": "Start now"
   },
   "onboarding": {
     "nicheTitle": "What is your channel about?",
@@ -182,7 +199,7 @@
     },
     "unavailable": {
       "title": "Buying happens in the app",
-      "web_unsupported": "Purchases run through the App Store and Google Play, so they only work in the mobile app. You can still review, read results and earn credits here.",
+      "web_unsupported": "Purchases run through the App Store and Google Play, so they only work in the mobile app. The app is coming soon — you can still review, read results and earn credits here.",
       "not_configured": "This build has no store keys, so buying is off. Earning credits by reviewing works as usual."
     },
     "errors": {
@@ -329,6 +346,10 @@
       "empty": "Nothing yet. Reviewing a video earns your first credit.",
       "buy": "Buy credits or go Pro",
       "buyHint": "Reviewing other creators earns credits for free. Buying is for when you would rather not spend the time.",
+      "proTitle": "Clickable Pro",
+      "proBody": "40 credits every month, 25 reviews per test instead of 15, and an AI summary of your results.",
+      "proCta": "See Pro",
+      "proActive": "Pro is active on your account.",
       "reasons": {
         "signup_bonus": "Welcome bonus",
         "review_reward": "Review you gave",

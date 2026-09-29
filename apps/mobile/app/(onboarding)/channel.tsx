@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
@@ -55,50 +55,50 @@ export default function ChannelStep() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <Screen gap={space.xxl} style={styles.page}>
-        <View style={styles.section}>
-          <Title>{t('onboarding.channelTitle')}</Title>
-          <Small tone="muted">{t('onboarding.channelHint')}</Small>
-          <TextField
-            label={t('onboarding.channelLabel')}
-            placeholder={t('onboarding.channelPlaceholder')}
-            value={url}
-            onChangeText={setUrl}
-            error={urlError}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="url"
-            inputMode="url"
-          />
-        </View>
-
-        <View style={styles.section}>
-          <Heading>{t('onboarding.bandTitle')}</Heading>
-          <View style={styles.chips} accessibilityRole="radiogroup">
-            {BANDS.map((option) => (
-              <Chip
-                key={option.value}
-                label={t(option.label)}
-                selected={option.value === band}
-                onPress={() => setBand(option.value === band ? null : option.value)}
-              />
-            ))}
-          </View>
-        </View>
-
-        {finish.error ? <Small tone="accent">{t('auth.genericError')}</Small> : null}
+    <Screen
+      gap={space.xxl}
+      style={styles.page}
+      footer={
         <Button
           title={t('onboarding.finish')}
           onPress={onFinish}
           disabled={url.trim().length === 0}
           loading={finish.isPending}
         />
-      </Screen>
-    </KeyboardAvoidingView>
+      }
+    >
+      <View style={styles.section}>
+        <Title>{t('onboarding.channelTitle')}</Title>
+        <Small tone="muted">{t('onboarding.channelHint')}</Small>
+        <TextField
+          label={t('onboarding.channelLabel')}
+          placeholder={t('onboarding.channelPlaceholder')}
+          value={url}
+          onChangeText={setUrl}
+          error={urlError}
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="url"
+          inputMode="url"
+        />
+      </View>
+
+      <View style={styles.section}>
+        <Heading>{t('onboarding.bandTitle')}</Heading>
+        <View style={styles.chips} accessibilityRole="radiogroup">
+          {BANDS.map((option) => (
+            <Chip
+              key={option.value}
+              label={t(option.label)}
+              selected={option.value === band}
+              onPress={() => setBand(option.value === band ? null : option.value)}
+            />
+          ))}
+        </View>
+      </View>
+
+      {finish.error ? <Small tone="accent">{t('auth.genericError')}</Small> : null}
+    </Screen>
   );
 }
 

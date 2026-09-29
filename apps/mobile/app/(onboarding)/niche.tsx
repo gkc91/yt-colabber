@@ -29,7 +29,20 @@ export default function NicheStep() {
   });
 
   return (
-    <Screen gap={space.xxl} style={styles.page}>
+    // CTA alta sabit (0047): eskiden kaydırılan içeriğin son elemanıydı ve içerik kısa
+    // olduğunda ekranın ortasında havada duruyordu.
+    <Screen
+      gap={space.xxl}
+      style={styles.page}
+      footer={
+        <Button
+          title={t('onboarding.continue')}
+          onPress={() => save.mutate()}
+          disabled={nicheId === null}
+          loading={save.isPending}
+        />
+      }
+    >
       <View style={styles.section}>
         <Title>{t('onboarding.nicheTitle')}</Title>
         <Small tone="muted">{t('onboarding.nicheHint')}</Small>
@@ -64,12 +77,6 @@ export default function NicheStep() {
       </View>
 
       {save.error || niches.error ? <Small tone="accent">{t('auth.genericError')}</Small> : null}
-      <Button
-        title={t('onboarding.continue')}
-        onPress={() => save.mutate()}
-        disabled={nicheId === null}
-        loading={save.isPending}
-      />
     </Screen>
   );
 }

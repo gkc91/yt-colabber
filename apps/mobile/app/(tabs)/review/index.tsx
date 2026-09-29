@@ -10,6 +10,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
+import { BuyCreditsButton } from '@/features/credits/BuyCreditsButton';
 import {
   PushUnavailable,
   enablePushNotifications,
@@ -54,9 +55,14 @@ export default function ReviewScreen() {
       <View style={styles.balance} accessibilityRole="summary">
         <View style={styles.balanceRow}>
           <Label style={styles.balanceLabelText}>{t('credits.balance')}</Label>
-          <Title style={styles.balanceValue} testID="credit-balance">
-            {balance.data ?? t('credits.loading')}
-          </Title>
+          {/* Sayı ve "+" birlikte sağda: üçünü `space-between` ile dağıtmak sayıyı
+              ortaya itiyordu (0047). */}
+          <View style={styles.balanceActions}>
+            <Title style={styles.balanceValue} testID="credit-balance">
+              {balance.data ?? t('credits.loading')}
+            </Title>
+            <BuyCreditsButton />
+          </View>
         </View>
         <Rule />
       </View>
@@ -150,9 +156,14 @@ const styles = StyleSheet.create({
   },
   balanceRow: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
     justifyContent: 'space-between',
     paddingBottom: space.md,
+  },
+  balanceActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
   },
   balanceLabelText: {
     flex: 1,

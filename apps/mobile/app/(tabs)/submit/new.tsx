@@ -224,7 +224,32 @@ function Wizard() {
   };
 
   return (
-    <Screen gap={space.xl}>
+    // Geri/İleri alta sabit (0047): kaydırılan içeriğin son elemanı olduklarında adım
+    // kısaysa ekranın ortasında havada duruyorlardı. Yükleme sırasında gizleniyorlar —
+    // o an geri dönmek yarım kalmış bir yüklemeyi bozardı.
+    <Screen
+      gap={space.xl}
+      footer={
+        uploading ? null : (
+          <View style={styles.nav}>
+            {step > 0 ? (
+              <View style={styles.navItem}>
+                <Button
+                  title={t('submit.wizard.back')}
+                  variant="secondary"
+                  onPress={() => setStep((current) => current - 1)}
+                />
+              </View>
+            ) : null}
+            {step < STEPS - 1 ? (
+              <View style={styles.navItem}>
+                <Button title={t('submit.wizard.next')} onPress={goNext} disabled={!canGoNext} />
+              </View>
+            ) : null}
+          </View>
+        )
+      }
+    >
       <View style={styles.header}>
         <Label>{t('submit.wizard.step', { current: step + 1, total: STEPS })}</Label>
         <StepBar step={step} total={STEPS} />
@@ -283,25 +308,6 @@ function Wizard() {
       ) : null}
 
       {error ? <Small tone="accent">{t(error)}</Small> : null}
-
-      {!uploading ? (
-        <View style={styles.nav}>
-          {step > 0 ? (
-            <View style={styles.navItem}>
-              <Button
-                title={t('submit.wizard.back')}
-                variant="secondary"
-                onPress={() => setStep((current) => current - 1)}
-              />
-            </View>
-          ) : null}
-          {step < STEPS - 1 ? (
-            <View style={styles.navItem}>
-              <Button title={t('submit.wizard.next')} onPress={goNext} disabled={!canGoNext} />
-            </View>
-          ) : null}
-        </View>
-      ) : null}
     </Screen>
   );
 }
