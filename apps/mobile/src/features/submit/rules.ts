@@ -120,7 +120,14 @@ export const orientationMatches = (format: ClipFormat, clipIsVertical: boolean):
   (format === 'vertical') === clipIsVertical;
 
 /** Sihirbazın adımları, ekranda göründükleri sırayla. */
-export const WIZARD_STEPS = ['format', 'thumbnails', 'titles', 'clip', 'quantity', 'review'] as const;
+export const WIZARD_STEPS = [
+  'format',
+  'thumbnails',
+  'titles',
+  'clip',
+  'quantity',
+  'review',
+] as const;
 export type WizardStep = (typeof WIZARD_STEPS)[number];
 
 export type WizardState = {

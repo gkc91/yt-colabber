@@ -45,7 +45,11 @@ export function ThumbnailsStep({ thumbnails, vertical = false, busy, onAdd, onRe
             <Meta style={styles.name} numberOfLines={1}>
               {thumbnail.name ?? t('submit.wizard.thumbnailNumber', { index: index + 1 })}
             </Meta>
-            <Pressable accessibilityRole="button" onPress={() => onRemove(index)} hitSlop={space.sm}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => onRemove(index)}
+              hitSlop={space.sm}
+            >
               <Meta tone="accent">{t('submit.wizard.removeThumbnail')}</Meta>
             </Pressable>
           </View>

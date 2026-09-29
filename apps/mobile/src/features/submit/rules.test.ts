@@ -205,8 +205,18 @@ describe('clipCompressionPlan', () => {
   });
 
   it('test_a_short_clip_may_use_a_higher_bitrate_than_a_long_one', () => {
-    const short = clipCompressionPlan({ bytes: 5e8, durationSeconds: 10, width: 3840, height: 2160 });
-    const long = clipCompressionPlan({ bytes: 5e8, durationSeconds: 60, width: 3840, height: 2160 });
+    const short = clipCompressionPlan({
+      bytes: 5e8,
+      durationSeconds: 10,
+      width: 3840,
+      height: 2160,
+    });
+    const long = clipCompressionPlan({
+      bytes: 5e8,
+      durationSeconds: 60,
+      width: 3840,
+      height: 2160,
+    });
     if (short.skip || long.skip) throw new Error('ikisi de yeniden kodlanmalı');
     expect(short.bitrate).toBeGreaterThan(long.bitrate);
   });
