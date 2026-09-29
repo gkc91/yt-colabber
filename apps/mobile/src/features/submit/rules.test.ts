@@ -1,12 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  CLIP_MAX_BYTES,
+  CLIP_MAX_EDGE,
   MAX_TITLE_LENGTH,
   PRO_REVIEW_COUNT,
   WIZARD_STEPS,
   canAfford,
   canContinue,
   cleanTitles,
+  clipCompressionPlan,
   creditCost,
   orientationMatches,
   remainingTime,
@@ -165,5 +168,46 @@ describe('canContinue', () => {
     // Bu dizinin sırası ekrandaki `step === 0..5` dallarıyla eşleşmek ZORUNDA; bir adım
     // araya girip burası güncellenmezse hata sessizce geri gelir.
     expect(WIZARD_STEPS).toEqual(['format', 'thumbnails', 'titles', 'clip', 'quantity', 'review']);
+  });
+});
+
+describe('clipCompressionPlan', () => {
+  it('test_clip_already_within_limits_is_not_re_encoded', () => {
+    // Asıl gerileme: sabit 2 Mbps ile yeniden kodlama 1.17 MB'lık 58 sn'lik dikey klibi
+    // ~14 MB'a BÜYÜTÜYOR ve kendi 8 MB sınırımıza takılıyordu (2026-09-29, gerçek cihaz).
+    expect(
+      clipCompressionPlan({ bytes: 1_226_000, durationSeconds: 58, width: 608, height: 1080 }),
+    ).toEqual({ skip: true });
+  });
+
+  it('test_clip_bitrate_fits_the_size_budget_for_its_duration', () => {
+    const plan = clipCompressionPlan({
+      bytes: 90 * 1024 * 1024,
+      durationSeconds: 60,
+      width: 3840,
+      height: 2160,
+    });
+    if (plan.skip) throw new Error('büyük klip yeniden kodlanmalı');
+
+    // Hedef bit hızı, süreye çarpıldığında 8 MB'ı aşmamalı — eski sabit 2 Mbps aşıyordu.
+    const estimatedBytes = ((plan.bitrate + 128_000) * 60) / 8;
+    expect(estimatedBytes).toBeLessThanOrEqual(CLIP_MAX_BYTES);
+    expect(plan.maxSize).toBe(CLIP_MAX_EDGE);
+  });
+
+  it('test_compression_never_raises_the_bitrate_above_the_source', () => {
+    // Çözünürlüğü yüksek ama zaten çok düşük bit hızlı bir klip: yeniden kodlanıyor
+    // (720p'yi aşıyor) ama kaynaktan daha yüksek bir hızla değil.
+    const source = { bytes: 2_000_000, durationSeconds: 58, width: 1920, height: 1080 };
+    const plan = clipCompressionPlan(source);
+    if (plan.skip) throw new Error('720p üstü klip yeniden kodlanmalı');
+    expect(plan.bitrate).toBeLessThanOrEqual((source.bytes * 8) / source.durationSeconds);
+  });
+
+  it('test_a_short_clip_may_use_a_higher_bitrate_than_a_long_one', () => {
+    const short = clipCompressionPlan({ bytes: 5e8, durationSeconds: 10, width: 3840, height: 2160 });
+    const long = clipCompressionPlan({ bytes: 5e8, durationSeconds: 60, width: 3840, height: 2160 });
+    if (short.skip || long.skip) throw new Error('ikisi de yeniden kodlanmalı');
+    expect(short.bitrate).toBeGreaterThan(long.bitrate);
   });
 });

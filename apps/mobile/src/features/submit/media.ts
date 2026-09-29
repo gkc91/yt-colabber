@@ -7,7 +7,13 @@ import { Video } from 'react-native-compressor';
 import { MAX_CLIP_BYTES, MAX_THUMBNAIL_BYTES, MediaError } from '@/lib/storage';
 
 import { ClipError, type PickedClip, type PickedThumbnail } from './media.types';
-import { CLIP_MAX_SECONDS, MAX_THUMBNAILS, THUMBNAIL_SIZE, validateClipDuration } from './rules';
+import {
+  CLIP_MAX_SECONDS,
+  MAX_THUMBNAILS,
+  THUMBNAIL_SIZE,
+  clipCompressionPlan,
+  validateClipDuration,
+} from './rules';
 
 export { ClipError };
 export type { PickedClip, PickedThumbnail };
@@ -27,12 +33,12 @@ export async function pickThumbnails(slotsLeft: number): Promise<PickedThumbnail
 
   const prepared: PickedThumbnail[] = [];
   for (const asset of result.assets.slice(0, limit)) {
-    prepared.push(await resizeThumbnail(asset.uri));
+    prepared.push(await resizeThumbnail(asset.uri, asset.fileName ?? undefined));
   }
   return prepared;
 }
 
-async function resizeThumbnail(uri: string): Promise<PickedThumbnail> {
+async function resizeThumbnail(uri: string, name?: string): Promise<PickedThumbnail> {
   const context = ImageManipulator.manipulate(uri);
   context.resize(THUMBNAIL_SIZE);
   const image = await context.renderAsync();
@@ -42,9 +48,9 @@ async function resizeThumbnail(uri: string): Promise<PickedThumbnail> {
   if (bytes > MAX_THUMBNAIL_BYTES) {
     // 1280×720 JPEG normalde 2 MB'ın çok altında; buraya düşerse daha sert sıkıştır.
     const retry = await image.saveAsync({ format: SaveFormat.JPEG, compress: 0.6 });
-    return { uri: retry.uri, bytes: await fileSize(retry.uri) };
+    return { uri: retry.uri, bytes: await fileSize(retry.uri), name };
   }
-  return { uri: saved.uri, bytes };
+  return { uri: saved.uri, bytes, name };
 }
 
 /**
@@ -68,13 +74,41 @@ export async function pickClip(onProgress?: (ratio: number) => void): Promise<Pi
   const durationProblem = validateClipDuration(durationSeconds);
   if (durationProblem) throw new ClipError(durationProblem);
 
-  const compressedUri = await Video.compress(
+  const sourceBytes = await fileSize(asset.uri);
+  const plan = clipCompressionPlan({
+    bytes: sourceBytes,
+    durationSeconds,
+    width: asset.width ?? 0,
+    height: asset.height ?? 0,
+  });
+
+  // Zaten sınırların içinde ve 720p'yi aşmıyorsa dokunmuyoruz: yeniden kodlamak onu
+  // yalnızca bozar, küçültmez.
+  if (plan.skip) {
+    onProgress?.(1);
+    return { uri: asset.uri, bytes: sourceBytes, durationSeconds, isVertical };
+  }
+
+  let bitrate = plan.bitrate;
+  let compressedUri = await Video.compress(
     asset.uri,
-    { compressionMethod: 'manual', maxSize: 1280, bitrate: 2_000_000 },
+    { compressionMethod: 'manual', maxSize: plan.maxSize, bitrate },
     (progress) => onProgress?.(progress),
   );
+  let bytes = await fileSize(compressedUri);
 
-  const bytes = await fileSize(compressedUri);
+  // Tek bir ikinci deneme: bit hızı bir tahmin, kodlayıcı onu her zaman tutturmuyor.
+  // Üçüncüyü denemiyoruz — o noktada sorun bütçe değil, klibin kendisi.
+  if (bytes > MAX_CLIP_BYTES) {
+    bitrate = Math.floor(bitrate * 0.6);
+    compressedUri = await Video.compress(
+      asset.uri,
+      { compressionMethod: 'manual', maxSize: plan.maxSize, bitrate },
+      (progress) => onProgress?.(progress),
+    );
+    bytes = await fileSize(compressedUri);
+  }
+
   if (bytes > MAX_CLIP_BYTES) throw new ClipError('clip_too_large');
 
   return { uri: compressedUri, bytes, durationSeconds, isVertical };

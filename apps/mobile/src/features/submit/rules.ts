@@ -164,3 +164,57 @@ export function canContinue(step: WizardStep, state: WizardState): boolean {
       return true;
   }
 }
+
+// ---------- klip sıkıştırma planı ----------
+
+/** Sıkıştırılmış klipte hedeflenen en yüksek çözünürlük kenarı (PRODUCT §6: 720p). */
+export const CLIP_MAX_EDGE = 1280;
+/** Ses için ayrılan pay; bütçeden düşülür. */
+const CLIP_AUDIO_BITRATE = 128_000;
+/** Konteyner ve değişken bit hızı payı: hedefi bütçenin biraz altında tutar. */
+const CLIP_BUDGET_SAFETY = 0.9;
+/** Altına inmeyeceğimiz taban: daha düşüğü izlenemeyecek hâle getirir. */
+const CLIP_MIN_BITRATE = 400_000;
+
+export type ClipSource = {
+  bytes: number;
+  durationSeconds: number;
+  width: number;
+  height: number;
+};
+
+export type ClipPlan = { skip: true } | { skip: false; bitrate: number; maxSize: number };
+
+/**
+ * Klip yeniden kodlanmalı mı, kodlanacaksa hangi bit hızıyla.
+ *
+ * BULGU (2026-09-29, kullanıcı gerçek cihazda bildirdi): sıkıştırma SABİT 2 Mbps ile
+ * çağrılıyordu. 58 saniyelik bir klip bu hızda ~14 MB ediyor, yani sıkıştırıcı 1.17 MB'lık
+ * bir dosyayı 14 MB'a BÜYÜTÜYOR ve sonra kendi 8 MB sınırımıza takılıyordu. Ürün zaten
+ * 60 saniye istediği için bu bir kenar durum değil, normal durumdu: uzun her klip
+ * reddediliyordu ve hata mesajı "daha kısa bir klip dene" diyerek kullanıcıyı yanlış
+ * yöne gönderiyordu.
+ *
+ * İki kural: (1) bit hızı süreye göre 8 MB bütçesinden hesaplanır, (2) kaynağın kendi
+ * bit hızını hiç aşmaz — sıkıştırma dosyayı asla büyütmemeli. Zaten sınırların içinde ve
+ * 720p'yi aşmayan bir klip hiç yeniden kodlanmaz; yeniden kodlamak onu yalnızca
+ * bozardı.
+ */
+export function clipCompressionPlan(source: ClipSource): ClipPlan {
+  const longestEdge = Math.max(source.width, source.height);
+  const fitsBudget = source.bytes <= CLIP_MAX_BYTES;
+  const fitsResolution = longestEdge > 0 && longestEdge <= CLIP_MAX_EDGE;
+  if (fitsBudget && fitsResolution) return { skip: true };
+
+  const seconds = Math.max(source.durationSeconds, 1);
+  const budget = (CLIP_MAX_BYTES * 8 * CLIP_BUDGET_SAFETY) / seconds - CLIP_AUDIO_BITRATE;
+  const sourceBitrate = source.bytes > 0 ? (source.bytes * 8) / seconds : Number.POSITIVE_INFINITY;
+
+  // Taban da kaynakla sınırlı: aksi hâlde zaten çok hafif bir klipte taban devreye girip
+  // dosyayı büyütürdü — yani düzeltmeye çalıştığımız hatanın ta kendisi. (Test yakaladı.)
+  return {
+    skip: false,
+    bitrate: Math.floor(Math.min(sourceBitrate, Math.max(budget, CLIP_MIN_BITRATE))),
+    maxSize: CLIP_MAX_EDGE,
+  };
+}

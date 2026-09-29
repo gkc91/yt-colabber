@@ -106,7 +106,8 @@
       "formatWhere": {
         "horizontal": "A normal YouTube video.",
         "vertical": "Shorts, Reels, TikTok."
-      }
+      },
+      "thumbnailNumber": "Thumbnail {{index}}"
     },
     "errors": {
       "insufficient_credits": "Not enough credits for this test.",
