@@ -10,8 +10,12 @@
 // sistem yazı tiplerine düşüyor ve marka dışı bir görsel üretiyordu.
 //
 // DÜZELTİLEN (2026-09-29, sahibin bildirimi): alt satır sağdaki ızgaranın üstüne biniyordu
-// ve kompozisyon yukarıda toplanıp altta 145 px boşluk bırakıyordu. Artık metin sütunu
+// ve kompozisyon yukarıda toplanıp altta 145 px boşluk bırakıyordu. Metin sütunu artık
 // ızgaraya değmeyen sabit bir genişlikte ve blok dikeyde ortalanıyor.
+//
+// Alt satır tamamen kaldırıldı (sahibin kararı): mağaza sayfasında öne çıkan görselin hemen
+// altında kısa açıklama zaten duruyor, yani aynı cümle iki kez görünüyordu. Geriye ürünün
+// adı ve sorusu kalıyor — ızgara zaten "hangisine tıklarsın?" diyor.
 import { readFileSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { chromium } from 'playwright';
@@ -44,9 +48,10 @@ ${font(600, '600SemiBold/Archivo_600SemiBold.ttf')}
 body{width:${W}px;height:${H}px;background:${PAPER};font-family:Archivo;
      display:flex;align-items:center;gap:0;overflow:hidden}
 .text{width:${TEXT_MAX}px;margin-left:72px}
-h1{font-weight:700;font-size:64px;line-height:1;color:${INK};letter-spacing:-0.02em}
-.rule{width:120px;height:6px;background:${ACCENT};border-radius:3px;margin:22px 0}
-p{font-weight:600;font-size:23px;line-height:1.35;color:${INK};opacity:0.62}
+h1{font-weight:700;font-size:84px;line-height:1;color:${INK};letter-spacing:-0.02em}
+/* Çizgi kalıyor: alt satır gidince solda hiç aksan rengi kalmıyor ve sağdaki kırmızı
+   karo dengesiz duruyor. Adın altındaki bu çizgi o dengeyi kuruyor. */
+.rule{width:140px;height:7px;background:${ACCENT};border-radius:4px;margin:26px 0 0}
 .grid{position:absolute;left:${GRID_X}px;top:${(H - (2 * TILE_H + TILE_GAP)) / 2}px;
       display:grid;grid-template-columns:repeat(2,${TILE_W}px);gap:${TILE_GAP}px}
 .tile{width:${TILE_W}px;height:${TILE_H}px;border-radius:12px;background:${INK}}
@@ -55,7 +60,6 @@ p{font-weight:600;font-size:23px;line-height:1.35;color:${INK};opacity:0.62}
 <div class="text">
   <h1>Clickable</h1>
   <div class="rule"></div>
-  <p>Test your thumbnail before you publish</p>
 </div>
 <div class="grid">
   <div class="tile"></div><div class="tile chosen"></div>
@@ -74,7 +78,7 @@ await page.evaluate(() => document.fonts.ready);
 // (İlk hâli böyleydi ve 0 px pay bildirdi.)
 const overflow = await page.evaluate((limit) => {
   const right = Math.max(
-    ...[...document.querySelectorAll('.text h1, .text p')].map((el) => {
+    ...[...document.querySelectorAll('.text h1')].map((el) => {
       const range = document.createRange();
       range.selectNodeContents(el);
       return Math.round(range.getBoundingClientRect().right);
