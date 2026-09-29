@@ -12,6 +12,7 @@
     "db:reset": "supabase db reset && node scripts/local-storage-index.mjs",
     "db:types": "supabase gen types typescript --local --schema public > apps/mobile/src/lib/database.types.ts",
     "test:db": "supabase test db",
+    "test:functions": "deno test --allow-net supabase/functions/_shared/",
     "lint": "pnpm -r --if-present lint",
     "typecheck": "pnpm -r --if-present typecheck",
     "format": "prettier --write .",
@@ -27,5 +28,7 @@
     "prettier": "^3.6.2",
     "supabase": "^2.117.0"
   },
-  "workspaces": ["apps/*"]
+  "workspaces": [
+    "apps/*"
+  ]
 }
