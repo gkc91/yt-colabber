@@ -63,7 +63,7 @@ Submission 72 saat açık kalır; sonunda gelen kadarıyla `completed`, kullanı
 
 ## 8. Kredi ekonomisi
 - Kayıt +5 · Değerlendirme +1 (reputation ≥ 0.5) · Submission −N · Süre dolunca iade.
-- IAP: `credits_10` / `credits_30` / `credits_100`. Pro aylık: 40 kredi + öncelikli kuyruk + 25'e kadar değerlendirici + AI özeti.
+- IAP: `credits_10` / `credits_50` / `credits_100`. Pro aylık: 40 kredi + öncelikli kuyruk + 25'e kadar değerlendirici + AI özeti.
 - Pro kredisi **aktif olunan her 30 günde bir kez** 40 (0028) — faturanın nasıl kesildiğine
   bakmaz. Yıllık plan aylığın indirimli hâlidir, kredisi de aynı akar. Satın alma anında ilk
   40 hemen yazılır, sonrakileri günlük cron getirir. İptal edip vazgeçmek (UNCANCELLATION)
@@ -73,7 +73,7 @@ Submission 72 saat açık kalır; sonunda gelen kadarıyla `completed`, kullanı
 Uygulama YouTube üzerinde hiçbir etkileşim üretmez ve istemez. İzlenme/abone vaadi verilmez: YouTube'un sahte etkileşim politikası takas ve şişirme hizmetlerini yasaklar (uyarı → ihtar → kanal kapatma), uygulama içi izlemeler YouTube'da izlenme sayılmaz ve ilgisiz aboneler CTR/izlenme süresini düşürerek erişimi azaltır. Vaadimiz: yayın öncesi düzeltme ile **mevcut gösterimden daha fazla izlenme**. Kanal URL'i yalnızca niş/profil içindir. "Abone ol / izle / yorum yap" görevleri, karşılıklı tanıtım kredisi, izlenme/abone takası: **hiçbiri, hiçbir zaman.** Collab modülü yalnızca tanıştırır.
 
 ## 9.1 Örnek (demo) testler
-Değerlendir sekmesi boş kalmasın diye resmî `demo@clickable.app` hesabına ait örnek testler bulunur.
+Değerlendir sekmesi boş kalmasın diye resmî `demo@clickabletest.com` hesabına ait örnek testler bulunur.
 Kurallar: arayüzde "Örnek test" rozetiyle ve "kimse bunu beklemiyor" açıklamasıyla gösterilir; kredi
 ile açılmaz ve ledger'a dokunmaz; kapanmaz, iade üretmez; sıralamada gerçek testlerin arkasındadır;
 değerlendirici normal +1 krediyi kazanır. İçeriği gerçek, yayınlanabilir bir ilk 60 saniye olmalıdır
@@ -112,13 +112,22 @@ Gerekçe: üreticiler kurguyu ve thumbnail'ı PC'de yapıyor; dosyayı telefona 
 kullanıcısını kaybettiriyor. Sunucu tarafı transcoding yine YOK.
 
 ## 15. Fiyat taslağı (RevenueCat ürün id'leri)
-`credits_10` $2.99 · `credits_30` $4.99 · `credits_100` $14.99 · `pro_monthly` $6.99 · `pro_yearly` $66.99 (aylığın %20 indirimli hâli: 12 × $6.99 = $83.88). Mağaza yerel fiyatları otomatik.
+`credits_10` $2.99 · `credits_50` $9.99 · `credits_100` $14.99 · `pro_monthly` $4.99 · `pro_yearly` $47.99 (aylığın %20 indirimli hâli: 12 × $4.99 = $59.88). Mağaza yerel fiyatları otomatik.
 
-Kredi başına: `credits_10` $0.299 · `credits_30` $0.166 · `credits_100` $0.150 ·
-`pro_monthly` $0.175 · `pro_yearly` $0.140. **Kural: paket büyüdükçe kredi ucuzlar, Pro her
+Kredi başına: `credits_10` $0.299 · `credits_50` $0.200 · `credits_100` $0.150 ·
+`pro_monthly` $0.125 · `pro_yearly` $0.100. **Kural: paket büyüdükçe kredi ucuzlar, Pro her
 zaman en ucuzu.**
+
+Tek seferlik paketlerin Pro'dan pahalı kalması KASITLI: abonelik istemeyene de bir yol açık
+duruyor ve abone olmamanın bir bedeli var. Kural yine de sağlanıyor çünkü Pro gerçekten en ucuz.
 
 Geçmiş (2026-09-26/27): `credits_30` $6.99'dan $4.99'a indirildi — aynı parayla Pro aylık daha
 çok kredi (40 vs 30) VE öncelikli kuyruk, 25 değerlendirici, AI özeti veriyordu; katalogda hiç
 kimsenin almayacağı bir ürün duruyordu. Ardından `credits_100` $17.99'dan $14.99'a indirildi:
 30'luk paket inince büyük paket küçükten pahalı kalmıştı ($0.180 vs $0.166).
+
+2026-09-29: `pro_monthly` $6.99'dan $4.99'a indirildi ve yazılı kural ancak o zaman DOĞRU oldu —
+$6.99'da Pro'nun kredisi $0.175'e geliyordu, yani `credits_100`'ün $0.150'sinden pahalıydı ve
+"Pro her zaman en ucuzu" cümlesi yanlıştı. Aynı hamlede `credits_30` $4.99'da Pro ile eşitlenip
+ölü ürüne dönüşeceği için paket 50 krediye çıkarıldı ($9.99). Yıllık, %20 kuralı gereği
+$66.99'dan $47.99'a indi.

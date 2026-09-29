@@ -26,7 +26,7 @@ describe('products', () => {
   });
 
   it('test_kind_of_classifies_products', () => {
-    expect(kindOf('credits_30')).toBe('credits');
+    expect(kindOf('credits_50')).toBe('credits');
     expect(kindOf('pro_yearly')).toBe('pro');
     expect(kindOf('something_else')).toBe('unknown');
     expect(isProProduct('pro_monthly')).toBe(true);
@@ -34,9 +34,9 @@ describe('products', () => {
 
   it('test_purchase_options_put_credits_first_cheapest_first', () => {
     const options = toPurchaseOptions([
-      pkg('$rc_annual', 'pro_yearly', 49.99),
-      pkg('big', 'credits_100', 17.99),
-      pkg('$rc_monthly', 'pro_monthly', 6.99),
+      pkg('$rc_annual', 'pro_yearly', 47.99),
+      pkg('big', 'credits_100', 14.99),
+      pkg('$rc_monthly', 'pro_monthly', 4.99),
       pkg('small', 'credits_10', 2.99),
     ]);
 
@@ -49,14 +49,14 @@ describe('products', () => {
   });
 
   it('test_purchase_options_drop_unknown_products', () => {
-    const options = toPurchaseOptions([pkg('x', 'mystery_pack', 1), pkg('y', 'credits_30', 6.99)]);
+    const options = toPurchaseOptions([pkg('x', 'mystery_pack', 1), pkg('y', 'credits_50', 9.99)]);
     expect(options).toHaveLength(1);
-    expect(options[0].credits).toBe(30);
+    expect(options[0].credits).toBe(50);
   });
 
   it('test_pro_option_shows_monthly_credit_grant', () => {
-    const [option] = toPurchaseOptions([pkg('$rc_monthly', 'pro_monthly', 6.99)]);
+    const [option] = toPurchaseOptions([pkg('$rc_monthly', 'pro_monthly', 4.99)]);
     expect(option.credits).toBe(PRO_MONTHLY_CREDITS);
-    expect(option.priceString).toBe('$6.99');
+    expect(option.priceString).toBe('$4.99');
   });
 });

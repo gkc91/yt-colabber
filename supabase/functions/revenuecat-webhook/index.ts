@@ -20,7 +20,7 @@ import { signatureIsValid } from "../_shared/rcSignature.ts";
 /** Ürün → kredi. Sunucu tarafı yetkilidir; istemcideki katalog yalnızca gösterim içindir. */
 const CREDITS: Record<string, number> = {
   credits_10: 10,
-  credits_30: 30,
+  credits_50: 50,
   credits_100: 100,
 };
 

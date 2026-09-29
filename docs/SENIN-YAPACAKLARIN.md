@@ -80,15 +80,15 @@
       tanımlamadan önce bir kanala yüklenmiş sürüm isteyebiliyor — önce E3'ün kapalı test
       yüklemesini yap, sonra buraya dön.
 
-      **Ürünler ve fiyatlar** (PRODUCT.md §109 ile birebir aynı olmalı; 2026-09-27'de değişti):
+      **Ürünler ve fiyatlar** (PRODUCT.md §109 ile birebir aynı olmalı; 2026-09-29'da değişti):
 
       | Kimlik | Tür | Fiyat | Kredi |
       |---|---|---|---|
       | `credits_10` | tek seferlik | $2.99 | 10 |
-      | `credits_30` | tek seferlik | $4.99 | 30 |
+      | `credits_50` | tek seferlik | $9.99 | 50 |
       | `credits_100` | tek seferlik | $14.99 | 100 |
-      | `pro_monthly` | abonelik | $6.99/ay | 40/ay |
-      | `pro_yearly` | abonelik | $66.99/yıl | 40/ay |
+      | `pro_monthly` | abonelik | $4.99/ay | 40/ay |
+      | `pro_yearly` | abonelik | $47.99/yıl | 40/ay |
 
       Kural: paket büyüdükçe kredi ucuzlar, Pro her zaman en ucuzdur. Fiyatlar kodda değil
       mağazada tutulduğu için bunu hiçbir test koruyamıyor — D4'te elle doğrulanacak.

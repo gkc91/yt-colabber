@@ -79,7 +79,7 @@ describe('analytics', () => {
       key: 'phc_test',
       event: 'purchase',
       distinctId: 'user-1',
-      properties: { product: 'credits_30' },
+      properties: { product: 'credits_50' },
       timestamp: '2026-09-24T10:00:00.000Z',
     });
 

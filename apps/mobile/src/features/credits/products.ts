@@ -8,7 +8,7 @@ export const ENTITLEMENT_PRO = 'pro';
 
 export const CREDIT_PRODUCTS = {
   credits_10: 10,
-  credits_30: 30,
+  credits_50: 50,
   credits_100: 100,
 } as const;
 
