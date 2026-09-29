@@ -16,12 +16,15 @@ select plan(7);
 select vault.create_secret('https://proje.test', 'project_url');
 select vault.create_secret('SERVICE-ROLE-ANAHTARI-GIZLI', 'service_role_key');
 
--- ---------- test_the_gateway_token_falls_back_before_the_anon_key_is_stored ----------
--- Geçiş: sırlar konmadan migration yayınlansa bile bugünkü davranış korunmalı.
-select is(net_gateway_token(), 'SERVICE-ROLE-ANAHTARI-GIZLI',
-  'anon_key yokken ağ geçidi jetonu eski anahtara düşer');
-select is(net_auth_token(), 'SERVICE-ROLE-ANAHTARI-GIZLI',
-  'net_shared_secret yokken yetki jetonu eski anahtara düşer');
+-- ---------- test_a_missing_secret_produces_no_token_at_all ----------
+-- Geçiş yedeği 0041'de kaldırıldı. Artık sır yoksa jeton NULL: tetikleyiciler null
+-- jetonda erken dönüyor, yani çağrı hiç yapılmıyor. Sessizce service_role'a düşmek
+-- 0037'de kapattığımız şeyi geri açardı — ve sessiz geri dönüş, gürültülü arızadan kötü.
+-- Vault'ta service_role_key DURUYOR (yukarıda kuruldu): düşmediğini kanıtlayan da bu.
+select is(net_gateway_token(), null,
+  'anon_key yokken ağ geçidi jetonu yok — eski anahtara DÜŞMEZ');
+select is(net_auth_token(), null,
+  'net_shared_secret yokken yetki jetonu yok — eski anahtara DÜŞMEZ');
 
 -- ---------- act ----------
 -- Anon anahtarı JWT biçiminde: ağ geçidi bunu doğruluyor, bu yüzden biçimi testin konusu.

@@ -30,7 +30,11 @@ select is(
 -- istek staging'de yarıda kalıyor ve nişlerin yarısı boş kalıyordu.
 do $$ begin
   perform vault.create_secret('http://kong:8000', 'project_url');
-  perform vault.create_secret('test-service-role-key', 'service_role_key');
+  -- Üretimdeki iki sır (0037/0041): ağ geçidini geçen JWT ve gerçek yetkiyi taşıyan sır.
+  -- Eskiden burada `service_role_key` vardı; yedek kaldırılınca (0041) o kurulum artık
+  -- tetikleyiciyi çalıştırmıyor ve test doğru şekilde düştü.
+  perform vault.create_secret('eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYW5vbiJ9.imza', 'anon_key');
+  perform vault.create_secret('test-net-shared-secret', 'net_shared_secret');
 end $$;
 do $$ begin perform trigger_refresh_niche_cache(); end $$;
 

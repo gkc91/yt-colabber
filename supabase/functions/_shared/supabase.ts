@@ -59,18 +59,15 @@ export const json = (body: unknown, status = 200) =>
  * kapatma değil, patlama yarıçapını küçültme: yarın o satır bir şekilde görünür olursa
  * sızan şey "tarayıcıyı tetikleyebilirim" olsun, "veritabanı benim" değil.
  *
- * GEÇİŞ: NET_SHARED_SECRET tanımlıysa o kabul edilir; tanımlı değilse eski service_role
- * karşılaştırmasına düşer. Böylece fonksiyonlar ve migration birbirini beklemeden,
- * herhangi bir sırayla yayınlanabiliyor. Sır her yere yerleştikten sonra bu yedek kalkar.
+ * `Authorization` başlığına bakılmıyor: orayı Supabase ağ geçidi JWT olarak doğruluyor ve
+ * oraya JWT olmayan bir sır konamıyor — 0033 tam bunu denedi ve dört cron işi 95 dakika
+ * 401 aldı. O yüzden yetki ayrı bir başlıkta taşınıyor (0037).
  */
 export const INTERNAL_HEADER = "x-internal-secret";
 
 export function isInternalCall(req: Request): boolean {
+  // Tek kabul edilen yol. Geçiş dönemi bitti (0041): eskiden `Authorization` başlığındaki
+  // service_role anahtarı da kabul ediliyordu, artık edilmiyor.
   const shared = Deno.env.get("NET_SHARED_SECRET");
-  if (shared && req.headers.get(INTERNAL_HEADER) === shared) return true;
-
-  // Geçiş yedeği: 0037 yayınlanana kadar eski yol da kabul. Sır her yere yerleştikten
-  // ve dört cron işinin 200 döndüğü görüldükten sonra bu iki satır silinir.
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  return Boolean(serviceKey) && req.headers.get("Authorization") === `Bearer ${serviceKey}`;
+  return Boolean(shared) && req.headers.get(INTERNAL_HEADER) === shared;
 }
