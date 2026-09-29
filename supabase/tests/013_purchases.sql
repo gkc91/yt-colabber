@@ -63,7 +63,7 @@ select ok(
 -- ---------- test_grant_purchase_is_service_role_only ----------
 select ok(
   not has_function_privilege('authenticated',
-    'grant_purchase(uuid, text, text, int, jsonb, boolean, timestamptz)', 'execute'),
+    'grant_purchase(uuid, text, text, int, jsonb, boolean, timestamptz, text)', 'execute'),
   'kullanıcı kendine kredi yazdıramaz');
 
 select * from finish();

@@ -305,6 +305,20 @@ export default function ProfileScreen() {
       {/* ---------- kredi geçmişi ---------- */}
       <Section title={t('profile.credits.title')}>
         {credits.isPending ? <ActivityIndicator /> : <CreditHistory entries={credits.data ?? []} />}
+        {/*
+          Paywall'a TEK giriş noktası, sihirbazın "kredin yetmiyor" uyarısıydı (0045 bulgusu,
+          kullanıcı yakaladı). Yani kredisi yeten paywall'ı hiç göremiyor ve Pro'ya abone
+          olmanın pratikte yolu yok. Buraya konuldu çünkü bakiye ve kredi geçmişi zaten
+          burada: "kredim az" diye bakan kişi zaten bu ekranda.
+          Metin bilerek ölçülü — PRODUCT §9: asıl yol değerlendirme vermek, satın alma
+          zamanını harcamak istemeyenler için.
+        */}
+        <Button
+          title={t('profile.credits.buy')}
+          variant="secondary"
+          onPress={() => router.push('/paywall')}
+        />
+        <Meta>{t('profile.credits.buyHint')}</Meta>
       </Section>
 
       {/* ---------- hesap ---------- */}

@@ -327,6 +327,8 @@
     "credits": {
       "title": "Credit history",
       "empty": "Nothing yet. Reviewing a video earns your first credit.",
+      "buy": "Buy credits or go Pro",
+      "buyHint": "Reviewing other creators earns credits for free. Buying is for when you would rather not spend the time.",
       "reasons": {
         "signup_bonus": "Welcome bonus",
         "review_reward": "Review you gave",

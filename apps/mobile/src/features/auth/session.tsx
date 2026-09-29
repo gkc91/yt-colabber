@@ -1,6 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
+import { syncEntitlements } from '@/features/credits/entitlements';
 import { purchases } from '@/lib/purchases';
 import { track } from '@/lib/track';
 import { supabase } from '@/lib/supabase';
@@ -21,6 +22,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       // RevenueCat'in appUserID'si Supabase kullanıcı kimliğidir; webhook krediyi bu
       // kimliğe yazar. Anahtar yoksa katman sessizce devre dışı kalır (D1).
       void (session ? purchases.configure(session.user.id) : purchases.signOut()).catch(() => {});
+
+      // Kaybolan bir webhook'un telafisi (0043): sunucu RevenueCat'e sorup hak durumunu
+      // tazeliyor. Burada yapılıyor çünkü kullanıcı ödemesini yaptıktan sonra uygulamayı
+      // er ya da geç açıyor — açtığında düzelmiş oluyor. İstemci bir şey İDDİA ETMİYOR,
+      // yalnızca "bak" diyor; karar sunucunun.
+      if (session) void syncEntitlements().catch(() => {});
 
       // Ölçüm (E4): kimlik Supabase kullanıcı kimliği; e-posta gönderilmez.
       if (session) {

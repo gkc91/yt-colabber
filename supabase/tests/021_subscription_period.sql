@@ -79,7 +79,7 @@ select is(
 -- ---------- test_subscription_function_is_service_role_only ----------
 select ok(
   not has_function_privilege('authenticated',
-    'grant_purchase(uuid, text, text, int, jsonb, boolean, timestamptz)', 'execute'),
+    'grant_purchase(uuid, text, text, int, jsonb, boolean, timestamptz, text)', 'execute'),
   'kullanıcılar kendilerine kredi yazamaz');
 
 select ok(

@@ -32,6 +32,24 @@ const PRO_DEACTIVATE = ["EXPIRATION", "BILLING_ISSUE"];
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+/**
+ * RevenueCat olayının bize lazım olan alanları.
+ *
+ * Bu tip KULLANILIYOR ama hiçbir yerde tanımlı DEĞİLDİ (2026-09-29 bulgusu): Deno deploy
+ * tip denetimi yapmadığı için çalışma zamanında görünmüyordu, ama `deno check` kırıktı ve
+ * alan adlarını yanlış yazmak sessizce `undefined` veriyordu. Olayın tamamı `raw` olarak
+ * saklandığı için burada yalnızca okuduğumuz alanlar duruyor.
+ */
+interface RcEvent {
+  id: string;
+  type: string;
+  app_user_id?: unknown;
+  product_id?: unknown;
+  expiration_at_ms?: unknown;
+  /** RevenueCat'in işlem kimliği; API'deki non_subscriptions `id` ile aynı değer olmalı. */
+  transaction_id?: unknown;
+}
+
 Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response("method", { status: 405 });
 
@@ -111,6 +129,8 @@ Deno.serve(async (req) => {
     p_raw: event,
     p_pro_active: proActive,
     p_pro_expires: proExpires,
+    // 0043: senkron yolunun aynı satın almayı ikinci kez kredilendirmemesi için ortak anahtar.
+    p_rc_txn: typeof event.transaction_id === "string" ? event.transaction_id : null,
   });
   if (error) return json({ error: error.message }, 500);
   return json({ ok: true, credits, pro: proActive, signature: signatureState });

@@ -7,6 +7,7 @@ import { track } from '@/lib/track';
 import { type PurchaseOption } from '@/lib/purchases.types';
 
 import { fetchBalance } from './api';
+import { syncEntitlements } from './entitlements';
 import { waitForCredits, type PurchaseWaitOutcome } from './purchaseFlow';
 
 export { purchaseErrorKey } from './purchaseErrors';
@@ -62,11 +63,26 @@ export function usePurchase(userId: string | undefined) {
   });
 }
 
+/**
+ * "Satın almaları geri yükle".
+ *
+ * 0043'e kadar bu yalnızca SDK'yı çağırıp ekranda "Pro geri yüklendi" yazıyordu; sunucuya
+ * hiçbir şey yazmıyordu. Yani webhook kaybolmuşsa ekran bir şey, sunucu başka şey söylüyordu
+ * — ve gerçek olan sunucudur. Artık mağaza geri yüklemesinden SONRA sunucu RevenueCat'e
+ * soruyor ve hak durumunu kendisi yazıyor. Ekranın gösterdiği `proActive` yine SDK'dan
+ * geliyor ama artık arkasında sunucu kaydı var.
+ */
 export function useRestore(userId: string | undefined) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => purchases.restore(),
+    mutationFn: async () => {
+      const result = await purchases.restore();
+      // Sıra önemli: önce mağaza geri yüklemesi, sonra senkron. Tersi olsaydı RevenueCat
+      // henüz geri yüklenmemiş bir durumu bildirirdi.
+      await syncEntitlements().catch(() => null);
+      return result;
+    },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ['balance', userId] });
     },
