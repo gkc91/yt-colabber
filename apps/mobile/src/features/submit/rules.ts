@@ -125,6 +125,8 @@ export type WizardStep = (typeof WIZARD_STEPS)[number];
 
 export type WizardState = {
   format: ClipFormat | null;
+  /** Birden fazla kanal varsa biri seçilmiş mi. Tek kanallıda her zaman true. */
+  channelChosen: boolean;
   thumbnailCount: number;
   titlesProblem: TitlesProblem | null;
   hasClip: boolean;
@@ -148,7 +150,10 @@ export function canContinue(step: WizardStep, state: WizardState): boolean {
     case 'format':
       return state.format !== null;
     case 'thumbnails':
-      return state.thumbnailCount > 0;
+      // Kanal seçicisi BU adımda çiziliyor, o yüzden kapı da burada. Genel bir koşul
+      // olarak uygulanınca (2026-09-29) ilk adımı kilitliyordu ve kilidi açacak kontrol
+      // bir sonraki adımdaydı — çıkışsız. Kapı, kontrolün göründüğü adıma ait.
+      return state.thumbnailCount > 0 && state.channelChosen;
     case 'titles':
       return state.titlesProblem === null;
     case 'clip':

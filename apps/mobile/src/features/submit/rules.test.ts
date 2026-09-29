@@ -107,6 +107,7 @@ describe('canContinue', () => {
   // Sihirbazın en baştaki hâli: hiçbir şey seçilmemiş, hiçbir şey yüklenmemiş.
   const empty: WizardState = {
     format: null,
+    channelChosen: true,
     thumbnailCount: 0,
     titlesProblem: 'no_titles',
     hasClip: false,
@@ -137,6 +138,22 @@ describe('canContinue', () => {
 
     expect(canContinue('quantity', empty)).toBe(false);
     expect(canContinue('quantity', { ...empty, affordable: true })).toBe(true);
+  });
+
+  it('test_wizard_unpicked_channel_only_blocks_the_step_that_picks_it', () => {
+    // İkinci gerileme (2026-09-29, canlıda): kanal seçme koşulu TÜM adımlara
+    // uygulanıyordu. Birden fazla kanalı olan kullanıcı ilk adımda kilitleniyordu ve
+    // kanal seçicisi bir sonraki adımdaydı — çıkışsız.
+    const noChannel = { ...empty, channelChosen: false };
+
+    expect(canContinue('format', { ...noChannel, format: 'vertical' })).toBe(true);
+    expect(canContinue('titles', { ...noChannel, titlesProblem: null })).toBe(true);
+    expect(canContinue('clip', { ...noChannel, hasClip: true })).toBe(true);
+    expect(canContinue('quantity', { ...noChannel, affordable: true })).toBe(true);
+
+    // Kapı yalnızca seçicinin göründüğü adımda.
+    expect(canContinue('thumbnails', { ...noChannel, thumbnailCount: 1 })).toBe(false);
+    expect(canContinue('thumbnails', { ...empty, thumbnailCount: 1 })).toBe(true);
   });
 
   it('test_wizard_last_step_is_always_continuable', () => {

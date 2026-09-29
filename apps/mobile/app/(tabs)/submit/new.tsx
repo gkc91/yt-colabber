@@ -199,11 +199,12 @@ function Wizard() {
   const canGoNext =
     canContinue(WIZARD_STEPS[step], {
       format,
+      channelChosen: !mustPickChannel,
       thumbnailCount: thumbnails.length,
       titlesProblem: titleProblem,
       hasClip: clip !== null,
       affordable: canAfford(balance, requested),
-    }) && !mustPickChannel;
+    });
 
   const goNext = () => {
     // Klip seçilen orana uymuyorsa ızgara yanlış havuzdan beslenir; sebebini söyleyip durdur.
