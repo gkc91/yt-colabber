@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
@@ -55,7 +55,11 @@ function clipErrorKey(code: string): string {
   return code;
 }
 
-export default function NewSubmission() {
+/**
+ * Sihirbazın kendisi. Dışarıdan `key` ile yeniden monte ediliyor (aşağıya bakın), bu yüzden
+ * burada "sıfırla" diye bir şey yok: her yeni test taze bir bileşen.
+ */
+function NewSubmission() {
   // E5: masaüstünden de test açılabiliyor. Fark: cihazda uzun video 60 saniyeye kesilip
   // sıkıştırılıyor, tarayıcıda sıkıştırma yok — dosya zaten kurallara uymalı.
   return <Wizard />;
@@ -327,3 +331,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+/**
+ * "Yeni test" her basıldığında sihirbaz 1. ADIMDAN başlamalı (2026-09-29, kullanıcı bildirdi:
+ * 2. adımdayken başka sekmeye gidip dönünce sihirbaz 2. adımda kalıyordu).
+ *
+ * Sebep: `submit/new` bir sekme ekranı, sekme değişince bileşen SÖKÜLMÜYOR ve `useState`
+ * yaşamaya devam ediyor. Çözüm, adımı elle sıfırlamak DEĞİL: liste halinde tutulan bir
+ * sıfırlama, yeni bir alan eklendiğinde güncellenmeyi unutulacak türden bir koddur — bu
+ * dosyada iki gerileme tam olarak öyle çıktı. `key` değişince React her şeyi baştan kuruyor,
+ * yani sonradan eklenen alanlar da kendiliğinden kapsanıyor.
+ */
+export default function NewSubmissionScreen() {
+  const { n } = useLocalSearchParams<{ n?: string }>();
+  return <NewSubmission key={typeof n === 'string' ? n : 'new'} />;
+}

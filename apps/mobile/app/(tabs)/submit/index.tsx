@@ -1,4 +1,4 @@
-import { Link, useFocusEffect } from 'expo-router';
+import { Link, router, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, View } from 'react-native';
 
@@ -52,9 +52,19 @@ export default function SubmissionsScreen() {
         }
       />
       <View style={styles.footer}>
-        <Link href="/submit/new" asChild>
-          <Button title={t('submit.newTest')} onPress={() => {}} />
-        </Link>
+        {/*
+          `n` her basışta değişen bir sayı (0046). Sihirbaz onu React `key`'i olarak
+          kullanıyor, yani "Yeni test" her basıldığında BAŞTAN monte oluyor ve 1. adımdan
+          başlıyor. Alanları tek tek sıfırlamak yerine `key` kullanmanın sebebi: bu dosyada
+          bugüne kadar iki gerileme, elle tutulan bir listenin güncellenmeyi unutmasından
+          çıktı. Yeniden montaj, sonradan eklenecek her alanı da kendiliğinden kapsar.
+        */}
+        <Button
+          title={t('submit.newTest')}
+          onPress={() =>
+            router.push({ pathname: '/submit/new', params: { n: String(Date.now()) } })
+          }
+        />
       </View>
     </View>
   );

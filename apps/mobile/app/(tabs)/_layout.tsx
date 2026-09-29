@@ -1,4 +1,5 @@
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
+import { router } from 'expo-router';
 import { Tabs } from 'expo-router/js-tabs';
 import { useWindowDimensions, type ColorValue } from 'react-native';
 
@@ -48,6 +49,18 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="submit/index"
+        /*
+          Sekmeye basınca HER ZAMAN liste (0046). Varsayılan davranış sekmenin son odaklanmış
+          ekranını geri getiriyordu; yarım kalmış bir sihirbaz bu yüzden "Content"e basınca
+          2. adımda karşınıza çıkıyordu (2026-09-29, kullanıcı bildirdi). Sihirbazın taslağı
+          silinmiyor — yalnızca sekme kökü listeye sabitleniyor; taze sihirbaz "Yeni test"
+          düğmesinden açılıyor.
+        */
+        listeners={{
+          tabPress: () => {
+            router.navigate('/submit');
+          },
+        }}
         options={{
           title: t('tabs.submit'),
           tabBarIcon: ({ color }) => (
