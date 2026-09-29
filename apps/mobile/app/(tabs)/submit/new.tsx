@@ -169,7 +169,7 @@ function Wizard() {
     setUploading(true);
     setUploadProgress({ done: 0, total: thumbnails.length + 1 });
     try {
-      await uploadAndCreate(
+      const submissionId = await uploadAndCreate(
         {
           userId,
           channelId,
@@ -188,7 +188,11 @@ function Wizard() {
       });
       await queryClient.invalidateQueries({ queryKey: ['balance', userId] });
       await queryClient.invalidateQueries({ queryKey: ['submissions', userId] });
-      router.replace('/submit');
+      // Gönderimden sonra listeye değil, AÇILAN TESTİN kendisine gidiyoruz (0048).
+      // Eskiden liste geliyordu ve insan "yüklendi mi?" diye bakıyordu; test sayfası
+      // `0/5` ilerlemesini ve "değerlendirmeler bekleniyor" satırını zaten gösteriyor,
+      // yani onay için ayrı bir teşekkür ekranı yazmaya gerek yok.
+      router.replace({ pathname: '/submit/[id]', params: { id: submissionId } });
     } catch (e) {
       if (e instanceof Cancelled) setError('submit.wizard.cancelled');
       else if (e instanceof SubmissionFailed) setError(`submit.errors.${e.code}` as MessageKey);

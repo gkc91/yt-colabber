@@ -1,0 +1,13 @@
+# app.clickabletest.com — uygulamanın kendisi, içerik sitesi değil.
+#
+# NEDEN TAMAMEN KAPALI (2026-09-30): `_redirects` her adresi `index.html`'e 200 ile
+# düşürüyor (dinamik rotalar istemci tarafında çözülüyor). Yani arama motoru için bu alan
+# adı, SINIRSIZ sayıda farklı adreste AYNI sayfayı döndürüyor ve hepsinin başlığı
+# "Clickable". İndekslenmesi iki şeye yarar: kullanıcı arama sonucundan boş bir uygulama
+# kabuğuna düşer, ve clickabletest.com'un sıralaması kendi kopyalarıyla seyrelir.
+#
+# Tanıtım ve içerik clickabletest.com'da; site haritası da orada.
+User-agent: *
+Disallow: /
+
+Sitemap: https://clickabletest.com/sitemap.xml

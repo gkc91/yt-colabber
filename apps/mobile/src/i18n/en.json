@@ -365,7 +365,9 @@
       "signOut": "Sign out",
       "delete": "Delete my account",
       "deleteHint": "Deleting removes your account, your tests and your credit history. Reviews you wrote on other people's tests stay, without your name, so their results keep working.",
-      "deleteConfirm": "This cannot be undone. Your account, your tests and your credits will be deleted."
+      "deleteConfirm": "This cannot be undone. Your account, your tests and your credits will be deleted.",
+      "contact": "Contact support",
+      "contactHint": "Questions, a bug, or a problem with a review — write to {email} and a person reads it."
     },
     "channels": {
       "title": "Your channels",
@@ -463,5 +465,12 @@
       "not_authenticated": "Please sign in again.",
       "unknown": "Something went wrong. Please try again."
     }
+  },
+  "imageAlt": {
+    "thumbnailOption": "Thumbnail option {n}",
+    "thumbnailPicked": "The thumbnail you picked",
+    "thumbnailOther": "A thumbnail you did not pick",
+    "thumbnailYours": "Thumbnail {n} you uploaded",
+    "thumbnailResult": "Thumbnail {n}, {percent}% of picks"
   }
 }

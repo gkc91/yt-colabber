@@ -31,6 +31,12 @@ export function ThumbnailResults({ stats, thumbnailUrls }: Props) {
             style={styles.thumbnail}
             contentFit="cover"
             accessibilityIgnoresInvertColors
+            accessible
+            accessibilityRole="image"
+            accessibilityLabel={t('imageAlt.thumbnailResult', {
+              n: stat.idx + 1,
+              percent: percent(pickRate(stat)),
+            })}
           />
           <View style={styles.stats}>
             <Stat

@@ -26,11 +26,16 @@ export function GuessStep({ thumbnailUrl, title, guess, onChange, onContinue }: 
 
   return (
     <View style={styles.container}>
+      {/* Sorunun konusu bu görsel; ekran okuyucuya adlandırılmadan verilirse soru
+          anlamsız kalır (0048). */}
       <Image
         source={{ uri: thumbnailUrl }}
         style={[styles.thumbnail, { borderColor: colors.border }]}
         contentFit="cover"
         accessibilityIgnoresInvertColors
+        accessible
+        accessibilityRole="image"
+        accessibilityLabel={t('imageAlt.thumbnailOption', { n: 1 })}
       />
       {/* Başlık YouTube'daki gibi durur: burada da ölçtüğümüz şey vaat (DESIGN.md §2). */}
       <Heading>{title}</Heading>

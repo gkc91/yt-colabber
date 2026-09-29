@@ -39,6 +39,9 @@ export function ThumbnailsStep({ thumbnails, vertical = false, busy, onAdd, onRe
             ]}
             contentFit="cover"
             accessibilityIgnoresInvertColors
+            accessible
+            accessibilityRole="image"
+            accessibilityLabel={t('imageAlt.thumbnailYours', { n: index + 1 })}
           />
           <View style={styles.row}>
             {/* Ne eklediğini ekledikten sonra da görebilsin: ad yoksa sırasıyla numara. */}

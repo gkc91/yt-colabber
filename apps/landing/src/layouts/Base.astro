@@ -1,6 +1,8 @@
 ---
 import { canonical, LOCALES, localePath, SITE_URL, type Locale } from '../data/site';
 import { ui } from '../data/ui';
+import Analytics from '../components/Analytics.astro';
+import StickyCta from '../components/StickyCta.astro';
 
 interface Props {
   /** Locale-independent path, e.g. `/thumbnail-test`. */
@@ -64,7 +66,14 @@ const softwareApplication = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="theme-color" content="#0f1115" />
+    {/*
+      Favicon seti (2026-09-30). SVG modern tarayıcıda, PNG geri düşüş: `.svg`'yi
+      desteklemeyen tarayıcı ve iOS "ana ekrana ekle" boş bir kare gösteriyordu.
+    */}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <Analytics />
     <script type="application/ld+json" set:html={JSON.stringify(softwareApplication)} is:inline />
     {
       schema.map((item) => (
@@ -90,6 +99,9 @@ const softwareApplication = {
     <main id="main">
       <slot />
     </main>
+
+    {/* Mobilde alta yapışan CTA (2026-09-30); hero'daki düğmeler ekrandayken gizli. */}
+    <StickyCta locale={locale} />
 
     <footer class="site">
       <div class="bar">

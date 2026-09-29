@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { router } from 'expo-router';
-import { ActivityIndicator, Alert, Platform, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Linking, Platform, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
@@ -18,6 +18,7 @@ import {
 import { Body, Heading, Label, Meta, Small, Stat } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { SUPPORT_EMAIL } from '@/constants/support';
 import { space } from '@/design/tokens';
 import { signOut } from '@/features/auth/api';
 import { useSession } from '@/features/auth/session';
@@ -355,6 +356,19 @@ export default function ProfileScreen() {
           variant="secondary"
           onPress={() => signOut()}
         />
+        {/*
+          Uygulama içinde iletişim (0048). Destek adresi yalnızca web sitesindeydi; bir
+          sorun yaşayan kişi tam o anda uygulamadaydı ve yazacak yer bulamıyordu.
+          `mailto:` bilerek: form yazmak yeni bir uç, yeni bir spam yüzeyi ve yeni bir
+          "gitti mi?" sorusu demek — e-posta uygulaması kullanıcının kendi kopyasını da
+          bırakıyor.
+        */}
+        <Button
+          title={t('profile.account.contact')}
+          variant="secondary"
+          onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}`)}
+        />
+        <Meta>{t('profile.account.contactHint', { email: SUPPORT_EMAIL })}</Meta>
         <Meta>{t('profile.account.deleteHint')}</Meta>
         {removeAccount.error ? <Small tone="accent">{t('auth.genericError')}</Small> : null}
         <Button

@@ -1,0 +1,79 @@
+---
+// Mobilde alta yapışan CTA (2026-09-30).
+//
+// NEDEN: mağaza/web düğmeleri yalnızca hero'daydı. Telefonda sayfanın geri kalanı uzun,
+// yani okumaya devam eden kişi tam ikna olduğu anda tıklayacak bir şey bulamıyordu.
+//
+// YALNIZCA MOBİLDE: masaüstünde sayfa zaten kısa görünüyor ve alttan bir şerit ekranın
+// altını kaplamak dışında bir şey kazandırmıyor.
+//
+// HERO'DAKİ DÜĞMELER GÖRÜNÜRKEN GİZLİ: iki aynı CTA'yı aynı anda göstermek, üstteki hâlâ
+// ekrandayken alttan bir şerit çıkarmak demek — gereksiz ve rahatsız. Kesişim gözlemcisi
+// hero'yu izliyor, hero ekrandan çıkınca şerit beliriyor.
+import { STORE, WEB_APP_URL, type Locale } from '../data/site';
+import { ui } from '../data/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ui(locale);
+/** Mağaza linki yoksa tek anlamlı eylem web sürümü. */
+const href = STORE.android ?? STORE.ios ?? WEB_APP_URL;
+const label = STORE.android || STORE.ios ? t.cta.primary : t.cta.web;
+---
+
+<div class="sticky-cta" data-sticky-cta hidden>
+  <a class="btn" href={href}>{label}</a>
+</div>
+
+<script is:inline>
+  (function () {
+    var bar = document.querySelector('[data-sticky-cta]');
+    var hero = document.querySelector('.hero .actions');
+    if (!bar) return;
+    if (!hero || !('IntersectionObserver' in window)) {
+      bar.hidden = false;
+      return;
+    }
+    new IntersectionObserver(
+      function (entries) {
+        bar.hidden = entries[0].isIntersecting;
+      },
+      { threshold: 0 },
+    ).observe(hero);
+  })();
+</script>
+
+<style>
+  .sticky-cta {
+    display: none;
+  }
+
+  /* Hero düğmeleri masaüstünde yan yana ve sayfa kısa; şerit yalnızca telefonda. */
+  @media (max-width: 760px) {
+    .sticky-cta {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: block;
+      z-index: 20;
+      padding: 12px 20px;
+      /* Sistem çubuğunun altına düşmesin (iPhone ana ekran çizgisi). */
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+
+    .sticky-cta[hidden] {
+      display: none;
+    }
+
+    .sticky-cta .btn {
+      display: block;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+// Landing ölçümü (2026-09-30).
+//
+// NEDEN VAR: sitede hiçbir ölçüm yoktu. Uygulamada PostHog var ama siteye kaç kişi geliyor,
+// kaçı mağaza/web düğmesine basıyor bilinmiyordu — yani huninin en üstü karanlıktı.
+//
+// NEDEN PostHog SDK'sı DEĞİL: hazır snippet çerez yazıyor ve o an bir çerez banner'ı
+// borcu doğuyor. Burada yapılan iş tek bir POST; uygulamada da aynı sebeple kendi
+// `fetch` çağrımızı yazmıştık (src/lib/analytics.ts). Çerez yok, localStorage yok,
+// kalıcı kimlik yok — dolayısıyla rıza banner'ı gerektiren bir izleme de yok.
+//
+// BUNUN BEDELİ, açıkça: kimlik yalnızca sayfa ömrü boyunca yaşıyor. "Kaç tekil ziyaretçi"
+// sayısı şişer, çünkü ikinci sayfa yeni kimlik sayılır. Ölçmek istediğimiz şey o değil:
+// kaç ziyaret geldi ve kaçı CTA'ya bastı — ikisi de doğru sayılıyor.
+//
+// Anahtar yoksa (yerel geliştirme, önizleme) script hiç basılmaz.
+const key = import.meta.env.PUBLIC_POSTHOG_KEY;
+const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? 'https://eu.i.posthog.com';
+---
+
+{
+  key ? (
+    <script is:inline define:vars={{ key, host }}>
+      (function () {
+        var id = 'anon-' + Math.random().toString(36).slice(2, 12);
+
+        function send(event, props) {
+          var body = JSON.stringify({
+            api_key: key,
+            event: event,
+            distinct_id: id,
+            timestamp: new Date().toISOString(),
+            properties: Object.assign(
+              {
+                $current_url: location.href,
+                $pathname: location.pathname,
+                $lib: 'clickable-landing',
+                surface: 'landing',
+              },
+              props || {},
+            ),
+          });
+          // `keepalive`: dış bağlantıya tıklandığında sayfa kapanırken istek düşmesin.
+          try {
+            fetch(host + '/i/v0/e/', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: body,
+              keepalive: true,
+              mode: 'no-cors',
+            });
+          } catch (e) {
+            /* ölçüm sayfayı bozmaz */
+          }
+        }
+
+        send('$pageview');
+
+        // CTA tıklamaları: hangi düğme, hangi sayfa. Huninin ikinci adımı bu.
+        document.addEventListener('click', function (e) {
+          var el = e.target && e.target.closest ? e.target.closest('a.btn, span.btn') : null;
+          if (!el) return;
+          send('landing_cta_click', {
+            label: (el.textContent || '').trim().slice(0, 60),
+            href: el.getAttribute('href') || null,
+            disabled: el.tagName === 'SPAN',
+          });
+        });
+      })();
+    </script>
+  ) : null
+}

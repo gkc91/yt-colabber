@@ -27,6 +27,24 @@ export default function Root({ children }: { children: ReactNode }) {
           name="description"
           content="Test your thumbnail, title and first 60 seconds with real people in your niche before you publish."
         />
+        {/*
+          Paylaşılınca çıplak link çıkmasın (2026-09-30). Görsel landing ile AYNI dosya:
+          iki yerde iki farklı kapak tutmak, biri güncellenince diğerinin eskimesi demek.
+          `noindex` de burada: robots.txt zaten kapatıyor, bu ikinci kilit — robots.txt'i
+          okumayan ya da doğrudan adres verilen tarayıcılar için.
+        */}
+        <meta name="robots" content="noindex, nofollow" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Clickable" />
+        <meta property="og:title" content="Clickable" />
+        <meta
+          property="og:description"
+          content="Test your thumbnail, title and first 60 seconds with real people in your niche before you publish."
+        />
+        <meta property="og:image" content="https://clickabletest.com/og.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#FAF9F7" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png" />
