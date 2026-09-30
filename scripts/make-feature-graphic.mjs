@@ -32,7 +32,8 @@ const H = 500;
 const TEXT_MAX = 470;
 const GRID_X = 582;
 
-const FONT_DIR = 'node_modules/.pnpm/@expo-google-fonts+archivo@0.4.2/node_modules/@expo-google-fonts/archivo';
+const FONT_DIR =
+  'node_modules/.pnpm/@expo-google-fonts+archivo@0.4.2/node_modules/@expo-google-fonts/archivo';
 const font = (weight, file) =>
   `@font-face{font-family:Archivo;font-weight:${weight};src:url(data:font/ttf;base64,${readFileSync(resolve(FONT_DIR, file)).toString('base64')}) format('truetype');}`;
 

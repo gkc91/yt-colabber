@@ -389,6 +389,30 @@
         "unknown": "That did not work. Try again.",
         "unknown_platform": "We only take YouTube, Instagram and TikTok links for now."
       }
+    },
+    "collab": {
+      "title": "Collabs",
+      "body": "Meet creators in your niche at a similar size. No credits, no tasks, nothing on YouTube — just an introduction.",
+      "open": "I'm open to collabs",
+      "openHint": "While this is off, nobody sees you here and you see nobody.",
+      "types": "What are you up for?",
+      "bio": "Short intro",
+      "bioPlaceholder": "What you make, and what you would like to do together.",
+      "bioCount": "{used}/{max}",
+      "save": "Save",
+      "saved": "Saved",
+      "errors": {
+        "no_type": "Pick at least one kind of collab, or turn this off.",
+        "too_long": "Keep it under {max} characters.",
+        "save_failed": "Could not save. Check your connection and try again."
+      },
+      "kinds": {
+        "joint_video": "Joint video",
+        "guest": "Guest appearance",
+        "shorts": "Shorts together",
+        "end_screen_swap": "End screen swap",
+        "live": "Live together"
+      }
     }
   },
   "results": {

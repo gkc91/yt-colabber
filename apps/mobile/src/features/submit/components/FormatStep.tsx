@@ -34,7 +34,9 @@ export function FormatStep({ format, onChange }: Props) {
             <Pressable
               key={option}
               accessibilityRole="radio"
-              accessibilityState={{ selected }}
+              // Chip ile aynı düzeltme (2026-09-30): `accessibilityState.selected` web'e
+              // hiç yansımıyordu ve radio'nun doğru niteliği zaten `aria-checked`.
+              aria-checked={selected}
               style={styles.option}
               onPress={() => onChange(option)}
             >

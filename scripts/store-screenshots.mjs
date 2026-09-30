@@ -34,7 +34,9 @@ const SCALE = 3;
 if (!TOKEN) {
   console.error('SHOT_ACCESS_TOKEN gerekli. Yerel test kullanıcısı için giriş bağlantısı üret:');
   console.error('  supabase status -o env  →  SERVICE_ROLE_KEY');
-  console.error('  POST /auth/v1/admin/generate_link  {"type":"magiclink","email":"bob@clickable.test"}');
+  console.error(
+    '  POST /auth/v1/admin/generate_link  {"type":"magiclink","email":"bob@clickable.test"}',
+  );
   process.exit(1);
 }
 
@@ -85,7 +87,11 @@ await context.addInitScript(
       expires_in: 3600,
       expires_at: Math.floor(Date.now() / 1000) + 3000,
       refresh_token: refresh,
-      user: { id: '22222222-2222-2222-2222-222222222222', aud: 'authenticated', role: 'authenticated' },
+      user: {
+        id: '22222222-2222-2222-2222-222222222222',
+        aud: 'authenticated',
+        role: 'authenticated',
+      },
     };
     window.localStorage.setItem('sb-127-auth-token', JSON.stringify(session));
   },

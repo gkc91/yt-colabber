@@ -12,7 +12,19 @@ import { execFileSync, spawn } from 'node:child_process';
 
 const CONTAINER = 'supabase_db_clickable';
 const PROFILE = 'cc888888-0000-0000-0000-000000000001';
-const psql = ['exec', '-i', CONTAINER, 'psql', '-U', 'postgres', '-d', 'postgres', '-q', '-t', '-A'];
+const psql = [
+  'exec',
+  '-i',
+  CONTAINER,
+  'psql',
+  '-U',
+  'postgres',
+  '-d',
+  'postgres',
+  '-q',
+  '-t',
+  '-A',
+];
 
 const run = (sql) => execFileSync('docker', psql, { input: sql, encoding: 'utf8' }).trim();
 
@@ -24,7 +36,8 @@ run(`
   on conflict (profile_id) do update set tier='pro', active=true, expires_at=now()+interval '30 days';
   delete from credit_ledger where profile_id='${PROFILE}' and reason='subscription_grant';
 `);
-if (run(`select is_pro('${PROFILE}')`) !== 't') throw new Error('hazırlık başarısız: profil Pro değil');
+if (run(`select is_pro('${PROFILE}')`) !== 't')
+  throw new Error('hazırlık başarısız: profil Pro değil');
 
 // ---------- A: kilidi al ve tut ----------
 const holder = spawn('docker', psql, { stdio: ['pipe', 'pipe', 'pipe'] });

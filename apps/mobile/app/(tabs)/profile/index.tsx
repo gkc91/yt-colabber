@@ -34,6 +34,7 @@ import {
   useIsPro,
   useProfile,
 } from '@/features/profile/api';
+import { CollabSettings } from '@/features/collab/components/CollabSettings';
 import { CreditHistory } from '@/features/profile/components/CreditHistory';
 import { canChangeNiche, daysUntilNicheChange } from '@/features/profile/nicheChange';
 import {
@@ -348,6 +349,13 @@ export default function ProfileScreen() {
         />
         <Meta>{t('profile.credits.buyHint')}</Meta>
       </Section>
+
+      {/*
+        Collab (F1). Krediyle HİÇBİR bağı yok ve olmayacak (CLAUDE.md kırmızı çizgi):
+        burası yalnızca "aynı nişte, benzer boyutta biriyle tanış" ayarı. Kredi
+        bölümünden SONRA duruyor ki Pro kartı 0047'de verilen yerini korusun.
+      */}
+      <CollabSettings userId={userId} />
 
       {/* ---------- hesap ---------- */}
       <Section title={t('profile.account.title')}>

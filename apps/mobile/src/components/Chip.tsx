@@ -15,6 +15,14 @@ type Props = {
 /**
  * Seçili chip mürekkep rengi, kırmızı değil: profilde beş niş seçildiğinde sayfa beş
  * kırmızıyla dolmasın. Kırmızı ekranda tek bir yere ait (DESIGN.md §3).
+ *
+ * SEÇİLİ DURUMU `aria-checked` İLE VERİLİYOR, `accessibilityState` ile değil (2026-09-30).
+ * İki ayrı hata vardı: (1) React Native Web `accessibilityState.checked` ve `.selected`
+ * alanlarını web'e HİÇ yansıtmıyor — `disabled` yansıyor, bunlar yansımıyor; profil
+ * ekranındaki 25 chip'in hiçbirinde `aria-checked` yoktu, yani ekran okuyucu "onay kutusu"
+ * diyor ama neyin seçili olduğunu söyleyemiyordu. (2) `radio` için doğru ARIA niteliği
+ * `aria-selected` değil `aria-checked`; `aria-selected` option/tab/row içindir. RN 0.86
+ * aria-* proplarını hem yerelde hem web'de desteklediği için ikisi tek düzeltmeyle kapandı.
  */
 export function Chip({ label, selected, onPress, role = 'radio' }: Props) {
   const colors = Colors[useColorScheme()];
@@ -23,7 +31,7 @@ export function Chip({ label, selected, onPress, role = 'radio' }: Props) {
     <Pressable
       accessibilityRole={role}
       accessibilityLabel={label}
-      accessibilityState={role === 'checkbox' ? { checked: selected } : { selected }}
+      aria-checked={selected}
       onPress={onPress}
       style={[
         styles.chip,
