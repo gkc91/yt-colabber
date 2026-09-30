@@ -72,28 +72,42 @@ export function Screen({ children, center = false, gap = space.xl, style, footer
     </ScrollView>
   );
 
-  if (!footer) {
-    return <DismissKeyboard>{body}</DismissKeyboard>;
-  }
-
   return (
-    // Android'de pencere zaten yeniden boyutlanıyor (Expo varsayılanı `resize`), iOS'ta
-    // klavye içeriğin üstüne bindiği için yükseklik buradan veriliyor. İkisi de CTA'nın
-    // klavyenin ARKASINDA kalmamasını sağlıyor.
+    /*
+     * KLAVYE KORUMASI HER EKRANDA (2026-09-30, cihazda bildirildi).
+     *
+     * Önceden bu sarmalayıcı YALNIZCA `footer` verilen ekranlarda vardı. Değerlendirme
+     * ekranı (`review/[taskId]`) footer kullanmıyor, dolayısıyla hiç korunmuyordu: klavye
+     * açılınca metin alanı ve "Next" düğmesi klavyenin ALTINDA kalıyordu. Testçinin üç
+     * ayrı şikâyeti de tek bir kök sebepten geliyordu —
+     *   "ne yazdığımı göremiyorum"      → alan klavyenin altında,
+     *   "ekran daha yukarı kaymıyor"    → kaydırılacak içerik bitmiş, alan hâlâ altta,
+     *   "Next ilk basışta çalışmıyor"   → düğme klavyenin altında, ilk dokunuş klavyeye
+     *                                     gidip onu kapatıyor, ikincisi düğmeye ulaşıyor.
+     *
+     * ANDROID'DE `height`, iOS'ta `padding`: Expo'nun klavye rehberindeki eşleşme bu.
+     * Buradaki asıl incelik, SDK 53'ten beri Android'de edge-to-edge'in zorunlu olması —
+     * pencere artık `adjustResize` ile KÜÇÜLMÜYOR, klavye yüksekliği inset olarak
+     * bildiriliyor. Testçinin ekran görüntüsünde hiçbir şeyin kaymamış olması tam olarak
+     * bunun kanıtı. Yani işi bu bileşen yapmak zorunda; eski yorumdaki "Android'de pencere
+     * zaten yeniden boyutlanıyor" varsayımı artık doğru değildi.
+     */
     <KeyboardAvoidingView
       style={[styles.page, { backgroundColor: colors.background }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <DismissKeyboard>{body}</DismissKeyboard>
-      <View
-        style={[
-          styles.footer,
-          { backgroundColor: colors.background, borderTopColor: colors.border },
-          footerPad,
-        ]}
-      >
-        <View style={styles.frame}>{footer}</View>
-      </View>
+      {footer ? (
+        <View
+          style={[
+            styles.footer,
+            { backgroundColor: colors.background, borderTopColor: colors.border },
+            footerPad,
+          ]}
+        >
+          <View style={styles.frame}>{footer}</View>
+        </View>
+      ) : null}
     </KeyboardAvoidingView>
   );
 }
