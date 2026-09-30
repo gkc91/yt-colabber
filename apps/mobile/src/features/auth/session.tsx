@@ -6,12 +6,15 @@ import { purchases } from '@/lib/purchases';
 import { track } from '@/lib/track';
 import { supabase } from '@/lib/supabase';
 
+import { createSignInTracker } from './signInTracker';
+
 type SessionState = { session: Session | null; isLoading: boolean };
 
 const SessionContext = createContext<SessionState>({ session: null, isLoading: true });
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<SessionState>({ session: null, isLoading: true });
+  const [signInTracker] = useState(createSignInTracker);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -30,15 +33,18 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (session) void syncEntitlements().catch(() => {});
 
       // Ölçüm (E4): kimlik Supabase kullanıcı kimliği; e-posta gönderilmez.
+      // Olay yalnızca kullanıcı DEĞİŞTİĞİNDE gönderilir; bu akış tek açılışta birden
+      // çok kez ateşleniyor (bkz. signInTracker.ts).
       if (session) {
         track.identify(session.user.id);
-        track.capture('signed_in');
+        if (signInTracker.shouldCapture(session.user.id)) track.capture('signed_in');
       } else {
+        signInTracker.shouldCapture(null);
         track.reset();
       }
     });
     return () => data.subscription.unsubscribe();
-  }, []);
+  }, [signInTracker]);
 
   return <SessionContext.Provider value={state}>{children}</SessionContext.Provider>;
 }
