@@ -20,6 +20,11 @@ import { chooseLocale } from '@/i18n/localeStorage';
 const NAMES: Record<Locale, string> = {
   en: 'English',
   tr: 'Türkçe',
+  es: 'Español',
+  pt: 'Português',
+  de: 'Deutsch',
+  fr: 'Français',
+  hi: 'हिन्दी',
 };
 
 export function LanguageSetting() {

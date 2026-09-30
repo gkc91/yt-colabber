@@ -1,16 +1,23 @@
 import { describe, expect, it } from 'vitest';
 
+import de from './de.json';
 import en from './en.json';
+import es from './es.json';
+import fr from './fr.json';
+import hi from './hi.json';
+import pt from './pt.json';
 import tr from './tr.json';
 
 /**
- * Bu dosya ikinci dilin ASIL bakım maliyetini kapatıyor.
+ * Bu dosya ikinci (ve yedinci) dilin ASIL bakım maliyetini kapatıyor.
  *
- * Bu projede sürekli yeni metin ekleniyor. Bir anahtar `en.json`'a eklenip `tr.json`'a
+ * Bu projede sürekli yeni metin ekleniyor. Bir anahtar `en.json`'a eklenip ötekilere
  * eklenmezse `t()` sessizce İngilizceye düşer ve kimse fark etmez; üçüncü ayda yarısı
- * İngilizce bir Türkçe arayüz olur. Bunun tek çaresi derleme zamanında düşen bir test.
+ * İngilizce altı katalog olur. Bunun tek çaresi derlemede düşen bir test.
  */
 type Tree = Record<string, unknown>;
+
+const OTHERS: Record<string, Tree> = { tr, es, pt, de, fr, hi };
 
 const keys = (node: Tree, prefix = ''): string[] =>
   Object.entries(node).flatMap(([key, value]) =>
@@ -29,52 +36,98 @@ const placeholders = (text: string): string[] =>
 const read = (node: Tree, key: string): unknown =>
   key.split('.').reduce<unknown>((acc, part) => (acc as Tree)?.[part], node);
 
-describe('i18n catalogues', () => {
-  const enKeys = keys(en as Tree);
-  const trKeys = keys(tr as Tree);
+/**
+ * İngilizceyle AYNI kalması doğru olan anahtarlar: marka adları, kısaltmalar, sayı
+ * aralıkları ve yalnızca yer tutucudan ibaret olanlar.
+ */
+const SAME_ON_PURPOSE = new Set([
+  'auth.title',
+  'auth.emailPlaceholder',
+  'onboarding.bands.b0_100',
+  'onboarding.bands.b100_1k',
+  'onboarding.bands.b1k_10k',
+  'onboarding.bands.b10k_100k',
+  'onboarding.bands.b100k_plus',
+  'credits.loading',
+  'submit.wizard.thumbnailNumber',
+  'submit.wizard.proOnly',
+  'submit.wizard.format.horizontal',
+  'submit.wizard.format.vertical',
+  'submit.wizard.formatWhere.vertical',
+  'paywall.stores.ios',
+  'paywall.stores.android',
+  'paywall.options.pro_monthly',
+  'paywall.options.pro_yearly',
+  'profile.collab.bioCount',
+  'profile.credits.proTitle',
+  'profile.scope.niches',
+  'profile.scope.languages',
+  'review.done.reward',
+]);
 
-  it('test_turkish_has_every_english_key', () => {
-    const missing = enKeys.filter((key) => !trKeys.includes(key));
-    expect(missing, `tr.json eksik: ${missing.join(', ')}`).toEqual([]);
+/**
+ * Dile ÖZGÜ muafiyetler: o dilde İngilizce kelimenin kendisi kullanılıyor.
+ *
+ * Genel listeye atılmadılar bilerek — "Credits" Almancada doğru ama İspanyolcada
+ * çevrilmemiş demektir; genel muafiyet gerçek bir eksiği gizlerdi.
+ */
+const SAME_PER_LOCALE: Record<string, Set<string>> = {
+  // "Collabs", "Thumbnails" ve "Matches" Portekizcede olduğu gibi kullanılıyor.
+  pt: new Set([
+    'profile.collab.title',
+    'results.thumbnails.title',
+    'collab.title',
+    'collab.matches.title',
+  ]),
+  // Almanca "Credits", "Reputation", "Collabs", "Thumbnails", "Matches" aynen alır.
+  de: new Set([
+    'credits.balance',
+    'paywall.headerTitle',
+    'profile.stats.reputation',
+    'profile.collab.title',
+    'results.thumbnails.title',
+    'collab.title',
+    'collab.matches.title',
+  ]),
+  // Fransızca "Collabs"ı olduğu gibi kullanıyor.
+  fr: new Set(['profile.collab.title', 'collab.title']),
+};
+
+const enKeys = keys(en as Tree);
+
+describe.each(Object.entries(OTHERS))('catalogue %s', (name, catalogue) => {
+  const theirKeys = keys(catalogue);
+
+  it(`test_${'%s'.replace('%s', name)}_has_every_english_key`, () => {
+    const missing = enKeys.filter((key) => !theirKeys.includes(key));
+    expect(missing, `${name}.json eksik: ${missing.join(', ')}`).toEqual([]);
   });
 
-  it('test_turkish_has_no_key_english_does_not', () => {
-    const extra = trKeys.filter((key) => !enKeys.includes(key));
-    expect(extra, `tr.json fazla: ${extra.join(', ')}`).toEqual([]);
+  it(`test_${'%s'.replace('%s', name)}_has_no_key_english_does_not`, () => {
+    const extra = theirKeys.filter((key) => !enKeys.includes(key));
+    expect(extra, `${name}.json fazla: ${extra.join(', ')}`).toEqual([]);
   });
 
-  it('test_both_catalogues_use_the_same_placeholders', () => {
+  it(`test_${'%s'.replace('%s', name)}_uses_the_same_placeholders`, () => {
     // Çeviride unutulan bir `{count}` ekranda boşluk bırakır ve testsiz fark edilmez.
     const mismatched = enKeys.filter((key) => {
       const source = read(en as Tree, key);
-      const target = read(tr as Tree, key);
+      const target = read(catalogue, key);
       if (typeof source !== 'string' || typeof target !== 'string') return false;
       return placeholders(source).join(',') !== placeholders(target).join(',');
     });
-    expect(mismatched, `yer tutucuları uyuşmayan: ${mismatched.join(', ')}`).toEqual([]);
+    expect(mismatched, `${name}: yer tutucuları uyuşmayan: ${mismatched.join(', ')}`).toEqual([]);
   });
 
-  it('test_no_string_is_left_untranslated_by_accident', () => {
-    // Tam kopya bir metin genelde çevrilmeyi unutmuş demektir. Marka adları, kısaltmalar
-    // ve sayı aralıkları gibi ÇEVRİLMEMESİ gereken şeyler burada muaf.
-    const sameOnPurpose = new Set([
-      'auth.title',
-      'auth.emailPlaceholder',
-      'onboarding.bands.b0_100',
-      'onboarding.bands.b100k_plus',
-      'credits.loading',
-      'submit.wizard.thumbnailNumber',
-      'submit.wizard.proOnly',
-      'submit.wizard.formatWhere.vertical',
-      'paywall.stores.ios',
-      'paywall.stores.android',
-      'profile.collab.bioCount',
-      'profile.credits.proTitle',
-    ]);
-    const identical = enKeys.filter((key) => {
-      if (sameOnPurpose.has(key)) return false;
-      return read(en as Tree, key) === read(tr as Tree, key);
-    });
-    expect(identical, `çevrilmemiş olabilir: ${identical.join(', ')}`).toEqual([]);
+  it(`test_${'%s'.replace('%s', name)}_has_nothing_left_untranslated`, () => {
+    // Tam kopya bir metin genelde çevrilmeyi unutmuş demektir.
+    const allowed = SAME_PER_LOCALE[name] ?? new Set<string>();
+    const identical = enKeys.filter(
+      (key) =>
+        !SAME_ON_PURPOSE.has(key) &&
+        !allowed.has(key) &&
+        read(en as Tree, key) === read(catalogue, key),
+    );
+    expect(identical, `${name}: çevrilmemiş olabilir: ${identical.join(', ')}`).toEqual([]);
   });
 });

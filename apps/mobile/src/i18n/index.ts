@@ -3,23 +3,32 @@
 // vitest onu ayrıştıramıyor. İlk denemede buraya konulmuştu ve `t()`'nin bütün testleri
 // bir anda kırıldı — çeviri mantığının testsiz kalması, kolaylık için ödenecek bir bedel
 // değil.
+import de from './de.json';
 import en from './en.json';
+import es from './es.json';
+import fr from './fr.json';
+import hi from './hi.json';
+import pt from './pt.json';
 import tr from './tr.json';
 
 /**
- * Arayüz dilleri. Landing (`apps/landing`, LOCALES) ile AYNI liste olmalı: Türkçe bir
- * tanıtım sayfasından İngilizce bir uygulamaya düşmek huninin tam kayıt anında sızmasıdır.
+ * Arayüz dilleri. Kabul ettiğimiz İÇERİK dillerini kapsıyor (`features/onboarding/options`):
+ * içeriğini kabul ettiğimiz birinin uygulamayı okuyabilmesi gerekir.
  *
- * KASITLI OLARAK KISA: içerik dili (`profiles.language`, altı dil) hangi videoları
- * değerlendirdiğinizi belirler ve BAŞKA BİR ŞEYDİR. Arayüzü çevirmediğimiz bir dilde
- * video değerlendirmek bugün de mümkün. Yeni bir arayüz dili, o dilde gerçekten
- * değerlendirici havuzu topladığımızda eklenir — küresel bir sıralamaya göre değil
- * (TASKS G1: tek nişte 60-100 değerlendirici).
+ * ARAYÜZ DİLİ İLE İÇERİK DİLİ AYRI ŞEYLER. İçerik dili (`profiles.language`) hangi
+ * videoları değerlendirdiğini belirler ve eşleştirmeyi besler; arayüz dili yalnızca
+ * cihazda durur (`ui-locale`) ve sunucuya hiç gitmez. Bu yüzden arayüz dili eklemek
+ * eşleştirme havuzunu BÖLMEZ — Türk olup İngilizce video yapan biri Türkçe arayüz
+ * kullanıp İngilizce havuzda değerlendirilir. TASKS G1'deki "60-100 değerlendirici"
+ * barajı İÇERİK dili eklemek için geçerlidir, arayüz dili için değil.
+ *
+ * Landing (`apps/landing`, LOCALES) yalnızca en+tr konuşuyor; o bir pazarlama kararı ve
+ * bu listeyle aynı olmak zorunda değil.
  */
-export const LOCALES = ['en', 'tr'] as const;
+export const LOCALES = ['en', 'tr', 'es', 'pt', 'de', 'fr', 'hi'] as const;
 export type Locale = (typeof LOCALES)[number];
 
-const CATALOGUES: Record<Locale, unknown> = { en, tr };
+const CATALOGUES: Record<Locale, unknown> = { en, tr, es, pt, de, fr, hi };
 
 export const DEFAULT_LOCALE: Locale = 'en';
 

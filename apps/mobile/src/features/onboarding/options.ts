@@ -10,6 +10,11 @@ export const LANGUAGES = [
   { code: 'pt', label: 'Português' },
   { code: 'de', label: 'Deutsch' },
   { code: 'fr', label: 'Français' },
+  // Hintçe (2026-09-30): Hindistan YouTube'un en büyük pazarı ve sahibi hem içerik hem
+  // arayüz dili olarak istedi. İçerik dili eklemenin bedeli gerçek: o dilde değerlendirici
+  // havuzu yoksa test açan kişi sıfır değerlendirme alır (TASKS G1). Havuz büyüme
+  // işinin konusu; liste hazır olmadan o iş başlayamazdı.
+  { code: 'hi', label: 'हिन्दी' },
 ] as const;
 
 export const BANDS: { value: SubscriberBand; label: MessageKey }[] = [

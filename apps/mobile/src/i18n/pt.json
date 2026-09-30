@@ -1,0 +1,597 @@
+{
+  "tabs": {
+    "review": "Avaliar",
+    "submit": "Conteúdo",
+    "profile": "Perfil"
+  },
+  "credits": {
+    "balance": "Créditos",
+    "loading": "…",
+    "buyMore": "Comprar créditos ou assinar o Pro",
+    "lowTitle": "Você precisa de mais créditos",
+    "lowBody": "Um teste custa pelo menos {min} créditos. Avalie um vídeo do seu nicho para ganhar um, ou compre um pacote.",
+    "lowReview": "Avaliar um vídeo"
+  },
+  "auth": {
+    "title": "Clickable",
+    "tagline": "Teste sua thumbnail, seu título e seus primeiros 60 segundos com gente de verdade do seu nicho antes de publicar.",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "voce@exemplo.com",
+    "sendLink": "Me envie um link de acesso",
+    "linkSent": "Confira sua caixa de entrada. Abra o link neste aparelho para entrar.",
+    "useAnotherEmail": "Usar outro e-mail",
+    "or": "ou",
+    "google": "Continuar com o Google",
+    "invalidEmail": "Digite um e-mail válido.",
+    "signingIn": "Entrando…",
+    "linkFailed": "Esse link de acesso não funcionou. Ele pode ter expirado ou sido aberto em outro aparelho.",
+    "backToSignIn": "Voltar para o login",
+    "genericError": "Algo deu errado. Tente de novo."
+  },
+  "welcome": {
+    "title": "Saiba antes de publicar",
+    "lede": "O Clickable mostra sua thumbnail, seu título e seus primeiros 60 segundos para criadores de verdade do seu nicho, e depois conta o que eles realmente acharam.",
+    "step1Title": "Suba o que você está prestes a publicar",
+    "step1Body": "Até três thumbnails, alguns títulos e seus primeiros 60 segundos.",
+    "step2Title": "Gente de verdade do seu nicho decide",
+    "step2Body": "Eles escolhem uma, adivinham do que o vídeo trata e dizem onde parariam de assistir.",
+    "step3Title": "Leia o resultado e publique",
+    "step3Body": "Qual thumbnail venceu, qual título foi entendido e o segundo exato em que a atenção cai.",
+    "creditsTitle": "Funciona com créditos, não com assinatura",
+    "creditsBody": "Avalie um vídeo e ganhe um crédito. Gaste créditos para testarem o seu. Você começa com cinco.",
+    "start": "Começar agora"
+  },
+  "onboarding": {
+    "nicheTitle": "Sobre o que é o seu canal?",
+    "nicheHint": "Você vai avaliar vídeos deste nicho, e seus testes vão para gente dele.",
+    "languageTitle": "Em que idioma são seus vídeos?",
+    "continue": "Continuar",
+    "channelTitle": "Seu canal",
+    "channelHint": "YouTube, Instagram ou TikTok. Usamos só para mostrar quem você é — nunca publicamos, curtimos nem seguimos nada.",
+    "channelLabel": "Link do canal ou do perfil",
+    "channelPlaceholder": "youtube.com/@seucanal",
+    "channelInvalid": "Cole um link de canal ou de perfil: youtube.com/@nome, instagram.com/nome ou tiktok.com/@nome. O link de uma publicação avulsa não funciona.",
+    "bandTitle": "Inscritos (opcional)",
+    "finish": "Começar",
+    "bands": {
+      "b0_100": "0–100",
+      "b100_1k": "100–1K",
+      "b1k_10k": "1K–10K",
+      "b10k_100k": "10K–100K",
+      "b100k_plus": "100K+"
+    }
+  },
+  "submit": {
+    "listTitle": "Seus testes",
+    "empty": "Nenhum teste ainda. Suba uma thumbnail, alguns títulos e seus primeiros 60 segundos, e veja o que gente de verdade do seu nicho acha.",
+    "newTest": "Novo teste",
+    "reviewsProgress": "{received} de {requested} avaliações",
+    "remaining": "Faltam {hours} h {minutes} min",
+    "closed": "Encerrado",
+    "status": {
+      "open": "Coletando avaliações",
+      "completed": "Concluído",
+      "cancelled": "Cancelado",
+      "hidden": "Oculto",
+      "demo": "Teste de treino",
+      "screening": "Verificando…"
+    },
+    "wizard": {
+      "step": "Passo {current} de {total}",
+      "back": "Voltar",
+      "next": "Avançar",
+      "thumbnailsTitle": "Adicione até 3 thumbnails",
+      "thumbnailsHint": "Cada avaliador vê uma delas num feed, ao lado de vídeos de verdade do seu nicho. As imagens são redimensionadas para 1280×720 para você.",
+      "addThumbnail": "Escolher da galeria",
+      "removeThumbnail": "Remover",
+      "titlesTitle": "Adicione até 3 títulos",
+      "titlesHint": "Os avaliadores veem um título junto da thumbnail e então contam do que esperam que o vídeo trate.",
+      "titlePlaceholder": "Seu título",
+      "addTitle": "Adicionar outro título",
+      "clipTitle": "Seus primeiros 60 segundos",
+      "clipHint": "Escolha o clipe na sua galeria. Vídeos longos são cortados em 60 segundos enquanto você escolhe, e depois comprimidos para 720p.",
+      "pickClip": "Escolher vídeo",
+      "replaceClip": "Escolher outro vídeo",
+      "compressing": "Comprimindo… {percent} %",
+      "clipReady": "{seconds} s · {megabytes} MB",
+      "countTitle": "Quantas avaliações?",
+      "countHint": "Cada avaliação custa um crédito. Créditos não usados voltam quando o teste encerra.",
+      "countOption": "{count} {count:avaliação|avaliações} · {count} {count:crédito|créditos}",
+      "proOnly": "Pro",
+      "balance": "Você tem {balance} {balance:crédito|créditos}",
+      "notEnough": "{missing:Falta|Faltam} {missing} {missing:crédito|créditos}",
+      "getCredits": "Conseguir créditos",
+      "confirmTitle": "Tudo pronto",
+      "confirmSummary": "{thumbnails} {thumbnails:thumbnail|thumbnails} · {titles} {titles:título|títulos} · clipe de {seconds} s · {count} {count:avaliação|avaliações}",
+      "start": "Começar o teste",
+      "uploading": "Enviando {done}/{total}…",
+      "creating": "Abrindo seu teste…",
+      "cancel": "Cancelar",
+      "cancelled": "Envio cancelado. Nada foi cobrado.",
+      "done": "Seu teste está no ar. As avaliações chegam nas próximas 72 horas.",
+      "addThumbnailWeb": "Escolher do computador",
+      "pickClipWeb": "Escolher um arquivo de vídeo",
+      "clipHintWeb": "Seus primeiros 60 segundos, exportados em MP4 ou MOV a 720p e abaixo de 8 MB. O navegador não comprime, então um arquivo mais longo ou mais pesado é recusado.",
+      "channelTitle": "Para qual canal é isso?",
+      "channelHint": "Os avaliadores são combinados com o nicho do canal, então escolha o que vai publicar este vídeo.",
+      "formatTitle": "Como isso foi gravado?",
+      "formatHint": "Os avaliadores veem do jeito que as pessoas vão ver: um clipe vertical entre vídeos verticais, um largo entre vídeos largos.",
+      "format": {
+        "horizontal": "Largo 16:9",
+        "vertical": "Vertical 9:16"
+      },
+      "formatWhere": {
+        "horizontal": "Um vídeo normal do YouTube.",
+        "vertical": "Shorts, Reels, TikTok."
+      },
+      "thumbnailNumber": "Thumbnail {{index}}"
+    },
+    "errors": {
+      "insufficient_credits": "Créditos insuficientes para este teste.",
+      "pro_required": "25 avaliações é um recurso Pro.",
+      "onboarding_incomplete": "Termine de configurar seu canal primeiro.",
+      "not_authenticated": "Entre de novo para continuar.",
+      "no_titles": "Adicione pelo menos um título.",
+      "too_many_titles": "O limite é três títulos.",
+      "title_too_long": "Títulos podem ter até 100 caracteres.",
+      "clip_too_long": "Esse clipe passa de 60 segundos. Corte na hora de escolher.",
+      "clip_too_short": "Esse clipe tem menos de 5 segundos.",
+      "clip_too_large": "Mesmo depois da compressão, este clipe passa de 8 MB. Tente um mais curto ou mais simples.",
+      "unknown": "Algo deu errado. Tente de novo.",
+      "clip_wrong_type": "Esse tipo de arquivo não é aceito. Exporte um MP4 ou MOV.",
+      "clip_too_long_web": "Esse clipe passa de 60 segundos. Exporte só os primeiros 60 segundos do seu editor.",
+      "clip_orientation": "Esse clipe não tem o formato que você escolheu. Volte um passo para mudar, ou escolha outro clipe."
+    },
+    "requirements": {
+      "title": "O que ter em mãos",
+      "thumbnails": "1–3 thumbnails. De qualquer tamanho — redimensionamos para 1280×720 para você.",
+      "titles": "1–3 títulos, de até 100 caracteres cada.",
+      "clipApp": "Seu vídeo. Só os primeiros 60 segundos são usados; arquivos longos são cortados e comprimidos para 720p no seu celular.",
+      "clipWeb": "Seus primeiros 60 segundos em MP4 ou MOV, 8 MB ou menos — exporte do seu editor a 720p. O navegador não comprime, então um arquivo mais longo ou mais pesado é recusado."
+    },
+    "hidden": {
+      "title": "Pausado após uma denúncia",
+      "reason": {
+        "inappropriate": "Alguém denunciou como conteúdo impróprio.",
+        "abusive": "Alguém denunciou como ofensivo.",
+        "spam": "Alguém denunciou como spam ou enganoso.",
+        "copyright": "Alguém denunciou que o conteúdo não é seu.",
+        "other": "Alguém denunciou isto."
+      },
+      "body": "Seus créditos não usados já voltaram para o seu saldo. Se isto foi um engano, nos diga e uma pessoa vai olhar.",
+      "appeal": "Contestar",
+      "noteLabel": "O que devemos saber? (opcional)",
+      "notePlaceholder": "É meu próprio vídeo, eu que gravei",
+      "send": "Enviar contestação",
+      "cancel": "Cancelar",
+      "sent": "Contestação enviada. Vamos olhar e responder.",
+      "errors": {
+        "already_appealed": "Você já contestou esta. Estamos olhando.",
+        "not_hidden": "Este teste não está pausado.",
+        "not_owner": "Esse teste não é seu.",
+        "unknown_submission": "Esse teste não existe mais.",
+        "unknown": "Isso não funcionou. Tente de novo."
+      }
+    },
+    "screeningNote": "Conferimos cada thumbnail antes de os avaliadores verem. Leva só um instante."
+  },
+  "paywall": {
+    "title": "Créditos e Pro",
+    "balance": "Você tem {count} {count:crédito|créditos}.",
+    "earnInstead": "Cada avaliação que você dá rende um crédito. Comprar é só um atalho para quando você prefere não gastar o tempo.",
+    "buy": "Comprar",
+    "retry": "Tentar de novo",
+    "restore": "Restaurar compras",
+    "restored": "Sua assinatura Pro está ativa de novo.",
+    "restoredNothing": "Nada para restaurar nesta conta.",
+    "close": "Fechar",
+    "options": {
+      "credits": "{count} {count:crédito|créditos}",
+      "creditsBody": "Um crédito paga um avaliador em um teste, e créditos não expiram.",
+      "pro_monthly": "Pro — mensal",
+      "pro_yearly": "Pro — anual",
+      "proBody": "{count} créditos por mês, prioridade na fila, até 25 avaliadores por teste e um resumo com IA dos seus resultados."
+    },
+    "result": {
+      "credited": "Pronto. Seu saldo agora é de {balance} {balance:crédito|créditos}.",
+      "pending": "O pagamento passou. Os créditos chegam assim que a loja confirmar, normalmente em um minuto.",
+      "pro": "O Pro está ativo. Os créditos deste mês chegam já já."
+    },
+    "unavailable": {
+      "title": "Para isso você precisa do app",
+      "web_unsupported": "O Google Play e a App Store cuidam do pagamento, então comprar só funciona dentro do app. Todo o resto — avaliar, resultados, créditos — funciona aqui mesmo.",
+      "not_configured": "Esta versão não tem chaves de loja, então comprar está desligado. Avaliar continua rendendo créditos."
+    },
+    "errors": {
+      "load": "A loja não respondeu. Confira sua conexão e tente de novo.",
+      "store_error": "A loja não conseguiu concluir. Nada foi cobrado.",
+      "not_configured": "Esta versão não tem chaves de loja, então comprar está desligado.",
+      "web_unsupported": "Comprar só funciona no app do celular."
+    },
+    "headerTitle": "Créditos",
+    "renewal": {
+      "monthly": "Renova todo mês pelo preço acima até você cancelar.",
+      "yearly": "Renova todo ano pelo preço acima até você cancelar.",
+      "cancel": "Cancele quando quiser na sua conta da loja — a assinatura vai até o fim do período que você pagou."
+    },
+    "legal": {
+      "terms": "Termos",
+      "privacy": "Privacidade"
+    },
+    "stores": {
+      "ios": "App Store",
+      "android": "Google Play",
+      "comingSoon": "Em breve"
+    }
+  },
+  "notFound": {
+    "title": "Não tem nada aqui",
+    "message": "Essa tela não existe.",
+    "home": "Ir para o início"
+  },
+  "review": {
+    "ready": {
+      "title": "Tem um teste esperando",
+      "body": "Leva uns dois minutos e rende um crédito.",
+      "start": "Começar a avaliar",
+      "step1": "Escolha a que você clicaria",
+      "step2": "Diga do que você espera que seja",
+      "step3": "Assista ao começo e pare onde você pararia"
+    },
+    "empty": {
+      "title": "Nada para avaliar agora",
+      "body": "Ninguém do seu nicho está testando no momento. Volte mais tarde, ou ative as notificações que a gente avisa quando chegar um teste.",
+      "enablePush": "Me avise quando chegar um teste",
+      "pushOn": "A gente avisa quando aparecer um teste no seu nicho.",
+      "pushFailed": "As notificações ainda não funcionam neste aparelho. Estamos consertando — você não fez nada de errado.",
+      "limitTitle": "Por hoje já deu",
+      "limitBody": "Você avaliou bastante hoje, e obrigado. A gente limita em 20 por dia para que cada avaliação continue valendo a leitura. Volte amanhã e a próxima rende um crédito de novo."
+    },
+    "next": "Avançar",
+    "feed": {
+      "question": "Em qual você clicaria?"
+    },
+    "guess": {
+      "question": "Do que trata este vídeo, em uma frase?",
+      "placeholder": "Eu esperaria que este vídeo…",
+      "words": "{words} {words:palavra|palavras} (no mínimo {min})"
+    },
+    "hook": {
+      "video": "Os primeiros segundos do vídeo",
+      "leave": "Eu pararia de assistir aqui",
+      "watchedAll": "Você assistiu ao clipe inteiro.",
+      "leftAt": "Você parou no segundo {second}.",
+      "tagsTitle": "Por que você parou? (marque quantas quiser)",
+      "commentLabel": "Quer acrescentar algo? (opcional)",
+      "commentPlaceholder": "Uma linha para quem criou",
+      "submit": "Enviar avaliação",
+      "play": "Toque para tocar",
+      "loadFailed": "O clipe não carregou. Confira sua conexão e toque para tentar de novo.",
+      "tagsTitleStayed": "O que te fez continuar? (marque quantas quiser)",
+      "loading": "Carregando…",
+      "playAgain": "Toque para tentar de novo"
+    },
+    "tags": {
+      "slow_intro": "Introdução lenta",
+      "unclear_promise": "Promessa confusa",
+      "bad_audio": "Áudio ruim",
+      "low_energy": "Pouca energia",
+      "too_long_setup": "A introdução demorou demais",
+      "visual_quality": "Qualidade de imagem",
+      "didnt_match_thumbnail": "Não combinou com a thumbnail",
+      "kept_watching": "Me prendeu",
+      "strong_hook": "Abertura forte",
+      "clear_promise": "Eu sabia o que ia ver",
+      "got_to_the_point": "Foi direto ao ponto",
+      "good_energy": "Boa energia",
+      "good_visuals": "Ficou bonito",
+      "wanted_the_answer": "Eu queria a resposta"
+    },
+    "done": {
+      "reward": "+1 crédito",
+      "body": "Obrigado. Sua avaliação está a caminho de quem criou.",
+      "channelHint": "Ficou curioso sobre este criador?",
+      "visit": "Visitar o canal",
+      "visitNamed": "Visitar {channel}",
+      "next": "Avaliar outro"
+    },
+    "errors": {
+      "review_too_fast": "Isso foi rápido demais para ser uma avaliação de verdade, então não contou e você não ganhou crédito. Vá com calma na próxima.",
+      "task_expired": "Esta tarefa expirou. Pegue outra na aba Avaliar.",
+      "submission_closed": "Este teste já reuniu avaliações suficientes.",
+      "invalid_watch": "Os tempos de reprodução não fecharam. Tente de novo.",
+      "reviewer_blocked": "Avaliar está pausado na sua conta. Isso acontece quando as avaliações parecem automáticas — sempre o mesmo ponto escolhido, por exemplo, ou o clipe pulado na hora em toda tarefa. Responda ao seu e-mail de acesso se achar que é engano.",
+      "niche_cache_empty": "Ainda estamos juntando vídeos de exemplo para o seu nicho. Tente mais tarde."
+    },
+    "demo": {
+      "title": "Teste de treino",
+      "body": "Testes de treino ficam sempre abertos, então sempre tem algo para avaliar, e eles continuam rendendo um crédito. Responda exatamente como você faria com qualquer outro."
+    },
+    "reveal": {
+      "hitTitle": "Essa era a que estava sendo testada",
+      "missTitle": "Esta é a que estava sendo testada",
+      "body": "Seu clique já está registrado. Agora assista à abertura e diga o que achou.",
+      "youPicked": "Você escolheu",
+      "tested": "Em teste",
+      "continue": "Continuar"
+    }
+  },
+  "profile": {
+    "yourChannel": {
+      "title": "O que você avalia",
+      "body": "Você avalia testes de {niche} em {language}."
+    },
+    "scope": {
+      "title": "Avaliar também",
+      "body": "Escolha mais alguns nichos ou idiomas que você não se importa de avaliar. Seus próprios testes continuam indo só para o seu nicho, então os resultados seguem fazendo sentido.",
+      "niches": "Nichos extras ({used}/{max})",
+      "languages": "Idiomas extras ({used}/{max})",
+      "save": "Salvar",
+      "saved": "Salvo"
+    },
+    "stats": {
+      "title": "Você",
+      "reputation": "Reputação",
+      "given": "Avaliações dadas",
+      "received": "Avaliações recebidas",
+      "flagged": "Avaliar está pausado na sua conta. Responda ao seu e-mail de acesso se achar que é engano."
+    },
+    "niche": {
+      "change": "Mudar meu nicho",
+      "canChange": "Você pode mudar de nicho uma vez por mês.",
+      "locked": "Você pode mudar de novo em {days} {days:dia|dias}.",
+      "errors": {
+        "niche_change_too_soon": "Você mudou faz pouco. Dá para mudar de nicho uma vez por mês.",
+        "unknown_niche": "Escolha um nicho da lista.",
+        "unknown": "Algo deu errado. Tente de novo."
+      }
+    },
+    "credits": {
+      "title": "Histórico de créditos",
+      "empty": "Nada ainda. Avaliar um vídeo rende seu primeiro crédito.",
+      "buy": "Comprar créditos ou assinar o Pro",
+      "buyHint": "Avaliar outros criadores rende créditos de graça. Comprar é para quando você prefere não gastar o tempo.",
+      "proTitle": "Clickable Pro",
+      "proBody": "40 créditos por mês, 25 avaliações por teste em vez de 15, e um resumo com IA dos seus resultados.",
+      "proCta": "Ver o Pro",
+      "proActive": "O Pro está ativo na sua conta.",
+      "reasons": {
+        "signup_bonus": "Bônus de boas-vindas",
+        "review_reward": "Avaliação que você deu",
+        "submission_cost": "Teste que você abriu",
+        "refund": "Devolução por avaliações não usadas",
+        "purchase": "Créditos que você comprou",
+        "subscription_grant": "Créditos do Pro",
+        "admin": "Ajuste"
+      }
+    },
+    "account": {
+      "title": "Conta",
+      "signOut": "Sair",
+      "delete": "Excluir minha conta",
+      "deleteHint": "Excluir remove sua conta, seus testes e seu histórico de créditos. As avaliações que você escreveu em testes de outras pessoas continuam lá, sem o seu nome, para que os resultados delas sigam fechando.",
+      "deleteConfirm": "Isto não dá para desfazer. Sua conta, seus testes e seus créditos serão excluídos.",
+      "contact": "Falar com o suporte",
+      "contactHint": "Dúvidas, bugs ou algum problema com uma avaliação: escreva para {email} e uma pessoa vai ler."
+    },
+    "channels": {
+      "title": "Seus canais",
+      "body": "Cada canal tem o próprio nicho. Um teste vai para o nicho do canal que o publica.",
+      "add": "Adicionar um canal",
+      "addTitle": "Adicionar um canal",
+      "addHint": "YouTube, Instagram ou TikTok. Os avaliadores são combinados com o nicho deste canal, então escolha o nicho em que ele publica.",
+      "nicheTitle": "O que este canal faz?",
+      "languageTitle": "Em que idioma?",
+      "save": "Adicionar canal",
+      "changeNiche": "Mudar de nicho",
+      "errors": {
+        "channel_limit": "Você pode vincular até cinco canais.",
+        "channel_taken": "Esse canal já está vinculado a outra conta.",
+        "channel_url_required": "Adicione o link do canal.",
+        "niche_change_too_soon": "Você mudou o nicho deste canal faz pouco. Tente no mês que vem.",
+        "unknown_niche": "Escolha um nicho.",
+        "not_owner": "Esse canal não é seu.",
+        "unknown": "Isso não funcionou. Tente de novo.",
+        "unknown_platform": "Por enquanto aceitamos só links do YouTube, Instagram e TikTok."
+      }
+    },
+    "collab": {
+      "title": "Collabs",
+      "body": "Conheça criadores do seu nicho e de tamanho parecido. Sem créditos, sem tarefas, sem nada no YouTube — só uma apresentação.",
+      "open": "Estou aberto a collabs",
+      "openHint": "Enquanto isto estiver desligado, ninguém vê você e você não vê ninguém.",
+      "types": "Topa o quê?",
+      "bio": "Apresentação curta",
+      "bioPlaceholder": "O que você faz e o que gostaria de fazer junto.",
+      "bioCount": "{used}/{max}",
+      "save": "Salvar",
+      "saved": "Salvo",
+      "errors": {
+        "no_type": "Escolha pelo menos um tipo de collab, ou desligue isto.",
+        "too_long": "Não passe de {max} caracteres.",
+        "save_failed": "Não deu para salvar. Confira sua conexão e tente de novo."
+      },
+      "kinds": {
+        "joint_video": "Vídeo em conjunto",
+        "guest": "Participação",
+        "shorts": "Shorts juntos",
+        "end_screen_swap": "Troca de tela final",
+        "live": "Live juntos"
+      },
+      "browse": "Ver criadores",
+      "matches": "Meus matches"
+    },
+    "language": {
+      "title": "Idioma",
+      "body": "O idioma deste app. Não muda quais vídeos você avalia.",
+      "pick": "Idioma do app: {language}"
+    }
+  },
+  "results": {
+    "title": "Resultados",
+    "notFound": "Este teste não está disponível.",
+    "waiting": "Nenhuma avaliação ainda. Elas costumam começar a chegar em algumas horas.",
+    "noData": "Nada aqui ainda.",
+    "thumbnails": {
+      "title": "Thumbnails",
+      "winner": "Vencedora",
+      "noWinner": "Ainda está apertado demais para apontar uma vencedora.",
+      "detail": "{picked} de {shown} avaliadores · {seconds} s para decidir",
+      "clicked": "clicaram"
+    },
+    "hook": {
+      "title": "Primeiros 60 segundos",
+      "finished": "Assistiram até o fim",
+      "median": "Abandono mediano",
+      "chartLabel": "Quando os avaliadores pararam de assistir",
+      "bucket": "{seconds} s por barra",
+      "tags": "Por que pararam",
+      "tagsPositive": "O que os prendeu"
+    },
+    "reviews": {
+      "title": "O que esperavam",
+      "sawTitle": "Viu: {title}",
+      "understood": "Acertou",
+      "misunderstood": "Errou",
+      "helpful": "Útil",
+      "notHelpful": "Pouco útil",
+      "watchedAll": "Assistiu ao clipe inteiro",
+      "leftAt": "Parou no segundo {second}"
+    },
+    "aiSummary": {
+      "title": "Resumo com IA",
+      "ready": "Cinco pontos diretos tirados do que seus avaliadores fizeram de verdade, mais a única mudança que vale fazer primeiro.",
+      "generate": "Escrever o resumo",
+      "quota": "{used} de {limit} resumos usados nos últimos 30 dias.",
+      "proRequired": "O Pro transforma seus resultados em cinco pontos e aponta a mudança que vale fazer primeiro.",
+      "notEnoughReviews": "Precisa de {need} avaliações para valer a pena escrever, e você tem {have}. Três pessoas não são um padrão.",
+      "monthlyLimit": "Você usou todos os {limit} resumos dos últimos 30 dias. O mais antigo libera conforme envelhece.",
+      "errors": {
+        "summary_failed": "O resumo não pôde ser escrito. Nada foi consumido — tente de novo.",
+        "pro_required": "Isso precisa do Pro.",
+        "not_enough_reviews": "Ainda não há avaliações suficientes.",
+        "monthly_limit": "Você usou todos os seus resumos dos últimos 30 dias.",
+        "in_progress": "Já tem um resumo sendo escrito para este teste.",
+        "no_access": "Esse teste não é seu.",
+        "ai_summary_unavailable": "Os resumos estão desligados agora. Nada foi consumido."
+      }
+    },
+    "reviewsLabel": "avaliações recebidas"
+  },
+  "report": {
+    "title": "Denunciar isto",
+    "body": "Conte o que está errado. As denúncias são lidas por uma pessoa, e nada é apagado automaticamente.",
+    "reasons": {
+      "inappropriate": "Conteúdo impróprio",
+      "spam": "Spam ou enganoso",
+      "abusive": "Linguagem ofensiva",
+      "copyright": "O conteúdo não é dele",
+      "other": "Outra coisa"
+    },
+    "noteLabel": "Quer acrescentar algo? (opcional)",
+    "notePlaceholder": "Uma linha de contexto ajuda",
+    "send": "Enviar denúncia",
+    "cancel": "Cancelar",
+    "thanks": "Denunciado. Obrigado por avisar.",
+    "reportTest": "Denunciar este teste",
+    "reportReview": "Denunciar esta avaliação",
+    "errors": {
+      "no_access": "Você só pode denunciar algo que tenha visto aqui.",
+      "invalid_reason": "Escolha um dos motivos acima.",
+      "not_authenticated": "Entre de novo para continuar.",
+      "unknown": "Algo deu errado. Tente de novo."
+    }
+  },
+  "imageAlt": {
+    "thumbnailOption": "Opção de thumbnail {n}",
+    "thumbnailPicked": "A thumbnail que você escolheu",
+    "thumbnailOther": "Uma thumbnail que você não escolheu",
+    "thumbnailYours": "Thumbnail {n} que você subiu",
+    "thumbnailResult": "Thumbnail {n}, {percent} % dos cliques"
+  },
+  "collab": {
+    "title": "Collabs",
+    "intro": "Mesmo nicho, tamanho parecido. Não tem crédito envolvido e nada acontece no YouTube.",
+    "remaining": "Mais {count} depois deste",
+    "card": {
+      "unnamed": "Um criador",
+      "openChannel": "Abrir canal",
+      "history": {
+        "they_reviewed": "Avaliou {they} dos seus testes.",
+        "i_reviewed": "Você avaliou {me} dos testes dele.",
+        "both": "Avaliou {they} dos seus testes; você avaliou {me} dos dele."
+      }
+    },
+    "actions": {
+      "like": "Tenho interesse",
+      "pass": "Pular",
+      "block": "Bloquear este criador"
+    },
+    "block": {
+      "title": "Bloquear {name}?",
+      "body": "Vocês não vão mais se ver, e nenhum dos dois poderá mandar mensagem.",
+      "cancel": "Cancelar",
+      "confirm": "Bloquear"
+    },
+    "match": {
+      "title": "Deu match",
+      "body": "{name} também tem interesse.",
+      "keepBrowsing": "Continuar olhando",
+      "openChat": "Abrir a conversa"
+    },
+    "closed": {
+      "title": "As collabs estão desligadas",
+      "body": "Ligue \"Estou aberto a collabs\" no seu perfil e escolha o que você topa. Ninguém vê você até fazer isso.",
+      "cta": "Ir para o meu perfil"
+    },
+    "empty": {
+      "title": "Por ora é isso",
+      "body": "Você já viu todo mundo do seu nicho com tamanho parecido. Sempre tem criador novo ligando as collabs, então volte daqui a alguns dias.",
+      "refresh": "Olhar de novo"
+    },
+    "error": {
+      "title": "Não deu para carregar os criadores",
+      "body": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo",
+      "action": "Isso não passou. Tente de novo."
+    },
+    "matches": {
+      "title": "Matches",
+      "errorTitle": "Não deu para carregar seus matches",
+      "emptyTitle": "Nenhum match ainda",
+      "emptyBody": "Quando alguém que te interessa também se interessar por você, vai aparecer aqui.",
+      "browse": "Ver criadores",
+      "noMessages": "Diga oi.",
+      "rowUnread": "{name}, {count} não {count:lida|lidas}"
+    },
+    "chat": {
+      "intro": "Você e {name} deram match. Não tem crédito envolvido e nada acontece no YouTube.",
+      "empty": "Nada aqui ainda. Conte para {name} o que você faz e o que tinha em mente.",
+      "field": "Mensagem para {name}",
+      "placeholder": "Curto e específico.",
+      "send": "Enviar",
+      "tooLong": "Não passe de {max} caracteres.",
+      "errorTitle": "Não deu para abrir esta conversa",
+      "blocked": "Esta conversa está fechada.",
+      "goneTitle": "Esta conversa está fechada",
+      "goneBody": "Um de vocês bloqueou o outro, então nenhum dos dois pode escrever aqui.",
+      "fromMe": "Você disse: {body}",
+      "fromThem": "{name} disse: {body}",
+      "reported": "Denunciado",
+      "report": {
+        "action": "Denunciar",
+        "title": "Denunciar esta mensagem?",
+        "body": "Guardamos uma cópia da mensagem para que uma pessoa possa olhar. Bloquear é outra coisa — dá para fazer os dois.",
+        "confirm": "Denunciar"
+      },
+      "errors": {
+        "daily_limit": "Você bateu o limite diário de mensagens. Tente amanhã.",
+        "blocked": "Esta conversa está fechada.",
+        "not_in_match": "Esta conversa está fechada.",
+        "unknown": "Isso não foi enviado. Tente de novo."
+      },
+      "reportFailed": "Não deu para denunciar. Tente de novo.",
+      "block": "Bloquear este criador"
+    }
+  }
+}
