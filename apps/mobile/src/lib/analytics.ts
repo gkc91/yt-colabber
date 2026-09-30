@@ -21,9 +21,21 @@ export type AnalyticsEvent =
 
 export type AnalyticsProps = Record<string, string | number | boolean | null>;
 
+/**
+ * Her olaya eklenen sabit künye: olay hangi sürümden geldi.
+ *
+ * NEDEN: bu bilgi olmadan iki build'in verisi tek havuzda karışıyor. Yeni bir sürüm
+ * çıktığında "değerlendirme sayısı düştü" sorusunun cevabı, düşüşün yeni sürümden mi
+ * yoksa eski sürümde kalanlardan mı geldiğini ayırt edemeden verilemiyor. Profildeki
+ * sürüm satırı (AppVersion) insana aynı soruyu cevaplıyor; bu da panele cevaplıyor.
+ */
+export type AnalyticsContext = Record<string, string | number | boolean | null>;
+
 export interface AnalyticsOptions {
   key?: string;
   host?: string;
+  /** Her olaya eklenen sabit alanlar (sürüm, build, platform). */
+  context?: AnalyticsContext;
   fetchImpl?: typeof fetch;
   now?: () => Date;
   /** Hata ayıklarken görünürlük; varsayılan sessiz. */
@@ -42,6 +54,7 @@ export function buildCaptureBody(input: {
   event: AnalyticsEvent;
   distinctId: string;
   properties?: AnalyticsProps;
+  context?: AnalyticsContext;
   timestamp: string;
 }) {
   return {
@@ -49,12 +62,15 @@ export function buildCaptureBody(input: {
     event: input.event,
     distinct_id: input.distinctId,
     timestamp: input.timestamp,
-    properties: { ...(input.properties ?? {}), $lib: 'clickable-app' },
+    // Künye önce yazılıyor ki olayın kendi alanları onu ezebilsin; sürüm alanları
+    // hiçbir olayın özellik adıyla çakışmıyor, ama sıra yine de açık dursun.
+    properties: { ...(input.context ?? {}), ...(input.properties ?? {}), $lib: 'clickable-app' },
   };
 }
 
 export function createAnalytics({
   key,
+  context,
   host = 'https://eu.i.posthog.com',
   fetchImpl = fetch,
   now = () => new Date(),
@@ -82,6 +98,7 @@ export function createAnalytics({
         event,
         distinctId,
         properties,
+        context,
         timestamp: now().toISOString(),
       });
 

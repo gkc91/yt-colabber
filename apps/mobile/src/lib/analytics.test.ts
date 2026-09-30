@@ -86,4 +86,42 @@ describe('analytics', () => {
     // Kişisel veri göndermiyoruz: e-posta, kanal adresi, başlık metni yok.
     expect(Object.keys(body.properties)).toEqual(['product', '$lib']);
   });
+
+  it('test_context_is_attached_to_every_event', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue({ ok: true });
+    const analytics = createAnalytics({
+      key: 'phc_test',
+      context: { app_version: '1.4.0', app_build: '31', platform: 'android' },
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+    });
+
+    analytics.capture('task_started');
+    analytics.capture('review_submitted', { seconds: 42 });
+    await flush();
+
+    // Künye TEK BİR olaya değil, hepsine eklenmeli: sürüm ayrımı ancak o zaman yapılabilir.
+    for (const call of fetchImpl.mock.calls) {
+      const body = JSON.parse((call[1] as RequestInit).body as string);
+      expect(body.properties).toMatchObject({
+        app_version: '1.4.0',
+        app_build: '31',
+        platform: 'android',
+      });
+    }
+    const second = JSON.parse((fetchImpl.mock.calls[1][1] as RequestInit).body as string);
+    expect(second.properties.seconds).toBe(42);
+  });
+
+  it('test_event_properties_win_over_context', () => {
+    const body = buildCaptureBody({
+      key: 'phc_test',
+      event: 'purchase',
+      distinctId: 'user-1',
+      context: { app_version: '1.4.0' },
+      properties: { app_version: '9.9.9' },
+      timestamp: '2026-09-24T10:00:00.000Z',
+    });
+
+    expect(body.properties).toMatchObject({ app_version: '9.9.9' });
+  });
 });
