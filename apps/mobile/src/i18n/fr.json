@@ -593,5 +593,22 @@
       "reportFailed": "Impossible de signaler. Réessaie.",
       "block": "Bloquer ce créateur"
     }
+  },
+  "niches": {
+    "animation": "Animation",
+    "gaming": "Jeux vidéo",
+    "education": "Éducation et explications",
+    "tech": "Tech et logiciels",
+    "finance": "Finance",
+    "fitness": "Fitness et santé",
+    "vlog": "Vlog et lifestyle",
+    "food": "Cuisine",
+    "music": "Musique",
+    "diy": "DIY et loisirs créatifs",
+    "science": "Science",
+    "comedy": "Humour et divertissement",
+    "travel": "Voyage",
+    "kids": "Enfants et famille",
+    "other": "Autre"
   }
 }

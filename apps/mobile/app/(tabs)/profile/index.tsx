@@ -1,3 +1,4 @@
+import { nicheName } from '@/features/onboarding/nicheName';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { router } from 'expo-router';
@@ -176,7 +177,7 @@ export default function ProfileScreen() {
       <Section title={t('profile.yourChannel.title')}>
         <Small tone="muted">
           {t('profile.yourChannel.body', {
-            niche: ownNiche?.name ?? '—',
+            niche: nicheName(ownNiche?.slug, ownNiche?.name ?? '—'),
             language: ownLanguage?.label ?? profile.data?.language ?? '—',
           })}
         </Small>
@@ -187,7 +188,7 @@ export default function ProfileScreen() {
               {niches.data?.map((niche) => (
                 <Chip
                   key={niche.id}
-                  label={niche.name}
+                  label={nicheName(niche.slug, niche.name)}
                   selected={niche.id === profile.data?.niche_id}
                   onPress={() => switchNiche.mutate(niche.id)}
                 />
@@ -225,13 +226,18 @@ export default function ProfileScreen() {
         {channels.data?.map((channel) => (
           <View key={channel.id} style={styles.channelRow}>
             <Body>{channelLabel(channel)}</Body>
-            <Meta>{niches.data?.find((n) => n.id === channel.niche_id)?.name ?? '—'}</Meta>
+            <Meta>
+              {(() => {
+                const niche = niches.data?.find((n) => n.id === channel.niche_id);
+                return nicheName(niche?.slug, niche?.name ?? '—');
+              })()}
+            </Meta>
             {editingChannel === channel.id ? (
               <View style={styles.chips} accessibilityRole="radiogroup">
                 {niches.data?.map((niche) => (
                   <Chip
                     key={niche.id}
-                    label={niche.name}
+                    label={nicheName(niche.slug, niche.name)}
                     selected={niche.id === channel.niche_id}
                     onPress={() =>
                       switchChannelNiche.mutate({ channelId: channel.id, nicheId: niche.id })
@@ -270,7 +276,7 @@ export default function ProfileScreen() {
               <Chip
                 key={niche.id}
                 role="checkbox"
-                label={niche.name}
+                label={nicheName(niche.slug, niche.name)}
                 selected={alsoNicheIds.includes(niche.id)}
                 onPress={() =>
                   setEdited({

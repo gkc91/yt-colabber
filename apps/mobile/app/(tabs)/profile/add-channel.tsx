@@ -1,3 +1,4 @@
+import { nicheName } from '@/features/onboarding/nicheName';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -94,7 +95,7 @@ export default function AddChannel() {
           {niches.data?.map((niche) => (
             <Chip
               key={niche.id}
-              label={niche.name}
+              label={nicheName(niche.slug, niche.name)}
               selected={niche.id === nicheId}
               onPress={() => setNicheId(niche.id)}
             />

@@ -79,8 +79,12 @@ const SAME_PER_LOCALE: Record<string, Set<string>> = {
     'collab.title',
     'collab.matches.title',
   ]),
-  // Almanca "Credits", "Reputation", "Collabs", "Thumbnails", "Matches" aynen alır.
+  // Almanca "Credits", "Reputation", "Collabs", "Thumbnails", "Matches" aynen alır;
+  // niş adlarından "Animation", "Gaming" ve "Vlog" da Almancada aynen kullanılıyor.
   de: new Set([
+    'niches.animation',
+    'niches.gaming',
+    'niches.vlog',
     'credits.balance',
     'paywall.headerTitle',
     'profile.stats.reputation',
@@ -89,8 +93,15 @@ const SAME_PER_LOCALE: Record<string, Set<string>> = {
     'collab.title',
     'collab.matches.title',
   ]),
-  // Fransızca "Collabs"ı olduğu gibi kullanıyor.
-  fr: new Set(['profile.collab.title', 'collab.title']),
+  // Fransızca "Collabs"ı olduğu gibi kullanıyor; "Animation", "Finance" ve "Science"
+  // Fransızcada da aynı yazılır.
+  fr: new Set([
+    'profile.collab.title',
+    'collab.title',
+    'niches.animation',
+    'niches.finance',
+    'niches.science',
+  ]),
 };
 
 const enKeys = keys(en as Tree);

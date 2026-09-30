@@ -593,5 +593,22 @@
       "reportFailed": "Couldn't report that. Try again.",
       "block": "Block this creator"
     }
+  },
+  "niches": {
+    "animation": "Animation",
+    "gaming": "Gaming",
+    "education": "Education & Explainers",
+    "tech": "Tech & Software",
+    "finance": "Finance",
+    "fitness": "Fitness & Health",
+    "vlog": "Vlog & Lifestyle",
+    "food": "Food & Cooking",
+    "music": "Music",
+    "diy": "DIY & Crafts",
+    "science": "Science",
+    "comedy": "Comedy & Entertainment",
+    "travel": "Travel",
+    "kids": "Kids & Family",
+    "other": "Other"
   }
 }

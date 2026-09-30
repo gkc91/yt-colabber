@@ -593,5 +593,22 @@
       "reportFailed": "Das konnte nicht gemeldet werden. Versuch es noch mal.",
       "block": "Diesen Creator blockieren"
     }
+  },
+  "niches": {
+    "animation": "Animation",
+    "gaming": "Gaming",
+    "education": "Bildung & Erklärvideos",
+    "tech": "Technik & Software",
+    "finance": "Finanzen",
+    "fitness": "Fitness & Gesundheit",
+    "vlog": "Vlog & Lifestyle",
+    "food": "Essen & Kochen",
+    "music": "Musik",
+    "diy": "Heimwerken & Basteln",
+    "science": "Wissenschaft",
+    "comedy": "Comedy & Unterhaltung",
+    "travel": "Reisen",
+    "kids": "Kinder & Familie",
+    "other": "Sonstiges"
   }
 }

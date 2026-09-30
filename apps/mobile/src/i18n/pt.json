@@ -593,5 +593,22 @@
       "reportFailed": "Não deu para denunciar. Tente de novo.",
       "block": "Bloquear este criador"
     }
+  },
+  "niches": {
+    "animation": "Animação",
+    "gaming": "Games",
+    "education": "Educação e explicações",
+    "tech": "Tecnologia e software",
+    "finance": "Finanças",
+    "fitness": "Fitness e saúde",
+    "vlog": "Vlog e estilo de vida",
+    "food": "Comida e culinária",
+    "music": "Música",
+    "diy": "Faça você mesmo e artesanato",
+    "science": "Ciência",
+    "comedy": "Comédia e entretenimento",
+    "travel": "Viagens",
+    "kids": "Infantil e família",
+    "other": "Outro"
   }
 }

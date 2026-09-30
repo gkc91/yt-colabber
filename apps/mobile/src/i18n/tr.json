@@ -593,5 +593,22 @@
       "reportFailed": "Bu bildirilemedi. Tekrar dene.",
       "block": "Bu kişiyi engelle"
     }
+  },
+  "niches": {
+    "animation": "Animasyon",
+    "gaming": "Oyun",
+    "education": "Eğitim ve Anlatım",
+    "tech": "Teknoloji ve Yazılım",
+    "finance": "Finans",
+    "fitness": "Fitness ve Sağlık",
+    "vlog": "Vlog ve Yaşam",
+    "food": "Yemek",
+    "music": "Müzik",
+    "diy": "Kendin Yap",
+    "science": "Bilim",
+    "comedy": "Komedi ve Eğlence",
+    "travel": "Seyahat",
+    "kids": "Çocuk ve Aile",
+    "other": "Diğer"
   }
 }
