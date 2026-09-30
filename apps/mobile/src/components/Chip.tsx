@@ -10,6 +10,14 @@ type Props = {
   onPress: () => void;
   /** Çoklu seçimde 'checkbox' verilmeli; tek seçimde radio (varsayılan). */
   role?: 'radio' | 'checkbox';
+  /**
+   * Görünen etiket yeterince ayırt edici değilse erişilebilirlik adı.
+   *
+   * Profil ekranında AYNI ekranda iki "Türkçe" chip'i var: biri "Türkçe videoları da
+   * değerlendir", diğeri "arayüz Türkçe". Gözle bakan kişi bölüm başlığından ayırıyor;
+   * chip'ler arasında gezinen ekran okuyucu kullanıcısı ayıramıyordu.
+   */
+  accessibilityLabel?: string;
 };
 
 /**
@@ -24,13 +32,13 @@ type Props = {
  * `aria-selected` değil `aria-checked`; `aria-selected` option/tab/row içindir. RN 0.86
  * aria-* proplarını hem yerelde hem web'de desteklediği için ikisi tek düzeltmeyle kapandı.
  */
-export function Chip({ label, selected, onPress, role = 'radio' }: Props) {
+export function Chip({ label, selected, onPress, role = 'radio', accessibilityLabel }: Props) {
   const colors = Colors[useColorScheme()];
 
   return (
     <Pressable
       accessibilityRole={role}
-      accessibilityLabel={label}
+      accessibilityLabel={accessibilityLabel ?? label}
       aria-checked={selected}
       onPress={onPress}
       style={[

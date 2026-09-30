@@ -1,0 +1,597 @@
+{
+  "tabs": {
+    "review": "Değerlendir",
+    "submit": "İçerik",
+    "profile": "Profil"
+  },
+  "credits": {
+    "balance": "Kredi",
+    "loading": "…",
+    "buyMore": "Kredi al ya da Pro'ya geç",
+    "lowTitle": "Kredin yetmiyor",
+    "lowBody": "Bir test en az {min} krediye mal olur. Nişinden bir video değerlendirip kredi kazanabilir ya da paket alabilirsin.",
+    "lowReview": "Bir video değerlendir"
+  },
+  "auth": {
+    "title": "Clickable",
+    "tagline": "Thumbnail'ını, başlığını ve ilk 60 saniyeni yayınlamadan önce nişindeki gerçek insanlara test ettir.",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "sen@ornek.com",
+    "sendLink": "Giriş bağlantısı gönder",
+    "linkSent": "Gelen kutunu kontrol et. Bağlantıyı bu cihazda aç.",
+    "useAnotherEmail": "Başka bir e-posta kullan",
+    "or": "ya da",
+    "google": "Google ile devam et",
+    "invalidEmail": "Geçerli bir e-posta adresi gir.",
+    "signingIn": "Giriş yapılıyor…",
+    "linkFailed": "Bu giriş bağlantısı çalışmadı. Süresi dolmuş ya da başka bir cihazda açılmış olabilir.",
+    "backToSignIn": "Girişe dön",
+    "genericError": "Bir şeyler ters gitti. Tekrar dene."
+  },
+  "welcome": {
+    "title": "Yayınlamadan önce bil",
+    "lede": "Clickable, thumbnail'ını, başlığını ve ilk 60 saniyeni nişindeki gerçek içerik üreticilerine gösterir ve gerçekte ne düşündüklerini söyler.",
+    "step1Title": "Yayınlamak üzere olduğun şeyi yükle",
+    "step1Body": "En fazla üç thumbnail, birkaç başlık ve ilk 60 saniyen.",
+    "step2Title": "Nişindeki gerçek insanlar karar verir",
+    "step2Body": "Birini seçerler, videonun ne hakkında olduğunu tahmin ederler ve nerede izlemeyi bırakacaklarını söylerler.",
+    "step3Title": "Sonucu oku, sonra yayınla",
+    "step3Body": "Hangi thumbnail kazandı, hangi başlık anlaşıldı ve ilginin düştüğü tam saniye.",
+    "creditsTitle": "Abonelikle değil, krediyle çalışır",
+    "creditsBody": "Bir video değerlendir, bir kredi kazan. Kendi videonu test ettirmek için kredi harca. Beş krediyle başlıyorsun.",
+    "start": "Hemen başla"
+  },
+  "onboarding": {
+    "nicheTitle": "Kanalın ne hakkında?",
+    "nicheHint": "Bu nişten videolar değerlendireceksin ve testlerin de bu nişteki kişilere gidecek.",
+    "languageTitle": "Videoların hangi dilde?",
+    "continue": "Devam",
+    "channelTitle": "Kanalın",
+    "channelHint": "YouTube, Instagram ya da TikTok. Yalnızca kim olduğunu göstermek için kullanıyoruz — hiçbir yerde paylaşım yapmıyor, beğenmiyor, takip etmiyoruz.",
+    "channelLabel": "Kanal ya da profil bağlantısı",
+    "channelPlaceholder": "youtube.com/@kanalin",
+    "channelInvalid": "Bir kanal ya da profil bağlantısı yapıştır: youtube.com/@ad, instagram.com/ad ya da tiktok.com/@ad. Tek bir gönderinin bağlantısı işe yaramaz.",
+    "bandTitle": "Abone sayısı (isteğe bağlı)",
+    "finish": "Başla",
+    "bands": {
+      "b0_100": "0–100",
+      "b100_1k": "100–1B",
+      "b1k_10k": "1B–10B",
+      "b10k_100k": "10B–100B",
+      "b100k_plus": "100B+"
+    }
+  },
+  "submit": {
+    "listTitle": "Testlerin",
+    "empty": "Henüz test yok. Bir thumbnail, birkaç başlık ve ilk 60 saniyeni yükle, nişindeki gerçek insanların ne düşündüğünü gör.",
+    "newTest": "Yeni test",
+    "reviewsProgress": "{received}/{requested} değerlendirme",
+    "remaining": "{hours}s {minutes}dk kaldı",
+    "closed": "Kapandı",
+    "status": {
+      "open": "Değerlendirmeler toplanıyor",
+      "completed": "Bitti",
+      "cancelled": "İptal edildi",
+      "hidden": "Gizlendi",
+      "demo": "Alıştırma testi",
+      "screening": "Kontrol ediliyor…"
+    },
+    "wizard": {
+      "step": "Adım {current}/{total}",
+      "back": "Geri",
+      "next": "İleri",
+      "thumbnailsTitle": "En fazla 3 thumbnail ekle",
+      "thumbnailsHint": "Her değerlendirici bunlardan birini, nişinden gerçek videoların yanında bir akışta görüyor. Görseller senin için 1280×720'ye ölçekleniyor.",
+      "addThumbnail": "Galeriden seç",
+      "removeThumbnail": "Kaldır",
+      "titlesTitle": "En fazla 3 başlık ekle",
+      "titlesHint": "Değerlendiriciler thumbnail'la birlikte bir başlık görüyor ve videonun ne hakkında olmasını beklediklerini yazıyor.",
+      "titlePlaceholder": "Başlığın",
+      "addTitle": "Başka bir başlık ekle",
+      "clipTitle": "İlk 60 saniyen",
+      "clipHint": "Klibi galerinden seç. Uzun videolar sen seçerken 60 saniyeye kırpılıyor, sonra 720p'ye sıkıştırılıyor.",
+      "pickClip": "Video seç",
+      "replaceClip": "Başka bir video seç",
+      "compressing": "Sıkıştırılıyor… %{percent}",
+      "clipReady": "{seconds} sn · {megabytes} MB",
+      "countTitle": "Kaç değerlendirme?",
+      "countHint": "Bir değerlendirme bir krediye mal olur. Kullanılmayan krediler test kapanınca geri gelir.",
+      "countOption": "{count} değerlendirme · {count} kredi",
+      "proOnly": "Pro",
+      "balance": "{balance} kredin var",
+      "notEnough": "{missing} kredi daha lazım",
+      "getCredits": "Kredi al",
+      "confirmTitle": "Hazır",
+      "confirmSummary": "{thumbnails} thumbnail · {titles} başlık · {seconds} sn klip · {count} değerlendirme",
+      "start": "Testi başlat",
+      "uploading": "Yükleniyor {done}/{total}…",
+      "creating": "Testin açılıyor…",
+      "cancel": "İptal",
+      "cancelled": "Yükleme iptal edildi. Hiçbir ücret alınmadı.",
+      "done": "Testin yayında. Değerlendirmeler önümüzdeki 72 saat içinde gelecek.",
+      "addThumbnailWeb": "Bilgisayarından seç",
+      "pickClipWeb": "Video dosyası seç",
+      "clipHintWeb": "İlk 60 saniyen, 720p MP4 ya da MOV olarak ve 8 MB'ın altında. Tarayıcı sıkıştırma yapmaz, bu yüzden daha uzun ya da daha ağır bir dosya reddedilir.",
+      "channelTitle": "Bu hangi kanal için?",
+      "channelHint": "Değerlendiriciler kanalın nişine göre eşleştiriliyor, o yüzden bu videoyu yayınlayacak kanalı seç.",
+      "formatTitle": "Bu nasıl çekildi?",
+      "formatHint": "Değerlendiriciler videoyu insanların göreceği gibi görüyor: dikey bir klip dikey videoların, geniş bir klip geniş videoların arasında.",
+      "format": {
+        "horizontal": "Geniş 16:9",
+        "vertical": "Dikey 9:16"
+      },
+      "formatWhere": {
+        "horizontal": "Normal bir YouTube videosu.",
+        "vertical": "Shorts, Reels, TikTok."
+      },
+      "thumbnailNumber": "Thumbnail {{index}}"
+    },
+    "errors": {
+      "insufficient_credits": "Bu test için kredin yetmiyor.",
+      "pro_required": "25 değerlendirme Pro özelliği.",
+      "onboarding_incomplete": "Önce kanal kurulumunu tamamla.",
+      "not_authenticated": "Devam etmek için tekrar giriş yap.",
+      "no_titles": "En az bir başlık ekle.",
+      "too_many_titles": "En fazla üç başlık.",
+      "title_too_long": "Başlıklar en fazla 100 karakter olabilir.",
+      "clip_too_long": "Bu klip 60 saniyeden uzun. Seçerken kırp.",
+      "clip_too_short": "Bu klip 5 saniyeden kısa.",
+      "clip_too_large": "Sıkıştırmadan sonra bile bu klip 8 MB'ın üzerinde. Daha kısa ya da daha sade birini dene.",
+      "unknown": "Bir şeyler ters gitti. Tekrar dene.",
+      "clip_wrong_type": "Bu dosya türü desteklenmiyor. MP4 ya da MOV olarak dışa aktar.",
+      "clip_too_long_web": "Bu klip 60 saniyeden uzun. Kurgu programından yalnızca ilk 60 saniyeyi dışa aktar.",
+      "clip_orientation": "Bu klip seçtiğin biçimde değil. Bir adım geri dönüp değiştir ya da başka bir klip seç."
+    },
+    "requirements": {
+      "title": "Hazır olması gerekenler",
+      "thumbnails": "1–3 thumbnail. Boyut fark etmez — senin için 1280×720'ye ölçekleniyor.",
+      "titles": "1–3 başlık, her biri en fazla 100 karakter.",
+      "clipApp": "Videon. Yalnızca ilk 60 saniyesi kullanılıyor; uzun dosyalar telefonunda kırpılıp 720p'ye sıkıştırılıyor.",
+      "clipWeb": "İlk 60 saniyen, MP4 ya da MOV olarak, 8 MB ya da altı — kurgu programından 720p dışa aktar. Tarayıcı sıkıştırma yapmaz, bu yüzden daha uzun ya da daha ağır bir dosya reddedilir."
+    },
+    "hidden": {
+      "title": "Bir şikâyet sonrası durduruldu",
+      "reason": {
+        "inappropriate": "Biri bunu uygunsuz içerik olarak bildirdi.",
+        "abusive": "Biri bunu hakaret içerdiği için bildirdi.",
+        "spam": "Biri bunu spam ya da yanıltıcı olarak bildirdi.",
+        "copyright": "Biri bunun sana ait olmadığını bildirdi.",
+        "other": "Biri bunu bildirdi."
+      },
+      "body": "Kullanılmayan kredilerin çoktan bakiyene döndü. Bu yanlışsa bize yaz, bir insan bakacak.",
+      "appeal": "İtiraz et",
+      "noteLabel": "Ne bilmemiz gerekiyor? (isteğe bağlı)",
+      "notePlaceholder": "Kendi videom, ben çektim",
+      "send": "İtirazı gönder",
+      "cancel": "İptal",
+      "sent": "İtiraz gönderildi. Bakıp sana döneceğiz.",
+      "errors": {
+        "already_appealed": "Buna zaten itiraz ettin. Bakıyoruz.",
+        "not_hidden": "Bu test durdurulmuş değil.",
+        "not_owner": "Bu test senin değil.",
+        "unknown_submission": "Bu test artık yok.",
+        "unknown": "Bu işe yaramadı. Tekrar dene."
+      }
+    },
+    "screeningNote": "Değerlendiriciler görmeden önce her thumbnail'ı kontrol ediyoruz. Sadece birkaç saniye sürer."
+  },
+  "paywall": {
+    "title": "Kredi ve Pro",
+    "balance": "{count} kredin var.",
+    "earnInstead": "Verdiğin her değerlendirme bir kredi kazandırır. Satın alma, vakit harcamak istemediğin zamanlar için bir kısayol.",
+    "buy": "Satın al",
+    "retry": "Tekrar dene",
+    "restore": "Satın almaları geri yükle",
+    "restored": "Pro aboneliğin yeniden etkin.",
+    "restoredNothing": "Bu hesapta geri yüklenecek bir şey yok.",
+    "close": "Kapat",
+    "options": {
+      "credits": "{count} kredi",
+      "creditsBody": "Bir kredi, bir testte bir değerlendiricinin karşılığıdır ve kredilerin süresi dolmaz.",
+      "pro_monthly": "Pro — aylık",
+      "pro_yearly": "Pro — yıllık",
+      "proBody": "Her ay {count} kredi, sırada öncelik, test başına 25 değerlendiriciye kadar ve sonuçlarının yapay zekâ özeti."
+    },
+    "result": {
+      "credited": "Tamam. Bakiyen şimdi {balance} kredi.",
+      "pending": "Ödeme geçti. Krediler mağaza onaylar onaylamaz geliyor, genelde bir dakika içinde.",
+      "pro": "Pro etkin. Bu ayın kredileri birazdan geliyor."
+    },
+    "unavailable": {
+      "title": "Bunun için uygulama gerekiyor",
+      "web_unsupported": "Ödemeyi Google Play ve App Store yürütüyor, bu yüzden satın alma yalnızca uygulamanın içinde çalışıyor. Geri kalan her şey — değerlendirme, sonuçlar, krediler — burada çalışıyor.",
+      "not_configured": "Bu sürümde mağaza anahtarı yok, satın alma kapalı. Değerlendirme yine kredi kazandırıyor."
+    },
+    "errors": {
+      "load": "Mağaza cevap vermedi. Bağlantını kontrol edip tekrar dene.",
+      "store_error": "Mağaza bunu tamamlayamadı. Hiçbir ücret alınmadı.",
+      "not_configured": "Bu sürümde mağaza anahtarı yok, satın alma kapalı.",
+      "web_unsupported": "Satın alma yalnızca mobil uygulamada çalışıyor."
+    },
+    "headerTitle": "Kredi",
+    "renewal": {
+      "monthly": "Sen iptal edene kadar her ay yukarıdaki fiyattan yenilenir.",
+      "yearly": "Sen iptal edene kadar her yıl yukarıdaki fiyattan yenilenir.",
+      "cancel": "İstediğin zaman mağaza hesabından iptal edebilirsin — abonelik ödediğin dönemin sonuna kadar sürer."
+    },
+    "legal": {
+      "terms": "Koşullar",
+      "privacy": "Gizlilik"
+    },
+    "stores": {
+      "ios": "App Store",
+      "android": "Google Play",
+      "comingSoon": "Yakında"
+    }
+  },
+  "notFound": {
+    "title": "Burada bir şey yok",
+    "message": "Böyle bir ekran yok.",
+    "home": "Ana sayfaya dön"
+  },
+  "review": {
+    "ready": {
+      "title": "Bir test bekliyor",
+      "body": "Yaklaşık iki dakika sürer ve bir kredi kazandırır.",
+      "start": "Değerlendirmeye başla",
+      "step1": "Tıklayacağın olanı seç",
+      "step2": "Ne hakkında olmasını beklediğini yaz",
+      "step3": "Açılışı izle ve bırakacağın yerde bırak"
+    },
+    "empty": {
+      "title": "Şu an değerlendirilecek bir şey yok",
+      "body": "Nişinde şu an test yapan kimse yok. Sonra tekrar bak ya da bildirimleri aç, bir test geldiğinde haber verelim.",
+      "enablePush": "Test gelince haber ver",
+      "pushOn": "Nişinde bir test çıkınca haber vereceğiz.",
+      "pushFailed": "Bildirimler bu cihazda henüz çalışmıyor. Düzeltiyoruz — senin yaptığın bir hata yok.",
+      "limitTitle": "Bugünlük bu kadar yeter",
+      "limitBody": "Bugün epey değerlendirme yaptın, teşekkürler. Her değerlendirme okunmaya değer kalsın diye günde 20 ile sınırlıyoruz. Yarın gel, bir sonraki yine kredi kazandıracak."
+    },
+    "next": "İleri",
+    "feed": {
+      "question": "Hangisine tıklardın?"
+    },
+    "guess": {
+      "question": "Bu video ne hakkında, tek cümleyle?",
+      "placeholder": "Bu videonun şunu yapmasını beklerdim…",
+      "words": "{words} kelime (en az {min})"
+    },
+    "hook": {
+      "video": "Videonun ilk saniyeleri",
+      "leave": "Burada izlemeyi bırakırdım",
+      "watchedAll": "Klibin tamamını izledin.",
+      "leftAt": "{second}. saniyede bıraktın.",
+      "tagsTitle": "Neden bıraktın? (birden fazla seçebilirsin)",
+      "commentLabel": "Eklemek istediğin bir şey? (isteğe bağlı)",
+      "commentPlaceholder": "İçerik üreticisine tek satır",
+      "submit": "Değerlendirmeyi gönder",
+      "play": "Oynatmak için dokun",
+      "loadFailed": "Klip yüklenmedi. Bağlantını kontrol edip tekrar dokun.",
+      "tagsTitleStayed": "Seni ne izlemeye devam ettirdi? (birden fazla seçebilirsin)",
+      "loading": "Yükleniyor…",
+      "playAgain": "Tekrar denemek için dokun"
+    },
+    "tags": {
+      "slow_intro": "Yavaş giriş",
+      "unclear_promise": "Belirsiz vaat",
+      "bad_audio": "Kötü ses",
+      "low_energy": "Düşük enerji",
+      "too_long_setup": "Giriş fazla uzadı",
+      "visual_quality": "Görüntü kalitesi",
+      "didnt_match_thumbnail": "Thumbnail'la uyuşmadı",
+      "kept_watching": "İzlemeye devam ettirdi",
+      "strong_hook": "Güçlü açılış",
+      "clear_promise": "Ne alacağımı biliyordum",
+      "got_to_the_point": "Sadede geldi",
+      "good_energy": "İyi enerji",
+      "good_visuals": "Güzel görünüyordu",
+      "wanted_the_answer": "Cevabı merak ettim"
+    },
+    "done": {
+      "reward": "+1 kredi",
+      "body": "Teşekkürler. Değerlendirmen içerik üreticisine gidiyor.",
+      "channelHint": "Bu içerik üreticisini merak ettin mi?",
+      "visit": "Kanala git",
+      "visitNamed": "{channel} kanalına git",
+      "next": "Bir tane daha değerlendir"
+    },
+    "errors": {
+      "review_too_fast": "Bu, gerçek bir değerlendirme olamayacak kadar hızlıydı; sayılmadı ve kredi kazanmadın. Bir sonrakinde acele etme.",
+      "task_expired": "Bu görevin süresi doldu. Değerlendir sekmesinden yenisini al.",
+      "submission_closed": "Bu test yeterince değerlendirme topladı.",
+      "invalid_watch": "İzleme süreleri tutmadı. Tekrar dene.",
+      "reviewer_blocked": "Hesabında değerlendirme durduruldu. Bu, değerlendirmeler otomatik göründüğünde olur — mesela her seferinde aynı yerin seçilmesi ya da her görevde klibin anında atlanması. Yanlış olduğunu düşünüyorsan giriş e-postana yanıt yaz.",
+      "niche_cache_empty": "Nişin için hâlâ örnek video topluyoruz. Sonra tekrar dene."
+    },
+    "demo": {
+      "title": "Alıştırma testi",
+      "body": "Alıştırma testleri açık kalır, böylece her zaman değerlendirilecek bir şey olur ve yine kredi kazandırırlar. Herkese davrandığın gibi cevapla."
+    },
+    "reveal": {
+      "hitTitle": "Test edilen buydu",
+      "missTitle": "Test edilen bu",
+      "body": "Tıklaman çoktan kaydedildi. Şimdi açılışını izle ve ne düşündüğünü söyle.",
+      "youPicked": "Sen seçtin",
+      "tested": "Test ediliyor",
+      "continue": "Devam"
+    }
+  },
+  "profile": {
+    "yourChannel": {
+      "title": "Ne değerlendiriyorsun",
+      "body": "{language} dilinde {niche} testleri değerlendiriyorsun."
+    },
+    "scope": {
+      "title": "Ayrıca değerlendir",
+      "body": "Değerlendirmekten memnun olacağın birkaç niş ya da dil daha seç. Kendi testlerin yine sadece kendi nişine gider, böylece sonuçlar anlamlı kalır.",
+      "niches": "Ek nişler ({used}/{max})",
+      "languages": "Ek diller ({used}/{max})",
+      "save": "Kaydet",
+      "saved": "Kaydedildi"
+    },
+    "stats": {
+      "title": "Sen",
+      "reputation": "İtibar",
+      "given": "Verilen değerlendirme",
+      "received": "Alınan değerlendirme",
+      "flagged": "Hesabında değerlendirme durduruldu. Yanlış olduğunu düşünüyorsan giriş e-postana yanıt yaz."
+    },
+    "niche": {
+      "change": "Nişimi değiştir",
+      "canChange": "Nişini ayda bir kez değiştirebilirsin.",
+      "locked": "{days} gün sonra tekrar değiştirebilirsin.",
+      "errors": {
+        "niche_change_too_soon": "Yakın zamanda değiştirdin. Nişini ayda bir kez değiştirebilirsin.",
+        "unknown_niche": "Listeden bir niş seç.",
+        "unknown": "Bir şeyler ters gitti. Tekrar dene."
+      }
+    },
+    "credits": {
+      "title": "Kredi geçmişi",
+      "empty": "Henüz bir şey yok. Bir video değerlendirmek ilk kredini kazandırır.",
+      "buy": "Kredi al ya da Pro'ya geç",
+      "buyHint": "Başka içerik üreticilerini değerlendirmek ücretsiz kredi kazandırır. Satın alma, vakit harcamak istemediğin zamanlar için.",
+      "proTitle": "Clickable Pro",
+      "proBody": "Her ay 40 kredi, test başına 15 yerine 25 değerlendirme ve sonuçlarının yapay zekâ özeti.",
+      "proCta": "Pro'ya bak",
+      "proActive": "Hesabında Pro etkin.",
+      "reasons": {
+        "signup_bonus": "Hoş geldin bonusu",
+        "review_reward": "Verdiğin değerlendirme",
+        "submission_cost": "Başlattığın test",
+        "refund": "Kullanılmayan değerlendirme iadesi",
+        "purchase": "Satın aldığın krediler",
+        "subscription_grant": "Pro kredileri",
+        "admin": "Düzeltme"
+      }
+    },
+    "account": {
+      "title": "Hesap",
+      "signOut": "Çıkış yap",
+      "delete": "Hesabımı sil",
+      "deleteHint": "Silmek hesabını, testlerini ve kredi geçmişini kaldırır. Başkalarının testlerine yazdığın değerlendirmeler adın çıkarılarak kalır, böylece onların sonuçları bozulmaz.",
+      "deleteConfirm": "Bu geri alınamaz. Hesabın, testlerin ve kredilerin silinecek.",
+      "contact": "Destekle iletişime geç",
+      "contactHint": "Soru, hata ya da bir değerlendirmeyle ilgili sorun: {email} adresine yaz, bir insan okuyacak."
+    },
+    "channels": {
+      "title": "Kanalların",
+      "body": "Her kanalın kendi nişi var. Bir test, onu yayınlayan kanalın nişine gider.",
+      "add": "Kanal ekle",
+      "addTitle": "Kanal ekle",
+      "addHint": "YouTube, Instagram ya da TikTok. Değerlendiriciler bu kanalın nişine göre eşleştiriliyor, o yüzden yayın yaptığı nişi seç.",
+      "nicheTitle": "Bu kanal ne üretiyor?",
+      "languageTitle": "Hangi dilde?",
+      "save": "Kanalı ekle",
+      "changeNiche": "Nişi değiştir",
+      "errors": {
+        "channel_limit": "En fazla beş kanal bağlayabilirsin.",
+        "channel_taken": "Bu kanal başka bir hesaba bağlı.",
+        "channel_url_required": "Kanal bağlantısını ekle.",
+        "niche_change_too_soon": "Bu kanalın nişini yakın zamanda değiştirdin. Gelecek ay tekrar dene.",
+        "unknown_niche": "Bir niş seç.",
+        "not_owner": "Bu kanal senin değil.",
+        "unknown": "Bu işe yaramadı. Tekrar dene.",
+        "unknown_platform": "Şimdilik yalnızca YouTube, Instagram ve TikTok bağlantılarını kabul ediyoruz."
+      }
+    },
+    "collab": {
+      "title": "İş birlikleri",
+      "body": "Nişinde ve benzer büyüklükteki içerik üreticileriyle tanış. Kredi yok, görev yok, YouTube'da hiçbir şey olmuyor — sadece bir tanışma.",
+      "open": "İş birliğine açığım",
+      "openHint": "Bu kapalıyken seni kimse görmez, sen de kimseyi görmezsin.",
+      "types": "Neye varsın?",
+      "bio": "Kısa tanıtım",
+      "bioPlaceholder": "Ne ürettiğin ve birlikte ne yapmak istediğin.",
+      "bioCount": "{used}/{max}",
+      "save": "Kaydet",
+      "saved": "Kaydedildi",
+      "errors": {
+        "no_type": "En az bir iş birliği türü seç ya da bunu kapat.",
+        "too_long": "{max} karakterin altında tut.",
+        "save_failed": "Kaydedilemedi. Bağlantını kontrol edip tekrar dene."
+      },
+      "kinds": {
+        "joint_video": "Ortak video",
+        "guest": "Konuk olarak",
+        "shorts": "Birlikte Shorts",
+        "end_screen_swap": "Bitiş ekranı takası",
+        "live": "Birlikte canlı yayın"
+      },
+      "browse": "İçerik üreticilerine bak",
+      "matches": "Eşleşmelerim"
+    },
+    "language": {
+      "title": "Dil",
+      "body": "Uygulamanın dili. Hangi videoları değerlendirdiğini değiştirmez.",
+      "pick": "Uygulama dili: {language}"
+    }
+  },
+  "results": {
+    "title": "Sonuçlar",
+    "notFound": "Bu test kullanılabilir değil.",
+    "waiting": "Henüz değerlendirme yok. Genelde birkaç saat içinde gelmeye başlar.",
+    "noData": "Henüz bir şey yok.",
+    "thumbnails": {
+      "title": "Thumbnail'lar",
+      "winner": "Kazanan",
+      "noWinner": "Kazanan demek için henüz çok yakın.",
+      "detail": "{shown} değerlendiriciden {picked} kişi · karar {seconds} sn",
+      "clicked": "tıkladı"
+    },
+    "hook": {
+      "title": "İlk 60 saniye",
+      "finished": "Sonuna kadar izledi",
+      "median": "Medyan bırakma anı",
+      "chartLabel": "Değerlendiriciler ne zaman bıraktı",
+      "bucket": "Çubuk başına {seconds} sn",
+      "tags": "Neden bıraktılar",
+      "tagsPositive": "Ne izlemeye devam ettirdi"
+    },
+    "reviews": {
+      "title": "Ne beklediler",
+      "sawTitle": "Gördü: {title}",
+      "understood": "Doğru anladı",
+      "misunderstood": "Yanlış anladı",
+      "helpful": "Yararlı",
+      "notHelpful": "Yararsız",
+      "watchedAll": "Klibin tamamını izledi",
+      "leftAt": "{second}. saniyede bıraktı"
+    },
+    "aiSummary": {
+      "title": "Yapay zekâ özeti",
+      "ready": "Değerlendiricilerinin gerçekte yaptıklarından çıkan beş net madde ve önce yapılmaya değer tek değişiklik.",
+      "generate": "Özeti yaz",
+      "quota": "Son 30 günde {limit} özetin {used} tanesi kullanıldı.",
+      "proRequired": "Pro, sonuçlarını beş maddeye indirir ve önce yapılacak tek değişikliği söyler.",
+      "notEnoughReviews": "Yazmaya değmesi için {need} değerlendirme gerekiyor, sende {have} var. Üç kişi bir desen değildir.",
+      "monthlyLimit": "Son 30 gün için {limit} özetin hepsini kullandın. En eskisi zamanı geçtikçe yeniden açılıyor.",
+      "errors": {
+        "summary_failed": "Özet yazılamadı. Hakkından bir şey düşmedi — tekrar dene.",
+        "pro_required": "Bunun için Pro gerekiyor.",
+        "not_enough_reviews": "Henüz yeterli değerlendirme yok.",
+        "monthly_limit": "Son 30 gün için bütün özetlerini kullandın.",
+        "in_progress": "Bu test için zaten bir özet yazılıyor.",
+        "no_access": "Bu test senin değil.",
+        "ai_summary_unavailable": "Özetler şu an kapalı. Hakkından bir şey düşmedi."
+      }
+    },
+    "reviewsLabel": "değerlendirme geldi"
+  },
+  "report": {
+    "title": "Bunu bildir",
+    "body": "Neyin yanlış olduğunu yaz. Bildirimleri bir insan okuyor ve hiçbir şey otomatik olarak silinmiyor.",
+    "reasons": {
+      "inappropriate": "Uygunsuz içerik",
+      "spam": "Spam ya da yanıltıcı",
+      "abusive": "Hakaret içeren dil",
+      "copyright": "Kendi içeriği değil",
+      "other": "Başka bir şey"
+    },
+    "noteLabel": "Eklemek istediğin bir şey? (isteğe bağlı)",
+    "notePlaceholder": "Tek satır bağlam işe yarar",
+    "send": "Bildirimi gönder",
+    "cancel": "İptal",
+    "thanks": "Bildirildi. Haber verdiğin için teşekkürler.",
+    "reportTest": "Bu testi bildir",
+    "reportReview": "Bu değerlendirmeyi bildir",
+    "errors": {
+      "no_access": "Yalnızca burada gördüğün bir şeyi bildirebilirsin.",
+      "invalid_reason": "Yukarıdaki sebeplerden birini seç.",
+      "not_authenticated": "Devam etmek için tekrar giriş yap.",
+      "unknown": "Bir şeyler ters gitti. Tekrar dene."
+    }
+  },
+  "imageAlt": {
+    "thumbnailOption": "Thumbnail seçeneği {n}",
+    "thumbnailPicked": "Seçtiğin thumbnail",
+    "thumbnailOther": "Seçmediğin bir thumbnail",
+    "thumbnailYours": "Yüklediğin {n}. thumbnail",
+    "thumbnailResult": "{n}. thumbnail, tıklamaların %{percent}'i"
+  },
+  "collab": {
+    "title": "İş birlikleri",
+    "intro": "Aynı niş, benzer büyüklük. Kredi işin içinde değil ve YouTube'da hiçbir şey olmuyor.",
+    "remaining": "Bundan sonra {count} kişi daha",
+    "card": {
+      "unnamed": "Bir içerik üreticisi",
+      "openChannel": "Kanalı aç",
+      "history": {
+        "they_reviewed": "Testlerinden {they} tanesini değerlendirdi.",
+        "i_reviewed": "Onun testlerinden {me} tanesini değerlendirdin.",
+        "both": "Testlerinden {they} tanesini değerlendirdi; sen onunkilerden {me} tanesini."
+      }
+    },
+    "actions": {
+      "like": "İlgileniyorum",
+      "pass": "Geç",
+      "block": "Bu kişiyi engelle"
+    },
+    "block": {
+      "title": "{name} engellensin mi?",
+      "body": "Birbirinizi bir daha görmezsiniz ve hiçbiriniz diğerine mesaj gönderemez.",
+      "cancel": "İptal",
+      "confirm": "Engelle"
+    },
+    "match": {
+      "title": "Eşleştiniz",
+      "body": "{name} de ilgileniyor.",
+      "keepBrowsing": "Bakmaya devam et",
+      "openChat": "Sohbeti aç"
+    },
+    "closed": {
+      "title": "İş birlikleri kapalı",
+      "body": "Profilinden \"İş birliğine açığım\"ı aç ve neye var olduğunu seç. Bunu yapana kadar seni kimse görmez.",
+      "cta": "Profilime git"
+    },
+    "empty": {
+      "title": "Şimdilik hepsi bu",
+      "body": "Nişinde ve benzer büyüklükteki herkesi gördün. Yeni içerik üreticileri sürekli iş birliklerini açıyor, birkaç gün sonra tekrar bak.",
+      "refresh": "Tekrar bak"
+    },
+    "error": {
+      "title": "İçerik üreticileri yüklenemedi",
+      "body": "Bağlantını kontrol edip tekrar dene.",
+      "retry": "Tekrar dene",
+      "action": "Bu geçmedi. Tekrar dene."
+    },
+    "matches": {
+      "title": "Eşleşmeler",
+      "errorTitle": "Eşleşmelerin yüklenemedi",
+      "emptyTitle": "Henüz eşleşme yok",
+      "emptyBody": "İlgilendiğin biri de seninle ilgilendiğinde burada görünecek.",
+      "browse": "İçerik üreticilerine bak",
+      "noMessages": "Merhaba de.",
+      "rowUnread": "{name}, {count} okunmamış"
+    },
+    "chat": {
+      "intro": "{name} ile eşleştiniz. Kredi işin içinde değil ve YouTube'da hiçbir şey olmuyor.",
+      "empty": "Henüz bir şey yok. {name} kişisine ne ürettiğini ve aklında ne olduğunu anlat.",
+      "field": "{name} kişisine mesaj",
+      "placeholder": "Kısa ve net tut.",
+      "send": "Gönder",
+      "tooLong": "{max} karakterin altında tut.",
+      "errorTitle": "Bu sohbet açılamadı",
+      "blocked": "Bu sohbet kapalı.",
+      "goneTitle": "Bu sohbet kapalı",
+      "goneBody": "Biriniz diğerini engelledi, bu yüzden hiçbiriniz buraya yazamaz.",
+      "fromMe": "Sen dedin ki: {body}",
+      "fromThem": "{name} dedi ki: {body}",
+      "reported": "Bildirildi",
+      "report": {
+        "action": "Bildir",
+        "title": "Bu mesaj bildirilsin mi?",
+        "body": "Bir insan bakabilsin diye mesajın bir kopyasını saklıyoruz. Engellemek ayrı bir şey — ikisini birden yapabilirsin.",
+        "confirm": "Bildir"
+      },
+      "errors": {
+        "daily_limit": "Günlük mesaj sınırına ulaştın. Yarın tekrar dene.",
+        "blocked": "Bu sohbet kapalı.",
+        "not_in_match": "Bu sohbet kapalı.",
+        "unknown": "Bu gönderilemedi. Tekrar dene."
+      },
+      "reportFailed": "Bu bildirilemedi. Tekrar dene.",
+      "block": "Bu kişiyi engelle"
+    }
+  }
+}

@@ -420,6 +420,11 @@
       },
       "browse": "Browse creators",
       "matches": "My matches"
+    },
+    "language": {
+      "title": "Language",
+      "body": "The language of this app. It does not change which videos you review.",
+      "pick": "App language: {language}"
     }
   },
   "results": {

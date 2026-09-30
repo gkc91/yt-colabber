@@ -12,6 +12,7 @@ import { registerDevice } from '@/features/device/api';
 import { useProfile } from '@/features/profile/api';
 import { supabase } from '@/lib/supabase';
 import { t } from '@/i18n';
+import { useLocale } from '@/i18n/useLocale';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -37,6 +38,9 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const { session, isLoading } = useSession();
+  // Dil: cihazdan ya da kayıtlı tercihten. `localeKey` ağacı yeniden monte ediyor, yani
+  // dil değişince ekranlarda eski metin kalmıyor.
+  const { locale, ready: localeReady } = useLocale();
   // Başlık fontu (DESIGN.md §4). Yüklenene kadar ekran açılmaz: yazı kayması olmasın.
   const [fontsLoaded] = useFonts({ Archivo_600SemiBold, Archivo_700Bold });
   const userId = session?.user.id;
@@ -45,7 +49,8 @@ function RootNavigator() {
   // Profil okunamıyorsa (oturum süresi dolmuş, kullanıcı silinmiş) boş ekranda kalmak yerine
   // oturumu kapatıp giriş ekranına döneriz.
   const profileFailed = profile.isError;
-  const ready = fontsLoaded && !isLoading && (!userId || !profile.isPending || profileFailed);
+  const ready =
+    fontsLoaded && localeReady && !isLoading && (!userId || !profile.isPending || profileFailed);
   const onboarded = profile.data?.onboarding_done === true;
 
   useEffect(() => {
@@ -65,7 +70,9 @@ function RootNavigator() {
   if (!ready) return null;
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    // `key`: dil değişince bütün ağaç yeniden monte olur. `t()` düz bir fonksiyon
+    // olduğu için ekranlar kendiliğinden yeniden çizilmezdi.
+    <Stack key={locale} screenOptions={{ headerShown: false }}>
       <Stack.Protected guard={!session}>
         <Stack.Screen name="(auth)" />
       </Stack.Protected>
