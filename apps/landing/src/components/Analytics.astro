@@ -13,15 +13,22 @@
 // sayısı şişer, çünkü ikinci sayfa yeni kimlik sayılır. Ölçmek istediğimiz şey o değil:
 // kaç ziyaret geldi ve kaçı CTA'ya bastı — ikisi de doğru sayılıyor.
 //
-// Anahtar yoksa (yerel geliştirme, önizleme) script hiç basılmaz.
-const key = import.meta.env.PUBLIC_POSTHOG_KEY;
-const host = import.meta.env.PUBLIC_POSTHOG_HOST ?? 'https://eu.i.posthog.com';
+// AÇIK OLDUĞU TEK YER gerçek alan adı: kontrol tarayıcıda yapılıyor, çünkü aynı yapı
+// hem canlıya hem Cloudflare önizleme adreslerine dağıtılıyor ve derleme zamanında
+// hangisi olduğu bilinmiyor. Yerelde de sessiz kalır.
+import { ANALYTICS_HOSTNAME, POSTHOG_HOST, POSTHOG_KEY } from '../data/site';
+
+const key = POSTHOG_KEY;
+const host = POSTHOG_HOST;
+const only = ANALYTICS_HOSTNAME;
 ---
 
 {
   key ? (
-    <script is:inline define:vars={{ key, host }}>
+    <script is:inline define:vars={{ key, host, only }}>
       (function () {
+        if (location.hostname !== only) return;
+
         var id = 'anon-' + Math.random().toString(36).slice(2, 12);
 
         function send(event, props) {

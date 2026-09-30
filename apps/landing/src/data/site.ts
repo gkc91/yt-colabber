@@ -8,6 +8,26 @@ export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? 'https://clickablete
 /** Support and privacy contact; forwarded by Cloudflare Email Routing. */
 export const CONTACT_EMAIL = 'support@clickabletest.com';
 
+/**
+ * Ölçüm (0049). Bu anahtar GİZLİ DEĞİL: PostHog'un proje anahtarı tasarımı gereği
+ * istemciye gömülür ve uygulamanın paketinde de aynısı duruyor. Ortam değişkeni yerine
+ * burada durmasının sebebi, gizlilik değil UNUTULMAZLIK: Cloudflare'de tanımlanmayı
+ * bekleyen bir değişken, tanımlanana kadar ölçümü SESSİZCE kapalı tutuyordu.
+ *
+ * Bölge EU olarak DOĞRULANDI (girişsiz): `eu.i.posthog.com/array/<key>/config` tam
+ * yapılandırma döndürüyor, `us.i.posthog.com` aynı anahtara 404 veriyor. Gizlilik
+ * politikasındaki "AB" ifadesi de bununla tutarlı.
+ */
+export const POSTHOG_KEY = 'phc_xpGfSBmGcceDC2aA5xwEs7ZAxD3AYj8L2zciKoRnWHXG';
+export const POSTHOG_HOST = 'https://eu.i.posthog.com';
+
+/**
+ * Ölçümün açık olduğu tek yer: gerçek alan adı. Yerel geliştirme ve Cloudflare'in
+ * `*.pages.dev` önizleme adresleri veriye karışmasın — yoksa her dağıtım önizlemesi
+ * "ziyaret" sayılır ve huni kendi gürültümüzle dolar.
+ */
+export const ANALYTICS_HOSTNAME = 'clickabletest.com';
+
 export const LOCALES = ['en', 'tr'] as const;
 export type Locale = (typeof LOCALES)[number];
 
