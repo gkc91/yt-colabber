@@ -34,6 +34,9 @@ export function BuyCreditsButton() {
         { borderColor: colors.border, opacity: pressed ? 0.6 : 1 },
       ]}
       // Dokunma alanı görünen kutudan geniş: 32 dp'lik bir daire parmak için küçük.
+      // `hitSlop` yerelde çalışıyor ama React Native Web onu uygulamıyor; web'de
+      // dokunma alanı görünen daire kadar kalıyor. Fare için yeterli, ve bu düğme
+      // web'de de ikincil bir kısayol — büyütmek daireyi bozardı.
       hitSlop={10}
     >
       {/* İç kutu flex ile ortalanıyor (kenarlıktan etkilenmez); kollar onun içinde. */}

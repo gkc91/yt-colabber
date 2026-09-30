@@ -372,7 +372,10 @@
       "deleteHint": "Silmek hesabını, testlerini ve kredi geçmişini kaldırır. Başkalarının testlerine yazdığın değerlendirmeler adın çıkarılarak kalır, böylece onların sonuçları bozulmaz.",
       "deleteConfirm": "Bu geri alınamaz. Hesabın, testlerin ve kredilerin silinecek.",
       "contact": "Destekle iletişime geç",
-      "contactHint": "Soru, hata ya da bir değerlendirmeyle ilgili sorun: {email} adresine yaz, bir insan okuyacak."
+      "contactHint": "Soru, hata ya da bir değerlendirmeyle ilgili sorun: {email} adresine yaz, bir insan okuyacak.",
+      "version": "Sürüm {version} ({build})",
+      "versionWithUpdate": "Sürüm {version} ({build}) · güncelleme {update}",
+      "versionOnly": "Sürüm {version}"
     },
     "channels": {
       "title": "Kanalların",

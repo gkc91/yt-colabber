@@ -7,7 +7,7 @@ import { Card } from '@/components/Card';
 import { Body, Heading, Meta, Small } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
-import { radius, space } from '@/design/tokens';
+import { layout, radius, space } from '@/design/tokens';
 import { t, type MessageKey } from '@/i18n';
 
 import { candidateName, historyKind, type Candidate } from '../candidates';
@@ -29,11 +29,14 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
           Kanal bağlantısı PRODUCT §12 gereği burada gösteriliyor ve §9 gereği hiçbir
           şekilde ödüllendirilmiyor: tıklamak kredi vermez, görev değildir, izlemesi
           beklenmez. Sadece "bu kim" sorusunun cevabı.
+
+          Dokunma alanı gerçek dolguyla büyütülüyor, `hitSlop` ile değil: React Native Web
+          `hitSlop`'u uygulamıyor ve bağlantı web'de 18 dp yüksekliğinde kalırdı.
         */}
         {candidate.youtubeUrl ? (
           <Pressable
             accessibilityRole="link"
-            hitSlop={space.sm}
+            style={styles.link}
             onPress={() => Linking.openURL(candidate.youtubeUrl as string)}
           >
             <Meta>{t('collab.card.openChannel')}</Meta>
@@ -80,6 +83,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: space.sm,
+  },
+  link: {
+    minHeight: layout.minTouch,
+    justifyContent: 'center',
   },
   badge: {
     borderWidth: StyleSheet.hairlineWidth * 2,

@@ -372,7 +372,10 @@
       "deleteHint": "Eliminar borra tu cuenta, tus pruebas y tu historial de créditos. Las evaluaciones que escribiste en pruebas de otros se quedan, sin tu nombre, para que sus resultados sigan cuadrando.",
       "deleteConfirm": "Esto no se puede deshacer. Se borrarán tu cuenta, tus pruebas y tus créditos.",
       "contact": "Contactar con soporte",
-      "contactHint": "Dudas, fallos o un problema con una evaluación: escribe a {email} y lo leerá una persona."
+      "contactHint": "Dudas, fallos o un problema con una evaluación: escribe a {email} y lo leerá una persona.",
+      "version": "Versión {version} ({build})",
+      "versionWithUpdate": "Versión {version} ({build}) · actualización {update}",
+      "versionOnly": "Versión {version}"
     },
     "channels": {
       "title": "Tus canales",

@@ -372,7 +372,10 @@
       "deleteHint": "Deleting removes your account, your tests and your credit history. The reviews you wrote on other people's tests stay, with your name removed, so their results still add up.",
       "deleteConfirm": "This can't be undone. Your account, your tests and your credits will be deleted.",
       "contact": "Contact support",
-      "contactHint": "Questions, bugs, or a problem with a review: write to {email} and a person will read it."
+      "contactHint": "Questions, bugs, or a problem with a review: write to {email} and a person will read it.",
+      "version": "Version {version} ({build})",
+      "versionWithUpdate": "Version {version} ({build}) · update {update}",
+      "versionOnly": "Version {version}"
     },
     "channels": {
       "title": "Your channels",

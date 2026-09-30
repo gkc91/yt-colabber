@@ -372,7 +372,10 @@
       "deleteHint": "Beim Löschen verschwinden dein Konto, deine Tests und dein Credit-Verlauf. Die Bewertungen, die du zu fremden Tests geschrieben hast, bleiben ohne deinen Namen erhalten, damit deren Ergebnisse weiter aufgehen.",
       "deleteConfirm": "Das lässt sich nicht rückgängig machen. Dein Konto, deine Tests und deine Credits werden gelöscht.",
       "contact": "Support kontaktieren",
-      "contactHint": "Fragen, Fehler oder ein Problem mit einer Bewertung: schreib an {email}, ein Mensch liest mit."
+      "contactHint": "Fragen, Fehler oder ein Problem mit einer Bewertung: schreib an {email}, ein Mensch liest mit.",
+      "version": "Version {version} ({build})",
+      "versionWithUpdate": "Version {version} ({build}) · Update {update}",
+      "versionOnly": "Version {version}"
     },
     "channels": {
       "title": "Deine Kanäle",

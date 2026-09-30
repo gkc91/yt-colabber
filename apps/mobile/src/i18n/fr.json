@@ -372,7 +372,10 @@
       "deleteHint": "La suppression retire ton compte, tes tests et ton historique de crédits. Les évaluations que tu as écrites sur les tests des autres restent, sans ton nom, pour que leurs résultats tiennent toujours.",
       "deleteConfirm": "C'est irréversible. Ton compte, tes tests et tes crédits seront supprimés.",
       "contact": "Contacter le support",
-      "contactHint": "Questions, bugs ou souci avec une évaluation : écris à {email}, une personne te lira."
+      "contactHint": "Questions, bugs ou souci avec une évaluation : écris à {email}, une personne te lira.",
+      "version": "Version {version} ({build})",
+      "versionWithUpdate": "Version {version} ({build}) · mise à jour {update}",
+      "versionOnly": "Version {version}"
     },
     "channels": {
       "title": "Tes chaînes",

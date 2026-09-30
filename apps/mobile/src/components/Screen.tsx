@@ -5,9 +5,9 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
   View,
   type ViewStyle,
 } from 'react-native';
@@ -34,17 +34,27 @@ interface Props {
 }
 
 /**
- * Boşluğa dokununca klavye kapansın (2026-09-29, iOS'ta hiç kapanmıyordu).
+ * Boşluğa dokununca klavye kapansın — ama içeriğin SARMALAYICISI OLARAK DEĞİL.
  *
- * `TouchableWithoutFeedback` bilerek: ekstra bir View üretmiyor, yani düzeni bozmuyor.
- * `accessible={false}` de bilerek: bu bir düğme değil, yalnızca boşluğa dokunma jesti —
- * ekran okuyucuya "düğme" diye duyurulursa içeriğin tamamı tek bir kontrol gibi okunur.
+ * ÖNCEKİ HÂLİ BÜTÜN UYGULAMAYI BOZUYORDU (2026-09-30, sahibi ve testçi bağımsız buldu):
+ * bu iş `TouchableWithoutFeedback` ile ScrollView'ı SARARAK yapılıyordu. Sarmalayıcı,
+ * çocuklarından önce dokunuşa talip oluyor; sahibinin bulduğu tekrar bunu birebir
+ * gösteriyor — "boş bir yere tıklayıp sonra ilk butona tıklayınca çalışmıyor". Boş yere
+ * yapılan dokunuş sarmalayıcıyı devreye sokuyor, ondan sonraki ilk dokunuş düğmeye
+ * ulaşmıyor, ikincisi ulaşıyor. Şikâyet "bütün butonlarda" diye geldi, çünkü bu bileşen
+ * gerçekten bütün ekranların altında.
+ *
+ * ŞİMDİ KARDEŞ: içeriğin ARKASINDA duran, mutlak konumlu bir katman. Boş yere yapılan
+ * dokunuş buraya düşer (üstünde dokunmaya talip hiçbir şey yok), düğmeye yapılan dokunuş
+ * düğmeye gider (düğme daha SONRA çiziliyor ve dokunma sırasında öne geçiyor). Hiçbir
+ * zaman bir çocuğun dokunuşuna talip olmuyor.
+ *
+ * `accessible={false}`: bu bir düğme değil, yalnızca bir jest — ekran okuyucuya "düğme"
+ * diye duyurulursa içeriğin tamamı tek bir kontrol gibi okunur.
  */
-function DismissKeyboard({ children }: { children: ReactNode }) {
+function DismissLayer() {
   return (
-    <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
-      {children}
-    </TouchableWithoutFeedback>
+    <Pressable accessible={false} style={StyleSheet.absoluteFill} onPress={Keyboard.dismiss} />
   );
 }
 
@@ -62,12 +72,20 @@ export function Screen({ children, center = false, gap = space.xl, style, footer
     </View>
   ) : (
     <ScrollView
-      style={{ backgroundColor: colors.background }}
+      /*
+       * `flex: 1` ŞART (2026-09-30, cihaz ekran görüntüsünde yakalandı): bu olmadan
+       * ScrollView yalnızca İÇERİĞİ kadar yer kaplıyor ve alta sabitlenmesi gereken
+       * footer içeriğin hemen altında, ekranın ortasında kalıyor. Web'de fark
+       * edilmemişti çünkü React Native Web'in ScrollView'ı kendiliğinden `flexGrow: 1`
+       * taşıyor; yerelde taşımıyor. İki platformun aynı görünmesi bu satıra bağlı.
+       */
+      style={[styles.page, { backgroundColor: colors.background }]}
       contentContainerStyle={[styles.scroll, footer ? styles.scrollWithFooter : null, style]}
       keyboardShouldPersistTaps="handled"
       // iOS'ta kaydırmaya başlayınca klavye kapansın; dokunma jestiyle birlikte iki yol.
       keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
     >
+      <DismissLayer />
       <View style={[styles.frame, { gap }]}>{children}</View>
     </ScrollView>
   );
@@ -96,7 +114,7 @@ export function Screen({ children, center = false, gap = space.xl, style, footer
       style={[styles.page, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <DismissKeyboard>{body}</DismissKeyboard>
+      {body}
       {footer ? (
         <View
           style={[
@@ -121,6 +139,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: layout.gutter,
   },
   scroll: {
+    // İçerik kısa olsa da kapsayıcı ekranı doldursun: klavyeyi kapatan arka plan katmanı
+    // (`DismissLayer`) buranın sınırlarını kaplıyor.
+    flexGrow: 1,
     paddingHorizontal: layout.gutter,
     paddingTop: space.xl,
     paddingBottom: space.xxxl,

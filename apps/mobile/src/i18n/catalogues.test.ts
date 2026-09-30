@@ -82,6 +82,9 @@ const SAME_PER_LOCALE: Record<string, Set<string>> = {
   // Almanca "Credits", "Reputation", "Collabs", "Thumbnails", "Matches" aynen alır;
   // niş adlarından "Animation", "Gaming" ve "Vlog" da Almancada aynen kullanılıyor.
   de: new Set([
+    // "Version" Almancada ve Fransızcada aynı kelime.
+    'profile.account.version',
+    'profile.account.versionOnly',
     'niches.animation',
     'niches.gaming',
     'niches.vlog',
@@ -98,6 +101,8 @@ const SAME_PER_LOCALE: Record<string, Set<string>> = {
   fr: new Set([
     'profile.collab.title',
     'collab.title',
+    'profile.account.version',
+    'profile.account.versionOnly',
     'niches.animation',
     'niches.finance',
     'niches.science',

@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
-import { radius, space } from '@/design/tokens';
+import { layout, radius, space } from '@/design/tokens';
 
 type Props = {
   label: string;
@@ -61,6 +61,13 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     paddingHorizontal: space.lg,
     paddingVertical: space.sm,
+    /*
+     * 44 dp, dokunma hedefi alt sınırı (2026-09-30, tarayıcıda ölçüldü: chip'ler 40 dp
+     * çıkıyordu). Profil ekranında otuzdan fazla chip var ve hepsi bu sınırın altındaydı;
+     * dört dp küçük bir fark gibi duruyor ama parmak ucu o farkı bulur.
+     */
+    minHeight: layout.minTouch,
+    justifyContent: 'center',
   },
   label: {
     fontSize: 15,

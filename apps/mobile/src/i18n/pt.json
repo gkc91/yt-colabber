@@ -372,7 +372,10 @@
       "deleteHint": "Excluir remove sua conta, seus testes e seu histórico de créditos. As avaliações que você escreveu em testes de outras pessoas continuam lá, sem o seu nome, para que os resultados delas sigam fechando.",
       "deleteConfirm": "Isto não dá para desfazer. Sua conta, seus testes e seus créditos serão excluídos.",
       "contact": "Falar com o suporte",
-      "contactHint": "Dúvidas, bugs ou algum problema com uma avaliação: escreva para {email} e uma pessoa vai ler."
+      "contactHint": "Dúvidas, bugs ou algum problema com uma avaliação: escreva para {email} e uma pessoa vai ler.",
+      "version": "Versão {version} ({build})",
+      "versionWithUpdate": "Versão {version} ({build}) · atualização {update}",
+      "versionOnly": "Versão {version}"
     },
     "channels": {
       "title": "Seus canais",

@@ -36,6 +36,7 @@ import {
   useProfile,
 } from '@/features/profile/api';
 import { CollabSettings } from '@/features/collab/components/CollabSettings';
+import { AppVersion } from '@/features/profile/components/AppVersion';
 import { LanguageSetting } from '@/features/profile/components/LanguageSetting';
 import { CreditHistory } from '@/features/profile/components/CreditHistory';
 import { canChangeNiche, daysUntilNicheChange } from '@/features/profile/nicheChange';
@@ -393,6 +394,9 @@ export default function ProfileScreen() {
           onPress={confirmDelete}
           loading={removeAccount.isPending}
         />
+
+        {/* Künye en altta: bu bir eylem değil, rapor ederken okunacak bir bilgi. */}
+        <AppVersion />
       </Section>
     </Screen>
   );
@@ -418,9 +422,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     rowGap: space.lg,
+    /*
+     * `columnGap` YOKTU ve Türkçe ekranda iki etiket birbirine giriyordu: "VERİLEN
+     * DEĞERLENDİRMEALINAN DEĞERLENDİRME" (2026-09-30, ekran görüntüsünde görüldü).
+     * İngilizcede fark edilmemişti çünkü "Reviews given" kısa; çeviriler uzayınca
+     * sütunlar birbirine dayandı. Boşluk artık yazının uzunluğundan bağımsız.
+     */
+    columnGap: space.md,
   },
   stat: {
-    // İki sütunlu künye: sayılar alt alta hizalansın.
-    minWidth: '45%',
+    // İki sütunlu künye: sayılar alt alta hizalansın. `flexBasis` yüzdeyle değil esneyerek
+    // veriliyor: uzun bir etiket sütunu taşırmak yerine satırı ikiye bölsün.
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '40%',
   },
 });

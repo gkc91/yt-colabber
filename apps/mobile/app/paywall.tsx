@@ -1,12 +1,12 @@
 import { router } from 'expo-router';
 import { useEffect } from 'react';
-import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
 import { Body, Heading, Small, Title } from '@/components/Type';
-import { space } from '@/design/tokens';
+import { layout, space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
 import { StoreBadges } from '@/features/credits/StoreBadges';
@@ -113,21 +113,29 @@ export default function Paywall() {
       ) : null}
 
       {/* Mağazalar satın alma ekranında şartlara ve gizliliğe erişim istiyor. */}
+      {/*
+        Dokunma alanı (2026-09-30, ölçüldü: bu iki bağlantı 21 dp yüksekliğindeydi, alt
+        sınır 44). `hitSlop` DEĞİL gerçek dolgu: React Native Web `hitSlop`'u hiç
+        uygulamıyor, yani yalnızca onunla büyütülen bir hedef app.clickabletest.com'da
+        küçük kalırdı. Dolgu iki yüzeyde de çalışıyor.
+      */}
       <View style={styles.legal}>
-        <Small
-          tone="muted"
+        <Pressable
           accessibilityRole="link"
+          accessibilityLabel={t('paywall.legal.terms')}
+          style={styles.legalLink}
           onPress={() => Linking.openURL('https://clickabletest.com/terms')}
         >
-          {t('paywall.legal.terms')}
-        </Small>
-        <Small
-          tone="muted"
+          <Small tone="muted">{t('paywall.legal.terms')}</Small>
+        </Pressable>
+        <Pressable
           accessibilityRole="link"
+          accessibilityLabel={t('paywall.legal.privacy')}
+          style={styles.legalLink}
           onPress={() => Linking.openURL('https://clickabletest.com/privacy')}
         >
-          {t('paywall.legal.privacy')}
-        </Small>
+          <Small tone="muted">{t('paywall.legal.privacy')}</Small>
+        </Pressable>
       </View>
 
       <Button title={t('paywall.close')} variant="secondary" onPress={() => router.back()} />
@@ -195,6 +203,11 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     flexShrink: 1,
+  },
+  legalLink: {
+    minHeight: layout.minTouch,
+    justifyContent: 'center',
+    paddingHorizontal: space.sm,
   },
   legal: {
     flexDirection: 'row',
