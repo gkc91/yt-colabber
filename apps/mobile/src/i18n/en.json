@@ -199,7 +199,7 @@
     },
     "unavailable": {
       "title": "Buying happens in the app",
-      "web_unsupported": "Purchases run through the App Store and Google Play, so they only work in the mobile app. The app is coming soon — you can still review, read results and earn credits here.",
+      "web_unsupported": "Buying runs through the app stores, so it cannot happen in a browser. Reviewing, results and earning credits all work here.",
       "not_configured": "This build has no store keys, so buying is off. Earning credits by reviewing works as usual."
     },
     "errors": {
@@ -217,6 +217,11 @@
     "legal": {
       "terms": "Terms",
       "privacy": "Privacy"
+    },
+    "stores": {
+      "ios": "App Store",
+      "android": "Google Play",
+      "comingSoon": "Coming soon"
     }
   },
   "notFound": {

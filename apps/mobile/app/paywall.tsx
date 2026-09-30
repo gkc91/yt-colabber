@@ -9,6 +9,7 @@ import { Body, Heading, Small, Title } from '@/components/Type';
 import { space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import { useBalance } from '@/features/credits/api';
+import { StoreBadges } from '@/features/credits/StoreBadges';
 import {
   purchaseErrorKey,
   usePurchase,
@@ -49,9 +50,14 @@ export default function Paywall() {
       {options.isPending ? <ActivityIndicator /> : null}
 
       {unavailable ? (
-        <Card>
+        <Card gap={space.md}>
           <Heading>{t('paywall.unavailable.title')}</Heading>
           <Small tone="muted">{t(`paywall.unavailable.${loadErrorKey}` as MessageKey)}</Small>
+          {/*
+            Mağaza rozetleri yalnızca web'de: `not_configured` bir GELİŞTİRME durumu
+            (anahtarsız build) ve oradaki kullanıcıya mağazayı göstermek yanlış cevap.
+          */}
+          {loadErrorKey === 'web_unsupported' ? <StoreBadges /> : null}
         </Card>
       ) : null}
 
