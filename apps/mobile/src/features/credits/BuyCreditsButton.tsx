@@ -8,15 +8,20 @@
 // zamanını harcamak istemeyenler için. Ekranın ortasında duran bir "SATIN AL" düğmesi
 // ürünün vaadini tersine çevirirdi.
 import { router } from 'expo-router';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { radius } from '@/design/tokens';
 import { t } from '@/i18n';
 
+const SIZE = 32;
+const ARM = 14;
+const THICKNESS = 2;
+
 export function BuyCreditsButton() {
   const colors = Colors[useColorScheme()];
+  const bar = { backgroundColor: colors.text };
 
   return (
     <Pressable
@@ -31,35 +36,60 @@ export function BuyCreditsButton() {
       // Dokunma alanı görünen kutudan geniş: 32 dp'lik bir daire parmak için küçük.
       hitSlop={10}
     >
-      <Text style={[styles.plus, { color: colors.text }]}>+</Text>
+      {/* İç kutu flex ile ortalanıyor (kenarlıktan etkilenmez); kollar onun içinde. */}
+      <View style={styles.mark}>
+        <View style={[styles.arm, styles.horizontal, bar]} />
+        <View style={[styles.arm, styles.vertical, bar]} />
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    width: 32,
-    height: 32,
+    width: SIZE,
+    height: SIZE,
     borderRadius: radius.pill,
     borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'center',
   },
   /*
-   * "+" ARTIK `Title` DEĞİL, kendi ölçüsü olan düz bir metin (sahibi işaretin dairenin
-   * içinde ortalı olmadığını bildirdi). İki sebep vardı ve ikisi de tipografi ölçeğinden
-   * geliyordu: `title` ölçeği `letterSpacing: -0.6` taşıyor ve harf aralığı SON harften
-   * SONRA da uygulandığı için tek karakterlik bir metnin kutusu sola kayıyor; ayrıca
-   * 28 punto yazıya elle verilen `lineHeight: 26` metni kutusunun dışına taşırıyordu.
-   * Burada aralık sıfır, satır yüksekliği düğmenin kendi yüksekliği ve Android'in font
-   * dolgusu kapalı — üçü birden olmadan ortalama güvenilir değil.
+   * "+" BİR YAZI DEĞİL, İKİ ÇUBUK — ve çubuklar İÇ BİR KUTUNUN içinde (2026-09-30).
+   *
+   * Üç deneme sürdü, üçü de aynı dersi verdi: ölçmediğin şeyi düzeltmiş sayılmazsın.
+   *   1. `Title` ile yazı: `title` ölçeğinin `letterSpacing: -0.6` değeri tek karakterlik
+   *      metnin kutusunu sola kaydırıyordu.
+   *   2. Kendi ölçüsü olan düz `Text`: tarayıcıda ölçüldü ve "ortalandı" denildi, ama
+   *      ÖLÇÜLEN ŞEY METNİN KUTUSUYDU, MÜREKKEBİ DEĞİL. Bir "+" glifi taban çizgisine
+   *      göre yerleşir, satır kutusunun ortasına değil.
+   *   3. Kutuya göre mutlak konumlanan iki çubuk: mutlak konum KENARLIĞIN İÇİNDEN
+   *      başlıyor. `StyleSheet.hairlineWidth` web'de 1 piksel, dolayısıyla her iki kol da
+   *      1 dp sağa ve aşağı kaydı — koyu piksellerin ağırlık merkezi ölçüldüğünde yatayda
+   *      0.42, dikeyde 0.92 dp sapma çıktı.
+   *
+   * Şimdiki hâl: iç kutu `alignItems`/`justifyContent` ile ortalanıyor (flex kenarlığı
+   * doğru hesaplar), kollar da kenarlığı olmayan o kutunun içinde sabit ofsetlerle
+   * duruyor. Fonttan da kenarlıktan da bağımsız.
    */
-  plus: {
-    fontSize: 22,
-    lineHeight: 32,
-    fontWeight: '600',
-    letterSpacing: 0,
-    textAlign: 'center',
-    includeFontPadding: false,
+  mark: {
+    width: ARM,
+    height: ARM,
+  },
+  arm: {
+    position: 'absolute',
+    borderRadius: THICKNESS / 2,
+  },
+  horizontal: {
+    width: ARM,
+    height: THICKNESS,
+    left: 0,
+    top: (ARM - THICKNESS) / 2,
+  },
+  vertical: {
+    width: THICKNESS,
+    height: ARM,
+    left: (ARM - THICKNESS) / 2,
+    top: 0,
   },
 });
