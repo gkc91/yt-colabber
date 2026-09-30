@@ -82,6 +82,14 @@ export default function TabLayout() {
       */}
       <Tabs.Screen name="collab/index" options={{ href: null, title: t('collab.title') }} />
       <Tabs.Screen
+        name="collab/matches"
+        options={{ href: null, title: t('collab.matches.title') }}
+      />
+      <Tabs.Screen
+        name="collab/[matchId]"
+        options={{ href: null, title: t('collab.matches.title') }}
+      />
+      <Tabs.Screen
         name="profile/add-channel"
         options={{ href: null, title: t('profile.channels.addTitle') }}
       />

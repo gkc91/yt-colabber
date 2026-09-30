@@ -10,7 +10,13 @@ const MAX_ATTEMPTS = 5;
 type Row = {
   id: string;
   profile_id: string;
-  kind: "reviews_arriving" | "test_completed" | "tasks_waiting" | "submission_hidden";
+  kind:
+    | "reviews_arriving"
+    | "test_completed"
+    | "tasks_waiting"
+    | "submission_hidden"
+    | "collab_match"
+    | "collab_message";
   payload: Record<string, unknown>;
   attempts: number;
   profiles: { expo_push_token: string | null } | null;
@@ -34,6 +40,18 @@ const TEXTS: Record<Row["kind"], { title: string; body: string }> = {
   submission_hidden: {
     title: "One of your tests is paused",
     body: "Someone reported it. Your unused credits are back — open the app to appeal.",
+  },
+  // Collab (0045). İkisi de krediyle ilgisizdir ve metinleri bunu ima etmemeli — burada
+  // kazanılacak bir şey yok, tanışılacak biri var.
+  collab_match: {
+    title: "You matched",
+    body: "Someone in your niche is up for a collab too. Say hello.",
+  },
+  // Gönderenin adı BİLEREK yazılmıyor: bildirim kilit ekranında görünür ve bu satır
+  // uygulamayı açmayan birine de başkasının adını gösterir.
+  collab_message: {
+    title: "New collab message",
+    body: "One of your matches wrote to you.",
   },
 };
 

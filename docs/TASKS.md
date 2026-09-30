@@ -100,7 +100,7 @@ Her görevde "Kabul" maddeleri sağlanmadan görev bitmiş sayılmaz.
 
 - [x] **F1. Collab profili** — profil ayarında "Collab'a açığım", türler, bio → `collab_profiles`.
 - [x] **F2. Aday kartları** — `collab/index`: `rpc('collab_candidates')`, kart (kanal, band, türler, bio, "seni X kez değerlendirdi"), beğen / geç / engelle. Eşleşince kutlama + sohbete git.
-- [ ] **F3. Sohbet** — `collab/matches`: eşleşme listesi, `messages` Realtime, `rpc('send_message')`, push (C2'ye tetikleyici ekle).
+- [x] **F3. Sohbet** — `collab/matches`: eşleşme listesi, `messages` Realtime, `rpc('send_message')`, push (C2'ye tetikleyici ekle).
 - [ ] **F4. Moderasyon** — mesaj raporu, engelleyince eşleşme gizlenir; günlük mesaj limiti (100).
 
 ## Faz G — Büyüme (kod değil; E1 yayına girdikten sonra, GROWTH.md)

@@ -413,7 +413,8 @@
         "end_screen_swap": "End screen swap",
         "live": "Live together"
       },
-      "browse": "Browse creators"
+      "browse": "Browse creators",
+      "matches": "My matches"
     }
   },
   "results": {
@@ -525,8 +526,8 @@
     "match": {
       "title": "It's a match",
       "body": "{name} is interested too.",
-      "chatSoon": "Messaging is coming in the next update.",
-      "keepBrowsing": "Keep browsing"
+      "keepBrowsing": "Keep browsing",
+      "openChat": "Open chat"
     },
     "closed": {
       "title": "Collabs are off",
@@ -543,6 +544,37 @@
       "body": "Check your connection and try again.",
       "retry": "Try again",
       "action": "That did not go through. Try again."
+    },
+    "matches": {
+      "title": "Matches",
+      "errorTitle": "Could not load your matches",
+      "emptyTitle": "No matches yet",
+      "emptyBody": "When someone you are interested in is interested back, they show up here.",
+      "browse": "Browse creators",
+      "noMessages": "Say hello.",
+      "rowUnread": "{name}, {count} unread"
+    },
+    "chat": {
+      "intro": "You and {name} matched. Credits and YouTube have nothing to do with this.",
+      "empty": "Nothing here yet. Tell {name} what you make and what you had in mind.",
+      "field": "Message to {name}",
+      "placeholder": "Keep it short and specific.",
+      "send": "Send",
+      "sendFailed": "That did not send. Try again.",
+      "tooLong": "Keep it under {max} characters.",
+      "errorTitle": "Could not open this chat",
+      "blocked": "This conversation is closed.",
+      "goneTitle": "This chat is closed",
+      "goneBody": "One of you blocked the other, so neither can write here.",
+      "fromMe": "You said: {body}",
+      "fromThem": "{name} said: {body}",
+      "reported": "Reported",
+      "report": {
+        "action": "Report",
+        "title": "Report this message?",
+        "body": "We keep a copy of the message so a person can look at it. Blocking is separate — you can do both.",
+        "confirm": "Report"
+      }
     }
   }
 }

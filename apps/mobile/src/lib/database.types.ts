@@ -1259,6 +1259,8 @@ export type Database = {
         | "test_completed"
         | "tasks_waiting"
         | "submission_hidden"
+        | "collab_match"
+        | "collab_message"
       submission_status:
         | "open"
         | "completed"
@@ -1421,6 +1423,8 @@ export const Constants = {
         "test_completed",
         "tasks_waiting",
         "submission_hidden",
+        "collab_match",
+        "collab_message",
       ],
       submission_status: [
         "open",

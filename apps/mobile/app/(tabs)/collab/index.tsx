@@ -42,7 +42,7 @@ export default function CollabScreen() {
   // sorulmuyor. Her karardan sonra `collab_candidates` çağırmak, karar sunucuya işlenene
   // kadar aynı kişiyi geri getirme riski taşır ve gereksiz gidip gelmedir.
   const [decided, setDecided] = useState<string[]>([]);
-  const [matched, setMatched] = useState<Candidate | null>(null);
+  const [matched, setMatched] = useState<{ candidate: Candidate; matchId: string } | null>(null);
 
   const cards = (deck.data ?? []).filter((c) => !decided.includes(c.id));
   const current = cards[0] ?? null;
@@ -54,7 +54,7 @@ export default function CollabScreen() {
     mutationFn: (candidate: Candidate) => likeCandidate(candidate.id),
     onSuccess: (matchId, candidate) => {
       decide(candidate.id);
-      if (matchId) setMatched(candidate);
+      if (matchId) setMatched({ candidate, matchId });
     },
   });
 
@@ -129,19 +129,28 @@ export default function CollabScreen() {
   }
 
   if (matched) {
-    const name = candidateName(matched, t('collab.card.unnamed'));
+    const name = candidateName(matched.candidate, t('collab.card.unnamed'));
     return (
       <Screen>
         <Card gap={space.md}>
           <Heading>{t('collab.match.title')}</Heading>
           <Body>{t('collab.match.body', { name })}</Body>
-          {/*
-            Sohbet F3'te geliyor. "Yakında" demek, çalışmayan bir düğme koymaktan
-            dürüsttür — kullanıcı basıp hiçbir şey olmamasını yaşamıyor.
-          */}
-          <Meta>{t('collab.match.chatSoon')}</Meta>
         </Card>
-        <Button title={t('collab.match.keepBrowsing')} onPress={() => setMatched(null)} />
+        {/* Sohbet birincil eylem: eşleşmenin karşılığı konuşmak. */}
+        <Button
+          title={t('collab.match.openChat')}
+          onPress={() =>
+            router.push({
+              pathname: '/collab/[matchId]',
+              params: { matchId: matched.matchId },
+            })
+          }
+        />
+        <Button
+          title={t('collab.match.keepBrowsing')}
+          variant="secondary"
+          onPress={() => setMatched(null)}
+        />
       </Screen>
     );
   }

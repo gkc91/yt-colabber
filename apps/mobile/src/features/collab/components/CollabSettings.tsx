@@ -139,11 +139,18 @@ export function CollabSettings({ userId }: { userId: string }) {
         gizli — kaydedilmemiş bir seçimle desteye gitmek, seçimi kaybetmek demek.
       */}
       {saved.data?.isOpen && !dirty ? (
-        <Button
-          title={t('profile.collab.browse')}
-          variant="secondary"
-          onPress={() => router.push('/collab')}
-        />
+        <>
+          <Button
+            title={t('profile.collab.browse')}
+            variant="secondary"
+            onPress={() => router.push('/collab')}
+          />
+          <Button
+            title={t('profile.collab.matches')}
+            variant="secondary"
+            onPress={() => router.push('/collab/matches')}
+          />
+        </>
       ) : null}
     </Section>
   );

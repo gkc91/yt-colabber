@@ -1,7 +1,7 @@
 // Aday kartı (F2). Tek bir kişi: kanal, band, türler, bio ve aranızdaki değerlendirme
 // geçmişi. PRODUCT §12'de adaylar bu geçmişe göre SIRALANIYOR; kartta yazılmazsa
 // kullanıcı listenin neden o sırada olduğunu anlamaz.
-import { Linking, StyleSheet, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { Card } from '@/components/Card';
 import { Body, Heading, Meta, Small } from '@/components/Type';
@@ -31,12 +31,13 @@ export function CandidateCard({ candidate }: { candidate: Candidate }) {
           beklenmez. Sadece "bu kim" sorusunun cevabı.
         */}
         {candidate.youtubeUrl ? (
-          <Meta
+          <Pressable
             accessibilityRole="link"
+            hitSlop={space.sm}
             onPress={() => Linking.openURL(candidate.youtubeUrl as string)}
           >
-            {t('collab.card.openChannel')}
-          </Meta>
+            <Meta>{t('collab.card.openChannel')}</Meta>
+          </Pressable>
         ) : null}
       </View>
 
