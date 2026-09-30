@@ -1,6 +1,6 @@
 // Sohbet (F3). PRODUCT §12 — Collab krediye BAĞLANMAZ; bu ekranda bakiye okunmaz.
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
@@ -13,6 +13,7 @@ import Colors from '@/constants/Colors';
 import { radius, space } from '@/design/tokens';
 import { useSession } from '@/features/auth/session';
 import {
+  blockCandidate,
   CollabError,
   markRead,
   matchesQueryKey,
@@ -104,6 +105,27 @@ export default function ChatScreen() {
     onSuccess: (_result, message) => setReported((list) => [...list, message.id]),
   });
 
+  // Engelleme SOHBETTEN de yapılabilmeli. İlk hâlinde yalnızca aday destesinde vardı,
+  // yani eşleştikten sonra rahatsız eden biriyle karşılaşan kişinin hiçbir çıkışı yoktu —
+  // rapor bir insanın bakmasını sağlar ama konuşmayı o an kesmez.
+  const block = useMutation({
+    mutationFn: (partnerId: string) => blockCandidate(partnerId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: matchesQueryKey });
+      router.replace('/collab/matches');
+    },
+  });
+
+  const confirmBlock = async (partnerId: string, partnerName: string) => {
+    const ok = await confirmDestructive({
+      title: t('collab.block.title', { name: partnerName }),
+      message: t('collab.block.body'),
+      confirmLabel: t('collab.block.confirm'),
+      cancelLabel: t('collab.block.cancel'),
+    });
+    if (ok) block.mutate(partnerId);
+  };
+
   const confirmReport = async (message: Message) => {
     const ok = await confirmDestructive({
       title: t('collab.chat.report.title'),
@@ -158,17 +180,40 @@ export default function ChatScreen() {
             style={styles.input}
             error={error === 'too_long' ? t('collab.chat.tooLong', { max: MESSAGE_MAX }) : null}
           />
-          {send.isError ? <Small tone="accent">{t('collab.chat.sendFailed')}</Small> : null}
+          {send.isError ? (
+            <Small tone="accent">
+              {t(
+                `collab.chat.errors.${
+                  send.error instanceof CollabError && send.error.code !== 'collab_closed'
+                    ? send.error.code
+                    : 'unknown'
+                }` as MessageKey,
+              )}
+            </Small>
+          ) : null}
           <Button
             title={t('collab.chat.send')}
             onPress={() => send.mutate()}
             disabled={error !== null || send.isPending}
             loading={send.isPending}
           />
+          {/*
+            Engelleme ikincil ve altta: sohbet ekranının işi konuşmak, kapatmak değil.
+            Ama BULUNMAK ZORUNDA — rapor bir insanın bakmasını sağlar, konuşmayı o an
+            kesmez ve eşleştikten sonra rahatsız eden biriyle karşılaşan kişinin başka
+            çıkışı yok.
+          */}
+          <Button
+            title={t('collab.chat.block')}
+            variant="secondary"
+            disabled={block.isPending}
+            onPress={() => confirmBlock(match.partnerId, name)}
+          />
         </View>
       }
     >
       <Meta>{t('collab.chat.intro', { name })}</Meta>
+      {report.isError ? <Small tone="accent">{t('collab.chat.reportFailed')}</Small> : null}
 
       {messages.length === 0 ? (
         <Body>{t('collab.chat.empty', { name })}</Body>

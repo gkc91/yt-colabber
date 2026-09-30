@@ -6,7 +6,7 @@
 -- (`profiles` "yalnızca kendini oku" politikasında) ve raporun kendi mesajına işlemediği.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(26);
+select plan(29);
 
 -- ---------- arrange ----------
 -- 01 ben · 02 eşleşeceğim kişi · 03 engelleyeceğim kişi · 04 geçeceğim kişi
@@ -183,7 +183,27 @@ select throws_ok(
   'kendi mesajını raporlayamıyorsun'
 );
 
--- ---------- 9. Engellenen eşleşme sohbete kapanıyor ----------
+-- ---------- 9. Günlük mesaj sınırı ----------
+-- Sayı (100) bilerek `collab_message_limit()`'ten okunmuyor: sınırı sınadığı fonksiyondan
+-- türeten bir test, sınır kaldırıldığında kendisi de uyum sağlayıp geçer (0040'ın dersi).
+-- Bugüne kadar 1 mesaj atıldı; 99 tane daha tam sınırı doldurur.
+set local request.jwt.claims to '{"sub":"cc000000-0000-0000-0000-000000000001","role":"authenticated"}';
+select lives_ok(
+  $$select send_message((select id from t_match), 'fill ' || g) from generate_series(1, 99) g$$,
+  'ön koşul: günün kotası tam olarak dolduruldu (1 + 99 = 100)'
+);
+select throws_ok(
+  $$select send_message((select id from t_match), 'one too many')$$,
+  'daily_limit',
+  'yüz birinci mesaj günlük sınıra takılıyor'
+);
+select is(
+  (select count(*)::int from messages where sender_id = 'cc000000-0000-0000-0000-000000000001'),
+  100,
+  've gerçekten yüz mesaj yazılmış, yüz bir değil'
+);
+
+-- ---------- 10. Engellenen eşleşme sohbete kapanıyor ----------
 select lives_ok(
   $$select collab_block('cc000000-0000-0000-0000-000000000002')$$,
   'eşleştiğim kişiyi engelleyebiliyorum'

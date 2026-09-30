@@ -560,7 +560,6 @@
       "field": "Message to {name}",
       "placeholder": "Keep it short and specific.",
       "send": "Send",
-      "sendFailed": "That did not send. Try again.",
       "tooLong": "Keep it under {max} characters.",
       "errorTitle": "Could not open this chat",
       "blocked": "This conversation is closed.",
@@ -574,7 +573,15 @@
         "title": "Report this message?",
         "body": "We keep a copy of the message so a person can look at it. Blocking is separate — you can do both.",
         "confirm": "Report"
-      }
+      },
+      "errors": {
+        "daily_limit": "You have hit the daily message limit. Try again tomorrow.",
+        "blocked": "This conversation is closed.",
+        "not_in_match": "This conversation is closed.",
+        "unknown": "That did not send. Try again."
+      },
+      "reportFailed": "Could not report that. Try again.",
+      "block": "Block this creator"
     }
   }
 }

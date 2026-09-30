@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
 import { toCandidates, type Candidate } from './candidates';
+import { toCollabError } from './errors';
 import { toMatches, toMessages, type Match, type Message } from './chat';
 import { EMPTY_COLLAB_PROFILE, sanitizeTypes, type CollabProfile } from './rules';
 
@@ -57,20 +58,6 @@ export async function saveCollabProfile(userId: string, draft: CollabProfile): P
 }
 
 // ---------------------------------------------------------------- Aday destesi (F2)
-
-/** Sunucu `collab_closed` fırlatıyorsa kullanıcı profilini açmamış demektir. */
-export class CollabError extends Error {
-  constructor(readonly code: 'collab_closed' | 'blocked' | 'unknown') {
-    super(code);
-  }
-}
-
-function toCollabError(error: { message?: string } | null): CollabError {
-  const message = error?.message ?? '';
-  if (message.includes('collab_closed')) return new CollabError('collab_closed');
-  if (message.includes('blocked')) return new CollabError('blocked');
-  return new CollabError('unknown');
-}
 
 export async function fetchCandidates(): Promise<Candidate[]> {
   const { data, error } = await supabase.rpc('collab_candidates', { p_limit: 20 });
@@ -185,3 +172,5 @@ export function subscribeToMessages(matchId: string, onInsert: (row: unknown) =>
     supabase.removeChannel(channel);
   };
 }
+
+export { CollabError, type CollabErrorCode } from './errors';
