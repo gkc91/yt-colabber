@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { router } from 'expo-router';
-import { ActivityIndicator, Alert, Linking, Platform, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
@@ -46,6 +46,7 @@ import {
   useReviewScope,
 } from '@/features/profile/reviewScope';
 import { t, type MessageKey } from '@/i18n';
+import { confirmDestructive } from '@/lib/confirm';
 
 export default function ProfileScreen() {
   const { session } = useSession();
@@ -124,20 +125,17 @@ export default function ProfileScreen() {
   const daysLeft = daysUntilNicheChange(profile.data?.niche_changed_at ?? null);
   const nicheUnlocked = canChangeNiche(profile.data?.niche_changed_at ?? null);
 
-  const confirmDelete = () => {
-    const message = t('profile.account.deleteConfirm');
-    if (Platform.OS === 'web') {
-      if (typeof window !== 'undefined' && window.confirm(message)) removeAccount.mutate();
-      return;
-    }
-    Alert.alert(t('profile.account.delete'), message, [
-      { text: t('report.cancel'), style: 'cancel' },
-      {
-        text: t('profile.account.delete'),
-        style: 'destructive',
-        onPress: () => removeAccount.mutate(),
-      },
-    ]);
+  const confirmDelete = async () => {
+    // Web ayrımı burada satır içindeydi (`Alert.alert` web'de çalışmıyor); Collab'da aynı
+    // ihtiyaç ikinci kez çıkınca `lib/confirm.ts`'e taşındı. Davranış aynı, tek fark
+    // tarayıcı penceresinde artık başlık da görünüyor.
+    const ok = await confirmDestructive({
+      title: t('profile.account.delete'),
+      message: t('profile.account.deleteConfirm'),
+      confirmLabel: t('profile.account.delete'),
+      cancelLabel: t('report.cancel'),
+    });
+    if (ok) removeAccount.mutate();
   };
 
   return (

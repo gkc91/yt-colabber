@@ -412,7 +412,8 @@
         "shorts": "Shorts together",
         "end_screen_swap": "End screen swap",
         "live": "Live together"
-      }
+      },
+      "browse": "Browse creators"
     }
   },
   "results": {
@@ -496,5 +497,52 @@
     "thumbnailOther": "A thumbnail you did not pick",
     "thumbnailYours": "Thumbnail {n} you uploaded",
     "thumbnailResult": "Thumbnail {n}, {percent}% of picks"
+  },
+  "collab": {
+    "title": "Collabs",
+    "intro": "Same niche, similar size. Nothing here touches credits or YouTube.",
+    "remaining": "{count} more after this one",
+    "card": {
+      "unnamed": "A creator",
+      "openChannel": "Open channel",
+      "history": {
+        "they_reviewed": "Reviewed {they} of your tests.",
+        "i_reviewed": "You reviewed {me} of their tests.",
+        "both": "Reviewed {they} of your tests; you reviewed {me} of theirs."
+      }
+    },
+    "actions": {
+      "like": "Interested",
+      "pass": "Skip",
+      "block": "Block this creator"
+    },
+    "block": {
+      "title": "Block {name}?",
+      "body": "You will not see each other again, and neither of you can message the other.",
+      "cancel": "Cancel",
+      "confirm": "Block"
+    },
+    "match": {
+      "title": "It's a match",
+      "body": "{name} is interested too.",
+      "chatSoon": "Messaging is coming in the next update.",
+      "keepBrowsing": "Keep browsing"
+    },
+    "closed": {
+      "title": "Collabs are off",
+      "body": "Turn on \"I am open to collabs\" in your profile and pick what you are up for. Nobody sees you until you do.",
+      "cta": "Go to my profile"
+    },
+    "empty": {
+      "title": "Nobody left for now",
+      "body": "You have seen everyone in your niche at a similar size. New creators turn collabs on all the time — check back in a few days.",
+      "refresh": "Look again"
+    },
+    "error": {
+      "title": "Could not load creators",
+      "body": "Check your connection and try again.",
+      "retry": "Try again",
+      "action": "That did not go through. Try again."
+    }
   }
 }

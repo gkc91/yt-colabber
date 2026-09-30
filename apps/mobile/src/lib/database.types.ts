@@ -7,31 +7,6 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
       ai_summary_runs: {
@@ -241,6 +216,39 @@ export type Database = {
           },
         ]
       }
+      collab_match_reads: {
+        Row: {
+          last_read_at: string
+          match_id: string
+          profile_id: string
+        }
+        Insert: {
+          last_read_at?: string
+          match_id: string
+          profile_id: string
+        }
+        Update: {
+          last_read_at?: string
+          match_id?: string
+          profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collab_match_reads_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "collab_matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collab_match_reads_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       collab_matches: {
         Row: {
           a_id: string
@@ -271,6 +279,39 @@ export type Database = {
           {
             foreignKeyName: "collab_matches_b_id_fkey"
             columns: ["b_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collab_passes: {
+        Row: {
+          created_at: string
+          from_id: string
+          to_id: string
+        }
+        Insert: {
+          created_at?: string
+          from_id: string
+          to_id: string
+        }
+        Update: {
+          created_at?: string
+          from_id?: string
+          to_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collab_passes_from_id_fkey"
+            columns: ["from_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collab_passes_to_id_fkey"
+            columns: ["to_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -341,6 +382,45 @@ export type Database = {
           {
             foreignKeyName: "credit_ledger_profile_id_fkey"
             columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      message_reports: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: number
+          reason: string
+          reporter_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_id: number
+          reason: string
+          reporter_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: number
+          reason?: string
+          reporter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_reports_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "message_reports_reporter_id_fkey"
+            columns: ["reporter_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -575,6 +655,7 @@ export type Database = {
           profile_id: string
           raw: Json | null
           rc_event_id: string
+          rc_transaction_id: string | null
         }
         Insert: {
           created_at?: string
@@ -584,6 +665,7 @@ export type Database = {
           profile_id: string
           raw?: Json | null
           rc_event_id: string
+          rc_transaction_id?: string | null
         }
         Update: {
           created_at?: string
@@ -593,6 +675,7 @@ export type Database = {
           profile_id?: string
           raw?: Json | null
           rc_event_id?: string
+          rc_transaction_id?: string | null
         }
         Relationships: [
           {
@@ -978,8 +1061,14 @@ export type Database = {
       }
       clip_retention_days: { Args: never; Returns: number }
       close_stale_submissions: { Args: never; Returns: undefined }
+      collab_block: { Args: { p_target: string }; Returns: undefined }
+      collab_blocked: { Args: { p_a: string; p_b: string }; Returns: boolean }
       collab_candidates: { Args: { p_limit?: number }; Returns: Json }
       collab_like: { Args: { p_to: string }; Returns: string }
+      collab_mark_read: { Args: { p_match: string }; Returns: undefined }
+      collab_matches_list: { Args: never; Returns: Json }
+      collab_message_limit: { Args: never; Returns: number }
+      collab_pass: { Args: { p_to: string }; Returns: undefined }
       create_demo_submission: {
         Args: {
           p_clip_duration: number
@@ -1005,6 +1094,7 @@ export type Database = {
         }
         Returns: string
       }
+      daily_review_limit: { Args: never; Returns: number }
       decoy_keywords: {
         Args: { p_niche_id: number; p_title: string }
         Returns: string[]
@@ -1028,20 +1118,32 @@ export type Database = {
           p_profile: string
           p_raw: Json
           p_rc_event_id: string
+          p_rc_txn?: string
         }
         Returns: undefined
       }
+      hourly_upload_limit: { Args: never; Returns: number }
       is_pro: { Args: { p: string }; Returns: boolean }
       mark_clips_deleted: { Args: { p_ids: string[] }; Returns: number }
+      media_grace_hours: { Args: never; Returns: number }
       media_paths: {
         Args: { p_submission_id?: string; p_task_id?: string }
         Returns: Json
       }
+      net_auth_token: { Args: never; Returns: string }
+      net_gateway_token: { Args: never; Returns: string }
+      net_headers: { Args: never; Returns: Json }
       next_review_task: { Args: never; Returns: Json }
       niches_to_refresh: {
         Args: never
         Returns: {
           slug: string
+        }[]
+      }
+      orphan_media: {
+        Args: { p_limit?: number }
+        Returns: {
+          path: string
         }[]
       }
       pick_decoys: {
@@ -1077,6 +1179,10 @@ export type Database = {
         Returns: undefined
       }
       report_is_weighted: { Args: { p_reporter: string }; Returns: boolean }
+      report_message: {
+        Args: { p_message: number; p_reason: string }
+        Returns: undefined
+      }
       report_threshold: {
         Args: { p_reason: string; p_weighted: boolean }
         Returns: number
@@ -1122,10 +1228,16 @@ export type Database = {
         }
         Returns: string
       }
+      sync_pro_state: {
+        Args: { p_active: boolean; p_expires: string; p_profile: string }
+        Returns: Json
+      }
       trigger_cleanup_clips: { Args: never; Returns: undefined }
       trigger_notify: { Args: never; Returns: undefined }
       trigger_refresh_niche_cache: { Args: never; Returns: undefined }
       trigger_screen_media: { Args: never; Returns: undefined }
+      uploads_under_quota: { Args: { p_uid: string }; Returns: boolean }
+      word_count: { Args: { p_text: string }; Returns: number }
     }
     Enums: {
       collab_type:
@@ -1286,9 +1398,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       collab_type: [

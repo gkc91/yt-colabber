@@ -75,6 +75,12 @@ export default function TabLayout() {
       <Tabs.Screen name="review/[taskId]" options={{ href: null, title: t('tabs.review') }} />
       <Tabs.Screen name="submit/new" options={{ href: null, title: t('submit.newTest') }} />
       <Tabs.Screen name="submit/[id]" options={{ href: null, title: t('results.title') }} />
+      {/*
+        Collab SEKME DEĞİL (F2). Giriş noktası profildeki Collab bölümü. Dördüncü bir
+        sekme, kuzey yıldızı "submission başına ilk 24 saatteki değerlendirme" olan bir
+        uygulamada dikkati krediyle hiç ilgisi olmayan bir modüle kaydırırdı.
+      */}
+      <Tabs.Screen name="collab/index" options={{ href: null, title: t('collab.title') }} />
       <Tabs.Screen
         name="profile/add-channel"
         options={{ href: null, title: t('profile.channels.addTitle') }}

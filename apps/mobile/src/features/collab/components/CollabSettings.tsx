@@ -3,6 +3,7 @@
 // Kendi bileşeni, çünkü profil ekranı zaten 400 satırın üstünde ve buraya bir taslak
 // durumu daha eklemek onu okunmaz hâle getirirdi (CreditHistory ile aynı gerekçe).
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
@@ -130,6 +131,20 @@ export function CollabSettings({ userId }: { userId: string }) {
         disabled={!dirty || error !== null}
         loading={save.isPending}
       />
+
+      {/*
+        Desteye giden TEK yol bu (Collab sekme değil). Yalnızca kaydedilmiş ve açık bir
+        profil için gösteriliyor: kapalıyken basan kişi "profilini aç" ekranına düşerdi,
+        yani düğme onu gönderdiği yerde geri çeviren bir düğme olurdu. Taslak varken de
+        gizli — kaydedilmemiş bir seçimle desteye gitmek, seçimi kaybetmek demek.
+      */}
+      {saved.data?.isOpen && !dirty ? (
+        <Button
+          title={t('profile.collab.browse')}
+          variant="secondary"
+          onPress={() => router.push('/collab')}
+        />
+      ) : null}
     </Section>
   );
 }

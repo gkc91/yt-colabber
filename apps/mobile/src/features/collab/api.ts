@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { supabase } from '@/lib/supabase';
 
+import { toCandidates, type Candidate } from './candidates';
 import { EMPTY_COLLAB_PROFILE, sanitizeTypes, type CollabProfile } from './rules';
 
 export async function fetchCollabProfile(userId: string): Promise<CollabProfile> {
@@ -52,4 +53,56 @@ export async function saveCollabProfile(userId: string, draft: CollabProfile): P
     { onConflict: 'profile_id' },
   );
   if (error) throw error;
+}
+
+// ---------------------------------------------------------------- Aday destesi (F2)
+
+/** Sunucu `collab_closed` fırlatıyorsa kullanıcı profilini açmamış demektir. */
+export class CollabError extends Error {
+  constructor(readonly code: 'collab_closed' | 'blocked' | 'unknown') {
+    super(code);
+  }
+}
+
+function toCollabError(error: { message?: string } | null): CollabError {
+  const message = error?.message ?? '';
+  if (message.includes('collab_closed')) return new CollabError('collab_closed');
+  if (message.includes('blocked')) return new CollabError('blocked');
+  return new CollabError('unknown');
+}
+
+export async function fetchCandidates(): Promise<Candidate[]> {
+  const { data, error } = await supabase.rpc('collab_candidates', { p_limit: 20 });
+  if (error) throw toCollabError(error);
+  return toCandidates(data);
+}
+
+export const candidatesQueryKey = ['collab-candidates'] as const;
+
+export function useCandidates(enabled: boolean) {
+  return useQuery({
+    queryKey: candidatesQueryKey,
+    queryFn: fetchCandidates,
+    enabled,
+    // Deste istemcide tükeniyor; her odaklanmada yeniden çekmek kullanıcının
+    // az önce geçtiği kartları geri getirirdi.
+    refetchOnWindowFocus: false,
+  });
+}
+
+/** Beğeni karşılıklıysa eşleşme kimliği döner; değilse null. */
+export async function likeCandidate(profileId: string): Promise<string | null> {
+  const { data, error } = await supabase.rpc('collab_like', { p_to: profileId });
+  if (error) throw toCollabError(error);
+  return typeof data === 'string' ? data : null;
+}
+
+export async function passCandidate(profileId: string): Promise<void> {
+  const { error } = await supabase.rpc('collab_pass', { p_to: profileId });
+  if (error) throw toCollabError(error);
+}
+
+export async function blockCandidate(profileId: string): Promise<void> {
+  const { error } = await supabase.rpc('collab_block', { p_target: profileId });
+  if (error) throw toCollabError(error);
 }
