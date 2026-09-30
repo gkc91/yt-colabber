@@ -8,9 +8,8 @@
 // zamanını harcamak istemeyenler için. Ekranın ortasında duran bir "SATIN AL" düğmesi
 // ürünün vaadini tersine çevirirdi.
 import { router } from 'expo-router';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
-import { Title } from '@/components/Type';
 import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
 import { radius } from '@/design/tokens';
@@ -32,7 +31,7 @@ export function BuyCreditsButton() {
       // Dokunma alanı görünen kutudan geniş: 32 dp'lik bir daire parmak için küçük.
       hitSlop={10}
     >
-      <Title style={styles.plus}>+</Title>
+      <Text style={[styles.plus, { color: colors.text }]}>+</Text>
     </Pressable>
   );
 }
@@ -46,7 +45,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  /*
+   * "+" ARTIK `Title` DEĞİL, kendi ölçüsü olan düz bir metin (sahibi işaretin dairenin
+   * içinde ortalı olmadığını bildirdi). İki sebep vardı ve ikisi de tipografi ölçeğinden
+   * geliyordu: `title` ölçeği `letterSpacing: -0.6` taşıyor ve harf aralığı SON harften
+   * SONRA da uygulandığı için tek karakterlik bir metnin kutusu sola kayıyor; ayrıca
+   * 28 punto yazıya elle verilen `lineHeight: 26` metni kutusunun dışına taşırıyordu.
+   * Burada aralık sıfır, satır yüksekliği düğmenin kendi yüksekliği ve Android'in font
+   * dolgusu kapalı — üçü birden olmadan ortalama güvenilir değil.
+   */
   plus: {
-    lineHeight: 26,
+    fontSize: 22,
+    lineHeight: 32,
+    fontWeight: '600',
+    letterSpacing: 0,
+    textAlign: 'center',
+    includeFontPadding: false,
   },
 });

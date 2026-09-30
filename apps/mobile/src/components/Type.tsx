@@ -2,6 +2,7 @@
 //
 // Başlıklar ve sayılar Archivo, gövde sistem fontu. `Stat` rapor hissinin taşıyıcısı:
 // sayı başlıktan büyüktür, etiketi küçük ve sessizdir.
+import type { ReactNode } from 'react';
 import { StyleSheet, Text as RNText, View, type TextProps, type ViewStyle } from 'react-native';
 
 import { useColorScheme } from '@/components/useColorScheme';
@@ -63,23 +64,35 @@ export function Label({ children, ...rest }: Props) {
   return <Meta {...rest}>{typeof children === 'string' ? caps(children) : children}</Meta>;
 }
 
-/** Sonuç ekranlarının kahramanı: büyük sayı + sessiz etiket. */
+/**
+ * Sonuç ekranlarının kahramanı: büyük sayı + sessiz etiket.
+ *
+ * `action` SAYININ SATIRINDA duruyor, bloğun ortasında değil. Kredi bakiyesinin yanındaki
+ * "+" önce dıştan bir satıra sarılmıştı ve `alignItems: 'center'` onu iki satırlık bloğun
+ * ortasına, yani sayı ile etiketin ARASINA koyuyordu — sayının yanında değil, altına
+ * kaymış görünüyordu (sahibi bildirdi).
+ */
 export function Stat({
   value,
   label,
   tone = 'ink',
   style,
+  action,
 }: {
   value: string;
   label: string;
   tone?: Tone;
   style?: ViewStyle;
+  action?: ReactNode;
 }) {
   return (
     <View style={[styles.stat, style]}>
-      <Display tone={tone} style={styles.statValue}>
-        {value}
-      </Display>
+      <View style={styles.statRow}>
+        <Display tone={tone} style={styles.statValue}>
+          {value}
+        </Display>
+        {action}
+      </View>
       <Label>{label}</Label>
     </View>
   );
@@ -88,6 +101,11 @@ export function Stat({
 const styles = StyleSheet.create({
   stat: {
     gap: space.xs,
+  },
+  statRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
   },
   statValue: {
     // Rakamlar hizalı dursun: "73%" ile "8%" alt alta kaymasın.

@@ -145,12 +145,12 @@ export default function ProfileScreen() {
       <Section title={t('profile.stats.title')}>
         <View style={styles.stats}>
           {/* Kredi sayısının yanında "+" (0047): "kredim az" diye bakan kişi tam burada. */}
-          <View style={styles.stat}>
-            <View style={styles.creditStat}>
-              <Stat label={t('credits.balance')} value={String(balance.data ?? '—')} />
-              <BuyCreditsButton />
-            </View>
-          </View>
+          <Stat
+            style={styles.stat}
+            label={t('credits.balance')}
+            value={String(balance.data ?? '—')}
+            action={<BuyCreditsButton />}
+          />
           <Stat
             style={styles.stat}
             label={t('profile.stats.reputation')}
@@ -404,11 +404,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: space.sm,
-  },
-  creditStat: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.md,
   },
   pro: {
     borderWidth: 1,
