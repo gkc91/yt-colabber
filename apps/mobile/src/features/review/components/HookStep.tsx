@@ -1,6 +1,6 @@
 import { useEventListener } from 'expo';
-import { useVideoPlayer, VideoView, type VideoPlayerStatus } from 'expo-video';
-import { useState } from 'react';
+import { VideoView, type VideoPlayer, type VideoPlayerStatus } from 'expo-video';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 
 import { Button } from '@/components/Button';
@@ -15,7 +15,13 @@ import { t, type MessageKey } from '@/i18n';
 import { tagsFor, toggleTag, type ReasonTag } from '../rules';
 
 type Props = {
-  clipUrl: string;
+  /**
+   * Oynatıcı DIŞARIDAN geliyor (2026-09-30, testçi "videoların gelmesi yavaştı" dedi).
+   * Eskiden burada doğuyordu, yani klip ancak bu adım ekrana gelince inmeye başlıyordu ve
+   * kullanıcı tam o anda bekliyordu. Artık ekran açılır açılmaz doğuyor ve feed → reveal →
+   * tahmin adımları boyunca tamponunu dolduruyor.
+   */
+  player: VideoPlayer;
   vertical?: boolean;
   comment: string;
   tags: ReasonTag[];
@@ -36,7 +42,7 @@ const overlayKey = (status: VideoPlayerStatus) =>
 
 /** Adım 3 — hook testi: klip oynar, "buradan çıktım" ya da sonuna kadar (PRODUCT §5). */
 export function HookStep({
-  clipUrl,
+  player,
   vertical = false,
   comment,
   tags,
@@ -56,10 +62,11 @@ export function HookStep({
   // "video yok, buraya resim koymuşlar" dedirtiyor (2026-09-25 bulgusu).
   const [status, setStatus] = useState<VideoPlayerStatus>('idle');
 
-  const player = useVideoPlayer(clipUrl, (instance) => {
-    instance.timeUpdateEventInterval = 1;
-    instance.play();
-  });
+  // Oynatma bu adıma gelindiğinde başlıyor; oynatıcının kendisi çoktan tampon doldurmuş
+  // oluyor. Mobil tarayıcıda otomatik oynatma reddedilirse aşağıdaki "oynat" katmanı çıkar.
+  useEffect(() => {
+    player.play();
+  }, [player]);
 
   useEventListener(player, 'playingChange', ({ isPlaying }) => {
     if (isPlaying) setStarted(true);

@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams } from 'expo-router';
+import { useVideoPlayer } from 'expo-video';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 
@@ -51,6 +52,26 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
     queryFn: () => storage.getSignedUrls({ taskId }),
     enabled: !!taskId,
   });
+
+  /*
+   * VİDEO ERKEN İNSİN (2026-09-30, testçi bildirdi: "videoların gelme kısmında yavaşlık
+   * vardı"). `expo-video` bir görünüme bağlı olmayan oynatıcının da tamponunu dolduruyor,
+   * yani klip kullanıcı feed → reveal → tahmin adımlarını geçerken iniyor ve hook adımına
+   * gelindiğinde hazır oluyor. Eskiden oynatıcı HookStep'in içinde doğuyordu: indirme ancak
+   * o adım ekrana gelince başlıyor, kullanıcı da tam orada bekliyordu.
+   *
+   * Kaynak `null` başlıyor çünkü imzalı adres bir tur sonra geliyor; geldiğinde
+   * `replace()` ile veriliyor.
+   */
+  const player = useVideoPlayer(null, (instance) => {
+    instance.timeUpdateEventInterval = 1;
+    // Klipler en fazla 60 saniye: ileri tamponu o kadar isteyince tamamı erkenden iniyor.
+    instance.bufferOptions = { preferredForwardBufferDuration: 60 };
+  });
+  const clipUrl = media.data?.clip ?? '';
+  useEffect(() => {
+    if (clipUrl) player.replace(clipUrl);
+  }, [clipUrl, player]);
 
   const [stage, setStage] = useState<Stage>('feed');
   // Gönderimden sonra sunucuda başka görev kalmayabilir; "+1 kredi" ekranı bu değere
@@ -188,7 +209,7 @@ function ReviewTaskFlow({ taskId }: { taskId: string }) {
       {stage === 'hook' ? (
         <HookStep
           vertical={isVertical}
-          clipUrl={media.data?.clip ?? ''}
+          player={player}
           comment={comment}
           tags={tags}
           submitting={submitting}
