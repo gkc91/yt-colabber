@@ -8,8 +8,8 @@
     "balance": "Credits",
     "loading": "…",
     "buyMore": "Buy credits or go Pro",
-    "lowTitle": "Not enough credits to start a test",
-    "lowBody": "A test needs at least {min} credits. Review one video in your niche and you earn one credit — or buy a pack.",
+    "lowTitle": "You need more credits",
+    "lowBody": "A test costs at least {min} credits. Review a video in your niche to earn one, or buy a pack.",
     "lowReview": "Review a video"
   },
   "auth": {
@@ -24,21 +24,21 @@
     "google": "Continue with Google",
     "invalidEmail": "Enter a valid email address.",
     "signingIn": "Signing you in…",
-    "linkFailed": "This sign-in link didn't work. It may have expired or been opened on another device.",
+    "linkFailed": "That sign-in link didn't work. It may have expired, or been opened on another device.",
     "backToSignIn": "Back to sign in",
-    "genericError": "Something went wrong. Please try again."
+    "genericError": "Something went wrong. Try again."
   },
   "welcome": {
     "title": "Know before you publish",
-    "lede": "Clickable shows your thumbnail, title and first 60 seconds to real creators in your niche — and tells you what they actually thought.",
-    "step1Title": "Upload what you would publish",
+    "lede": "Clickable shows your thumbnail, title and first 60 seconds to real creators in your niche, then tells you what they actually thought.",
+    "step1Title": "Upload what you're about to publish",
     "step1Body": "Up to three thumbnails, a few titles, and your first 60 seconds.",
     "step2Title": "Real people in your niche decide",
-    "step2Body": "They pick, guess what the video is about, and say where they would stop watching.",
+    "step2Body": "They pick one, guess what the video is about, and say where they'd stop watching.",
     "step3Title": "Read the result, then publish",
-    "step3Body": "Which thumbnail won, which title was understood, and the second attention drops.",
+    "step3Body": "Which thumbnail won, which title landed, and the exact second attention drops.",
     "creditsTitle": "It runs on credits, not a subscription",
-    "creditsBody": "Review one video, earn one credit. Spend credits to have your own video tested. You start with five.",
+    "creditsBody": "Review a video, earn a credit. Spend credits to get your own video tested. You start with five.",
     "start": "Start now"
   },
   "onboarding": {
@@ -47,10 +47,10 @@
     "languageTitle": "Which language are your videos in?",
     "continue": "Continue",
     "channelTitle": "Your channel",
-    "channelHint": "YouTube, Instagram or TikTok. Only used to show who you are — we never post, like or follow anywhere.",
+    "channelHint": "YouTube, Instagram or TikTok. We only use it to show who you are — we never post, like or follow anything.",
     "channelLabel": "Channel or profile link",
     "channelPlaceholder": "youtube.com/@yourchannel",
-    "channelInvalid": "Paste a channel or profile link: youtube.com/@name, instagram.com/name or tiktok.com/@name. A post link will not work.",
+    "channelInvalid": "Paste a channel or profile link: youtube.com/@name, instagram.com/name or tiktok.com/@name. A link to a single post won't work.",
     "bandTitle": "Subscribers (optional)",
     "finish": "Start",
     "bands": {
@@ -81,11 +81,11 @@
       "back": "Back",
       "next": "Next",
       "thumbnailsTitle": "Add up to 3 thumbnails",
-      "thumbnailsHint": "Each reviewer sees one of them in a feed next to real videos from your niche. Images are resized to 1280×720.",
+      "thumbnailsHint": "Each reviewer sees one of them in a feed, next to real videos from your niche. Images are resized to 1280×720 for you.",
       "addThumbnail": "Choose from gallery",
       "removeThumbnail": "Remove",
       "titlesTitle": "Add up to 3 titles",
-      "titlesHint": "Reviewers see one title with the thumbnail and tell you what they expect the video to be about.",
+      "titlesHint": "Reviewers see one title with the thumbnail, then tell you what they expect the video to be about.",
       "titlePlaceholder": "Your title",
       "addTitle": "Add another title",
       "clipTitle": "Your first 60 seconds",
@@ -96,13 +96,13 @@
       "clipReady": "{seconds}s · {megabytes} MB",
       "countTitle": "How many reviews?",
       "countHint": "One review costs one credit. Unused credits come back when the test closes.",
-      "countOption": "{count} reviews · {count} credits",
+      "countOption": "{count} {count:review|reviews} · {count} {count:credit|credits}",
       "proOnly": "Pro",
-      "balance": "You have {balance} credits",
-      "notEnough": "You need {missing} more credits",
+      "balance": "You have {balance} {balance:credit|credits}",
+      "notEnough": "You need {missing} more {missing:credit|credits}",
       "getCredits": "Get credits",
       "confirmTitle": "Ready to go",
-      "confirmSummary": "{thumbnails} thumbnails · {titles} titles · {seconds}s clip · {count} reviews",
+      "confirmSummary": "{thumbnails} {thumbnails:thumbnail|thumbnails} · {titles} {titles:title|titles} · {seconds}s clip · {count} {count:review|reviews}",
       "start": "Start the test",
       "uploading": "Uploading {done}/{total}…",
       "creating": "Opening your test…",
@@ -111,11 +111,11 @@
       "done": "Your test is live. Reviews will arrive over the next 72 hours.",
       "addThumbnailWeb": "Choose from your computer",
       "pickClipWeb": "Choose a video file",
-      "clipHintWeb": "Your first 60 seconds, exported as MP4 or MOV at 720p and under 8 MB. Nothing is compressed here, so a longer or heavier file is refused.",
+      "clipHintWeb": "Your first 60 seconds, exported as MP4 or MOV at 720p and under 8 MB. The browser doesn't compress, so a longer or heavier file is rejected.",
       "channelTitle": "Which channel is this for?",
       "channelHint": "Reviewers are matched to the channel's niche, so pick the one publishing this video.",
       "formatTitle": "How was this shot?",
-      "formatHint": "Reviewers see it the way people will: a vertical clip among vertical videos, a wide one among wide videos.",
+      "formatHint": "Reviewers see it the way people will: a tall clip among tall videos, a wide one among wide videos.",
       "format": {
         "horizontal": "Wide 16:9",
         "vertical": "Tall 9:16"
@@ -130,24 +130,24 @@
       "insufficient_credits": "Not enough credits for this test.",
       "pro_required": "25 reviews is a Pro feature.",
       "onboarding_incomplete": "Finish setting up your channel first.",
-      "not_authenticated": "Please sign in again.",
+      "not_authenticated": "Sign in again to continue.",
       "no_titles": "Add at least one title.",
-      "too_many_titles": "Up to 3 titles.",
+      "too_many_titles": "Three titles is the limit.",
       "title_too_long": "Titles can be up to 100 characters.",
-      "clip_too_long": "The clip is longer than 60 seconds. Trim it while picking.",
-      "clip_too_short": "The clip is shorter than 5 seconds.",
-      "clip_too_large": "Even after compression this clip is over 8 MB. Try a shorter or simpler clip.",
-      "unknown": "Something went wrong. Please try again.",
-      "clip_wrong_type": "That file type is not supported. Export an MP4 (or MOV).",
+      "clip_too_long": "That clip is longer than 60 seconds. Trim it while picking.",
+      "clip_too_short": "That clip is shorter than 5 seconds.",
+      "clip_too_large": "Even after compression, this clip is over 8 MB. Try a shorter or simpler one.",
+      "unknown": "Something went wrong. Try again.",
+      "clip_wrong_type": "That file type isn't supported. Export an MP4 or MOV.",
       "clip_too_long_web": "That clip is longer than 60 seconds. Export just the first 60 seconds from your editor.",
-      "clip_orientation": "That clip is not the shape you picked. Go back a step and change it, or choose another clip."
+      "clip_orientation": "That clip isn't the shape you picked. Go back a step to change it, or choose another clip."
     },
     "requirements": {
       "title": "What to have ready",
-      "thumbnails": "1–3 thumbnails. Any size — they are resized to 1280×720 for you.",
+      "thumbnails": "1–3 thumbnails. Any size — they're resized to 1280×720 for you.",
       "titles": "1–3 titles, up to 100 characters each.",
-      "clipApp": "Your video. The first 60 seconds are used; longer files are trimmed and compressed to 720p on your phone.",
-      "clipWeb": "Your first 60 seconds as an MP4 or MOV, 8 MB or less — export it from your editor at 720p. The browser does not compress, so a longer or heavier file is refused."
+      "clipApp": "Your video. Only the first 60 seconds are used; longer files are trimmed and compressed to 720p on your phone.",
+      "clipWeb": "Your first 60 seconds as an MP4 or MOV, 8 MB or less — export it from your editor at 720p. The browser doesn't compress, so a longer or heavier file is rejected."
     },
     "hidden": {
       "title": "Paused after a report",
@@ -161,24 +161,24 @@
       "body": "Your unused credits are already back in your balance. If this was wrong, tell us and a person will look at it.",
       "appeal": "Appeal this",
       "noteLabel": "What should we know? (optional)",
-      "notePlaceholder": "It is my own video, filmed by me",
+      "notePlaceholder": "It's my own video, I filmed it",
       "send": "Send appeal",
       "cancel": "Cancel",
-      "sent": "Appeal sent. We will look at it and write back.",
+      "sent": "Appeal sent. We'll look at it and write back.",
       "errors": {
-        "already_appealed": "You have already appealed this one — we are looking at it.",
-        "not_hidden": "This test is not paused.",
-        "not_owner": "That is not your test.",
+        "already_appealed": "You've already appealed this one. We're looking at it.",
+        "not_hidden": "This test isn't paused.",
+        "not_owner": "That test isn't yours.",
         "unknown_submission": "That test no longer exists.",
-        "unknown": "That did not work. Try again."
+        "unknown": "That didn't work. Try again."
       }
     },
-    "screeningNote": "We check every thumbnail before reviewers see it. This takes a moment."
+    "screeningNote": "We check every thumbnail before reviewers see it. It only takes a moment."
   },
   "paywall": {
     "title": "Credits and Pro",
-    "balance": "You have {count} credits.",
-    "earnInstead": "Every review you give earns one credit — buying is only for when you would rather not spend the time.",
+    "balance": "You have {count} {count:credit|credits}.",
+    "earnInstead": "Every review you give earns a credit. Buying is just a shortcut for when you'd rather not spend the time.",
     "buy": "Buy",
     "retry": "Try again",
     "restore": "Restore purchases",
@@ -186,27 +186,27 @@
     "restoredNothing": "Nothing to restore on this account.",
     "close": "Close",
     "options": {
-      "credits": "{count} credits",
-      "creditsBody": "One credit pays for one reviewer on one test. Credits never expire.",
+      "credits": "{count} {count:credit|credits}",
+      "creditsBody": "A credit pays for one reviewer on one test, and credits never expire.",
       "pro_monthly": "Pro — monthly",
       "pro_yearly": "Pro — yearly",
-      "proBody": "{count} credits every month, priority in the queue, up to 25 reviewers per test and an AI summary of your results."
+      "proBody": "{count} credits every month, priority in the queue, up to 25 reviewers per test, and an AI summary of your results."
     },
     "result": {
-      "credited": "Done — your balance is now {balance} credits.",
+      "credited": "Done. Your balance is now {balance} {balance:credit|credits}.",
       "pending": "Payment went through. The credits land as soon as the store confirms it, usually within a minute.",
-      "pro": "Pro is active. This month’s credits arrive in a moment."
+      "pro": "Pro is active. This month's credits land in a moment."
     },
     "unavailable": {
-      "title": "Buying happens in the app",
-      "web_unsupported": "Buying runs through the app stores, so it cannot happen in a browser. Reviewing, results and earning credits all work here.",
-      "not_configured": "This build has no store keys, so buying is off. Earning credits by reviewing works as usual."
+      "title": "You'll need the app for this",
+      "web_unsupported": "Google Play and the App Store handle the payment, so buying only works inside the app. Everything else — reviewing, results, credits — works right here.",
+      "not_configured": "This build has no store keys, so buying is switched off. Reviewing still earns credits."
     },
     "errors": {
-      "load": "The store did not answer. Check your connection and try again.",
-      "store_error": "The store could not complete that. Nothing was charged.",
-      "not_configured": "This build has no store keys, so buying is off.",
-      "web_unsupported": "Purchases only work in the mobile app."
+      "load": "The store didn't answer. Check your connection and try again.",
+      "store_error": "The store couldn't complete that. Nothing was charged.",
+      "not_configured": "This build has no store keys, so buying is switched off.",
+      "web_unsupported": "Buying only works in the mobile app."
     },
     "headerTitle": "Credits",
     "renewal": {
@@ -225,27 +225,27 @@
     }
   },
   "notFound": {
-    "title": "Oops!",
-    "message": "This screen doesn't exist.",
-    "home": "Go to home screen"
+    "title": "Nothing here",
+    "message": "That screen doesn't exist.",
+    "home": "Go home"
   },
   "review": {
     "ready": {
       "title": "A test is waiting",
-      "body": "About two minutes. You earn a credit for it.",
+      "body": "Takes about two minutes, and earns you a credit.",
       "start": "Start reviewing",
-      "step1": "Pick the one you would click",
+      "step1": "Pick the one you'd click",
       "step2": "Say what you expect it to be about",
-      "step3": "Watch the opening, stop when you would stop"
+      "step3": "Watch the opening, and stop where you'd stop"
     },
     "empty": {
       "title": "Nothing to review right now",
-      "body": "No one in your niche is testing at the moment. Come back later, or turn on notifications so we can tell you when a test arrives.",
+      "body": "Nobody in your niche is testing at the moment. Come back later, or turn on notifications and we'll tell you when a test arrives.",
       "enablePush": "Tell me when a test arrives",
       "pushOn": "We'll let you know when a test shows up in your niche.",
       "pushFailed": "Notifications aren't working on this device yet. We're fixing it — nothing you did is wrong.",
       "limitTitle": "That's enough for today",
-      "limitBody": "You've reviewed a lot today — thank you. We cap it at 20 a day so every review stays worth reading. Come back tomorrow and your next one earns a credit again."
+      "limitBody": "You've reviewed a lot today, and thank you. We cap it at 20 a day so every review stays worth reading. Come back tomorrow and your next one earns a credit again."
     },
     "next": "Next",
     "feed": {
@@ -254,7 +254,7 @@
     "guess": {
       "question": "What is this video about, in one sentence?",
       "placeholder": "I'd expect this video to…",
-      "words": "{words} words (at least {min})"
+      "words": "{words} {words:word|words} (at least {min})"
     },
     "hook": {
       "video": "The first seconds of the video",
@@ -276,7 +276,7 @@
       "unclear_promise": "Unclear promise",
       "bad_audio": "Bad audio",
       "low_energy": "Low energy",
-      "too_long_setup": "Setup too long",
+      "too_long_setup": "Setup took too long",
       "visual_quality": "Visual quality",
       "didnt_match_thumbnail": "Didn't match the thumbnail",
       "kept_watching": "Kept me watching",
@@ -296,21 +296,21 @@
       "next": "Review another"
     },
     "errors": {
-      "review_too_fast": "That was too quick to be a real review, so it wasn't counted and no credit was given. Take your time with the next one.",
+      "review_too_fast": "That was too quick to be a real review, so it wasn't counted and you didn't earn a credit. Take your time with the next one.",
       "task_expired": "This task has expired. Grab a new one from the Review tab.",
       "submission_closed": "This test has already collected enough reviews.",
-      "invalid_watch": "Something didn't add up in the playback times. Please try again.",
-      "reviewer_blocked": "Reviewing is paused on your account. This happens when reviews look automatic — for example the same spot picked every time, or the clip skipped instantly on every task. Reply to your sign-in email if you think this is wrong.",
-      "niche_cache_empty": "We're still collecting example videos for your niche. Please try again later."
+      "invalid_watch": "The playback times didn't add up. Try again.",
+      "reviewer_blocked": "Reviewing is paused on your account. This happens when reviews look automatic — the same spot picked every time, say, or the clip skipped instantly on every task. Reply to your sign-in email if you think this is wrong.",
+      "niche_cache_empty": "We're still collecting example videos for your niche. Try again later."
     },
     "demo": {
       "title": "Practice test",
-      "body": "Practice tests stay open, so there is always something to review, and they still earn you a credit. Answer exactly as you would for anyone else."
+      "body": "Practice tests stay open, so there's always something to review, and they still earn you a credit. Answer exactly as you would for anyone else."
     },
     "reveal": {
       "hitTitle": "That was the one being tested",
-      "missTitle": "Here is the one being tested",
-      "body": "Your click is already recorded. Now watch its opening and say what you think.",
+      "missTitle": "Here's the one being tested",
+      "body": "Your click is already recorded. Now watch the opening and tell us what you think.",
       "youPicked": "You picked",
       "tested": "Being tested",
       "continue": "Continue"
@@ -339,18 +339,18 @@
     "niche": {
       "change": "Change my niche",
       "canChange": "You can change your niche once a month.",
-      "locked": "You can change it again in {days} days.",
+      "locked": "You can change it again in {days} {days:day|days}.",
       "errors": {
-        "niche_change_too_soon": "You changed it recently. Niches can change once a month.",
-        "unknown_niche": "Pick one of the niches in the list.",
-        "unknown": "Something went wrong. Please try again."
+        "niche_change_too_soon": "You changed it recently. You can change your niche once a month.",
+        "unknown_niche": "Pick a niche from the list.",
+        "unknown": "Something went wrong. Try again."
       }
     },
     "credits": {
       "title": "Credit history",
       "empty": "Nothing yet. Reviewing a video earns your first credit.",
       "buy": "Buy credits or go Pro",
-      "buyHint": "Reviewing other creators earns credits for free. Buying is for when you would rather not spend the time.",
+      "buyHint": "Reviewing other creators earns credits for free. Buying is for when you'd rather not spend the time.",
       "proTitle": "Clickable Pro",
       "proBody": "40 credits every month, 25 reviews per test instead of 15, and an AI summary of your results.",
       "proCta": "See Pro",
@@ -369,10 +369,10 @@
       "title": "Account",
       "signOut": "Sign out",
       "delete": "Delete my account",
-      "deleteHint": "Deleting removes your account, your tests and your credit history. Reviews you wrote on other people's tests stay, without your name, so their results keep working.",
-      "deleteConfirm": "This cannot be undone. Your account, your tests and your credits will be deleted.",
+      "deleteHint": "Deleting removes your account, your tests and your credit history. The reviews you wrote on other people's tests stay, with your name removed, so their results still add up.",
+      "deleteConfirm": "This can't be undone. Your account, your tests and your credits will be deleted.",
       "contact": "Contact support",
-      "contactHint": "Questions, a bug, or a problem with a review — write to {email} and a person reads it."
+      "contactHint": "Questions, bugs, or a problem with a review: write to {email} and a person will read it."
     },
     "channels": {
       "title": "Your channels",
@@ -385,31 +385,31 @@
       "save": "Add channel",
       "changeNiche": "Change niche",
       "errors": {
-        "channel_limit": "Five channels is the limit for one account.",
-        "channel_taken": "That YouTube channel is already linked to an account.",
-        "channel_url_required": "Add the channel address.",
+        "channel_limit": "You can link up to five channels.",
+        "channel_taken": "That channel is already linked to another account.",
+        "channel_url_required": "Add the channel link.",
         "niche_change_too_soon": "You changed this channel's niche recently. Try again next month.",
         "unknown_niche": "Pick a niche.",
-        "not_owner": "That channel is not yours.",
-        "unknown": "That did not work. Try again.",
-        "unknown_platform": "We only take YouTube, Instagram and TikTok links for now."
+        "not_owner": "That channel isn't yours.",
+        "unknown": "That didn't work. Try again.",
+        "unknown_platform": "We only accept YouTube, Instagram and TikTok links for now."
       }
     },
     "collab": {
       "title": "Collabs",
       "body": "Meet creators in your niche at a similar size. No credits, no tasks, nothing on YouTube — just an introduction.",
       "open": "I'm open to collabs",
-      "openHint": "While this is off, nobody sees you here and you see nobody.",
+      "openHint": "While this is off, nobody sees you and you see nobody.",
       "types": "What are you up for?",
       "bio": "Short intro",
-      "bioPlaceholder": "What you make, and what you would like to do together.",
+      "bioPlaceholder": "What you make, and what you'd like to do together.",
       "bioCount": "{used}/{max}",
       "save": "Save",
       "saved": "Saved",
       "errors": {
         "no_type": "Pick at least one kind of collab, or turn this off.",
         "too_long": "Keep it under {max} characters.",
-        "save_failed": "Could not save. Check your connection and try again."
+        "save_failed": "Couldn't save. Check your connection and try again."
       },
       "kinds": {
         "joint_video": "Joint video",
@@ -455,19 +455,19 @@
     },
     "aiSummary": {
       "title": "AI summary",
-      "ready": "Five blunt points from what your reviewers actually did, plus the single change worth making first.",
+      "ready": "Five blunt points from what your reviewers actually did, plus the one change worth making first.",
       "generate": "Write the summary",
       "quota": "{used} of {limit} summaries used in the last 30 days.",
       "proRequired": "Pro turns your results into five points and names the one change to make first.",
-      "notEnoughReviews": "Needs {need} reviews to be worth writing — you have {have}. Three people are not a pattern.",
-      "monthlyLimit": "You have used all {limit} summaries for the last 30 days. The oldest one frees up as it ages out.",
+      "notEnoughReviews": "It needs {need} reviews to be worth writing, and you have {have}. Three people aren't a pattern.",
+      "monthlyLimit": "You've used all {limit} summaries for the last 30 days. The oldest one frees up as it ages out.",
       "errors": {
-        "summary_failed": "The summary could not be written. Nothing was used up — try again.",
+        "summary_failed": "The summary couldn't be written. Nothing was used up — try again.",
         "pro_required": "That needs Pro.",
         "not_enough_reviews": "Not enough reviews yet.",
-        "monthly_limit": "You have used all your summaries for the last 30 days.",
+        "monthly_limit": "You've used all your summaries for the last 30 days.",
         "in_progress": "A summary is already being written for this test.",
-        "no_access": "This test is not yours.",
+        "no_access": "That test isn't yours.",
         "ai_summary_unavailable": "Summaries are switched off right now. Nothing was used up."
       }
     },
@@ -475,7 +475,7 @@
   },
   "report": {
     "title": "Report this",
-    "body": "Tell us what's wrong. Reports are reviewed by a person; nothing is deleted automatically.",
+    "body": "Tell us what's wrong. Reports are read by a person, and nothing is deleted automatically.",
     "reasons": {
       "inappropriate": "Inappropriate content",
       "spam": "Spam or misleading",
@@ -491,22 +491,22 @@
     "reportTest": "Report this test",
     "reportReview": "Report this review",
     "errors": {
-      "no_access": "You can only report something you have seen here.",
+      "no_access": "You can only report something you've seen here.",
       "invalid_reason": "Pick one of the reasons above.",
-      "not_authenticated": "Please sign in again.",
-      "unknown": "Something went wrong. Please try again."
+      "not_authenticated": "Sign in again to continue.",
+      "unknown": "Something went wrong. Try again."
     }
   },
   "imageAlt": {
     "thumbnailOption": "Thumbnail option {n}",
     "thumbnailPicked": "The thumbnail you picked",
-    "thumbnailOther": "A thumbnail you did not pick",
+    "thumbnailOther": "A thumbnail you didn't pick",
     "thumbnailYours": "Thumbnail {n} you uploaded",
     "thumbnailResult": "Thumbnail {n}, {percent}% of picks"
   },
   "collab": {
     "title": "Collabs",
-    "intro": "Same niche, similar size. Nothing here touches credits or YouTube.",
+    "intro": "Same niche, similar size. No credits involved, and nothing happens on YouTube.",
     "remaining": "{count} more after this one",
     "card": {
       "unnamed": "A creator",
@@ -524,7 +524,7 @@
     },
     "block": {
       "title": "Block {name}?",
-      "body": "You will not see each other again, and neither of you can message the other.",
+      "body": "You won't see each other again, and neither of you can send a message.",
       "cancel": "Cancel",
       "confirm": "Block"
     },
@@ -536,40 +536,40 @@
     },
     "closed": {
       "title": "Collabs are off",
-      "body": "Turn on \"I am open to collabs\" in your profile and pick what you are up for. Nobody sees you until you do.",
+      "body": "Turn on \"I'm open to collabs\" in your profile and pick what you're up for. Nobody sees you until you do.",
       "cta": "Go to my profile"
     },
     "empty": {
-      "title": "Nobody left for now",
-      "body": "You have seen everyone in your niche at a similar size. New creators turn collabs on all the time — check back in a few days.",
-      "refresh": "Look again"
+      "title": "That's everyone for now",
+      "body": "You've seen everyone in your niche at a similar size. New creators turn collabs on all the time, so check back in a few days.",
+      "refresh": "Check again"
     },
     "error": {
-      "title": "Could not load creators",
+      "title": "Couldn't load creators",
       "body": "Check your connection and try again.",
       "retry": "Try again",
-      "action": "That did not go through. Try again."
+      "action": "That didn't go through. Try again."
     },
     "matches": {
       "title": "Matches",
-      "errorTitle": "Could not load your matches",
+      "errorTitle": "Couldn't load your matches",
       "emptyTitle": "No matches yet",
-      "emptyBody": "When someone you are interested in is interested back, they show up here.",
+      "emptyBody": "When someone you're interested in is interested back, they'll show up here.",
       "browse": "Browse creators",
       "noMessages": "Say hello.",
       "rowUnread": "{name}, {count} unread"
     },
     "chat": {
-      "intro": "You and {name} matched. Credits and YouTube have nothing to do with this.",
+      "intro": "You and {name} matched. No credits involved, and nothing happens on YouTube.",
       "empty": "Nothing here yet. Tell {name} what you make and what you had in mind.",
       "field": "Message to {name}",
       "placeholder": "Keep it short and specific.",
       "send": "Send",
       "tooLong": "Keep it under {max} characters.",
-      "errorTitle": "Could not open this chat",
+      "errorTitle": "Couldn't open this chat",
       "blocked": "This conversation is closed.",
       "goneTitle": "This chat is closed",
-      "goneBody": "One of you blocked the other, so neither can write here.",
+      "goneBody": "One of you blocked the other, so neither of you can write here.",
       "fromMe": "You said: {body}",
       "fromThem": "{name} said: {body}",
       "reported": "Reported",
@@ -580,12 +580,12 @@
         "confirm": "Report"
       },
       "errors": {
-        "daily_limit": "You have hit the daily message limit. Try again tomorrow.",
+        "daily_limit": "You've hit the daily message limit. Try again tomorrow.",
         "blocked": "This conversation is closed.",
         "not_in_match": "This conversation is closed.",
-        "unknown": "That did not send. Try again."
+        "unknown": "That didn't send. Try again."
       },
-      "reportFailed": "Could not report that. Try again.",
+      "reportFailed": "Couldn't report that. Try again.",
       "block": "Block this creator"
     }
   }

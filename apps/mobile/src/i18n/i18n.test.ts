@@ -28,3 +28,21 @@ describe('caps', () => {
     expect(caps('practice')).not.toContain('İ');
   });
 });
+
+describe('t plurals', () => {
+  it('test_i18n_picks_the_singular_at_exactly_one', () => {
+    expect(t('paywall.balance', { count: 1 })).toContain('1 credit.');
+    expect(t('paywall.balance', { count: 1 })).not.toContain('credits');
+  });
+
+  it('test_i18n_picks_the_plural_for_everything_else', () => {
+    expect(t('paywall.balance', { count: 0 })).toContain('0 credits');
+    expect(t('paywall.balance', { count: 2 })).toContain('2 credits');
+    expect(t('paywall.balance', { count: 40 })).toContain('40 credits');
+  });
+
+  it('test_i18n_leaves_a_plural_alone_when_the_variable_is_missing', () => {
+    // Eksik değişken sessizce yanlış biçim seçmemeli; ham hâli kalsın ki gözden kaçmasın.
+    expect(t('paywall.balance')).toContain('{count:credit|credits}');
+  });
+});
