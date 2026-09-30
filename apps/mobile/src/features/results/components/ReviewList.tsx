@@ -101,11 +101,16 @@ function Choice({
   onPress: () => void;
 }) {
   const colors = Colors[useColorScheme()];
+
+  // Seçili durum `aria-pressed` ile veriliyor, `accessibilityState.selected` ile değil:
+  // React Native Web `selected` alanını web'e hiç yansıtmıyor (aynı hata Chip'te de vardı,
+  // 2026-09-30). Bu bir aç/kapa düğmesi olduğu için doğru nitelik `aria-pressed`.
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityState={{ selected: active, disabled }}
+      aria-pressed={active}
+      accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={onPress}
       style={[
@@ -137,6 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     paddingHorizontal: space.lg,
     justifyContent: 'center',
-    minHeight: layout.minTouch - space.md,
+    // Tam 44 dp: eskiden 32 dp idi ve kenarlarına basınca tepki vermiyordu (2026-09-30).
+    minHeight: layout.minTouch,
   },
 });

@@ -68,6 +68,10 @@ export function StudioSidebar({ state, descriptors, navigation }: BottomTabBarPr
             <Pressable
               key={route.key}
               accessibilityRole="link"
+              // Bir bağlantı için "bulunduğun sayfa" bilgisinin doğru karşılığı
+              // `aria-current`; React Native Web `accessibilityState.selected` alanını
+              // web'e hiç yansıtmıyor (aynı hata Chip'te de vardı, 2026-09-30).
+              aria-current={focused ? 'page' : undefined}
               accessibilityState={{ selected: focused }}
               onPress={() => {
                 const event = navigation.emit({

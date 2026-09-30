@@ -21,6 +21,9 @@ export function Button({ title, onPress, variant = 'primary', disabled, loading 
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={title}
+      // `busy` de `accessibilityState` ile web'e yansımıyor; `disabled` yansıyor
+      // (2026-09-30). Yükleniyor durumunu ekran okuyucuya `aria-busy` taşıyor.
+      aria-busy={loading === true}
       accessibilityState={{ disabled: inactive, busy: loading }}
       onPress={onPress}
       disabled={inactive}
