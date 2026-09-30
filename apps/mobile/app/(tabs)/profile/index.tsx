@@ -31,11 +31,11 @@ import {
   deleteAccount,
   profileQueryKey,
   useCreditHistory,
+  useIsPro,
   useProfile,
 } from '@/features/profile/api';
 import { CreditHistory } from '@/features/profile/components/CreditHistory';
 import { canChangeNiche, daysUntilNicheChange } from '@/features/profile/nicheChange';
-import { useIsPro } from '@/features/profile/api';
 import {
   MAX_EXTRA_LANGUAGES,
   MAX_EXTRA_NICHES,
